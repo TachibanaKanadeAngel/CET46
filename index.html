@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; connect-src 'self' https://api.allorigins.win https://corsproxy.io https://api.codetabs.com https://dict.youdao.com https://cdn.jsdelivr.net https://raw.githubusercontent.com; font-src 'self' data: https://fonts.gstatic.com;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f3c951" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#e2a053" media="(prefers-color-scheme: dark)">
+  <meta name="description" content="基于FSRS 4.5算法的科学记忆系统，支持CET-4/6词汇学习，WebDAV多设备同步">
+  <meta name="keywords" content="CET4,CET6,英语,背单词,记忆算法,FSRS,间隔重复,单词记忆">
+  <meta name="author" content="CET46 Engine Team">
+  <meta name="robots" content="index, follow">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CET46引擎">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CET46 科学记忆引擎 Pro v1.0">
+  <meta property="og:description" content="基于FSRS 4.5算法的科学记忆系统，支持CET-4/6词汇学习与多设备同步">
+  <meta property="og:image" content="icons/icon-512.svg">
+  <meta property="og:url" content="https://cet46.app">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="CET46引擎">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CET46 科学记忆引擎 Pro v1.0">
+  <meta name="twitter:description" content="基于FSRS 4.5算法的科学记忆系统">
+  <meta name="twitter:image" content="icons/icon-512.svg">
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="icon" type="image/svg+xml" sizes="192x192" href="icons/icon-192.svg">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
+  <link rel="mask-icon" href="icons/icon.svg" color="#e2a053">
+
+  <link rel="preconnect" href="https://dict.youdao.com" crossorigin>
+  <link rel="dns-prefetch" href="https://api.allorigins.win">
+  <link rel="dns-prefetch" href="https://corsproxy.io">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+  <link rel="preload" href="css/styles.css" as="style">
+  <link rel="preload" href="js/main.js" as="script" crossorigin>
+
+  <title>CET46 科学记忆引擎 Pro v1.0</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="a11y-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+  
+  <div class="app-container" role="main">
+    <header class="header">
+      <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="theme-toggle" data-action="toggle-theme" aria-label="切换深色/浅色主题" title="切换主题">🌙</button>
+          <span id="offline-indicator" style="font-size: 0.9rem; cursor: help;" title="检查网络状态...">🟡</span>
+          <span id="network-status-dot" class="status-online" title="在线模式"></span>
+          <button class="theme-toggle" data-action="show-shortcut-guide" aria-label="显示快捷键指南" title="快捷键指南">⌨️</button>
+        </div>
+      </div>
+      <h1>🧠 CET46 科学记忆引擎 Pro v1.0</h1>
+      <div class="subtitle">FSRS 4.5 算法 + 向量时钟同步</div>
+      
+      <div id="engine-container" class="engine-core-container" role="region" aria-label="记忆引擎核心状态">
+        <div class="engine-sprite">
+          <div class="engine-core"></div>
+        </div>
+        <div class="engine-status">
+          <div class="engine-bars">
+            <div class="engine-bar-item">
+              <div class="sv-bar-label">
+                <span id="engine-fuel-label">燃料：20%</span>
+                <span>⛽</span>
+              </div>
+              <div class="sv-bar-wrapper sv-fuel">
+                <div class="sv-bar-fill" id="engine-fuel-fill" style="width: 20%;"></div>
+              </div>
+            </div>
+            <div class="engine-bar-item">
+              <div class="sv-bar-label">
+                <span id="engine-heat-label">温度：0%</span>
+                <span>🔥</span>
+              </div>
+              <div class="sv-bar-wrapper sv-heat">
+                <div class="sv-bar-fill" id="engine-heat-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="engine-status-text" id="engine-status-text">
+            * 引擎正在休眠 *
+          </div>
+        </div>
+      </div>
+      
+      <div class="stats-row" role="status" aria-live="polite">
+        <div class="stat-box">
+          <span class="stat-num" id="stat-total">0</span>
+          <span>总计</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" id="stat-new">0</span>
+          <span>新词</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" id="stat-review">0</span>
+          <span>待复习</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" id="stat-mastered">0</span>
+          <span>已掌握</span>
+        </div>
+      </div>
+    </header>
+
+    <nav class="nav-tabs" role="tablist" aria-label="主导航">
+      <button class="tab-btn active" data-tab="study" data-action="nav-study" role="tab" aria-selected="true" aria-controls="view-study">📖 学习</button>
+      <button class="tab-btn" data-tab="review" data-action="nav-review" role="tab" aria-selected="false" aria-controls="view-review">🔄 复习</button>
+      <button class="tab-btn" data-tab="wrong" data-action="nav-wrong" role="tab" aria-selected="false" aria-controls="view-wrong">📝 错题</button>
+      <button class="tab-btn" data-tab="stats" data-action="nav-stats" role="tab" aria-selected="false" aria-controls="view-stats">📊 统计</button>
+      <button class="tab-btn" data-tab="list" data-action="nav-list" role="tab" aria-selected="false" aria-controls="view-list">📋 词库</button>
+    </nav>
+
+    <div class="content">
+      <div id="view-study" class="view active" role="tabpanel" aria-labelledby="tab-study">
+        <div class="level-select">
+          <label for="study-level" class="visually-hidden">选择学习级别</label>
+          <select id="study-level" aria-label="选择学习级别">
+            <option value="all">全部单词 (CET4 + CET6)</option>
+            <option value="CET4">仅 CET-4</option>
+            <option value="CET6">仅 CET-6</option>
+          </select>
+        </div>
+
+        <div class="cycle-banner" id="cycle-banner" style="display: none;" role="status" aria-live="polite">
+          <div>轮次: <span id="cycle-num">1</span></div>
+          <div>本轮剩余: <span id="cycle-remain">0</span></div>
+          <div>完成: <span id="cycle-done">0</span></div>
+        </div>
+
+        <div class="word-card" id="study-card" data-action="flip-card" role="button" tabindex="0" aria-label="单词卡片，点击翻转查看释义">
+          <button class="sound-btn" id="study-sound-btn" data-action="speak-study-word" aria-label="播放单词发音" title="发音">🔊</button>
+          <div class="word" id="study-word">点击开始学习</div>
+          <div class="pronunciation" id="study-pron" aria-label="音标"></div>
+          <div class="meaning" id="study-meaning" aria-label="释义">科学记忆，高效学习</div>
+          <div class="example" id="study-example" aria-label="例句"></div>
+          <div id="semantic-warning" style="display:none; margin-top:10px; padding:8px; background: rgba(236,201,75,0.2); border-left: 4px solid var(--warning); font-size: 0.8rem; color: #b7791f; text-align: left;" role="alert" aria-live="polite">
+            🚨 <strong>混淆词干预：</strong> 系统检测到形近词近期已复习，为防止认知干扰，已拉开本词复习间隔。
+          </div>
+          <div id="related-words" style="display:none; margin-top:8px; padding: 8px; background: rgba(102,126,234,0.2); border-radius: 8px; font-size: 0.8rem;">
+            <span style="color: rgba(255,255,255,0.7);">🔗 相关词:</span>
+            <span id="related-words-list"></span>
+          </div>
+          <div id="mnemonic-container" style="display:none; margin-top:10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+            <label for="mnemonic-input" class="visually-hidden">助记口诀</label>
+            <textarea id="mnemonic-input" placeholder="写下你的助记口诀..." style="width:100%; border-radius:8px; padding:8px; font-size:0.85rem; border:1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9); color: var(--dark); resize: none; min-height: 60px;"></textarea>
+            <button class="text-btn" id="save-mnemonic-btn" data-action="save-mnemonic" style="font-size:0.75rem; color: white; margin-top: 5px; text-decoration: none; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 4px;">💾 保存笔记</button>
+          </div>
+          <div class="flip-hint">👆 点击卡片或按空格键查看释义</div>
+        </div>
+
+        <div class="ef-display" id="ef-display" style="display: none;" aria-label="记忆参数">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+            <span>难度因子: <strong id="ef-value">2.5</strong></span>
+            <span id="retention-display">记忆留存: <strong id="retention-value">--</strong></span>
+          </div>
+          <div class="ef-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><div class="ef-fill" id="ef-fill" style="width: 50%;"></div></div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--gray); margin-top: 4px;">
+            <span>稳定性: <span id="stability-value">--</span>天</span>
+            <span>难度: <span id="difficulty-value">--</span></span>
+          </div>
+        </div>
+
+        <div class="btn-group" id="study-buttons" style="display: none;">
+          <button class="btn btn-danger" id="btn-unknown" data-action="mark-unknown" aria-label="标记为不认识">❌ 不认识</button>
+          <button class="btn btn-warning" id="btn-spell" data-action="open-spelling" aria-label="进入拼写模式">✍️ 拼写</button>
+          <button class="btn btn-success" id="btn-known" data-action="mark-known" aria-label="标记为认识">✅ 认识</button>
+        </div>
+
+        <div class="btn-group" id="cloze-toggle" style="display: none; margin-top: 8px;">
+          <button class="btn" id="btn-cloze" data-action="toggle-cloze" style="font-size: 0.85rem; padding: 6px 12px;" aria-pressed="false">
+            📝 完形填空: 关闭
+          </button>
+        </div>
+
+        <button class="btn btn-primary" id="start-btn" data-action="start-study" style="width: 100%;" aria-label="开始学习新单词">🚀 开始学习</button>
+
+        <div class="progress-container" id="study-progress" style="display: none;">
+          <div class="progress-estimate" id="study-estimate" style="text-align: center; font-size: 0.85rem; color: var(--warning); margin-bottom: 0.5rem; display: none;">
+            🎯 预计完成: <strong id="study-est-date">--</strong>
+          </div>
+          <div class="progress-text" id="progress-text" aria-live="polite">有效掌握: 0 / 0 (0%)</div>
+          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="controls-row">
+          <button class="text-btn" id="reset-progress-btn" data-action="reset-progress" aria-label="重置所有学习进度">⚠️ 重置进度</button>
+          <button class="text-btn" id="undo-btn" data-action="undo-action" aria-label="撤销上一步操作">↩️ 撤销 (Ctrl+Z)</button>
+          <span class="keyboard-hint" style="margin: 0;" aria-hidden="true">
+            <kbd>←</kbd> 不认识 <kbd>空格</kbd> 翻转 <kbd>→</kbd> 认识 <kbd>S</kbd> 拼写
+          </span>
+        </div>
+      </div>
+
+      <div id="view-review" class="view" role="tabpanel" aria-labelledby="tab-review">
+        <div class="review-stats" role="status" aria-live="polite">
+          <div class="review-stat">
+            <div class="review-stat-num" id="review-count">0</div>
+            <div class="review-stat-label">待复习</div>
+          </div>
+          <div class="review-stat">
+            <div class="review-stat-num" id="review-overdue">0</div>
+            <div class="review-stat-label">已过期</div>
+          </div>
+        </div>
+
+        <div class="word-card" id="review-card" data-action="flip-review" role="button" tabindex="0" aria-label="复习单词卡片，点击翻转查看释义">
+          <button class="sound-btn" id="review-sound-btn" data-action="speak-review-word" aria-label="播放单词发音" title="发音">🔊</button>
+          <div class="word" id="review-word">暂无待复习单词</div>
+          <div class="pronunciation" id="review-pron" aria-label="音标"></div>
+          <div class="meaning" id="review-meaning" aria-label="释义"></div>
+          <div class="example" id="review-example" aria-label="例句"></div>
+          <div class="flip-hint">👆 点击卡片查看释义</div>
+        </div>
+
+        <div class="ef-display" id="review-ef-display" style="display: none;" aria-label="记忆参数">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+            <span>难度因子: <strong id="review-ef-value">2.5</strong></span>
+            <span id="review-retention-display">记忆留存: <strong id="review-retention-value">--</strong></span>
+          </div>
+          <div class="ef-bar"><div class="ef-fill" id="review-ef-fill" style="width: 50%;"></div></div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--gray); margin-top: 4px;">
+            <span>稳定性: <span id="review-stability-value">--</span>天</span>
+            <span>难度: <span id="review-difficulty-value">--</span></span>
+          </div>
+        </div>
+
+        <div class="btn-group" id="review-buttons" style="display: none;">
+          <button class="btn btn-danger" id="btn-review-unknown" data-action="review-unknown" aria-label="标记为还是不会">❌ 还是不会</button>
+          <button class="btn btn-success" id="btn-review-known" data-action="review-known" aria-label="标记为记住了">✅ 记住了</button>
+        </div>
+      </div>
+
+      <div id="view-wrong" class="view" role="tabpanel" aria-labelledby="tab-wrong">
+        <div class="review-stats" role="status" aria-live="polite">
+          <div class="review-stat">
+            <div class="review-stat-num" id="wrong-count">0</div>
+            <div class="review-stat-label">错词总数</div>
+          </div>
+          <div class="review-stat">
+            <div class="review-stat-num" id="wrong-total-errors">0</div>
+            <div class="review-stat-label">累计错误</div>
+          </div>
+        </div>
+
+        <div class="btn-group" style="margin-bottom: 1rem;">
+          <button class="btn btn-primary" id="wrong-study-btn" data-action="study-wrong" style="width: 100%;" aria-label="开始专项复习错题">🎯 专项复习错题</button>
+        </div>
+
+        <div id="error-analysis-panel" style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;" role="region" aria-label="错误病理学分析">
+          <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--warning);">📊 错误病理学分析</div>
+          <div id="error-analysis-content" style="font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.6;"></div>
+        </div>
+
+        <div class="word-list" id="wrong-list" role="list" aria-label="错词列表"></div>
+      </div>
+
+      <div id="view-stats" class="view" role="tabpanel" aria-labelledby="tab-stats">
+        <div class="heatmap-container">
+          <div class="heatmap-title">
+            <span>📅 学习热力图</span>
+            <span id="heatmap-streak">🔥 连续 0 天</span>
+          </div>
+          <div class="heatmap-grid" id="heatmap-grid" role="img" aria-label="最近50天学习热力图"></div>
+          <div class="heatmap-legend">
+            <span><div class="heatmap-cell"></div> 0</span>
+            <span><div class="heatmap-cell level-1"></div> 1-10</span>
+            <span><div class="heatmap-cell level-2"></div> 11-30</span>
+            <span><div class="heatmap-cell level-3"></div> 31-50</span>
+            <span><div class="heatmap-cell level-4"></div> 51-100</span>
+            <span><div class="heatmap-cell level-5"></div> 100+</span>
+          </div>
+        </div>
+
+        <div class="heatmap-container" style="margin-top: 1rem;">
+          <div class="heatmap-title">
+            <span>📈 未来7天复习工作量预测</span>
+            <span id="total-upcoming">总计: 0词</span>
+          </div>
+          <canvas id="retention-chart" width="400" height="150" style="width: 100%; height: 150px;" role="img" aria-label="未来7天复习工作量预测图表"></canvas>
+        </div>
+
+        <div class="review-stats" style="margin-top: 1rem;">
+          <div class="review-stat">
+            <div class="review-stat-num" id="stats-total-words">0</div>
+            <div class="review-stat-label">总学习词数</div>
+          </div>
+          <div class="review-stat">
+            <div class="review-stat-num" id="stats-avg-ef">2.5</div>
+            <div class="review-stat-label">平均EF</div>
+          </div>
+          <div class="review-stat">
+            <div class="review-stat-num" id="stats-days">0</div>
+            <div class="review-stat-label">学习天数</div>
+          </div>
+          <div class="review-stat" style="border-left: 1px solid var(--border-color); padding-left: 1rem;">
+            <div class="review-stat-num" id="stats-est-date" style="font-size: 1.1rem; color: var(--warning);">计算中...</div>
+            <div class="review-stat-label">🎯 预估达成日期</div>
+          </div>
+        </div>
+
+        <div class="data-panel">
+          <h3 style="font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text-color);">☁️ WebDAV 云同步</h3>
+          <div class="webdav-config" id="webdav-config" style="display: none;">
+            <label for="webdav-url" class="visually-hidden">WebDAV服务器地址</label>
+            <input type="text" id="webdav-url" placeholder="WebDAV 服务器地址" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.85rem;">
+            <label for="webdav-master-key" class="visually-hidden">主密码</label>
+            <input type="password" id="webdav-master-key" placeholder="主密码 (用于加密凭证)" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.85rem;">
+            <label for="webdav-username" class="visually-hidden">用户名</label>
+            <input type="text" id="webdav-username" placeholder="用户名" style="width: 48%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.85rem;">
+            <label for="webdav-password" class="visually-hidden">密码</label>
+            <input type="password" id="webdav-password" placeholder="密码" style="width: 48%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.85rem; float: right;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.85rem;">
+              <input type="checkbox" id="webdav-auto-sync" style="width: 16px; height: 16px;">
+              <label for="webdav-auto-sync">启动时自动增量同步</label>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-primary" id="save-webdav-btn" data-action="save-webdav" style="flex: 1; font-size: 0.8rem;">💾 保存配置</button>
+              <button class="btn btn-secondary" id="test-webdav-btn" data-action="test-webdav" style="flex: 1; font-size: 0.8rem;">🔗 测试连接</button>
+            </div>
+          </div>
+          <div class="data-actions" id="webdav-actions">
+            <button class="btn btn-primary" id="sync-up-btn" data-action="sync-up" aria-label="同步数据到云端">⬆️ 同步到云端</button>
+            <button class="btn btn-secondary" id="sync-down-btn" data-action="sync-down" aria-label="从云端恢复数据">⬇️ 从云端恢复</button>
+            <button class="btn btn-secondary" id="toggle-config-btn" data-action="toggle-webdav" aria-label="打开WebDAV配置">⚙️ 配置</button>
+            <button class="btn btn-secondary" id="export-key-btn" data-action="export-key" style="font-size: 0.8rem;" aria-label="导出加密凭证">🔑 导出凭证</button>
+          </div>
+          <div id="webdav-status" style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--gray);" role="status" aria-live="polite"></div>
+        </div>
+
+        <div class="data-panel">
+          <h3 style="font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text-color);">🧠 算法实验室</h3>
+          <div class="fsrs-tuning" style="font-size: 0.85rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span>当前模型 Log-Loss:</span>
+              <span id="fsrs-fit-score">--</span>
+            </div>
+            <div style="margin-bottom: 1rem; padding: 0.8rem; background: rgba(102,126,234,0.1); border-radius: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span>🎯 目标留存率</span>
+                <span id="retention-value" style="font-weight: bold; color: var(--primary);">90%</span>
+              </div>
+              <input type="range" id="retention-slider" min="80" max="95" value="90" step="1" style="width: 100%; cursor: pointer;" aria-label="调整目标留存率">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--gray); margin-top: 0.3rem;">
+                <span>80% (轻松)</span>
+                <span>95% (严格)</span>
+              </div>
+              <div style="font-size: 0.75rem; color: var(--gray); margin-top: 0.5rem;">
+                💡 留存率越高，复习越频繁，记忆越牢固
+              </div>
+            </div>
+            <button class="btn btn-primary" id="train-fsrs-btn" data-action="train-fsrs" style="width: 100%; margin-bottom: 0.5rem;" aria-label="基于历史数据训练FSRS模型">🎯 基于历史数据训练</button>
+            <button class="btn btn-secondary" id="reset-fsrs-btn" data-action="reset-fsrs" style="width: 100%; font-size: 0.8rem;" aria-label="恢复默认FSRS权重">↩️ 恢复默认权重</button>
+          </div>
+        </div>
+
+        <div class="data-panel">
+          <h3 style="font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text-color);">💾 本地数据管理</h3>
+          <div class="data-actions">
+            <button class="btn btn-primary" id="export-btn" data-action="export-data" aria-label="导出学习进度">📤 导出进度</button>
+            <button class="btn btn-secondary" id="import-btn" data-action="import-data" aria-label="导入学习进度">📥 导入进度</button>
+            <input type="file" id="import-file" accept=".json" style="display: none;" aria-hidden="true">
+          </div>
+          <div class="data-actions" style="margin-top: 0.5rem;">
+            <button class="btn btn-secondary" id="load-vocab-btn" data-action="load-vocab" aria-label="加载自定义词库">📚 加载词库</button>
+            <input type="file" id="vocab-file" accept=".json" style="display: none;" aria-hidden="true">
+          </div>
+        </div>
+      </div>
+
+      <div id="view-list" class="view" role="tabpanel" aria-labelledby="tab-list">
+        <div class="filter-controls">
+          <label for="search-input" class="visually-hidden">搜索词库</label>
+          <input type="text" class="search-input" id="search-input" placeholder="瞬时搜索词库..." aria-label="搜索词库">
+          <label for="filter-level" class="visually-hidden">筛选级别</label>
+          <select class="filter-select" id="filter-level" aria-label="筛选级别">
+            <option value="all">全部级别</option>
+            <option value="CET4">CET-4</option>
+            <option value="CET6">CET-6</option>
+          </select>
+          <label for="filter-status" class="visually-hidden">筛选状态</label>
+          <select class="filter-select" id="filter-status" aria-label="筛选状态">
+            <option value="all">全部状态</option>
+            <option value="new">未学习</option>
+            <option value="review">待复习</option>
+            <option value="mastered">已掌握</option>
+          </select>
+        </div>
+        <div id="virtual-scroll-container" role="list" aria-label="单词列表" tabindex="0" style="height: 450px; overflow-y: auto; position: relative; border-radius: 12px; border: 1px solid var(--border-color);">
+          <div id="virtual-scroll-spacer" style="position: absolute; top: 0; left: 0; right: 0;"></div>
+          <div id="virtual-scroll-content" style="position: absolute; top: 0; left: 0; right: 0;"></div>
+        </div>
+        <div class="word-list" id="word-list" style="display: none;"></div>
+
+        <div class="pagination-controls" id="pagination-controls" style="display: none; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem; padding-bottom: 1rem;">
+          <button class="mode-btn" id="btn-prev-page">上一页</button>
+          <span id="page-info" style="font-size: 0.85rem; color: var(--gray);">1 / 1</span>
+          <button class="mode-btn" id="btn-next-page">下一页</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spelling-modal" id="spelling-modal" role="dialog" aria-labelledby="spelling-title" aria-modal="true">
+    <div class="spelling-box">
+      <h3 id="spelling-title">✍️ 拼写挑战</h3>
+      <div class="spelling-hint">根据提示拼写单词</div>
+
+      <div class="spelling-mode-toggle" role="group" aria-label="拼写模式选择">
+        <button class="mode-btn active" id="mode-meaning" data-action="spelling-mode-meaning" aria-pressed="true">看释义</button>
+        <button class="mode-btn" id="mode-phonetic" data-action="spelling-mode-phonetic" aria-pressed="false">看音标</button>
+        <button class="mode-btn" id="mode-audio" data-action="spelling-mode-audio" aria-pressed="false">听发音</button>
+      </div>
+
+      <div class="spelling-meaning" id="spelling-meaning" aria-live="polite"></div>
+      <div class="spelling-phonetic" id="spelling-phonetic"></div>
+      <button class="sound-btn" id="spelling-sound" data-action="speak-spelling-word" style="display: none; margin: 0 auto 1rem; position: static; width: 50px; height: 50px; font-size: 1.3rem;" aria-label="播放发音">🔊</button>
+
+      <label for="spelling-input" class="visually-hidden">输入单词拼写</label>
+      <input type="text" class="spelling-input" id="spelling-input" placeholder="输入单词..." autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="spelling-result">
+
+      <div style="display: flex; justify-content: center; margin-top: 0.5rem;">
+        <button class="mode-btn" id="hint-btn" data-action="spelling-hint" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;" aria-label="获取拼写提示">💡 提示</button>
+        <span id="hint-level-display" style="font-size: 0.75rem; color: var(--gray); margin-left: 0.5rem; display: none;" aria-live="polite">提示等级: 0</span>
+      </div>
+
+      <div class="spelling-result" id="spelling-result" aria-live="assertive">
+        <div id="spelling-result-text"></div>
+        <div class="spelling-answer" id="spelling-answer"></div>
+      </div>
+
+      <div class="spelling-buttons">
+        <button class="btn btn-secondary" id="spelling-cancel-btn" data-action="close-spelling">取消</button>
+        <button class="btn btn-primary" id="spelling-submit" data-action="submit-spelling">提交</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="conflict-modal" class="spelling-modal" role="dialog" aria-labelledby="conflict-title" aria-modal="true">
+    <div class="spelling-box" style="max-width: 500px; text-align: left;">
+      <h3 id="conflict-title">⚔️ 同步冲突检测</h3>
+      <div id="conflict-word" style="font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--primary);"></div>
+      <div id="conflict-diff" style="margin: 1rem 0; font-family: monospace; white-space: pre-wrap; font-size: 0.85rem; max-height: 200px; overflow-y: auto; background: var(--light); padding: 10px; border-radius: 8px;"></div>
+      <div id="conflict-counter" style="font-size: 0.8rem; color: var(--gray); margin-bottom: 0.5rem;"></div>
+      <div class="btn-group">
+        <button class="btn btn-primary" id="keep-local">📝 保留本地</button>
+        <button class="btn btn-secondary" id="use-cloud">☁️ 使用云端</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="minigame-modal" class="spelling-modal" role="dialog" aria-labelledby="minigame-prompt-title" aria-modal="true">
+    <div class="spelling-box" style="max-width: 450px;">
+      <button class="spelling-close" aria-label="关闭">×</button>
+      <h3 id="minigame-prompt-title" style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary);">🎮 休息一下，玩个游戏吧！</h3>
+      <p style="font-size: 1rem; color: var(--text-color); margin-bottom: 1.5rem; line-height: 1.6;">
+        你已经连续学习了 <strong id="minigame-prompt-count" style="color: var(--primary); font-size: 1.2rem;">50</strong> 个单词，<br/>
+        来玩个 9x9 单词匹配游戏放松一下吧！
+      </p>
+      <div class="btn-group">
+        <button class="btn btn-primary" id="minigame-play-btn" style="flex: 1; padding: 12px 24px; font-size: 1rem;">🎯 开始游戏</button>
+        <button class="btn btn-secondary" id="minigame-close-prompt" style="flex: 1; padding: 12px 24px; font-size: 1rem;">继续学习</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="minigame-game-modal" class="spelling-modal" role="dialog" aria-labelledby="minigame-game-title" aria-modal="true">
+    <div class="spelling-box" style="max-width: 700px; background: var(--bg-color);">
+      <button class="spelling-close" aria-label="关闭">×</button>
+      <h3 id="minigame-game-title" style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--primary);">🎮 单词匹配挑战</h3>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 10px; background: var(--card-bg); border-radius: 8px;">
+        <div style="font-size: 0.9rem; color: var(--gray);">
+          <span>得分：<strong id="minigame-score" style="color: var(--primary); font-size: 1.2rem;">0</strong></span>
+          <span style="margin-left: 15px;">连击：<strong id="minigame-streak" style="color: var(--success); font-size: 1.2rem;">0</strong></span>
+        </div>
+        <div style="font-size: 1.5rem; font-weight: bold; color: var(--warning);" id="minigame-timer">60</div>
+      </div>
+      <div id="minigame-target" style="text-align: center; font-size: 1.5rem; font-weight: bold; color: var(--primary); padding: 15px; background: var(--card-bg); border-radius: 12px; margin-bottom: 15px;">
+        准备开始...
+      </div>
+      <div id="minigame-grid"></div>
+      <p style="text-align: center; margin-top: 15px; font-size: 0.85rem; color: var(--gray);">
+        💡 提示：点击与中文释义匹配的英文单词
+      </p>
+    </div>
+  </div>
+
+  <div id="minigame-result-modal" class="spelling-modal" role="dialog" aria-labelledby="minigame-result-title" aria-modal="true">
+    <div class="spelling-box" style="max-width: 400px; text-align: center;">
+      <button class="spelling-close" id="minigame-result-close" aria-label="关闭">×</button>
+      <h3 id="minigame-result-title" style="font-size: 1.8rem; margin-bottom: 1rem;">🎉 挑战成功！</h3>
+      <div style="margin: 2rem 0;">
+        <div style="font-size: 3rem; font-weight: bold; color: var(--primary); margin-bottom: 0.5rem;" id="minigame-final-score">0</div>
+        <div style="font-size: 1rem; color: var(--gray); margin-bottom: 1.5rem;">最终得分</div>
+        <div style="display: flex; justify-content: center; gap: 30px;">
+          <div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: var(--success);" id="minigame-final-streak">0</div>
+            <div style="font-size: 0.85rem; color: var(--gray);">最大连击</div>
+          </div>
+          <div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: var(--danger);" id="minigame-final-errors">0</div>
+            <div style="font-size: 0.85rem; color: var(--gray);">错误次数</div>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; padding: 1rem; background: var(--light); border-radius: 12px;">
+          <div style="font-size: 0.85rem; color: var(--gray); margin-bottom: 0.5rem;">当前等级</div>
+          <div style="font-size: 2rem;" id="minigame-current-reward">🥉</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="minigame-result-close-btn" style="width: 100%; padding: 12px 24px; font-size: 1rem;">确定</button>
+    </div>
+  </div>
+
+  <div id="minigame-reward-modal" class="spelling-modal" role="dialog" aria-modal="true" style="pointer-events: none;">
+    <div class="spelling-box" style="max-width: 300px; text-align: center; animation: reward-pop 0.5s ease-out;">
+      <div style="font-size: 4rem; margin-bottom: 0.5rem;" id="reward-icon">🎁</div>
+      <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary);" id="reward-name">解锁成就</div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes reward-pop {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+
+  <div id="offline-banner" style="display: none; position: fixed; top: 0; left: 0; right: 0; background: var(--warning); color: #1a202c; padding: 8px 16px; text-align: center; font-size: 0.9rem; z-index: 3000; font-weight: 500;" role="alert" aria-live="assertive">
+    📴 当前处于离线模式，部分功能可能受限
+  </div>
+
+  <div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(4px);" role="alertdialog" aria-labelledby="loading-text" aria-modal="true">
+    <div style="background: var(--card-bg); border-radius: 20px; padding: 2rem; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
+      <div style="font-size: 2.5rem; margin-bottom: 1rem;" aria-hidden="true">⚡</div>
+      <div id="loading-text" style="font-size: 1rem; color: var(--text-color); margin-bottom: 1rem;">处理中...</div>
+      <div style="height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div id="loading-progress" style="height: 100%; background: linear-gradient(90deg, var(--sv-panel-base), var(--sv-panel-shadow)); border-radius: 4px; width: 0%; transition: width 0.3s ease;"></div>
+      </div>
+      <div id="loading-percent" style="font-size: 0.85rem; color: var(--gray); margin-top: 0.5rem;">0%</div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

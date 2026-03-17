@@ -1,0 +1,52 @@
+name: Build EXE Release
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build application
+      run: npm run build
+      
+    - name: Build EXE
+      run: npx electron-builder --win
+      
+    - name: Upload EXE artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: CET46-Windows-EXE
+        path: |
+          release/*.exe
+          
+    - name: Create Release
+      if: github.event_name == 'push'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: release/*.exe
+        tag_name: v${{ github.run_number }}
+        name: CET46 科学记忆引擎 v${{ github.run_number }}
+        body: |
+          ## 更新内容
+          自动构建版本
+          
+          ## 下载说明
+          - `CET46 科学记忆引擎 Setup *.exe` - 安装版（推荐）
+          - `CET46-Portable-*.exe` - 便携版（无需安装）
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
