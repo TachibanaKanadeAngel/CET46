@@ -1,0 +1,81 @@
+{
+  "name": "CET46 科学记忆引擎 Pro 1.0",
+  "short_name": "CET46引擎",
+  "description": "基于FSRS 4.5算法的科学记忆系统，支持CET-4/6词汇学习与多设备同步",
+  "start_url": "index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3c951",
+  "theme_color": "#e2a053",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512-maskable.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "开始学习",
+      "short_name": "学习",
+      "description": "开始新的学习会话",
+      "url": "index.html#study"
+    },
+    {
+      "name": "复习单词",
+      "short_name": "复习",
+      "description": "复习到期单词",
+      "url": "index.html#review"
+    },
+    {
+      "name": "错题本",
+      "short_name": "错题",
+      "description": "查看错词列表",
+      "url": "index.html#wrong"
+    }
+  ],
+  "related_applications": [],
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "share_target": {
+    "action": "index.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+cet46",
+      "url": "index.html?action=%s"
+    }
+  ]
+}

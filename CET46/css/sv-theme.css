@@ -1,0 +1,123 @@
+/* 星露谷引擎样式 */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root {
+  --sv-wood-base: #e2a053;
+  --sv-wood-highlight: #ffcca6;
+  --sv-wood-shadow: #b16223;
+  --sv-border: #2b1100;
+  --sv-bar-bg: #5a2e15;
+  --sv-energy-green: #63c74d;
+  --sv-energy-dark: #3e8948;
+  --sv-heat-red: #e43b44;
+  --sv-heat-dark: #a22633;
+  --sv-coin-gold: #ffd700;
+  --sv-coin-shadow: #b8860b;
+}
+
+/* 引擎核心容器 */
+.engine-core-container {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin: 16px auto;
+  max-width: 450px;
+  padding: 12px;
+  background: var(--sv-wood-base);
+  border: 3px solid var(--sv-border);
+  border-radius: 8px;
+}
+
+/* 引擎状态 */
+.engine-status {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+/* 进度条容器 */
+.sv-bar-wrapper {
+  background-color: var(--sv-bar-bg);
+  border: 2px solid var(--sv-border);
+  height: 20px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+/* 进度条填充 */
+.sv-bar-fill {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+/* 燃料条 */
+.sv-fuel .sv-bar-fill {
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--sv-energy-green) 0%,
+    var(--sv-energy-green) 60%,
+    var(--sv-energy-dark) 60%,
+    var(--sv-energy-dark) 100%
+  );
+}
+
+/* 温度条 */
+.sv-heat .sv-bar-fill {
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--sv-heat-red) 0%,
+    var(--sv-heat-red) 60%,
+    var(--sv-heat-dark) 60%,
+    var(--sv-heat-dark) 100%
+  );
+}
+
+/* 引擎精灵 */
+.engine-sprite {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #7b7b7b 25%, #5a5a5a 25%, #5a5a5a 50%, #7b7b7b 50%, #7b7b7b 75%, #5a5a5a 75%, #5a5a5a 100%);
+  background-size: 8px 8px;
+  border: 3px solid var(--sv-border);
+  border-radius: 4px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* 引擎核心 */
+.engine-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  background: radial-gradient(circle, var(--sv-coin-gold) 0%, var(--sv-coin-shadow) 70%);
+  border-radius: 50%;
+  border: 2px solid var(--sv-border);
+  box-shadow: 0 0 8px var(--sv-coin-gold);
+  animation: sv-pulse 2s infinite;
+}
+
+@keyframes sv-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* 状态文字 */
+.engine-status-text {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.sv-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 2px;
+}
