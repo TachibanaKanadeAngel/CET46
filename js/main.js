@@ -12,10 +12,10 @@ import {
   loadFSRSWeights, saveFSRSWeights,
   loadFromIndexedDB, getWordDataSync,
   getPersonalizedCircadianFactor, pushAction, undoLastAction,
-  getData, saveData, getWordData, markWordAsDeleted, getWordStatus,
+  getData, saveData, getWordData, setWordData, markWordAsDeleted, getWordStatus,
   getWrongWords, saveWrongWords, addWrongWord, removeWrongWord,
   getHeatmap, saveHeatmap, recordHeatmap,
-  collectReviewLogs, migrateData
+  shuffle, updateFSRS, calculateFSRSInterval, applyFuzz
 } from './core.js';
 
 
@@ -493,71 +493,6 @@ async function prefetchAudioLibrary(words) {
   }
   
   console.log('✅ 音频预缓存完成');
-}
-
-async function setWordData(id, wd) {
-  const previousState = { ...memoryCache.progress[id] };
-  
-  wd.isDirty = true;
-  wd.mtime = Date.now();
-  
-  memoryCache.progress[id] = wd;
-  
-  await pushAction(id, previousState);
-  
-  return new Promise((resolve, reject) => {
-    memoryCache.writeQueue.push({
-      id,
-      data: wd,
-      resolve,
-      reject,
-      timestamp: Date.now()
-    });
-    
-    if (memoryCache.writeQueue.length >= 5 || !memoryCache.isWriting) {
-      processWriteQueue();
-    }
-    
-    setTimeout(() => {
-      if (memoryCache.writeQueue.find(item => item.id === id)) {
-        processWriteQueue();
-      }
-    }, 100);
-  });
-}
-
-async function processWriteQueue() {
-  if (memoryCache.isWriting || memoryCache.writeQueue.length === 0) return;
-  
-  memoryCache.isWriting = true;
-  const batch = memoryCache.writeQueue.splice(0, 5);
-  
-  try {
-    if (db.instance) {
-      const tx = db.instance.transaction('progress', 'readwrite');
-      const store = tx.objectStore('progress');
-      
-      batch.forEach(item => {
-        store.put({ id: item.id, ...item.data });
-      });
-      
-      await new Promise((resolve, reject) => {
-        tx.oncomplete = resolve;
-        tx.onerror = () => reject(new Error('Transaction failed'));
-      });
-    }
-    
-    batch.forEach(item => item.resolve());
-  } catch (err) {
-    console.error('批量写入失败，回滚到队列:', err);
-    memoryCache.writeQueue.unshift(...batch);
-    batch.forEach(item => item.reject(err));
-  } finally {
-    memoryCache.isWriting = false;
-    if (memoryCache.writeQueue.length > 0) {
-      setTimeout(processWriteQueue, 50);
-    }
-  }
 }
 
 function saveMnemonic(wordId, mnemonic) {

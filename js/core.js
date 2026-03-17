@@ -106,6 +106,74 @@ function getWordData(id) {
   };
 }
 
+let writeQueue = [];
+let isWriting = false;
+
+async function setWordData(id, wd) {
+  const previousState = { ...memoryCache.progress[id] };
+  
+  wd.isDirty = true;
+  wd.mtime = Date.now();
+  
+  memoryCache.progress[id] = wd;
+  
+  await pushAction(id, previousState);
+  
+  return new Promise((resolve, reject) => {
+    writeQueue.push({
+      id,
+      data: wd,
+      resolve,
+      reject,
+      timestamp: Date.now()
+    });
+    
+    if (writeQueue.length >= 5 || !isWriting) {
+      processWriteQueue();
+    }
+    
+    setTimeout(() => {
+      if (writeQueue.find(item => item.id === id)) {
+        processWriteQueue();
+      }
+    }, 100);
+  });
+}
+
+async function processWriteQueue() {
+  if (isWriting || writeQueue.length === 0) return;
+  
+  isWriting = true;
+  const batch = writeQueue.splice(0, 5);
+  
+  try {
+    if (db.instance) {
+      const tx = db.instance.transaction('progress', 'readwrite');
+      const store = tx.objectStore('progress');
+      
+      batch.forEach(item => {
+        store.put({ id: item.id, ...item.data });
+      });
+      
+      await new Promise((resolve, reject) => {
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(new Error('Transaction failed'));
+      });
+    }
+    
+    batch.forEach(item => item.resolve());
+  } catch (err) {
+    console.error('批量写入失败，回滚到队列:', err);
+    writeQueue.unshift(...batch);
+    batch.forEach(item => item.reject(err));
+  } finally {
+    isWriting = false;
+    if (writeQueue.length > 0) {
+      setTimeout(processWriteQueue, 50);
+    }
+  }
+}
+
 function markWordAsDeleted(id) {
   memoryCache.deletedIds.add(id);
   deleteWordData(id);
@@ -244,6 +312,7 @@ export {
   getData,
   saveData,
   getWordData,
+  setWordData,
   markWordAsDeleted,
   getWordStatus,
   getWrongWords,
