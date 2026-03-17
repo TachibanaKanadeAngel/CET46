@@ -18,11 +18,7 @@ import {
   collectReviewLogs, migrateData
 } from './core.js';
 
-import {
-  calculateFSRSInterval, calculateLevenshtein, updateFSRS, migrateSM2ToFSRS,
-  calculateInterval, updateEF,
-  evaluateLogLoss, calculateGradientsForLogLoss, shuffle, escapeHTML
-} from './fsrs.js';
+
 
 import {
   subscribeToStore, getMemoryCache
@@ -1939,46 +1935,6 @@ function setupReactiveBindings() {
   });
   
   console.log('✅ 响应式绑定已设置');
-}
-      } else {
-        offlineIndicator.textContent = '🔴';
-        offlineIndicator.title = '离线 - 使用缓存数据';
-      }
-    }
-    
-    if (statusDot) {
-      if (isOnline) {
-        if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-          statusDot.className = 'status-online';
-          statusDot.title = '在线模式';
-        } else {
-          statusDot.className = 'status-online';
-          statusDot.title = '在线模式 (PWA未激活)';
-        }
-      } else if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-        statusDot.className = 'status-offline-ready';
-        statusDot.title = '离线就绪 (PWA)';
-      } else {
-        statusDot.className = 'status-disconnected';
-        statusDot.title = '网络断开';
-      }
-    }
-    
-    if (!isOnline) {
-      UI.toast('网络连接已断开', 'warning');
-    }
-  }
-
-  window.addEventListener('online', () => {
-    updateOnlineStatus();
-    UI.toast('网络已恢复连接', 'success');
-  });
-
-  window.addEventListener('offline', () => {
-    updateOnlineStatus();
-  });
-
-  updateOnlineStatus();
 }
 
 function showMilestoneCelebration(type, count) {

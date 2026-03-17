@@ -6,9 +6,16 @@
   --sv-panel-shadow: #b16223;
   --sv-border-dark: #2b1100;
   --sv-energy-green: #63c74d;
+  --sv-energy-dark: #4a9c38;
   --sv-warning-yellow: #ffd700;
   --sv-heat-red: #e43b44;
+  --sv-heat-dark: #c53030;
   --sv-text-main: #2b1100;
+  --sv-wood-base: #d4a574;
+  --sv-border: #2b1100;
+  --sv-bar-bg: #5c4033;
+  --sv-coin-gold: #ffd700;
+  --sv-coin-shadow: #e2a053;
   
   --primary: #e2a053;
   --success: #63c74d;
@@ -36,7 +43,12 @@
   border: 0;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
 body {
   background-color: var(--sv-bg-base);
@@ -52,6 +64,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .app-container {
@@ -603,3 +617,287 @@ body {
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--sv-panel-shadow); border-radius: 3px; }
 ::-webkit-scrollbar-thumb { background: var(--sv-border-dark); border-radius: 3px; }
+
+/* ==================== 粒子特效系统 ==================== */
+.particle-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.particle-layer * {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+/* 像素烟雾粒子 */
+.smoke-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(200, 200, 200, 0.3);
+  image-rendering: pixelated;
+  animation: smoke-rise linear infinite;
+}
+
+@keyframes smoke-rise {
+  0% { opacity: 0; transform: translateY(0) translateX(0) scale(1); }
+  10% { opacity: 0.4; }
+  50% { opacity: 0.3; transform: translateY(-50vh) translateX(20px) scale(1.5); }
+  90% { opacity: 0.1; }
+  100% { opacity: 0; transform: translateY(-100vh) translateX(-20px) scale(2); }
+}
+
+.smoke-particle.large {
+  width: 8px;
+  height: 8px;
+  background: rgba(180, 180, 180, 0.2);
+  animation-duration: 15s;
+}
+
+/* 萤火虫粒子 */
+.firefly-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #ffd700;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #ffd700, 0 0 8px #ffed4a, 0 0 12px rgba(255, 215, 0, 0.5);
+  animation: firefly-float ease-in-out infinite;
+}
+
+@keyframes firefly-float {
+  0%, 100% { opacity: 0; transform: translate(0, 0); }
+  25% { opacity: 1; transform: translate(10px, -15px); }
+  50% { opacity: 0.6; transform: translate(-5px, -25px); }
+  75% { opacity: 1; transform: translate(15px, -10px); }
+}
+
+.firefly-particle.glow {
+  animation: firefly-glow 2s ease-in-out infinite;
+}
+
+@keyframes firefly-glow {
+  0%, 100% {
+    box-shadow: 0 0 2px #ffd700, 0 0 4px #ffed4a;
+    opacity: 0.3;
+  }
+  50% {
+    box-shadow: 0 0 6px #ffd700, 0 0 12px #ffed4a, 0 0 18px rgba(255, 215, 0, 0.6);
+    opacity: 1;
+  }
+}
+
+/* 火星粒子 */
+.spark-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #ff6b35;
+  box-shadow: 0 0 3px #ff6b35;
+  animation: spark-rise linear infinite;
+}
+
+@keyframes spark-rise {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  50% { opacity: 0.8; transform: translateY(-30px) translateX(5px) scale(0.8); }
+  100% { opacity: 0; transform: translateY(-60px) translateX(-5px) scale(0.5); }
+}
+
+/* 灰尘粒子 */
+.dust-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  animation: dust-drift linear infinite;
+}
+
+@keyframes dust-drift {
+  0% { opacity: 0; transform: translateX(-100px) translateY(0); }
+  20% { opacity: 0.3; }
+  80% { opacity: 0.3; }
+  100% { opacity: 0; transform: translateX(100vw) translateY(-50px); }
+}
+
+/* 星星粒子 */
+.star-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #ffffff;
+  animation: star-twinkle ease-in-out infinite;
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* 落叶粒子 */
+.leaf-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #d2691e;
+  animation: leaf-fall ease-in-out infinite;
+}
+
+@keyframes leaf-fall {
+  0% { opacity: 0; transform: translateY(-20px) rotate(0deg); }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { opacity: 0; transform: translateY(100vh) rotate(360deg); }
+}
+
+/* 雪花粒子 */
+.snow-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #ffffff;
+  border-radius: 50%;
+  animation: snow-fall linear infinite;
+}
+
+@keyframes snow-fall {
+  0% { opacity: 0; transform: translateY(-10px) translateX(0); }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { opacity: 0; transform: translateY(100vh) translateX(20px); }
+}
+
+/* 响应式和性能优化 */
+@media (max-width: 768px) {
+  .smoke-particle:nth-child(n+5),
+  .firefly-particle:nth-child(n+3),
+  .spark-particle:nth-child(n+4) { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .particle-layer { display: none; }
+}
+
+/* ==================== 星露谷引擎样式 ==================== */
+.engine-core-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin: 12px auto;
+  max-width: 400px;
+  padding: 10px 12px;
+  background: var(--sv-wood-base);
+  border: 3px solid var(--sv-border);
+  border-radius: 8px;
+}
+
+.engine-status {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.engine-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.engine-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sv-bar-wrapper {
+  background-color: var(--sv-bar-bg);
+  border: 2px solid var(--sv-border);
+  height: 16px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.sv-bar-fill {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.sv-fuel .sv-bar-fill {
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--sv-energy-green) 0%,
+    var(--sv-energy-green) 60%,
+    var(--sv-energy-dark) 60%,
+    var(--sv-energy-dark) 100%
+  );
+}
+
+.sv-heat .sv-bar-fill {
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--sv-heat-red) 0%,
+    var(--sv-heat-red) 60%,
+    var(--sv-heat-dark) 60%,
+    var(--sv-heat-dark) 100%
+  );
+}
+
+.engine-sprite {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #7b7b7b 25%, #5a5a5a 25%, #5a5a5a 50%, #7b7b7b 50%, #7b7b7b 75%, #5a5a5a 75%, #5a5a5a 100%);
+  background-size: 8px 8px;
+  border: 3px solid var(--sv-border);
+  border-radius: 4px;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+}
+
+.engine-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  background: radial-gradient(circle, var(--sv-coin-gold) 0%, var(--sv-coin-shadow) 70%);
+  border-radius: 50%;
+  border: 2px solid var(--sv-border);
+  box-shadow: 0 0 8px var(--sv-coin-gold);
+  animation: sv-pulse 2s infinite;
+}
+
+@keyframes sv-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+.engine-status-text {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.sv-bar-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  margin-bottom: 2px;
+  color: var(--sv-text-main);
+}

@@ -1,4 +1,4 @@
-import { SCHEMA_VERSION, db, memoryCache, actionStack, FSRS_W, DEFAULT_FSRS_W, saveFSRSWeights, collectReviewLogs, evaluateLogLoss, gradientDescentOptimization, shuffle, migrateData } from '../core.js';
+import { SCHEMA_VERSION, db, memoryCache, actionStack, FSRS_W, DEFAULT_FSRS_W, saveFSRSWeights, collectReviewLogs, evaluateLogLoss, shuffle, migrateData } from '../core.js';
 import { CONFIG } from '../config.js';
 import { UI } from '../ui.js';
 

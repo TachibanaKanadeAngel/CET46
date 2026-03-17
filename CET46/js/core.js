@@ -7,7 +7,13 @@ import {
   MIN_EF,
   MAX_EF,
   loadFSRSWeights,
-  saveFSRSWeights
+  saveFSRSWeights,
+  shuffle,
+  updateFSRS,
+  calculateFSRSInterval,
+  applyFuzz,
+  calculateLevenshtein,
+  escapeHTML
 } from './fsrs.js';
 import {
   memoryCache,
@@ -250,5 +256,11 @@ export {
   getPersonalizedCircadianFactor,
   collectReviewLogs,
   migrateData,
-  migrateSM2ToFSRS
+  migrateSM2ToFSRS,
+  shuffle,
+  updateFSRS,
+  calculateFSRSInterval,
+  applyFuzz,
+  calculateLevenshtein,
+  escapeHTML
 };

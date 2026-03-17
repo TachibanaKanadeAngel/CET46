@@ -1,4 +1,4 @@
-import { getMemoryCache } from '../store.js';
+import { getMemoryCache, getWrongWords } from '../core.js';
 
 const BASE_GRID_SIZE = 9;
 const MIN_CONSECUTIVE = 50;

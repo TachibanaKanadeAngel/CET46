@@ -2,53 +2,76 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  root: '.',
   build: {
-    target: 'esnext',
-    outDir: 'dist',
-    cssCodeSplit: false,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    },
     rollupOptions: {
-      input: {
-        main: 'index.html'
-      },
       output: {
-        manualChunks: undefined,
-        entryFileNames: 'js/app.[hash].js',
-        chunkFileNames: 'js/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash].[ext]'
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+          if (id.includes('features/minigame')) {
+            return 'minigame';
+          }
+          if (id.includes('particle-system') || id.includes('engine-visualizer')) {
+            return 'visual-fx';
+          }
+          if (id.includes('workers/')) {
+            return 'workers';
+          }
+        }
       }
     },
-    reportCompressedSize: true,
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 500
   },
   plugins: [
     VitePWA({
-      strategies: 'injectManifest',
-      srcDir: '.',
-      filename: 'sw.js',
-      injectManifest: {
-        globPatterns: ['**/*.{html,js,css,svg,json,ico}']
+      registerType: 'autoUpdate',
+      includeAssets: ['icons/*.svg'],
+      manifest: {
+        name: 'CET46 科学记忆引擎 Pro 1.0',
+        short_name: 'CET46 引擎',
+        description: '基于 FSRS 4.5 算法的科学记忆系统，支持 CET-4/6 词汇学习与多设备同步',
+        theme_color: '#e2a053',
+        background_color: '#f3c951',
+        display: 'standalone'
       },
-      manifest: false
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'gstatic-fonts-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          }
+        ]
+      }
     })
   ],
   server: {
     port: 3000,
-    open: true,
-    cors: true
-  },
-  preview: {
-    port: 4173,
     open: true
-  },
-  optimizeDeps: {
-    include: []
   }
 });

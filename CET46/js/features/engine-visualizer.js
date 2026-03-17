@@ -51,12 +51,14 @@ export class MemoryEngineFSM {
   }
 
   initListeners() {
-    subscribeToStore('progress', (data) => {
-      this.handleAction(data);
-    });
-    
-    subscribeToStore('wrongWords', (data) => {
-      this.handleMistake(data);
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      const action = btn.dataset.action;
+      if (action === 'mark-known') this.handleAction(4);
+      if (action === 'mark-unknown') this.handleAction(1);
+      if (action === 'review-known') this.handleAction(4);
+      if (action === 'review-unknown') this.handleAction(1);
     });
     
     setInterval(() => {
@@ -64,13 +66,13 @@ export class MemoryEngineFSM {
     }, 5000);
   }
 
-  handleAction(data) {
-    if (data && (data.actionType === 'know' || data.actionType === 'easy' || data.quality >= 3)) {
+  handleAction(quality) {
+    if (quality >= 3) {
       this.coal = Math.min(100, this.coal + 5);
       this.heat = Math.max(0, this.heat - 2);
       this.reviewCount++;
       this.createParticle();
-    } else if (data && data.quality < 3) {
+    } else {
       this.heat = Math.min(100, this.heat + 8);
       this.coal = Math.max(0, this.coal - 2);
       this.errorCount++;
@@ -78,16 +80,6 @@ export class MemoryEngineFSM {
     
     this.evaluateState();
     this.saveState();
-  }
-
-  handleMistake(data) {
-    if (data && data.action === 'add') {
-      this.heat = Math.min(100, this.heat + 15);
-      this.coal = Math.max(0, this.coal - 2);
-      this.errorCount++;
-      this.evaluateState();
-      this.saveState();
-    }
   }
 
   passiveHeatDecay() {
@@ -194,7 +186,7 @@ export class MemoryEngineFSM {
   }
 
   createParticle() {
-    const particleContainer = document.querySelector('.particle-container');
+    const particleContainer = document.querySelector('.particle-layer');
     if (!particleContainer) return;
     
     const particle = document.createElement('div');
@@ -211,7 +203,7 @@ export class MemoryEngineFSM {
   }
 
   createSparkParticle() {
-    const particleContainer = document.querySelector('.particle-container');
+    const particleContainer = document.querySelector('.particle-layer');
     if (!particleContainer) return;
     
     const spark = document.createElement('div');
