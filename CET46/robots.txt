@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://cet46.app/sitemap.xml
-
-Crawl-delay: 1
