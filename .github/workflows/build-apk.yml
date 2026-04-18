@@ -1,0 +1,78 @@
+name: Build APK Release
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build application
+      run: npm run build
+      
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Install Capacitor
+      run: npm install @capacitor/cli @capacitor/core @capacitor/android
+      
+    - name: Initialize Capacitor
+      run: npx cap init CET46Pro com.cet46.app --web-dir dist --npm-client npm
+      
+    - name: Add Android platform
+      run: npx cap add android
+      
+    - name: Sync Android
+      run: npx cap sync android
+      
+    - name: Build APK
+      run: |
+        cd android
+        ./gradlew assembleDebug
+        
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: CET46-Android-APK
+        path: android/app/build/outputs/apk/debug/app-debug.apk
+        
+    - name: Create Release
+      if: github.event_name == 'push'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: android/app/build/outputs/apk/debug/app-debug.apk
+        tag_name: apk-v${{ github.run_number }}
+        name: CET46 Android APK v${{ github.run_number }}
+        body: |
+          ## Android APK 版本
+          
+          ### 安装说明
+          1. 下载 `app-debug.apk` 文件
+          2. 在 Android 设备上允许"安装未知来源应用"
+          3. 点击 APK 文件进行安装
+          
+          ### 注意事项
+          - 这是调试版本，适合测试使用
+          - 如需发布到应用商店，需要配置签名密钥
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
