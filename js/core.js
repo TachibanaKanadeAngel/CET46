@@ -8,13 +8,12 @@ import {
   MAX_EF,
   loadFSRSWeights,
   saveFSRSWeights,
-  shuffle,
   updateFSRS,
   calculateFSRSInterval,
   applyFuzz,
-  calculateLevenshtein,
-  escapeHTML
+  calculateLevenshtein
 } from './fsrs.js';
+import { shuffle, escapeHTML } from './utils.js';
 import {
   memoryCache,
   getMemoryCache,
@@ -36,7 +35,7 @@ const ACTION_STACK_MAX = CONFIG.MAX_ACTION_STACK;
 const CIRCADIAN_MIN_SAMPLES = CONFIG.CIRCADIAN_MIN_SAMPLES;
 const SCHEMA_VERSION = CONFIG.SCHEMA_VERSION;
 
-let actionStack = [];
+const actionStack = [];
 
 async function pushAction(wordId, prevState) {
   const action = { wordId, state: JSON.parse(JSON.stringify(prevState)), timestamp: Date.now() };
@@ -56,6 +55,12 @@ async function pushAction(wordId, prevState) {
   }
   
   console.log(`📋 操作栈：${actionStack.length}/${ACTION_STACK_MAX}`);
+}
+
+function restoreActionStack(actions) {
+  actionStack.length = 0;
+  actionStack.push(...actions);
+  console.log(`📋 ActionStack restored: ${actions.length} actions`);
 }
 
 async function undoLastAction() {
@@ -83,95 +88,68 @@ async function undoLastAction() {
 }
 
 function getData() {
-  return memoryCache.progress;
+  if (memoryCache.progress && typeof memoryCache.progress.toObject === 'function') {
+    return memoryCache.progress.toObject();
+  }
+  return memoryCache.progress || {};
 }
 
 function saveData(data) {
-  memoryCache.progress = data;
+  if (memoryCache.progress && typeof memoryCache.progress.fromObject === 'function') {
+    memoryCache.progress.fromObject(data);
+  } else {
+    memoryCache.progress = data;
+  }
 }
 
 function getWordData(id) {
-  const raw = memoryCache.progress[id];
+  let raw;
+  if (memoryCache.progress && typeof memoryCache.progress.get === 'function') {
+    raw = memoryCache.progress.get(id);
+  } else {
+    raw = memoryCache.progress[id];
+  }
+
   const migrated = raw ? migrateSM2ToFSRS(raw) : null;
-  
-  return migrated || { 
-    status: 'new', 
-    level: 0, 
-    nextReview: 0, 
-    lastStudy: 0, 
-    ef: DEFAULT_EF, 
+
+  return migrated || {
+    status: 'new',
+    level: 0,
+    nextReview: 0,
+    lastStudy: 0,
+    ef: DEFAULT_EF,
     reviewCount: 0,
     difficulty: DEFAULT_FSRS_W[1],
     stability: DEFAULT_FSRS_W[0]
   };
 }
 
-let writeQueue = [];
-let isWriting = false;
-
 async function setWordData(id, wd) {
-  const previousState = { ...memoryCache.progress[id] };
-  
+  let previousState;
+  if (memoryCache.progress && typeof memoryCache.progress.get === 'function') {
+    previousState = { ...memoryCache.progress.get(id) };
+  } else {
+    previousState = { ...(memoryCache.progress[id] || {}) };
+  }
+
   wd.isDirty = true;
   wd.mtime = Date.now();
-  
-  memoryCache.progress[id] = wd;
-  
-  await pushAction(id, previousState);
-  
-  return new Promise((resolve, reject) => {
-    writeQueue.push({
-      id,
-      data: wd,
-      resolve,
-      reject,
-      timestamp: Date.now()
-    });
-    
-    if (writeQueue.length >= 5 || !isWriting) {
-      processWriteQueue();
-    }
-    
-    setTimeout(() => {
-      if (writeQueue.find(item => item.id === id)) {
-        processWriteQueue();
-      }
-    }, 100);
-  });
-}
 
-async function processWriteQueue() {
-  if (isWriting || writeQueue.length === 0) return;
-  
-  isWriting = true;
-  const batch = writeQueue.splice(0, 5);
-  
-  try {
-    if (db.instance) {
-      const tx = db.instance.transaction('progress', 'readwrite');
-      const store = tx.objectStore('progress');
-      
-      batch.forEach(item => {
-        store.put({ id: item.id, ...item.data });
-      });
-      
-      await new Promise((resolve, reject) => {
-        tx.oncomplete = resolve;
-        tx.onerror = () => reject(new Error('Transaction failed'));
-      });
-    }
-    
-    batch.forEach(item => item.resolve());
-  } catch (err) {
-    console.error('批量写入失败，回滚到队列:', err);
-    writeQueue.unshift(...batch);
-    batch.forEach(item => item.reject(err));
-  } finally {
-    isWriting = false;
-    if (writeQueue.length > 0) {
-      setTimeout(processWriteQueue, 50);
-    }
+  if (memoryCache.progress && typeof memoryCache.progress.set === 'function') {
+    memoryCache.progress.set(id, wd);
+  } else {
+    memoryCache.progress[id] = wd;
   }
+
+  await pushAction(id, previousState);
+
+  if (db.instance) {
+    db.save('progress', { id: parseInt(id), ...wd }).catch(err => {
+      console.error(`单词 ${id} 持久化失败:`, err);
+    });
+  }
+
+  return wd;
 }
 
 function markWordAsDeleted(id) {
@@ -309,6 +287,7 @@ export {
   deleteWordData,
   pushAction,
   undoLastAction,
+  restoreActionStack,
   getData,
   saveData,
   getWordData,

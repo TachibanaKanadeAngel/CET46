@@ -1,4 +1,4 @@
-import { CONFIG, SEMANTIC_CLUSTERS, CONFUSING_PAIRS } from './config.js';
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿import { CONFIG, SEMANTIC_CLUSTERS, CONFUSING_PAIRS } from './config.js';
 import { DEFAULT_WORDS } from './data/default_vocab.js';
 import { AppState, ReactiveAppState, watch, computed } from './state.js';
 import { performanceMonitor } from './utils/performance-monitor.js';
@@ -6,48 +6,338 @@ import { pwaWidgets } from './widgets/pwa-widgets.js';
 import { particleSystem } from './utils/particle-system.js';
 
 import {
-  db, FSRS_W, DEFAULT_FSRS_W, DEFAULT_EF, MIN_EF, MAX_EF,
-  ACTION_STACK_MAX, CIRCADIAN_MIN_SAMPLES, SCHEMA_VERSION,
+  db, FSRS_W, MIN_EF, MAX_EF,
   memoryCache, actionStack,
-  loadFSRSWeights, saveFSRSWeights,
-  loadFromIndexedDB, getWordDataSync,
-  getPersonalizedCircadianFactor, pushAction, undoLastAction,
-  getData, saveData, getWordData, setWordData, markWordAsDeleted, getWordStatus,
-  getWrongWords, saveWrongWords, addWrongWord, removeWrongWord,
-  getHeatmap, saveHeatmap, recordHeatmap,
-  shuffle, updateFSRS, calculateFSRSInterval, applyFuzz
+  loadFromIndexedDB,
+  getPersonalizedCircadianFactor, pushAction, undoLastAction, restoreActionStack,
+  getData, getWordData, setWordData, getWordStatus,
+  getWrongWords, addWrongWord, removeWrongWord,
+  getHeatmap, recordHeatmap,
+  shuffle, updateFSRS, calculateFSRSInterval
 } from './core.js';
 
-
-
 import {
-  subscribeToStore, getMemoryCache
-} from './store.js';
-
-import {
-  Security, asyncCrypto,
-  webdavConfig, loadWebDAVConfig, decryptWebDAVCredentials,
-  saveWebDAVConfig, testWebDAVConnection,
-  generateVectorClock, compareVectorClocks, mergePropertyAware, mergeLocalAndCloud,
-  syncToWebDAV, syncFromWebDAV,
-  exportEncryptionKey, updateWebDAVStatus
+  webdavConfig, loadWebDAVConfig,
+  saveWebDAVConfig,
+  mergeLocalAndCloud,
+  syncToWebDAV, syncFromWebDAV
 } from './sync.js';
-
-import { Network } from './network.js';
 
 import {
   UI, playTone, fireConfetti, speak, setSafeWordHeader,
-  generateCloze, initClozeMode, toggleTheme, initTheme,
+  toggleTheme, initTheme,
   showLoadingOverlay, updateLoadingProgress,
-  renderAlgorithmTransparency, createAlgorithmHeatmap,
-  renderEFDisplay, Skeleton, THEME_KEY
+  Skeleton
 } from './ui.js';
 
-import { StudyFeature } from './features/study.js';
+import { StudyFeature, INITIAL_STUDY_EMPTY_STATE } from './features/study.js';
 import { ReviewFeature } from './features/review.js';
 import { SpellingFeature } from './features/spelling.js';
 import { miniGame } from './features/minigame.js';
 import { engineVisualizer } from './features/engine-visualizer.js';
+
+// 检测是否运行在 file:// 协议下
+const isFileProtocol = () => {
+  return window.location.protocol === 'file:';
+};
+
+/**
+ * @param {string} str
+ * @returns {string}
+ */
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function getDisplayMeaning(word) {
+  return word?.meaning || word?.translation || '';
+}
+
+const INITIAL_SUBTITLE_TEXT = 'FSRS 4.5 算法 · 本地记忆同步';
+const CORRUPTED_PLACEHOLDER_PATTERN = /(?:\?{2,}|锟斤拷|�)/;
+const CORRUPTED_GARBLED_PATTERN = /(?:瀹|鐨|鍜|搴|淇|绛|瑙|濂|範|淓|闂|銆|榛|蹇|鎴|鍚|涓|浠|妯|鍓|暱)/;
+
+function hasCorruptedPlaceholderText(value) {
+  return !value || CORRUPTED_PLACEHOLDER_PATTERN.test(value.trim()) || CORRUPTED_GARBLED_PATTERN.test(value.trim());
+}
+
+function repairInitialPlaceholderText() {
+  const subtitleEl = document.querySelector('.engine-header .subtitle');
+  const titleEl = document.querySelector('.engine-header h1');
+  const wordEl = document.getElementById('study-word');
+  const meaningEl = document.getElementById('study-meaning');
+  const pronEl = document.getElementById('study-pron');
+  const exampleEl = document.getElementById('study-example');
+  const startBtn = document.getElementById('start-btn');
+  const soundBtn = document.getElementById('study-sound-btn');
+
+  document.title = 'CET46 科学记忆引擎 Pro v1.3.2';
+
+  if (titleEl && hasCorruptedPlaceholderText(titleEl.textContent || '')) {
+    titleEl.textContent = 'CET46 科学记忆引擎 Pro v1.3.2';
+  }
+
+  if (subtitleEl && hasCorruptedPlaceholderText(subtitleEl.textContent || '')) {
+    subtitleEl.textContent = INITIAL_SUBTITLE_TEXT;
+  }
+
+  if (wordEl && hasCorruptedPlaceholderText(wordEl.textContent || '')) {
+    wordEl.textContent = INITIAL_STUDY_EMPTY_STATE.word;
+  }
+
+  if (meaningEl && hasCorruptedPlaceholderText(meaningEl.textContent || '')) {
+    meaningEl.textContent = INITIAL_STUDY_EMPTY_STATE.meaning;
+  }
+
+  if (pronEl && hasCorruptedPlaceholderText(pronEl.textContent || '')) {
+    pronEl.textContent = INITIAL_STUDY_EMPTY_STATE.pronunciation;
+  }
+
+  if (exampleEl && hasCorruptedPlaceholderText(exampleEl.textContent || '')) {
+    exampleEl.textContent = INITIAL_STUDY_EMPTY_STATE.example;
+  }
+
+  if (startBtn && hasCorruptedPlaceholderText(startBtn.textContent || '')) {
+    startBtn.textContent = '开始学习';
+    startBtn.setAttribute('aria-label', '开始学习');
+  }
+
+  if (soundBtn && hasCorruptedPlaceholderText(soundBtn.textContent || '')) {
+    soundBtn.textContent = '发音';
+    soundBtn.setAttribute('title', '发音');
+    soundBtn.setAttribute('aria-label', '播放单词发音');
+  }
+}
+
+function setText(selector, text) {
+  const el = document.querySelector(selector);
+  if (el) el.textContent = text;
+}
+
+function setHtml(selector, html) {
+  const el = document.querySelector(selector);
+  if (el) el.innerHTML = html;
+}
+
+function setInputText(selector, { placeholder, ariaLabel, title, value } = {}) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  if (placeholder !== undefined) el.setAttribute('placeholder', placeholder);
+  if (ariaLabel !== undefined) el.setAttribute('aria-label', ariaLabel);
+  if (title !== undefined) el.setAttribute('title', title);
+  if (value !== undefined && !el.value) el.value = value;
+}
+
+function restoreTextIfCorrupted(selector, text) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  if (hasCorruptedPlaceholderText(el.textContent || '')) {
+    el.textContent = text;
+  }
+}
+
+function restoreHtmlIfCorrupted(selector, html) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  if (hasCorruptedPlaceholderText(el.textContent || '')) {
+    el.innerHTML = html;
+  }
+}
+
+function setSelectOptions(selector, options) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  const currentValue = el.value;
+  el.innerHTML = options
+    .map(({ value, label }) => `<option value="${escapeHtml(String(value))}">${escapeHtml(label)}</option>`)
+    .join('');
+  if (options.some(option => option.value === currentValue)) {
+    el.value = currentValue;
+  }
+}
+
+function repairVisibleUIText() {
+  repairInitialPlaceholderText();
+
+  setText('.engine-header h1', 'CET46 科学记忆引擎 Pro v1.3.2');
+  setText('.engine-header .subtitle', INITIAL_SUBTITLE_TEXT);
+  setText('#engine-fuel-label', '燃料 20%');
+  setText('#engine-heat-label', '温度 0%');
+  setText('#engine-status-text', '引擎待机中');
+
+  setText('[data-tab="study"] .tab-label', '学习');
+  setText('[data-tab="review"] .tab-label', '复习');
+  setText('[data-tab="wrong"] .tab-label', '错题');
+  setText('[data-tab="stats"] .tab-label', '统计');
+  setText('[data-tab="list"] .tab-label', '词库');
+
+  setInputText('#study-level', { ariaLabel: '选择学习范围' });
+  setSelectOptions('#study-level', [
+    { value: 'all', label: '全部词库' },
+    { value: 'CET4', label: 'CET-4' },
+    { value: 'CET6', label: 'CET-6' }
+  ]);
+  setText('label[for="study-level"]', '选择学习范围');
+
+  setText('#study-sound-btn', '发音');
+  setInputText('#study-sound-btn', { ariaLabel: '播放发音', title: '播放发音' });
+  setText('#save-mnemonic-btn', '保存联想');
+  setText('.flip-hint.card-hint', '点击卡片或按空格键查看释义');
+  setHtml('#retention-display', '记忆留存: <strong id="retention-value">--</strong>');
+  setText('#btn-unknown', '不认识');
+  setText('#btn-spell', '拼写');
+  setText('#btn-known', '认识');
+  setInputText('#btn-unknown', { ariaLabel: '标记为不认识' });
+  setInputText('#btn-spell', { ariaLabel: '进入拼写模式' });
+  setInputText('#btn-known', { ariaLabel: '标记为认识' });
+  setText('#btn-cloze', '完形填空：关闭');
+  setHtml('#study-estimate', '预计完成：<strong id="study-est-date">--</strong>');
+  setText('#progress-text', '学习进度: 0 / 0 (0%)');
+  setInputText('#start-btn', { ariaLabel: '开始学习' });
+  setText('#start-btn', '开始学习');
+  setText('#reset-progress-btn span:last-child', '重置进度');
+  setText('#undo-btn span:last-child', '撤销');
+
+  const shortcutChips = document.querySelectorAll('.controls-row .action-chip[aria-hidden="true"]');
+  if (shortcutChips.length >= 4) {
+    shortcutChips[0].innerHTML = '<kbd>←</kbd><span>不认识</span>';
+    shortcutChips[1].innerHTML = '<kbd>空格</kbd><span>翻转</span>';
+    shortcutChips[2].innerHTML = '<kbd>→</kbd><span>认识</span>';
+    shortcutChips[3].innerHTML = '<kbd>S</kbd><span>拼写</span>';
+  }
+
+  setText('#review-count + .review-stat-label', '待复习');
+  setText('#review-overdue + .review-stat-label', '已过期');
+  setText('#review-sound-btn', '发音');
+  setInputText('#review-sound-btn', { ariaLabel: '播放发音', title: '播放发音' });
+  setText('#review-word', '暂无待复习单词');
+  setHtml('#review-retention-display', '记忆留存: <strong id="review-retention-value">--</strong>');
+  setText('#btn-review-unknown', '还是不会');
+  setText('#btn-review-known', '记住了');
+
+  setText('#wrong-count + .review-stat-label', '错词总数');
+  setText('#wrong-total-errors + .review-stat-label', '累计错误');
+  setText('#wrong-study-btn', '专项复习错题');
+  setHtml('#error-analysis-panel > div:first-child', '错误病理分析');
+
+  setText('.heatmap-container .heatmap-title span:first-child', '学习热力图');
+  setText('#heatmap-streak', '连续 0 天');
+  const secondHeatmapTitle = document.querySelectorAll('.heatmap-container .heatmap-title')[1];
+  if (secondHeatmapTitle) {
+    secondHeatmapTitle.children[0].textContent = '未来 7 天复习工作量预测';
+  }
+  setText('#total-upcoming', '总计：0 词');
+  setText('#stats-total-words + .review-stat-label', '总学习词数');
+  setText('#stats-avg-ef + .review-stat-label', '平均 EF');
+  setText('#stats-days + .review-stat-label', '学习天数');
+  const statsEstLabel = document.querySelector('#stats-est-date + .review-stat-label');
+  if (statsEstLabel) statsEstLabel.textContent = '预计达成日期';
+
+  const dataPanelTitles = document.querySelectorAll('.data-panel h3');
+  if (dataPanelTitles[0]) dataPanelTitles[0].textContent = 'WebDAV 云同步';
+  if (dataPanelTitles[1]) dataPanelTitles[1].textContent = '算法实验室';
+  if (dataPanelTitles[2]) dataPanelTitles[2].textContent = '本地数据管理';
+
+  setInputText('#webdav-url', { placeholder: 'WebDAV 服务器地址' });
+  setInputText('#webdav-master-key', { placeholder: '主密码（用于加密凭证）' });
+  setInputText('#webdav-username', { placeholder: '用户名' });
+  setInputText('#webdav-password', { placeholder: '密码' });
+  const autoSyncLabel = document.querySelector('label[for="webdav-auto-sync"]');
+  if (autoSyncLabel) autoSyncLabel.textContent = '启动时自动增量同步';
+  setText('#save-webdav-btn', '保存配置');
+  setText('#test-webdav-btn', '测试连接');
+  setText('#sync-up-btn', '同步到云端');
+  setText('#sync-down-btn', '从云端恢复');
+  setText('#toggle-config-btn', '配置');
+  setText('#export-key-btn', '导出凭证');
+  setText('#webdav-status', isFileProtocol() ? '本地模式下部分云同步功能可能不可用' : '');
+
+  const fsrsTuning = document.querySelector('.fsrs-tuning');
+  if (fsrsTuning) {
+    const topRow = fsrsTuning.querySelector('div > span');
+    if (topRow) topRow.textContent = '当前模型 Log-Loss:';
+    const targetRow = fsrsTuning.querySelector('div[style*="align-items: center"] span');
+    if (targetRow) targetRow.textContent = '目标留存率';
+    const hint = fsrsTuning.querySelector('div[style*="font-size: 0.75rem; color: var(--gray); margin-top: 0.5rem;"]');
+    if (hint) hint.textContent = '留存率越高，复习越频繁，记忆越牢固';
+  }
+  setText('#train-fsrs-btn', '基于历史数据训练');
+  setText('#reset-fsrs-btn', '恢复默认权重');
+  setText('#export-btn', '导出进度');
+  setText('#import-btn', '导入进度');
+  setText('#load-vocab-btn', '加载词库');
+
+  setInputText('#search-input', { placeholder: '搜索词库...', ariaLabel: '搜索词库' });
+  setText('label[for="search-input"]', '搜索词库');
+  setText('label[for="filter-level"]', '筛选词库');
+  setText('label[for="filter-status"]', '筛选状态');
+  setSelectOptions('#filter-level', [
+    { value: 'all', label: '全部词库' },
+    { value: 'CET4', label: 'CET-4' },
+    { value: 'CET6', label: 'CET-6' }
+  ]);
+  setSelectOptions('#filter-status', [
+    { value: 'all', label: '全部状态' },
+    { value: 'new', label: '未学习' },
+    { value: 'review', label: '待复习' },
+    { value: 'mastered', label: '已掌握' }
+  ]);
+  setText('#btn-apply-filter', '应用筛选');
+
+  setText('#spelling-title', '拼写挑战');
+  setText('.spelling-hint', '根据提示拼写单词');
+  setText('#spelling-sound', '发音');
+  setText('#hint-btn', '提示');
+  setText('#hint-level-display', '提示等级: 0');
+  setText('#spelling-cancel-btn', '取消');
+  setText('#spelling-submit', '提交');
+  setText('#keep-local', '保留本地');
+  setText('#use-cloud', '使用云端');
+}
+
+function repairRuntimeCorruptedUIText() {
+  restoreTextIfCorrupted('#engine-status-text', '当前状态正常，可以开始学习');
+  restoreTextIfCorrupted('#engine-fuel-label', '燃料 20%');
+  restoreTextIfCorrupted('#engine-heat-label', '温度 0%');
+  restoreTextIfCorrupted('#stats-est-date', '继续学习后生成预测');
+  restoreTextIfCorrupted('#fsrs-fit-score', '--');
+  restoreTextIfCorrupted('#webdav-status', isFileProtocol() ? '本地模式下部分云同步功能可能不可用' : '当前状态正常');
+  restoreTextIfCorrupted('#study-estimate', '预计完成：--');
+  restoreTextIfCorrupted('#review-word', '暂无待复习单词');
+  restoreTextIfCorrupted('#retention-value', '--');
+  restoreTextIfCorrupted('#review-retention-value', '--');
+
+  const semanticWarning = document.getElementById('semantic-warning');
+  if (semanticWarning && hasCorruptedPlaceholderText(semanticWarning.textContent || '')) {
+    semanticWarning.innerHTML = '<strong>当前状态正常，可以开始学习</strong>';
+  }
+}
+
+let uiRepairObserver = null;
+
+function ensureUIRepairObserver() {
+  // Recovery mode: keep the runtime text repair one-shot only.
+  // Observing the whole document and then mutating visible text can
+  // easily retrigger itself and freeze the file:// build.
+  if (uiRepairObserver || typeof MutationObserver === 'undefined') return;
+  return;
+}
+
+// 全局错误捕获
+window.addEventListener('error', (e) => {
+  console.error('[Global Error]', e.message, e.filename, e.lineno);
+  if (e.error) {
+    UI.toast && UI.toast('发生错误，请刷新页面', 'error');
+  }
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+  console.error('[Unhandled Promise Rejection]', e.reason);
+  UI.toast && UI.toast('操作出错，请刷新页面重试', 'error');
+  e.preventDefault();
+});
 let SettingsFeature = null;
 let WebDAVFeature = null;
 let settingsFeatureLoading = false;
@@ -155,10 +445,10 @@ const WebVitals = {
       rating = 'needs-improvement';
     }
     
-    console.log(`📊 Web Vitals [${name}]: ${value.toFixed(2)}ms (${rating})`);
+    console.log(`Web Vitals [${name}]: ${value.toFixed(2)}ms (${rating})`);
     
     if (rating === 'poor') {
-      console.warn(`⚠️ ${name} 性能指标较差，建议优化`);
+      console.warn(`性能指标 ${name} 较差，建议继续优化`);
     }
   },
   
@@ -191,6 +481,12 @@ const WorkerPool = {
   maxWorkers: 3,
   
   async getWorker(name, url) {
+    // file:// 协议下无法创建 Worker，返回 null
+    if (isFileProtocol()) {
+      console.log(`[WorkerPool] file:// 协议下无法创建 Worker，跳过 ${name}`);
+      return null;
+    }
+    
     if (this.workers.has(name)) {
       return this.workers.get(name);
     }
@@ -200,10 +496,15 @@ const WorkerPool = {
       this.terminateWorker(oldestKey);
     }
     
-    const worker = new Worker(url, { type: 'module' });
-    this.workers.set(name, worker);
-    console.log(`🔧 WorkerPool: 创建 ${name} Worker (当前: ${this.workers.size}/${this.maxWorkers})`);
-    return worker;
+    try {
+      const worker = new Worker(url, { type: 'module' });
+      this.workers.set(name, worker);
+      console.log(`[WorkerPool] 创建 ${name} Worker (当前: ${this.workers.size}/${this.maxWorkers})`);
+      return worker;
+    } catch (e) {
+      console.error(`[WorkerPool] 创建 ${name} Worker 失败:`, e.message);
+      return null;
+    }
   },
   
   terminateWorker(name) {
@@ -211,14 +512,14 @@ const WorkerPool = {
     if (worker) {
       worker.terminate();
       this.workers.delete(name);
-      console.log(`🔧 WorkerPool: 终止 ${name} Worker`);
+      console.log(`[WorkerPool] 终止 ${name} Worker`);
     }
   },
   
   clearAll() {
     this.workers.forEach((worker, name) => {
       worker.terminate();
-      console.log(`🔧 WorkerPool: 清理 ${name} Worker`);
+      console.log(`[WorkerPool] 清理 ${name} Worker`);
     });
     this.workers.clear();
   },
@@ -245,7 +546,6 @@ async function loadSettingsFeature() {
   try {
     const module = await import('./features/settings.js');
     SettingsFeature = module.SettingsFeature;
-    console.log('📦 SettingsFeature 模块已动态加载');
     return SettingsFeature;
   } finally {
     settingsFeatureLoading = false;
@@ -265,7 +565,6 @@ async function loadWebDAVFeature() {
   try {
     const module = await import('./features/webdav.js');
     WebDAVFeature = module.WebDAVFeature;
-    console.log('📦 WebDAVFeature 模块已动态加载');
     return WebDAVFeature;
   } finally {
     webdavFeatureLoading = false;
@@ -277,27 +576,45 @@ let WORDS = [...DEFAULT_WORDS];
 let semanticGraphWorker = null;
 let semanticGraphCache = null;
 let semanticGraphBuilding = false;
+let semanticGraphCancelled = false;
+let semanticGraphTimerId = null;
 
 function initSemanticGraphWorker() {
   if (semanticGraphWorker) return;
   
-  semanticGraphWorker = new Worker(
-    new URL('./workers/semantic-worker.js', import.meta.url),
-    { type: 'module' }
-  );
+  // file:// 协议下无法创建 Worker，直接跳过
+  if (isFileProtocol()) {
+    console.log('[Semantic] file:// 协议下跳过 Worker，使用主线程处理');
+    return;
+  }
+  
+  try {
+    semanticGraphWorker = new Worker(
+      new URL('./workers/semantic-worker.js', import.meta.url),
+      { type: 'module' }
+    );
+  } catch (e) {
+    console.error('创建 Semantic Worker 失败:', e.message);
+    semanticGraphWorker = null;
+  }
 }
 
+/**
+ * @param {Array<{id: number, word: string, level: string}>} words
+ * @param {number} [threshold=2]
+ * @returns {Promise<Object|null>}
+ */
 async function buildSemanticGraphAsync(words, threshold = 2) {
   if (semanticGraphCache) return semanticGraphCache;
   if (semanticGraphBuilding) return null;
 
-  // 尝试从 IndexedDB 加载 BK-Tree 缓存
+  // 灏濊瘯浠?IndexedDB 鍔犺浇 BK-Tree 缂撳瓨
   let cachedBKTree = null;
   if (db.instance) {
     try {
       cachedBKTree = await db.getSerializedBKTree();
       if (cachedBKTree) {
-        console.log('BK-Tree 从 IndexedDB 缓存加载成功');
+        // BK-Tree 从 IndexedDB 缓存加载成功
       }
     } catch (e) {
       console.log('BK-Tree 缓存读取失败，将重新构建');
@@ -307,7 +624,28 @@ async function buildSemanticGraphAsync(words, threshold = 2) {
   semanticGraphBuilding = true;
   initSemanticGraphWorker();
 
+  if (semanticGraphCancelled) {
+    semanticGraphBuilding = false;
+    return Promise.resolve(null);
+  }
+
+  // 如果 worker 创建失败（如 file:// 协议），直接返回 null
+  if (!semanticGraphWorker) {
+    console.log('[Semantic] Worker 不可用，跳过语义图谱构建');
+    semanticGraphBuilding = false;
+    return Promise.resolve(null);
+  }
+
   return new Promise((resolve) => {
+    if (semanticGraphCancelled) {
+      if (semanticGraphWorker) {
+        semanticGraphWorker.terminate();
+        semanticGraphWorker = null;
+      }
+      semanticGraphBuilding = false;
+      resolve(null);
+      return;
+    }
     // 如果有缓存，直接发送给 Worker 加载
     if (cachedBKTree) {
       semanticGraphWorker.postMessage({ 
@@ -317,7 +655,7 @@ async function buildSemanticGraphAsync(words, threshold = 2) {
       });
     } else {
       // 否则发送构建指令
-      semanticGraphWorker.postMessage({ 
+      semanticGraphWorker.postMessage({
         words, 
         threshold,
         loadFromDB: true 
@@ -325,10 +663,17 @@ async function buildSemanticGraphAsync(words, threshold = 2) {
     }
 
     semanticGraphWorker.onmessage = async (e) => {
+      if (semanticGraphCancelled) {
+        semanticGraphWorker.terminate();
+        semanticGraphWorker = null;
+        semanticGraphBuilding = false;
+        resolve(null);
+        return;
+      }
       if (e.data.type === 'SAVE_TREE') {
         if (db.instance) {
           try {
-            // 同时保存到 IndexedDB 和 localStorage（兼容旧版）
+            // 鍚屾椂淇濆瓨鍒?IndexedDB 鍜?localStorage锛堝吋瀹规棫鐗堬級
             await db.saveSerializedBKTree(e.data.data);
             localStorage.setItem('cet46_semantic_bktree', e.data.data);
             console.log(`BK-Tree 已保存到 IndexedDB，单词数：${e.data.wordCount}`);
@@ -389,13 +734,32 @@ function findConfusingWords(word) {
   return [...new Set(confusing)];
 }
 
+/**
+ * @returns {Promise<void>}
+ */
 async function initSemanticGraphInBackground() {
   if (semanticGraphCache || semanticGraphBuilding) return;
-  setTimeout(() => {
-    buildSemanticGraphAsync(WORDS, 2).then(() => {
-      console.log('语义图谱构建完成');
-    });
-  }, 5000);
+  semanticGraphTimerId = setTimeout(() => {
+    if (!semanticGraphCancelled) {
+      buildSemanticGraphAsync(WORDS, 2);
+    }
+  }, CONSTANTS.SEMANTIC_GRAPH_DEFER_MS);
+}
+
+/**
+ * @returns {void}
+ */
+function cleanupSemanticGraph() {
+  semanticGraphCancelled = true;
+  if (semanticGraphTimerId) {
+    clearTimeout(semanticGraphTimerId);
+    semanticGraphTimerId = null;
+  }
+  if (semanticGraphWorker) {
+    semanticGraphWorker.terminate();
+    semanticGraphWorker = null;
+  }
+  semanticGraphBuilding = false;
 }
 
 function adjustForSemanticInterference(wordId, baseInterval) {
@@ -436,67 +800,106 @@ const vocabProcessor = {
   async processJSON(jsonStr, onProgress) {
     return new Promise((resolve, reject) => {
       if (this.processing) {
-        reject(new Error('已有处理任务在进行中'));
+        reject(new Error('宸叉湁澶勭悊浠诲姟鍦ㄨ繘琛屼腑'));
         return;
       }
       this.processing = true;
 
-      const worker = new Worker(
-        new URL('./workers/vocab-worker.js', import.meta.url),
-        { type: 'module' }
-      );
-
-      const handler = (event) => {
-        const { type, result, count, message } = event.data;
-
-        if (type === 'SUCCESS') {
+      // file:// 协议下无法创建 Worker，使用主线程处理
+      if (isFileProtocol()) {
+        console.log('[Vocab] file:// 协议下使用主线程处理词库 JSON');
+        try {
+          const data = JSON.parse(jsonStr);
+          const rawWords = Array.isArray(data) ? data : (data.words || []);
+          
+          const processed = rawWords.map((w, i) => ({
+            id: w.id || i + 1,
+            word: (w.word || '').trim(),
+            phonetic: w.phonetic || '',
+            meaning: w.meaning || '',
+            example: w.example || '',
+            level: w.level || 'CET4'
+          })).filter(w => w.word.length > 0);
+          
           this.processing = false;
-          worker.removeEventListener('message', handler);
           if (onProgress) onProgress(100);
-          worker.terminate();
-          resolve({ result, count });
-        } else if (type === 'ERROR') {
+          resolve({ result: processed, count: processed.length });
+        } catch (err) {
           this.processing = false;
-          worker.removeEventListener('message', handler);
-          worker.terminate();
-          reject(new Error(message));
+          reject(new Error('JSON 鏍煎紡瑙ｆ瀽澶辫触: ' + err.message));
         }
-      };
+        return;
+      }
 
-      worker.addEventListener('message', handler);
-      worker.postMessage({ type: 'PROCESS_JSON', payload: jsonStr });
-      if (onProgress) onProgress(10);
+      try {
+        const worker = new Worker(
+          new URL('./workers/vocab-worker.js', import.meta.url),
+          { type: 'module' }
+        );
+
+        const handler = (event) => {
+          const { type, result, count, message } = event.data;
+
+          if (type === 'SUCCESS') {
+            this.processing = false;
+            worker.removeEventListener('message', handler);
+            if (onProgress) onProgress(100);
+            worker.terminate();
+            resolve({ result, count });
+          } else if (type === 'ERROR') {
+            this.processing = false;
+            worker.removeEventListener('message', handler);
+            worker.terminate();
+            reject(new Error(message));
+          }
+        };
+
+        worker.addEventListener('message', handler);
+        worker.postMessage({ type: 'PROCESS_JSON', payload: jsonStr });
+        if (onProgress) onProgress(10);
+        
+      } catch (e) {
+        this.processing = false;
+        console.error('创建 Vocab Worker 失败:', e.message);
+        reject(e);
+      }
     });
   }
 };
 
+/**
+ * @param {Array<{word: string}>} words
+ * @returns {Promise<void>}
+ */
 async function prefetchAudioLibrary(words) {
-  console.log('📡 开始静默预缓存音频...');
-  const maxWords = 500;
+  const maxWords = CONSTANTS.AUDIO_PREFETCH_MAX;
   const wordsToPrefetch = words.slice(0, maxWords);
+  const CONCURRENCY = CONSTANTS.AUDIO_PREFETCH_CONCURRENCY;
+  const DELAY_BETWEEN_BATCHES = CONSTANTS.AUDIO_PREFETCH_BATCH_DELAY;
   
-  for (let i = 0; i < wordsToPrefetch.length; i++) {
-    const w = wordsToPrefetch[i];
-    if (w.word) {
-      const originalUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(w.word)}&type=2`;
-      
-      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+  for (let i = 0; i < wordsToPrefetch.length; i += CONCURRENCY) {
+    const batch = wordsToPrefetch.slice(i, i + CONCURRENCY);
+    const batchPromises = batch.map(w => {
+      if (w.word && navigator.serviceWorker && navigator.serviceWorker.controller) {
+        const originalUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(w.word)}&type=2`;
         navigator.serviceWorker.controller.postMessage({ type: 'CACHE_AUDIO', url: originalUrl });
       }
-      
-      if (i % 50 === 0) {
-        console.log(`📡 已预缓存 ${i} / ${maxWords} 个音频`);
-      }
-      
-      await new Promise(resolve => setTimeout(resolve, 100));
+      return Promise.resolve();
+    });
+    
+    await Promise.all(batchPromises);
+    
+    if (i % (10 * CONCURRENCY) === 0) {
+      const progress = Math.min(i + CONCURRENCY, maxWords);
+      console.log(`已预缓存 ${progress} / ${maxWords} 个音频`);
     }
+    
+    await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_BATCHES));
   }
-  
-  console.log('✅ 音频预缓存完成');
 }
 
 function saveMnemonic(wordId, mnemonic) {
-  const wd = getWordData(wordId);
+  const wd = { ...getWordData(wordId) };
   wd.mnemonic = mnemonic;
   setWordData(wordId, wd);
   
@@ -512,10 +915,20 @@ function getMnemonic(wordId) {
 
 const CONSTANTS = {
   OVERLOAD_THRESHOLD: 200,
-  MS_PER_DAY: 24 * 60 * 60 * 1000
+  MS_PER_DAY: 24 * 60 * 60 * 1000,
+  DEFAULT_STUDY_LIMIT: 20,
+  QUICK_REVIEW_LIMIT: 50,
+  AUDIO_PREFETCH_MAX: 500,
+  AUDIO_PREFETCH_CONCURRENCY: 10,
+  AUDIO_PREFETCH_BATCH_DELAY: 100,
+  SEMANTIC_GRAPH_DEFER_MS: 5000
 };
 
 function updateStats() {
+  if (!WORDS || WORDS.length === 0) {
+    console.error('[updateStats] WORDS 为空！这是一个严重问题！');
+  }
+  
   const data = getData();
   let newCount = 0, reviewCount = 0, masteredCount = 0;
   let todayReviewCount = 0;
@@ -551,15 +964,15 @@ function checkMemoryOverload(todayCount) {
 
       const title = document.createElement('div');
       title.style.cssText = 'font-weight: bold; font-size: 1.1rem;';
-      title.textContent = '⚠️ 记忆负载过高';
+      title.textContent = '记忆负载过高';
 
       const desc = document.createElement('div');
       desc.style.cssText = 'font-size: 0.9rem; margin-top: 0.3rem;';
-      desc.textContent = `今日待复习 ${todayCount} 词，建议先消灭积压`;
+      desc.textContent = `今日待复习 ${todayCount} 词，建议先消化积压内容`;
 
       const btn = document.createElement('button');
       btn.style.cssText = 'margin-top: 0.5rem; padding: 0.5rem 1rem; background: white; color: #e53e3e; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;';
-      btn.textContent = '🚀 进入快速回顾模式';
+      btn.textContent = '进入快速回顾';
       btn.addEventListener('click', enterQuickReviewMode);
 
       banner.append(title, desc, btn);
@@ -577,7 +990,7 @@ function enterQuickReviewMode() {
   const quickQueue = WORDS.filter(w => {
     const wd = data[w.id];
     return wd && wd.status === 'review' && wd.nextReviewDate === today;
-  }).slice(0, 50);
+  }).slice(0, CONSTANTS.QUICK_REVIEW_LIMIT);
 
   if (quickQueue.length === 0) {
     UI.toast('没有待复习单词', 'warning');
@@ -587,17 +1000,37 @@ function enterQuickReviewMode() {
   shuffle(quickQueue);
   
   StudyFeature.setWords(WORDS);
-  StudyFeature.startStudy('all', getData, memoryCache, db, { overrideQueue: quickQueue });
+  StudyFeature.startStudy('all', CONSTANTS.QUICK_REVIEW_LIMIT, getData, memoryCache, db, { overrideQueue: quickQueue });
   
   UI.toast(`快速回顾模式：${quickQueue.length} 个单词`, 'success');
 }
 
 function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+  console.log(`[switchTab] 切换到标签 ${tab}`);
 
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.getElementById(`view-${tab}`).classList.add('active');
+  const activeBtn = document.querySelector(`.tab-btn[data-tab="${tab}"], .tab-button[data-tab="${tab}"]`);
+  document.querySelectorAll('.tab-btn, .tab-button').forEach(btn => {
+    btn.classList.remove('active');
+    btn.setAttribute('aria-selected', 'false');
+  });
+
+  if (activeBtn) {
+    activeBtn.classList.add('active');
+    activeBtn.setAttribute('aria-selected', 'true');
+  } else {
+    console.error(`[switchTab] 未找到标签按钮 ${tab}`);
+  }
+
+  const targetView = document.getElementById(`view-${tab}`);
+  if (!targetView) {
+    console.error(`[switchTab] 未找到视图 view-${tab}`);
+    return;
+  }
+
+  document.querySelectorAll('.view').forEach(v => {
+    v.classList.remove('active');
+  });
+  targetView.classList.add('active');
 
   if (tab === 'review') {
     ReviewFeature.updateReview(getWordData, MIN_EF, MAX_EF, FSRS_W);
@@ -608,6 +1041,9 @@ function switchTab(tab) {
     renderHeatmap();
     renderStorageInfo();
   }
+
+  repairVisibleUIText();
+  repairRuntimeCorruptedUIText();
 }
 
 async function renderStorageInfo() {
@@ -631,7 +1067,7 @@ async function renderStorageInfo() {
     row.style.cssText = 'display: flex; justify-content: space-between; font-size: 0.75rem;';
 
     const label = document.createElement('span');
-    label.textContent = '📦 PWA 离线存储';
+    label.textContent = '当前 PWA 缓存资源占用';
 
     const value = document.createElement('span');
     value.textContent = `${usedMB}MB / ${totalMB}MB`;
@@ -648,6 +1084,12 @@ async function renderStorageInfo() {
     barContainer.appendChild(barFill);
     storageDiv.appendChild(row);
     storageDiv.appendChild(barContainer);
+    if (isFileProtocol()) {
+      const note = document.createElement('div');
+      note.style.cssText = 'margin-top: 6px; font-size: 0.75rem; color: var(--gray);';
+      note.textContent = '本地模式下部分云同步功能可能不可用';
+      storageDiv.appendChild(note);
+    }
     statusEl.appendChild(storageDiv);
   }
 }
@@ -678,7 +1120,7 @@ function renderHeatmap() {
 
     const cell = document.createElement('div');
     cell.className = `heatmap-cell level-${level}`;
-    cell.title = `${dateStr}: ${count}次`;
+    cell.title = `${dateStr}: ${count} 词`;
     fragment.appendChild(cell);
 
     if (count > 0) {
@@ -693,7 +1135,7 @@ function renderHeatmap() {
 
   grid.innerHTML = '';
   grid.appendChild(fragment);
-  document.getElementById('heatmap-streak').textContent = `🔥 连续 ${streak} 天`;
+  document.getElementById('heatmap-streak').textContent = `连续 ${streak} 天`;
 
   const totalWords = Object.keys(getData()).length;
   const allData = getData();
@@ -743,7 +1185,7 @@ function renderRetentionChart() {
   });
 
   const totalUpcoming = upcomingReviews.reduce((a, b) => a + b, 0);
-  document.getElementById('total-upcoming').textContent = `总计: ${totalUpcoming}词`;
+  document.getElementById('total-upcoming').textContent = `总计: ${totalUpcoming} 词`;
 
   const labels = ['今天', '+1天', '+2天', '+3天', '+4天', '+5天', '+6天'];
   const maxValue = Math.max(...upcomingReviews, 10);
@@ -797,7 +1239,7 @@ function updateProgressEstimation() {
   const remaining = WORDS.length - masteredCount;
 
   if (dates.length < 3 || masteredCount < 5) {
-    estElement.textContent = "学习几天后再来看";
+    estElement.textContent = '继续学习后生成预测';
     return;
   }
 
@@ -830,7 +1272,7 @@ function updateProgressEstimation() {
   const estDate = new Date();
   estDate.setDate(estDate.getDate() + daysToFinish);
 
-  estElement.innerHTML = `<strong>${estDate.getMonth() + 1}月${estDate.getDate()}日</strong> (${daysToFinish}天后)`;
+  estElement.innerHTML = `<strong>${estDate.getMonth() + 1} 月 ${estDate.getDate()} 日</strong>（${daysToFinish} 天后）`;
 }
 
 async function saveDailyProgressSnapshot() {
@@ -858,29 +1300,44 @@ async function saveDailyProgressSnapshot() {
 function getWrongWordsList() {
   const wrongWords = getWrongWords();
   const list = [];
-  for (const id in wrongWords) {
+  const entries = wrongWords && typeof wrongWords.entries === 'function'
+    ? wrongWords.entries()
+    : Object.entries(wrongWords || {});
+
+  for (const [id, wrongData] of entries) {
     const w = WORDS.find(word => word.id === parseInt(id));
     if (w) {
-      list.push({ ...w, wrongData: wrongWords[id] });
+      list.push({
+        ...w,
+        meaning: getDisplayMeaning(w) || getDisplayMeaning(wrongData),
+        wrongData
+      });
     }
   }
+
   return list.sort((a, b) => b.wrongData.count - a.wrongData.count);
 }
 
 function renderWrongList() {
   const wrongWords = getWrongWordsList();
   const container = document.getElementById('wrong-list');
+  if (!container) {
+    console.warn('[renderWrongList] wrong-list 容器不存在');
+    return;
+  }
 
   let totalErrors = 0;
   wrongWords.forEach(w => totalErrors += w.wrongData.count);
 
-  document.getElementById('wrong-count').textContent = wrongWords.length;
-  document.getElementById('wrong-total-errors').textContent = totalErrors;
+  const wrongCountEl = document.getElementById('wrong-count');
+  const wrongTotalErrorsEl = document.getElementById('wrong-total-errors');
+  if (wrongCountEl) wrongCountEl.textContent = wrongWords.length;
+  if (wrongTotalErrorsEl) wrongTotalErrorsEl.textContent = totalErrors;
 
   renderErrorAnalysis(wrongWords);
 
   if (wrongWords.length === 0) {
-    container.innerHTML = '<div class="empty-state"><div class="icon">🎉</div><p>太棒了！没有错题</p></div>';
+    container.innerHTML = '<div class="empty-state"><p>当前没有错题</p></div>';
     return;
   }
 
@@ -909,7 +1366,7 @@ function renderWrongList() {
     
     const meaningDiv = document.createElement('div');
     meaningDiv.className = 'list-item-meaning';
-    meaningDiv.textContent = w.meaning;
+    meaningDiv.textContent = getDisplayMeaning(w);
     
     leftDiv.appendChild(wordDiv);
     leftDiv.appendChild(pronDiv);
@@ -917,7 +1374,7 @@ function renderWrongList() {
     
     const badge = document.createElement('span');
     badge.className = 'badge badge-danger';
-    badge.textContent = `❌ ${w.wrongData.count}次`;
+    badge.textContent = `${w.wrongData.count} 次`;
     
     div.appendChild(leftDiv);
     div.appendChild(badge);
@@ -930,7 +1387,7 @@ function renderErrorAnalysis(wrongWords) {
   const container = document.getElementById('error-analysis-content');
   
   if (wrongWords.length === 0) {
-    container.innerHTML = '<div style="color: var(--success);">✅ 暂无错误数据</div>';
+    container.innerHTML = '<div style="color: var(--success);">暂无错误数据</div>';
     return;
   }
 
@@ -968,22 +1425,22 @@ function renderErrorAnalysis(wrongWords) {
   if (topSuffix && topSuffix[1] >= 2) {
     const div = document.createElement('div');
     div.style.cssText = 'margin-bottom: 0.5rem;';
-    div.innerHTML = `🏷️ <strong>后缀敏感:</strong> 你经常在 <code style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">-${topSuffix[0]}</code> 后缀的词上出错 (${topSuffix[1]}次)，建议专项练习该后缀词汇。`;
+    div.innerHTML = `后缀提示：<code style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">-${escapeHtml(String(topSuffix[0]))}</code> 出现较多（${topSuffix[1]} 次），建议集中记忆这一类词形。`;
     fragment.appendChild(div);
   }
 
   const maxLenType = Object.entries(lengthDistribution).sort((a, b) => b[1] - a[1])[0];
-  const lenLabels = { short: '短词(≤5字母)', medium: '中词(6-8字母)', long: '长词(≥9字母)' };
+  const lenLabels = { short: '短词（1-5 字母）', medium: '中等词（6-8 字母）', long: '长词（9 字母以上）' };
   if (maxLenType[1] >= 3) {
     const div = document.createElement('div');
     div.style.cssText = 'margin-bottom: 0.5rem;';
-    let text = `📏 <strong>长度特征:</strong> 错误集中在 <strong>${lenLabels[maxLenType[0]]}</strong> (${maxLenType[1]}个)，`;
+    let text = `长度分布：错误更集中在 <strong>${lenLabels[maxLenType[0]]}</strong>（${maxLenType[1]} 词）。`;
     if (maxLenType[0] === 'long') {
-      text += '建议拆分记忆长难词。';
+      text += ' 可以把长词拆分成词根词缀来记忆。';
     } else if (maxLenType[0] === 'short') {
-      text += '短词易混淆，注意形近词区分。';
+      text += ' 注意区分近形词与常见短词混淆。';
     } else {
-      text += '注意词根词缀的规律。';
+      text += ' 适合按主题批量复习。';
     }
     div.innerHTML = text;
     fragment.appendChild(div);
@@ -994,24 +1451,24 @@ function renderErrorAnalysis(wrongWords) {
     const hour = parseInt(topTimeSlot[0]);
     let timeAdvice = '';
     if (hour >= 22 || hour < 2) {
-      timeAdvice = '🌙 深夜学习效率较低，建议调整到白天';
+      timeAdvice = '深夜学习效率偏低，建议调整到白天复习';
     } else if (hour >= 14 && hour < 18) {
-      timeAdvice = '☀️ 下午时段错误较多，可能疲劳';
+      timeAdvice = '下午容易疲劳，建议缩短单次学习时长';
     } else if (hour >= 6 && hour < 10) {
-      timeAdvice = '🌅 早晨学习需充分清醒';
+      timeAdvice = '早晨学习前先进入状态，效果会更好';
     } else {
-      timeAdvice = '⏰ 注意保持专注';
+      timeAdvice = '注意保持专注，避免分心';
     }
     const div = document.createElement('div');
     div.style.cssText = 'margin-bottom: 0.5rem;';
-    div.innerHTML = `${timeAdvice}，错误高峰时段: <strong>${topTimeSlot[0]}</strong> (${topTimeSlot[1]}次)`;
+    div.innerHTML = `${escapeHtml(timeAdvice)}。错误高峰时段：<strong>${escapeHtml(String(topTimeSlot[0]))}</strong>（${topTimeSlot[1]} 次）`;
     fragment.appendChild(div);
   }
 
   const avgErrors = (totalErrorCount / wrongWords.length).toFixed(1);
   const summaryDiv = document.createElement('div');
   summaryDiv.style.cssText = 'margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1);';
-  summaryDiv.innerHTML = `📈 平均每词错误 <strong>${avgErrors}</strong> 次，共 <strong>${wrongWords.length}</strong> 个错词需攻克。`;
+  summaryDiv.innerHTML = `平均每个错词错误 <strong>${avgErrors}</strong> 次，当前共分析 <strong>${wrongWords.length}</strong> 个错词。`;
   fragment.appendChild(summaryDiv);
 
   container.innerHTML = '';
@@ -1030,7 +1487,7 @@ function startWrongWordsStudy() {
   
   StudyFeature.setWords(WORDS);
   shuffle(wrongQueue);
-  StudyFeature.startStudy('all', getData, memoryCache, db, { overrideQueue: wrongQueue });
+  StudyFeature.startStudy('all', wrongQueue.length, getData, memoryCache, db, { overrideQueue: wrongQueue });
 
   switchTab('study');
 }
@@ -1043,19 +1500,27 @@ let listItemPool = [];
 const POOL_SIZE = VISIBLE_COUNT + 4;
 
 function getOrCreateListItem() {
+  let div;
   if (listItemPool.length > 0) {
-    return listItemPool.pop();
+    div = listItemPool.pop();
+    // 閲嶇疆鍏冪礌鍐呭锛岀‘淇濈粨鏋勬纭?    div.innerHTML = '';
+    // 纭繚鏍峰紡姝ｇ‘
+    div.className = 'list-item';
+    div.style.cssText = `height: ${ITEM_HEIGHT}px; box-sizing: border-box; cursor: pointer;`;
+  } else {
+    div = document.createElement('div');
+    div.className = 'list-item';
+    div.style.cssText = `height: ${ITEM_HEIGHT}px; box-sizing: border-box; cursor: pointer;`;
   }
-  const div = document.createElement('div');
-  div.className = 'list-item';
-  div.style.cssText = `height: ${ITEM_HEIGHT}px; box-sizing: border-box;`;
-  div.style.cursor = 'pointer';
 
   const leftDiv = document.createElement('div');
   leftDiv.className = 'list-item-left';
 
   const wordDiv = document.createElement('div');
   wordDiv.className = 'list-item-word';
+  // 鍒涘缓鏂囨湰鑺傜偣鐢ㄤ簬鏄剧ず鍗曡瘝
+  const textNode = document.createTextNode('');
+  wordDiv.appendChild(textNode);
   const small = document.createElement('small');
   wordDiv.appendChild(small);
 
@@ -1089,55 +1554,65 @@ function recycleListItem(div) {
 function renderVirtualList() {
   const container = document.getElementById('virtual-scroll-container');
   const content = document.getElementById('virtual-scroll-content');
-  const spacer = document.getElementById('virtual-scroll-spacer');
 
-  if (!container || !content) return;
-  if (!spacer) {
-    const newSpacer = document.createElement('div');
-    newSpacer.id = 'virtual-scroll-spacer';
-    newSpacer.style.cssText = 'position: absolute; top: 0; left: 0; right: 0;';
-    container.insertBefore(newSpacer, content);
+  if (!container || !content) {
+    console.error('[renderVirtualList] 容器不存在', { container: !!container, content: !!content });
+    return;
   }
 
-  const spacerEl = document.getElementById('virtual-scroll-spacer');
   const scrollTop = container.scrollTop;
   const startIndex = Math.floor(scrollTop / ITEM_HEIGHT);
   const endIndex = Math.min(startIndex + VISIBLE_COUNT + 2, filteredWords.length);
-
-  spacerEl.style.height = `${filteredWords.length * ITEM_HEIGHT}px`;
-  content.style.transform = `translateY(${startIndex * ITEM_HEIGHT}px)`;
 
   const visibleItems = filteredWords.slice(startIndex, endIndex);
 
   const fragment = document.createDocumentFragment();
   const existingItems = content.querySelectorAll('.list-item');
   existingItems.forEach(item => recycleListItem(item));
-  content.innerHTML = '';
 
-  visibleItems.forEach(w => {
+  visibleItems.forEach((w, _index) => {
+    if (!w || !w.id) {
+      console.warn('[renderVirtualList] 璺宠繃鏃犳晥鍗曡瘝:', w);
+      return;
+    }
+    
     const s = getWordStatus(w.id);
-    const badgeClass = { new: 'badge-gray', review: 'badge-warning', mastered: 'badge-success', deleted: 'badge-danger' }[s];
-    const badgeText = { new: '未学习', review: '待复习', mastered: '已掌握', deleted: '已删除' }[s];
+    const badgeClass = { new: 'badge-gray', review: 'badge-warning', mastered: 'badge-success', deleted: 'badge-danger' }[s] || 'badge-gray';
+    const badgeText = { new: '未学习', review: '待复习', mastered: '已掌握', deleted: '已移除' }[s] || '未学习';
 
     const div = getOrCreateListItem();
     div.dataset.action = 'show-detail';
     div.dataset.id = w.id;
 
     const wordDiv = div.querySelector('.list-item-word');
-    wordDiv.firstChild.textContent = w.word;
-    wordDiv.querySelector('small').textContent = w.level;
+    // childNodes[0] 是单词文本节点，small 用来显示级别标签
+    if (wordDiv && wordDiv.childNodes[0]) {
+      wordDiv.childNodes[0].textContent = (w.word || '未知单词') + ' ';
+    }
+    const smallEl = wordDiv ? wordDiv.querySelector('small') : null;
+    if (smallEl) {
+      smallEl.textContent = w.level || '';
+    }
 
-    div.querySelector('.list-item-pron').textContent = w.phonetic;
-    div.querySelector('.list-item-meaning').textContent = w.meaning;
+    const pronEl = div.querySelector('.list-item-pron');
+    if (pronEl) {
+      pronEl.textContent = w.phonetic || '';
+    }
+    
+    const meaningEl = div.querySelector('.list-item-meaning');
+    if (meaningEl) {
+      meaningEl.textContent = getDisplayMeaning(w);
+    }
 
     const badge = div.querySelector('.badge');
-    badge.className = `badge ${badgeClass}`;
-    badge.textContent = badgeText;
+    if (badge) {
+      badge.className = `badge ${badgeClass}`;
+      badge.textContent = badgeText;
+    }
 
     fragment.appendChild(div);
   });
-
-  content.appendChild(fragment);
+  content.replaceChildren(fragment);
 }
 
 function debouncedRenderVirtualList() {
@@ -1160,32 +1635,50 @@ const debouncedRenderList = debounce(() => {
 }, 300);
 
 function renderList() {
-  const search = document.getElementById('search-input').value.toLowerCase();
-  const level = document.getElementById('filter-level').value;
-  const status = document.getElementById('filter-status').value;
+  if (!WORDS || WORDS.length === 0) {
+    console.error('[renderList] WORDS 为空，无法渲染词库列表！');
+    return;
+  }
 
-  filteredWords = WORDS.filter(w => {
-    const matchSearch = w.word.toLowerCase().includes(search) || w.meaning.toLowerCase().includes(search);
+  const searchInput = document.getElementById('search-input');
+  const levelSelect = document.getElementById('filter-level');
+  const statusSelect = document.getElementById('filter-status');
+
+  const search = searchInput ? searchInput.value.toLowerCase() : '';
+  const level = levelSelect ? levelSelect.value : 'all';
+  const status = statusSelect ? statusSelect.value : 'all';
+
+  filteredWords = WORDS.filter((w) => {
+    const matchSearch = !search || w.word.toLowerCase().includes(search) || getDisplayMeaning(w).toLowerCase().includes(search);
     const matchLevel = level === 'all' || w.level === level;
     const s = getWordStatus(w.id);
     const matchStatus = status === 'all' || s === status;
     return matchSearch && matchLevel && matchStatus;
   });
+  
+  console.log('[renderList] 绛涢€夊悗鍗曡瘝鏁伴噺:', filteredWords.length);
+  
+  // 如果筛选后结果为 0，则重置筛选条件并重新筛选
+  if (filteredWords.length === 0 && WORDS.length > 0) {
+    filteredWords = [...WORDS];
+  }
 
   const container = document.getElementById('virtual-scroll-container');
   const pagination = document.getElementById('pagination-controls');
 
   if (filteredWords.length === 0) {
     if (container) {
-      document.getElementById('virtual-scroll-content').innerHTML = '<div class="empty-state" style="height: 200px;"><div class="icon">🔍</div><p>没有找到匹配的单词</p></div>';
-      document.getElementById('virtual-scroll-spacer').style.height = '200px';
+      const scrollContent = document.getElementById('virtual-scroll-content');
+      if (scrollContent) {
+        scrollContent.innerHTML = '<div class="empty-state" style="height: 200px;"><p>没有找到匹配的单词</p><p style="font-size:12px;color:#999;">请检查搜索词、词库范围和学习状态筛选条件。</p></div>';
+      }
     }
-    pagination.style.display = 'none';
+    if (pagination) pagination.style.display = 'none';
     return;
   }
 
   renderVirtualList();
-  pagination.style.display = 'none';
+  if (pagination) pagination.style.display = 'none';
 }
 
 function showWordDetail(id) {
@@ -1193,24 +1686,32 @@ function showWordDetail(id) {
   if (!w) return;
 
   setSafeWordHeader('study-word', w.word, w.level);
-  document.getElementById('study-pron').textContent = w.phonetic;
-  document.getElementById('study-meaning').textContent = w.meaning;
-  document.getElementById('study-example').textContent = w.example;
-  document.getElementById('study-card').classList.add('flipped');
+
+  const pronEl = document.getElementById('study-pron');
+  const meaningEl = document.getElementById('study-meaning');
+  const exampleEl = document.getElementById('study-example');
+  if (pronEl) pronEl.textContent = w.phonetic;
+  if (meaningEl) meaningEl.textContent = getDisplayMeaning(w);
+  if (exampleEl) exampleEl.textContent = w.example;
 
   switchTab('study');
 
-  document.getElementById('start-btn').style.display = 'block';
-  document.getElementById('study-buttons').style.display = 'none';
-  document.getElementById('study-progress').style.display = 'none';
-  document.getElementById('cycle-banner').style.display = 'none';
+  const startBtn = document.getElementById('start-btn');
+  const studyButtons = document.getElementById('study-buttons');
+  const studyProgress = document.getElementById('study-progress');
+  const cycleBanner = document.getElementById('cycle-banner');
+
+  if (startBtn) startBtn.style.display = 'block';
+  if (studyButtons) studyButtons.style.display = 'none';
+  if (studyProgress) studyProgress.style.display = 'none';
+  if (cycleBanner) cycleBanner.style.display = 'none';
 }
 
 async function loadCustomVocab(event) {
   const file = event.target.files[0];
   if (!file) return;
 
-  showLoadingOverlay(true, '🧪 正在后台解析词库...', 10);
+  showLoadingOverlay(true, '正在解析词库...', 10);
 
   const reader = new FileReader();
   reader.onload = async function(e) {
@@ -1218,22 +1719,22 @@ async function loadCustomVocab(event) {
     
     try {
       const { result, count } = await vocabProcessor.processJSON(jsonStr, (progress) => {
-        updateLoadingProgress(progress, '🧪 正在异步反序列化...');
+        updateLoadingProgress(progress, '正在处理词库数据...');
       });
       
-      updateLoadingProgress(50, '💾 正在写入数据库...');
+      updateLoadingProgress(50, '正在写入本地数据...');
       
       WORDS = result;
       
       if (db.instance) {
         await db.clear('words');
         await db.bulkSave('words', result, (progress) => {
-          updateLoadingProgress(50 + progress * 0.5, `💾 正在高效写入数据库 (${Math.round(progress)}%)...`);
+          updateLoadingProgress(50 + progress * 0.5, `正在写入本地数据（${Math.round(progress)}%）...`);
         });
-        console.log(`词库已持久化到 IndexedDB: ${count} 个单词`);
+        console.log(`??????? IndexedDB: ${count} ???`);
       }
 
-      updateLoadingProgress(100, '✅ 完成！');
+      updateLoadingProgress(100, '处理完成');
       
       setTimeout(async () => {
         showLoadingOverlay(false);
@@ -1244,20 +1745,20 @@ async function loadCustomVocab(event) {
           await prefetchAudioLibrary(result);
         }, 1000);
         
-        UI.toast(`✅ 异步处理完成！成功加载 ${count} 个单词。`, 'success');
+        UI.toast(`词库导入成功，共 ${count} 个单词`, 'success');
       }, 300);
       
     } catch (err) {
       showLoadingOverlay(false);
       console.error('导入失败:', err);
-      UI.toast('❌ ' + err.message, 'error');
+      UI.toast(`导入失败：${err.message}`, 'error');
     } finally {
       event.target.value = '';
     }
   };
   reader.onerror = () => {
     showLoadingOverlay(false);
-    UI.toast('❌ 文件读取失败', 'error');
+    UI.toast('文件读取失败', 'error');
     event.target.value = '';
   };
   reader.readAsText(file);
@@ -1294,72 +1795,107 @@ function removeVisualViewportListener() {
 }
 
 async function initializeFeatures() {
-  StudyFeature.setWords(WORDS);
-  ReviewFeature.setWords(WORDS);
-  
-  const settings = await loadSettingsFeature();
-  if (settings) {
-    settings.setWords(WORDS);
-  }
+  console.log(`[initializeFeatures] 寮€濮嬪垵濮嬪寲锛學ORDS 鏁伴噺: ${WORDS?.length || 0}`);
 
-  SpellingFeature.init({
-    get studyQueue() { return StudyFeature.studyQueue; },
-    get studyIndex() { return StudyFeature.studyIndex; },
-    getWordData,
-    setWordData,
-    addWrongWord,
-    removeWrongWord,
-    saveStudySession: () => StudyFeature.saveStudySession(memoryCache, db),
-    updateStats,
-    updateProgress: StudyFeature.updateProgress,
-    showStudyWord: () => StudyFeature.showStudyWord(findConfusingWords, adjustForSemanticInterference, MIN_EF, MAX_EF, FSRS_W, getWordData, renderAlgorithmTransparency)
-  });
+  try {
+    if (!WORDS || WORDS.length === 0) {
+      console.error('[initializeFeatures] WORDS ????? DEFAULT_WORDS ????');
+      WORDS = [...DEFAULT_WORDS];
+    }
 
-  miniGame.init();
-  
-  engineVisualizer.init();
-  pwaWidgets.init();
+    console.log('[initializeFeatures] 设置 StudyFeature 词库...');
+    StudyFeature.setWords(WORDS);
+    console.log('[initializeFeatures] 设置 ReviewFeature 词库...');
+    ReviewFeature.setWords(WORDS);
+    
+    console.log('[initializeFeatures] 鍔犺浇璁剧疆...');
+    const settings = await loadSettingsFeature();
+    if (settings) {
+      settings.setWords(WORDS);
+    }
 
-  const webdav = await loadWebDAVFeature();
-  if (webdav) {
-    webdav.init({
+    console.log('[initializeFeatures] 鍒濆鍖?SpellingFeature...');
+    SpellingFeature.init({
+      get studyQueue() { return StudyFeature.studyQueue; },
+      get studyIndex() { return StudyFeature.studyIndex; },
+      getWordData,
+      setWordData,
+      addWrongWord,
+      removeWrongWord,
+      saveStudySession: () => StudyFeature.saveStudySession(memoryCache, db),
       updateStats,
-      renderList
+      updateProgress: StudyFeature.updateProgress,
+      showStudyWord: () => StudyFeature.showStudyWord()
     });
-  }
 
-  if (settings) {
-    settings.init({
-      WORDS,
-      updateStats,
-      renderList
-    });
+    console.log('[initializeFeatures] 鍒濆鍖?miniGame...');
+    miniGame.init();
+    
+    console.log('[initializeFeatures] 鍒濆鍖?engineVisualizer...');
+    engineVisualizer.init();
+    console.log('[initializeFeatures] 鍒濆鍖?pwaWidgets...');
+    pwaWidgets.init();
+
+    console.log('[initializeFeatures] 鍔犺浇 WebDAV...');
+    const webdav = await loadWebDAVFeature();
+    if (webdav) {
+      webdav.init({
+        updateStats,
+        renderList
+      });
+    }
+
+    if (settings) {
+      settings.init({
+        WORDS,
+        updateStats,
+        renderList
+      });
+    }
+    
+    console.log('[initializeFeatures] ?????');
+  } catch (error) {
+    console.error('[initializeFeatures] 鉂?鍒濆鍖栧け璐?', error);
+    throw error;
   }
 }
 
 function bindStudyStartButton(session) {
   const startBtn = document.getElementById('start-btn');
+  if (!startBtn) return;
+
   if (session && session.hasSession) {
-    startBtn.textContent = `🚀 继续上次学习 (剩余 ${session.session.queue.length} 词)`;
+    startBtn.textContent = `继续上次学习（剩余 ${session.session.queue.length} 词）`;
     startBtn.dataset.action = 'resume-study';
   } else {
-    startBtn.textContent = '🚀 开始学习';
+    startBtn.textContent = '开始学习';
     startBtn.dataset.action = 'start-study';
+    if (StudyFeature && typeof StudyFeature.resetStudyCard === 'function') {
+      StudyFeature.resetStudyCard();
+    }
   }
+
+  repairVisibleUIText();
 }
 
 async function requestPersistentStorage() {
+  // file:// 协议下无法请求持久化存储权限，直接跳过
+  if (isFileProtocol()) {
+    console.log('[Storage] file:// 协议下跳过持久化存储权限请求');
+    return false;
+  }
+  
   if (navigator.storage && navigator.storage.persist) {
     try {
       const isPersisted = await navigator.storage.persist();
       if (isPersisted) {
-        console.log('✅ 持久化存储权限已获取，数据将不会被浏览器自动清理');
+        console.log('持久化存储权限已获取，数据将不会被浏览器自动清理');
       } else {
-        console.warn('⚠️ 持久化存储权限被拒绝，浏览器可能在磁盘空间不足时清理数据');
+        console.warn('持久化存储权限被拒绝，浏览器可能在磁盘空间不足时清理数据');
       }
       return isPersisted;
     } catch (e) {
-      console.warn('请求持久化存储失败:', e);
+      console.warn('请求持久化存储失败', e);
       return false;
     }
   }
@@ -1389,26 +1925,49 @@ async function initApp() {
     const dbWords = await db.getAll('words');
     if (dbWords && dbWords.length > 0) {
       WORDS = dbWords;
-      console.log(`从 IndexedDB 加载词库: ${WORDS.length} 个单词`);
+      console.log(`? IndexedDB ????: ${WORDS.length} ???`);
     } else {
-      for (const w of DEFAULT_WORDS) {
-        await db.save('words', w);
-      }
+      await db.bulkSave('words', DEFAULT_WORDS);
       WORDS = [...DEFAULT_WORDS];
-      console.log(`首次运行，已保存默认词库: ${WORDS.length} 个单词`);
+      console.log(`????????????: ${WORDS.length} ???`);
+    }
+    
+    // 关键修复：确保 WORDS 始终有数据
+    if (!WORDS || WORDS.length === 0) {
+      console.warn('[initApp] WORDS ?????????????');
+      WORDS = [...DEFAULT_WORDS];
     }
 
     await loadFromIndexedDB();
-    console.log('IndexedDB 初始化成功');
+    console.log('IndexedDB 数据已加载');
+
+    if (dbAvailable && db.instance) {
+      try {
+        const actionStackData = await db.getAll('actionStack');
+        if (actionStackData && actionStackData.length > 0) {
+          const actions = actionStackData
+            .sort((a, b) => a.timestamp - b.timestamp)
+            .map(item => item.action);
+          restoreActionStack(actions);
+        }
+      } catch (stackErr) {
+        console.warn('恢复 actionStack 失败:', stackErr);
+      }
+    }
   } catch (err) {
     console.log('IndexedDB 不可用，使用内存模式:', err);
     dbAvailable = false;
+    // 关键修复：即使 IndexedDB 失败，也要确保 WORDS 有数据
+    if (!WORDS || WORDS.length === 0) {
+      WORDS = [...DEFAULT_WORDS];
+      console.log(`[initApp] IndexedDB ????????? ${WORDS.length} ???`);
+    }
   }
 
   if (!dbAvailable) {
     const storageError = document.createElement('div');
     storageError.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#f56565;color:white;padding:10px;text-align:center;z-index:9999;font-size:14px;';
-    storageError.textContent = '⚠️ 存储空间不可用，学习进度将在页面关闭后丢失';
+    storageError.textContent = '本地数据库不可用，当前已切换到内存模式。';
     document.body.appendChild(storageError);
   }
 
@@ -1417,26 +1976,83 @@ async function initApp() {
   initTheme();
   loadWebDAVConfig();
   updateStats();
+  
+  // 鍏堥殣钘忛鏋跺睆锛屽啀娓叉煋鍒楄〃
+  Skeleton.hide('study-card');
+  Skeleton.hide('virtual-scroll-content');
+  
   renderList();
   
   const sessionResult = await StudyFeature.checkStudySession(memoryCache, db);
   bindStudyStartButton(sessionResult);
-  
-  Skeleton.hide('study-card');
-  Skeleton.hide('virtual-scroll-content');
+  repairVisibleUIText();
 
   saveDailyProgressSnapshot();
   initSemanticGraphInBackground();
   checkAndShowMilestones();
-  console.log('🚀 引擎已启动，词库容量:', WORDS.length);
+  console.log('引擎已启动，词库容量:', WORDS.length);
   
-  // 初始化环境粒子系统
-  particleSystem.init();
+  // TODO: 初始化环境粒子系统
+  // particleSystem.init();
+  
+  window.addEventListener('beforeunload', cleanupSemanticGraph);
   
   if (typeof window !== 'undefined') {
     window.perfMonitor = performanceMonitor;
     window.showPerfPanel = () => performanceMonitor.showPerformancePanel();
     window.particleSystem = particleSystem; // 暴露给调试
+    window.WORDS = WORDS; // 暴露词库给调试
+    window.filteredWords = filteredWords; // 暴露筛选结果给调试
+
+    // 调试功能：强制重置词库
+    window.resetVocabulary = async () => {
+      console.log('[Debug] 正在强制重置词库...');
+      try {
+        // 清空 IndexedDB 中的词库
+        const allWords = await db.getAll('words');
+        for (const w of allWords) {
+          await db.delete('words', w.id);
+        }
+        console.log('[Debug] 已清空 IndexedDB 词库');
+        
+        // 重新保存默认词库
+        for (const w of DEFAULT_WORDS) {
+          await db.save('words', w);
+        }
+        WORDS = [...DEFAULT_WORDS];
+        console.log(`[Debug] ????????? ${WORDS.length} ???`);
+        
+        // 重新初始化词库引用
+        StudyFeature.setWords(WORDS);
+        ReviewFeature.setWords(WORDS);
+        renderList();
+        
+        alert(`词库已重置，当前共 ${WORDS.length} 个单词`);
+      } catch (e) {
+        console.error('[Debug] 重置词库失败:', e);
+        alert('重置词库失败：' + e.message);
+      }
+    };
+    
+    // 调试功能：检查词库状态
+    window.checkVocabulary = () => {
+      console.log('[Debug] ========== 词库状态检查 ==========');
+      console.log('[Debug] WORDS 长度:', WORDS?.length || 0);
+      console.log('[Debug] DEFAULT_WORDS 长度:', DEFAULT_WORDS?.length || 0);
+      console.log('[Debug] filteredWords 长度:', filteredWords?.length || 0);
+      console.log('[Debug] StudyFeature.WORDS 长度:', StudyFeature?.WORDS?.length || 0);
+      console.log('[Debug] ====================================');
+      return {
+        wordsLength: WORDS?.length || 0,
+        defaultWordsLength: DEFAULT_WORDS?.length || 0,
+        filteredWordsLength: filteredWords?.length || 0,
+        studyFeatureWordsLength: StudyFeature?.WORDS?.length || 0
+      };
+    };
+    
+    console.log('[Debug] 调试功能已加载：');
+    console.log('  - resetVocabulary() : 强制重置词库');
+    console.log('  - checkVocabulary() : 检查词库状态');
   }
 
   const shortcutGuideShown = localStorage.getItem('cet46_shortcut_guide_shown');
@@ -1445,7 +2061,7 @@ async function initApp() {
   }
 
   if (webdavConfig && webdavConfig.autoSync && webdavConfig.url) {
-    console.log('🔄 启动时自动增量同步已启用');
+    console.log('启动时自动增量同步已启用');
     setTimeout(async () => {
       try {
         await WebDAVFeature.handleSyncFromWebDAV();
@@ -1474,34 +2090,11 @@ document.addEventListener('keydown', (e) => {
   const reviewView = document.getElementById('view-review').classList.contains('active');
 
   if (studyView && document.getElementById('study-buttons').style.display !== 'none') {
-    if (e.key === 'ArrowLeft' && StudyFeature.studyFlipped) {
-      StudyFeature.markStudyWord(false, {
-        getWordData, setWordData, pushAction, updateFSRS, calculateFSRSInterval,
-        getPersonalizedCircadianFactor, adjustForSemanticInterference, addWrongWord,
-        recordHeatmap, saveDailyProgressSnapshot,
-        saveStudySession: () => StudyFeature.saveStudySession(memoryCache, db),
-        updateStats,
-        showStudyWord: () => StudyFeature.showStudyWord(findConfusingWords, adjustForSemanticInterference, MIN_EF, MAX_EF, FSRS_W, getWordData, renderAlgorithmTransparency),
-        playTone
-      });
+    if (e.key === 'ArrowLeft') {
+      StudyFeature.markWord(false);
     }
-    if (e.key === ' ') {
-      e.preventDefault();
-      StudyFeature.flipStudyCard(getMnemonic);
-    }
-    if (e.key === 'ArrowRight' && StudyFeature.studyFlipped) {
-      StudyFeature.markStudyWord(true, {
-        getWordData, setWordData, pushAction, updateFSRS, calculateFSRSInterval,
-        getPersonalizedCircadianFactor, adjustForSemanticInterference, addWrongWord,
-        recordHeatmap, saveDailyProgressSnapshot,
-        saveStudySession: () => StudyFeature.saveStudySession(memoryCache, db),
-        updateStats,
-        showStudyWord: () => StudyFeature.showStudyWord(findConfusingWords, adjustForSemanticInterference, MIN_EF, MAX_EF, FSRS_W, getWordData, renderAlgorithmTransparency),
-        playTone
-      });
-    }
-    if ((e.key === 's' || e.key === 'S') && StudyFeature.studyFlipped) {
-      SpellingFeature.openSpellingChallenge();
+    if (e.key === 'ArrowRight') {
+      StudyFeature.markWord(true);
     }
     if ((e.key === 'z' || e.key === 'Z') && e.ctrlKey) {
       e.preventDefault();
@@ -1510,7 +2103,7 @@ document.addEventListener('keydown', (e) => {
   }
 
   if (reviewView && document.getElementById('review-buttons').style.display !== 'none') {
-    if (e.key === 'ArrowLeft' && ReviewFeature.reviewFlipped) {
+    if (e.key === 'ArrowLeft') {
       ReviewFeature.markReviewWord(false, {
         getWordData, setWordData, pushAction, updateFSRS, calculateFSRSInterval,
         adjustForSemanticInterference, getPersonalizedCircadianFactor, addWrongWord,
@@ -1519,11 +2112,7 @@ document.addEventListener('keydown', (e) => {
         playTone, fireConfetti
       });
     }
-    if (e.key === ' ') {
-      e.preventDefault();
-      ReviewFeature.flipReviewCard();
-    }
-    if (e.key === 'ArrowRight' && ReviewFeature.reviewFlipped) {
+    if (e.key === 'ArrowRight') {
       ReviewFeature.markReviewWord(true, {
         getWordData, setWordData, pushAction, updateFSRS, calculateFSRSInterval,
         adjustForSemanticInterference, getPersonalizedCircadianFactor, addWrongWord,
@@ -1535,24 +2124,37 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-document.getElementById('search-input').addEventListener('input', debouncedRenderList);
-document.getElementById('filter-level').addEventListener('change', () => { 
-  const container = document.getElementById('virtual-scroll-container');
-  if (container) container.scrollTop = 0;
-  renderList(); 
-});
-document.getElementById('filter-status').addEventListener('change', () => { 
-  const container = document.getElementById('virtual-scroll-container');
-  if (container) container.scrollTop = 0;
-  renderList(); 
-});
-
-const virtualContainer = document.getElementById('virtual-scroll-container');
-if (virtualContainer) {
-  virtualContainer.addEventListener('scroll', debouncedRenderVirtualList, { passive: true });
+// 注意：这些事件监听器已移到 DOMContentLoaded 中初始化，确保 DOM 已准备好
+function initFilterEventListeners() {
+  const searchInput = document.getElementById('search-input');
+  const levelSelect = document.getElementById('filter-level');
+  const statusSelect = document.getElementById('filter-status');
+  const virtualContainer = document.getElementById('virtual-scroll-container');
+  
+  if (searchInput) {
+    searchInput.addEventListener('input', debouncedRenderList);
+  }
+  
+  if (levelSelect) {
+    levelSelect.addEventListener('change', () => { 
+      if (virtualContainer) virtualContainer.scrollTop = 0;
+      renderList(); 
+    });
+  }
+  
+  if (statusSelect) {
+    statusSelect.addEventListener('change', () => { 
+      if (virtualContainer) virtualContainer.scrollTop = 0;
+      renderList(); 
+    });
+  }
+  
+  if (virtualContainer) {
+    virtualContainer.addEventListener('scroll', debouncedRenderVirtualList, { passive: true });
+  }
 }
 
-if ('serviceWorker' in navigator) {
+if (location.protocol !== 'file:' && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js').then(reg => {
       console.log('PWA Service Worker 注册成功');
@@ -1577,7 +2179,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (refreshing) return;
       refreshing = true;
-      console.log('Service Worker 已更新，页面即将刷新');
+      console.log('Service Worker 宸叉洿鏂帮紝椤甸潰鍗冲皢鍒锋柊');
       window.location.reload();
     });
   });
@@ -1605,7 +2207,7 @@ function showUpdateNotification() {
   `;
   
   const span = document.createElement('span');
-  span.textContent = '🚀 新版本可用';
+  span.textContent = '发现新版本';
   
   const btn = document.createElement('button');
   btn.style.cssText = `
@@ -1638,19 +2240,6 @@ function updateApp() {
   if (notification) notification.remove();
 }
 
-window.addEventListener('unhandledrejection', (event) => {
-  console.error('未捕获的 Promise 错误:', event.reason);
-  UI.toast('操作出错，请刷新页面重试', 'error');
-  event.preventDefault();
-});
-
-window.addEventListener('error', (event) => {
-  if (event.error) {
-    console.error('全局错误:', event.error);
-    UI.toast('发生错误，请刷新页面', 'error');
-  }
-});
-
 let touchStartX = 0;
 let touchStartY = 0;
 let touchStartTime = 0;
@@ -1681,38 +2270,20 @@ function handleTouchStart(e) {
 }
 
 function handleStudyTouchEnd(e) {
-  if (!StudyFeature.studyFlipped) return;
-  
   const touch = e.changedTouches[0];
   const deltaX = touch.clientX - touchStartX;
   const deltaY = touch.clientY - touchStartY;
   const deltaTime = Date.now() - touchStartTime;
-  
+
   if (Math.abs(deltaX) < SWIPE_THRESHOLD || Math.abs(deltaY) > Math.abs(deltaX) || deltaTime > SWIPE_TIME_THRESHOLD) {
     return;
   }
-  
+
   if (deltaX < 0) {
-    StudyFeature.markStudyWord(false, {
-      getWordData, setWordData, pushAction, updateFSRS, calculateFSRSInterval,
-      getPersonalizedCircadianFactor, adjustForSemanticInterference, addWrongWord,
-      recordHeatmap, saveDailyProgressSnapshot,
-      saveStudySession: () => StudyFeature.saveStudySession(memoryCache, db),
-      updateStats,
-      showStudyWord: () => StudyFeature.showStudyWord(findConfusingWords, adjustForSemanticInterference, MIN_EF, MAX_EF, FSRS_W, getWordData, renderAlgorithmTransparency),
-      playTone
-    });
+    StudyFeature.markWord(false);
     showSwipeFeedback('left');
   } else {
-    StudyFeature.markStudyWord(true, {
-      getWordData, setWordData, pushAction, updateFSRS, calculateFSRSInterval,
-      getPersonalizedCircadianFactor, adjustForSemanticInterference, addWrongWord,
-      recordHeatmap, saveDailyProgressSnapshot,
-      saveStudySession: () => StudyFeature.saveStudySession(memoryCache, db),
-      updateStats,
-      showStudyWord: () => StudyFeature.showStudyWord(findConfusingWords, adjustForSemanticInterference, MIN_EF, MAX_EF, FSRS_W, getWordData, renderAlgorithmTransparency),
-      playTone
-    });
+    StudyFeature.markWord(true);
     showSwipeFeedback('right');
   }
 }
@@ -1763,7 +2334,7 @@ function showSwipeFeedback(direction) {
     z-index: 1000;
     pointer-events: none;
   `;
-  indicator.textContent = direction === 'left' ? '❌' : '✅';
+  indicator.textContent = direction === 'left' ? '×' : '√';
   document.body.appendChild(indicator);
   
   requestAnimationFrame(() => {
@@ -1790,8 +2361,9 @@ function setupNetworkStatusListener() {
     
     if (offlineIndicator) {
       if (isOnline) {
-        offlineIndicator.textContent = '🟢';
-        offlineIndicator.title = '在线 - 所有功能可用';
+        offlineIndicator.textContent = '📦';
+        offlineIndicator.title = '资源状态';
+        offlineIndicator.setAttribute('aria-label', '资源状态');
         
         if (navigator.serviceWorker && navigator.serviceWorker.controller) {
           try {
@@ -1801,19 +2373,22 @@ function setupNetworkStatusListener() {
               const cache = await caches.open(audioCache);
               const keys = await cache.keys();
               if (keys.length > 100) {
-                offlineIndicator.title = `在线 - 音频缓存就绪 (${keys.length}个)`;
+                offlineIndicator.title = `资源状态：已缓存 ${keys.length} 项离线资源`;
               }
             }
           } catch (e) {}
         }
       } else {
-        offlineIndicator.textContent = '🔴';
-        offlineIndicator.title = '离线 - 部分功能受限';
+        offlineIndicator.textContent = '📴';
+        offlineIndicator.title = '资源状态：当前为离线模式';
+        offlineIndicator.setAttribute('aria-label', '资源状态');
       }
     }
     
     if (statusDot) {
       statusDot.className = isOnline ? 'status-dot online' : 'status-dot offline';
+      statusDot.title = '网络状态';
+      statusDot.setAttribute('aria-label', '网络状态');
     }
     
     ReactiveAppState.set('isOnline', isOnline);
@@ -1822,6 +2397,42 @@ function setupNetworkStatusListener() {
   window.addEventListener('online', updateOnlineStatus);
   window.addEventListener('offline', updateOnlineStatus);
   updateOnlineStatus();
+}
+
+function showResourceStatusPanel() {
+  const isFileMode = isFileProtocol();
+  const totalWords = Array.isArray(WORDS) ? WORDS.length : 0;
+  UI.showStatusPanel('资源状态', [
+    { label: '本地资源', value: isFileMode ? '已启用' : '按环境加载' },
+    { label: '离线词库', value: totalWords > 0 ? `已加载 ${totalWords} 个词条` : '等待初始化' },
+    { label: '当前模式', value: isFileMode ? 'file:// 本地版' : '在线版' }
+  ], {
+    note: isFileMode
+      ? '当前为本地资源模式，常用词库已内置，可直接学习。'
+      : '当前为在线模式，可按需使用缓存和同步功能。',
+    closeText: '关闭说明'
+  });
+}
+
+function showNetworkStatusPanel() {
+  const isFileMode = isFileProtocol();
+  const isOnline = navigator.onLine;
+  const syncState = isFileMode
+    ? '本地版不使用在线同步'
+    : isOnline
+      ? '可联网，可检查更新或同步'
+      : '当前离线，暂不可同步';
+
+  UI.showStatusPanel('网络状态', [
+    { label: '网络连接', value: isOnline ? '在线' : '离线' },
+    { label: '运行模式', value: isFileMode ? '本地模式' : '在线模式' },
+    { label: '同步/更新', value: syncState }
+  ], {
+    note: isFileMode
+      ? '你正在使用 file:// 本地版，适合离线学习。'
+      : '在线模式下可继续使用同步、更新和远程资源能力。',
+    closeText: '关闭说明'
+  });
 }
 
 function setupReactiveBindings() {
@@ -1853,7 +2464,7 @@ function setupReactiveBindings() {
     }
   });
   
-  const pendingReviews = computed(
+  computed(
     () => {
       const now = Date.now();
       const circadian = AppState.get('personalizedCircadian') || 1.0;
@@ -1866,14 +2477,14 @@ function setupReactiveBindings() {
     ['memoryCache.progress']
   );
   
-  watch(['stats'], (values) => {
+  watch(['stats'], (_values) => {
     updateStats();
   });
   
-  console.log('✅ 响应式绑定已设置');
+  console.log('响应式绑定已设置');
 }
 
-function showMilestoneCelebration(type, count) {
+function showMilestoneCelebration(type, _count) {
   const milestones = {
     'first-100': { emoji: '🎉', text: '首次掌握100词！' },
     'first-500': { emoji: '🏆', text: '突破500词大关！' },
@@ -1960,59 +2571,86 @@ function checkAndShowMilestones() {
 function setupGlobalEventDelegation() {
   const ACTION_HANDLERS = {
     'toggle-theme': () => toggleTheme(),
+    'show-resource-status': () => showResourceStatusPanel(),
+    'show-network-status': () => showNetworkStatusPanel(),
     'show-shortcut-guide': () => UI.showShortcutGuide(),
     
     // 导航栏动作
     'nav-study': () => {
-      console.log('[Nav] 切换到学习视图');
+      console.log('[Nav] ???????');
       switchTab('study');
     },
     'nav-review': () => {
-      console.log('[Nav] 切换到复习视图');
+      console.log('[Nav] ???????');
       switchTab('review');
     },
     'nav-wrong': () => {
-      console.log('[Nav] 切换到错题视图');
+      console.log('[Nav] ???????');
       switchTab('wrong');
     },
     'nav-stats': () => {
-      console.log('[Nav] 切换到统计视图');
+      console.log('[Nav] ???????');
       switchTab('stats');
     },
     'nav-list': () => {
-      console.log('[Nav] 切换到词库视图');
+      console.log('[Nav] ???????');
       switchTab('list');
     },
     
     'start-study': () => {
-      const level = document.getElementById('study-level').value;
-      StudyFeature.startStudy(level, getData, memoryCache, db);
-    },
-    'resume-study': () => {
-      const session = memoryCache.session;
-      if (session) {
-        StudyFeature.resumeStudy(session);
+      const levelSelect = document.getElementById('study-level');
+      const level = levelSelect ? levelSelect.value : 'all';
+      console.log(`[Start Study] 绾у埆锛?{level}`);
+
+      if (typeof StudyFeature !== 'undefined' && typeof StudyFeature.startStudy === 'function') {
+        const result = StudyFeature.startStudy(level, CONSTANTS.DEFAULT_STUDY_LIMIT, getData, memoryCache, db);
+        if (result) {
+          console.log('[Start Study] 学习已启动');
+        } else {
+          console.warn('[Start Study] 学习启动失败');
+        }
+      } else {
+        console.error('[Start Study] StudyFeature 鏈畾涔夛紒');
+        alert('学习功能尚未就绪，请稍后重试');
       }
     },
-    'flip-card': () => StudyFeature.flipStudyCard(getMnemonic),
-    'mark-known': () => StudyFeature.markStudyWord(true, {
-      getWordData, setWordData, pushAction, updateFSRS, calculateFSRSInterval,
-      getPersonalizedCircadianFactor, adjustForSemanticInterference, addWrongWord,
-      recordHeatmap, saveDailyProgressSnapshot,
-      saveStudySession: () => StudyFeature.saveStudySession(memoryCache, db),
-      updateStats,
-      showStudyWord: () => StudyFeature.showStudyWord(findConfusingWords, adjustForSemanticInterference, MIN_EF, MAX_EF, FSRS_W, getWordData, renderAlgorithmTransparency),
-      playTone
-    }),
-    'mark-unknown': () => StudyFeature.markStudyWord(false, {
-      getWordData, setWordData, pushAction, updateFSRS, calculateFSRSInterval,
-      getPersonalizedCircadianFactor, adjustForSemanticInterference, addWrongWord,
-      recordHeatmap, saveDailyProgressSnapshot,
-      saveStudySession: () => StudyFeature.saveStudySession(memoryCache, db),
-      updateStats,
-      showStudyWord: () => StudyFeature.showStudyWord(findConfusingWords, adjustForSemanticInterference, MIN_EF, MAX_EF, FSRS_W, getWordData, renderAlgorithmTransparency),
-      playTone
-    }),
+    'resume-study': async () => {
+      console.log('[Resume Study] 缁х画瀛︿範');
+      const sessionResult = await StudyFeature.checkStudySession(memoryCache, db);
+      if (!sessionResult || !sessionResult.hasSession || !sessionResult.session) {
+        UI.toast && UI.toast('Session restore failed, started a new session', 'warning');
+        const levelSelect = document.getElementById('study-level');
+        const level = levelSelect ? levelSelect.value : 'all';
+        StudyFeature.startStudy(level, CONSTANTS.DEFAULT_STUDY_LIMIT, getData, memoryCache, db);
+        return;
+      }
+
+      const session = sessionResult.session;
+      const levelSelect = document.getElementById('study-level');
+      if (levelSelect && session.level) {
+        levelSelect.value = session.level;
+      }
+
+      const resumed = await StudyFeature.resumeFromSession(session, memoryCache, db);
+      if (resumed) {
+        UI.toast && UI.toast('Resumed previous study session', 'success');
+      } else {
+        UI.toast && UI.toast('Session restore failed, started a new session', 'warning');
+        StudyFeature.startStudy(session.level || 'all', CONSTANTS.DEFAULT_STUDY_LIMIT, getData, memoryCache, db);
+      }
+    },
+    'mark-known': () => {
+      console.log('[Mark Known] ?????');
+      if (StudyFeature && StudyFeature.markWord) {
+        StudyFeature.markWord(true);
+      }
+    },
+    'mark-unknown': () => {
+      console.log('[Mark Unknown] 标记为不认识');
+      if (StudyFeature && StudyFeature.markWord) {
+        StudyFeature.markWord(false);
+      }
+    },
     'open-spelling': () => SpellingFeature.openSpellingChallenge(),
     'toggle-cloze': () => StudyFeature.toggleClozeMode(),
     'save-mnemonic': () => StudyFeature.handleSaveMnemonic(saveMnemonic),
@@ -2050,17 +2688,17 @@ function setupGlobalEventDelegation() {
     'speak-review-word': (e) => { e.stopPropagation(); ReviewFeature.speakReviewWord(); },
     'speak-spelling-word': () => SpellingFeature.replaySpellingAudio(),
     
-    'toggle-webdav': () => WebDAVFeature.toggleWebDAVConfig(),
-    'save-webdav': () => WebDAVFeature.handleSaveWebDAVConfig(),
-    'test-webdav': () => WebDAVFeature.handleTestWebDAVConnection(),
-    'sync-up': () => WebDAVFeature.handleSyncToWebDAV(),
-    'sync-down': () => WebDAVFeature.handleSyncFromWebDAV(),
-    'export-key': () => WebDAVFeature.handleExportEncryptionKey(),
-    
-    'train-fsrs': () => SettingsFeature.trainFSRSWeights(),
-    'reset-fsrs': () => SettingsFeature.resetFSRSWeights(),
-    'reset-progress': () => SettingsFeature.resetProgress(),
-    'export-data': () => SettingsFeature.exportData(),
+    'toggle-webdav': () => WebDAVFeature ? WebDAVFeature.toggleWebDAVConfig() : console.warn('[WebDAV] ?????'),
+    'save-webdav': () => WebDAVFeature ? WebDAVFeature.handleSaveWebDAVConfig() : console.warn('[WebDAV] ?????'),
+    'test-webdav': () => WebDAVFeature ? WebDAVFeature.handleTestWebDAVConnection() : console.warn('[WebDAV] ?????'),
+    'sync-up': () => WebDAVFeature ? WebDAVFeature.handleSyncToWebDAV() : console.warn('[WebDAV] ?????'),
+    'sync-down': () => WebDAVFeature ? WebDAVFeature.handleSyncFromWebDAV() : console.warn('[WebDAV] ?????'),
+    'export-key': () => WebDAVFeature ? WebDAVFeature.handleExportEncryptionKey() : console.warn('[WebDAV] ?????'),
+
+    'train-fsrs': () => SettingsFeature ? SettingsFeature.trainFSRSWeights() : console.warn('[Settings] ?????'),
+    'reset-fsrs': () => SettingsFeature ? SettingsFeature.resetFSRSWeights() : console.warn('[Settings] ?????'),
+    'reset-progress': () => SettingsFeature ? SettingsFeature.resetProgress() : console.warn('[Settings] ?????'),
+    'export-data': () => SettingsFeature ? SettingsFeature.exportData() : console.warn('[Settings] ?????'),
     'import-data': () => document.getElementById('import-file').click(),
     'load-vocab': () => document.getElementById('vocab-file').click(),
     
@@ -2073,47 +2711,78 @@ function setupGlobalEventDelegation() {
   };
 
   document.addEventListener('click', (e) => {
+    console.log('[Click Event] 鐐瑰嚮浜?', e.target.tagName, e.target.className, e.target.id);
+    
     const actionElement = e.target.closest('[data-action]');
     if (!actionElement) {
-      console.log('[Debug] 点击的元素没有 data-action 属性');
+      // 不打印这个日志，因为点击空白区域是正常的
       return;
     }
 
     const action = actionElement.dataset.action;
     const handler = ACTION_HANDLERS[action];
     
-    console.log(`[Input Debug] 点击了动作: ${action}`, actionElement);
+    console.log(`[Input Debug] 鐐瑰嚮浜嗗姩浣? ${action}`, actionElement);
 
     if (typeof handler === 'function') {
-      console.log(`[Action] 执行动作: ${action}`);
+      console.log(`[Action] 鎵ц鍔ㄤ綔: ${action}`);
       try {
         handler(e);
       } catch (err) {
         console.error(`[Action Error] 动作 "${action}" 执行失败:`, err);
       }
     } else {
-      console.error(`[Missing Handler] 动作 "${action}" 没有对应的处理函数！`);
+      console.error(`[Missing Handler] 鍔ㄤ綔 "${action}" 娌℃湁瀵瑰簲鐨勫鐞嗗嚱鏁帮紒`);
       console.log('[Available Actions]', Object.keys(ACTION_HANDLERS));
     }
   });
 
-  console.log('🚀 CET46 Pro v1.0: 事件委托系统已启用 (模块化架构 + FSRS增强)');
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') {
+      return;
+    }
+
+    const actionElement = e.target.closest('[data-action][role="button"]');
+    if (!actionElement) {
+      return;
+    }
+
+    e.preventDefault();
+    actionElement.click();
+  });
+
+  console.log('CET46 Pro v1.0: 事件委托系统已启用 (模块化架构 + FSRS增强)');
   console.log('[Debug] 已注册的动作处理器:', Object.keys(ACTION_HANDLERS));
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // 绑定导航栏 tab 切换
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-  });
+// 检查 DOM 是否已准备好
+if (document.readyState === 'loading') {
+  console.log('[main.js] DOM 仍在加载中，等待 DOMContentLoaded...');
+  document.addEventListener('DOMContentLoaded', initApplication);
+} else {
+  console.log('[main.js] DOM 已准备好，直接初始化...');
+  initApplication();
+}
+
+async function initApplication() {
+  console.log('[DOMContentLoaded] 馃殌 椤甸潰寮€濮嬪姞杞?..');
+  console.log('[DOMContentLoaded] 鍒濆 WORDS 闀垮害:', typeof WORDS !== 'undefined' ? WORDS.length : 'undefined');
+  console.log('[DOMContentLoaded] DEFAULT_WORDS 闀垮害:', typeof DEFAULT_WORDS !== 'undefined' ? DEFAULT_WORDS.length : 'undefined');
   
+  // 初始化筛选器事件监听器，确保 DOM 已准备好
+  initFilterEventListeners();
+  
+  // 事件委托负责按钮与导航动作绑定
   setupGlobalEventDelegation();
-  
+  repairVisibleUIText();
+  repairRuntimeCorruptedUIText();
+  ensureUIRepairObserver();
+
   try {
     await initApp();
-    console.log('✅ 应用初始化成功');
+    console.log('[DOMContentLoaded] 最终 WORDS 长度:', WORDS.length);
   } catch (error) {
-    console.error('❌ 应用初始化失败:', error);
-    alert('应用加载失败，请刷新页面重试。错误: ' + error.message);
+    console.error('应用初始化失败:', error);
+    alert('应用加载失败，请刷新页面重试。错误：' + error.message);
   }
-});
+}

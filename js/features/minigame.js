@@ -4,19 +4,19 @@ const BASE_GRID_SIZE = 9;
 const MIN_CONSECUTIVE = 50;
 
 const REWARDS = {
-  BRONZE: { threshold: 100, icon: '🥉', name: '青铜成就' },
-  SILVER: { threshold: 300, icon: '🥈', name: '白银成就' },
-  GOLD: { threshold: 500, icon: '🥇', name: '黄金成就' },
-  DIAMOND: { threshold: 800, icon: '💎', name: '钻石成就' },
-  MASTER: { threshold: 1000, icon: '👑', name: '宗师成就' }
+  BRONZE: { threshold: 100, icon: '馃', name: '闈掗摐鎴愬氨' },
+  SILVER: { threshold: 300, icon: '馃', name: '鐧介摱鎴愬氨' },
+  GOLD: { threshold: 500, icon: '馃', name: '榛勯噾鎴愬氨' },
+  DIAMOND: { threshold: 800, icon: '馃拵', name: '閽荤煶鎴愬氨' },
+  MASTER: { threshold: 1000, icon: '馃憫', name: '瀹楀笀鎴愬氨' }
 };
 
 const ACHIEVEMENTS = [
-  { id: 'first_game', name: '初次尝试', desc: '完成第一次游戏', icon: '🎮' },
+  { id: 'first_game', name: '初次尝试', desc: '完成第一局游戏', icon: '🎮' },
   { id: 'streak_5', name: '小试牛刀', desc: '连击达到 5', icon: '🔥' },
   { id: 'streak_10', name: '势如破竹', desc: '连击达到 10', icon: '⚡' },
   { id: 'score_500', name: '词汇大师', desc: '单次得分超过 500', icon: '🏆' },
-  { id: 'perfect', name: '完美无瑕', desc: '无错误完成游戏', icon: '✨' }
+  { id: 'perfect', name: '完美无瑕', desc: '无错误完成游戏', icon: '✅' }
 ];
 
 class MiniGame {
@@ -152,7 +152,7 @@ class MiniGame {
       gameModal.classList.add('active');
     }
     
-    console.log('🎮 单词匹配游戏开始 - 难度等级:', this.gridSize, 'x', this.gridSize);
+    console.log('馃幃 鍗曡瘝鍖归厤娓告垙寮€濮?- 闅惧害绛夌骇:', this.gridSize, 'x', this.gridSize);
   }
 
   generateGrid() {
@@ -160,11 +160,11 @@ class MiniGame {
     const grid = Array(gridSize).fill(null).map(() => Array(gridSize).fill(null));
     const wrongWords = getWrongWords();
     const wordList = Object.entries(wrongWords)
-      .filter(([_, data]) => data.count >= 1)
+      .filter(([, data]) => data.count >= 1)
       .map(([id, data]) => ({
         id,
         word: data.word,
-        translation: data.translation,
+        meaning: data.meaning || data.translation || '',
         count: data.count
       }))
       .sort((a, b) => b.count - a.count)
@@ -172,11 +172,11 @@ class MiniGame {
 
     if (wordList.length < 5) {
       const defaultWords = [
-        { id: 'default_1', word: 'abandon', translation: '放弃' },
-        { id: 'default_2', word: 'ability', translation: '能力' },
-        { id: 'default_3', word: 'abnormal', translation: '异常的' },
-        { id: 'default_4', word: 'aboard', translation: '在船上' },
-        { id: 'default_5', word: 'abroad', translation: '在国外' }
+        { id: 'default_1', word: 'abandon', meaning: '放弃' },
+        { id: 'default_2', word: 'ability', meaning: '能力' },
+        { id: 'default_3', word: 'abnormal', meaning: '不正常的' },
+        { id: 'default_4', word: 'aboard', meaning: '在船上' },
+        { id: 'default_5', word: 'abroad', meaning: '在国外' }
       ];
       wordList.push(...defaultWords);
     }
@@ -210,7 +210,7 @@ class MiniGame {
       grid[pos.row][pos.col] = {
         id: wordData.id,
         word: wordData.word,
-        translation: wordData.translation
+        meaning: wordData.meaning || wordData.translation || ''
       };
       usedWords.add(wordData.id);
       idx++;
@@ -223,7 +223,7 @@ class MiniGame {
           grid[i][j] = {
             id: `filler_${i}_${j}`,
             word: randomWord.word,
-            translation: randomWord.translation
+            meaning: randomWord.meaning || randomWord.translation || ''
           };
         }
       }
@@ -235,16 +235,8 @@ class MiniGame {
   renderGrid() {
     const gridContainer = document.getElementById('minigame-grid');
     if (!gridContainer) return;
-    
-    gridContainer.innerHTML = '';
-    gridContainer.style.cssText = `
-      display: grid;
-      grid-template-columns: repeat(${this.gridSize}, 1fr);
-      gap: 6px;
-      max-width: ${this.gridSize * 70}px;
-      margin: 0 auto;
-      padding: 15px;
-    `;
+
+    const fragment = document.createDocumentFragment();
 
     for (let i = 0; i < this.gridSize; i++) {
       for (let j = 0; j < this.gridSize; j++) {
@@ -252,10 +244,11 @@ class MiniGame {
         cell.className = 'minigame-cell';
         cell.dataset.row = i;
         cell.dataset.col = j;
-        
+        cell.dataset.state = 'normal';
+
         const wordData = this.grid[i][j];
         cell.textContent = wordData.word;
-        
+
         const fontSize = this.gridSize > 4 ? '11px' : '13px';
         cell.style.cssText = `
           width: ${this.gridSize > 4 ? '55px' : '65px'};
@@ -276,12 +269,22 @@ class MiniGame {
           word-break: break-word;
           box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         `;
-        
+
         cell.onclick = () => this.handleCellClick(i, j, cell);
-        
-        gridContainer.appendChild(cell);
+
+        fragment.appendChild(cell);
       }
     }
+
+    gridContainer.replaceChildren(fragment);
+    gridContainer.style.cssText = `
+      display: grid;
+      grid-template-columns: repeat(${this.gridSize}, 1fr);
+      gap: 6px;
+      max-width: ${this.gridSize * 70}px;
+      margin: 0 auto;
+      padding: 15px;
+    `;
   }
 
   handleCellClick(row, col, cellElement) {
@@ -289,7 +292,7 @@ class MiniGame {
     
     const clickedWord = this.grid[row][col];
     
-    if (clickedWord.translation === this.currentWord.translation) {
+    if (clickedWord.meaning === this.currentWord.meaning) {
       this.handleCorrectMatch(row, col, cellElement);
     } else {
       this.handleWrongMatch(row, col, cellElement);
@@ -314,7 +317,7 @@ class MiniGame {
     this.checkAchievements();
     
     if (typeof window.UI !== 'undefined') {
-      UI.toast(`+${10 + this.streak * 2} 分！连击：${this.streak} ${reward ? '🎁' : ''}`, 'success');
+      window.UI.toast(`+${10 + this.streak * 2} 鍒嗭紒杩炲嚮锛?{this.streak} ${reward ? '馃巵' : ''}`, 'success');
     }
     
     this.updateUI();
@@ -339,7 +342,7 @@ class MiniGame {
     cellElement.style.boxShadow = '0 0 15px var(--danger)';
     
     if (typeof window.UI !== 'undefined') {
-      UI.toast('匹配错误，连击中断', 'error');
+      window.UI.toast('匹配错误，连击已中断', 'error');
     }
     
     this.updateUI();
@@ -366,7 +369,7 @@ class MiniGame {
     localStorage.setItem('cet46_minigame_rewards', JSON.stringify(this.unlockedRewards));
     
     if (typeof window.UI !== 'undefined') {
-      UI.toast(`🎁 解锁成就：${reward.name} ${reward.icon}`, 'success');
+      window.UI.toast(`馃巵 瑙ｉ攣鎴愬氨锛?{reward.name} ${reward.icon}`, 'success');
     }
     
     setTimeout(() => {
@@ -406,7 +409,7 @@ class MiniGame {
         localStorage.setItem('cet46_minigame_achievements', JSON.stringify(this.achievements));
         
         if (typeof window.UI !== 'undefined') {
-          UI.toast(`🏆 达成成就：${achievement.name} ${achievement.icon}`, 'success');
+          window.UI.toast(`馃弳 杈炬垚鎴愬氨锛?{achievement.name} ${achievement.icon}`, 'success');
         }
       }
     }
@@ -422,12 +425,20 @@ class MiniGame {
   }
 
   nextWord() {
-    const availableWords = this.words.filter(w => w.translation);
-    this.currentWord = availableWords[Math.floor(Math.random() * availableWords.length)];
+    const availableWords = this.words.filter(w => (w.meaning || w.translation || ''));
+    if (availableWords.length === 0) {
+      this.currentWord = null;
+      return;
+    }
+    const pickedWord = availableWords[Math.floor(Math.random() * availableWords.length)];
+    this.currentWord = {
+      ...pickedWord,
+      meaning: pickedWord.meaning || pickedWord.translation || ''
+    };
     
     const targetDisplay = document.getElementById('minigame-target');
     if (targetDisplay) {
-      targetDisplay.textContent = this.currentWord.translation;
+      targetDisplay.textContent = this.currentWord.meaning || this.currentWord.translation || '';
       targetDisplay.style.cssText = `
         font-size: 1.5rem;
         font-weight: bold;
@@ -480,7 +491,7 @@ class MiniGame {
     const isPerfect = this.errors === 0 && victory;
     
     if (isPerfect) {
-      this.unlockReward({ id: 'perfect', name: '完美无瑕', icon: '✨' });
+      this.unlockReward({ id: 'perfect', name: '完美无瑕', icon: '✅' });
     }
     
     const gameModal = document.getElementById('minigame-game-modal');
@@ -493,7 +504,7 @@ class MiniGame {
       document.getElementById('minigame-final-streak').textContent = this.maxStreak;
       document.getElementById('minigame-final-errors').textContent = this.errors;
       document.getElementById('minigame-result-title').textContent = 
-        victory ? (isPerfect ? '✨ 完美通关！' : '🎉 挑战成功！') : '⏰ 时间到！';
+        victory ? (isPerfect ? '完美通关' : '挑战成功') : '时间到';
       
       const reward = this.getCurrentReward();
       document.getElementById('minigame-current-reward').textContent = reward.icon;
@@ -511,12 +522,12 @@ class MiniGame {
     const highScore = parseInt(localStorage.getItem('cet46_minigame_highscore') || '0');
     if (this.score > highScore) {
       localStorage.setItem('cet46_minigame_highscore', this.score.toString());
-      console.log('🎉 新纪录！', this.score);
+      console.log('馃帀 鏂扮邯褰曪紒', this.score);
     }
     
     localStorage.setItem('cet46_today_study_count', '0');
     
-    console.log(`🎮 游戏结束 - 得分：${this.score}, 连击：${this.maxStreak}, 错误：${this.errors}`);
+    console.log(`馃幃 娓告垙缁撴潫 - 寰楀垎锛?{this.score}, 杩炲嚮锛?{this.maxStreak}, 閿欒锛?{this.errors}`);
   }
 
   bindEvents() {
@@ -547,3 +558,4 @@ class MiniGame {
 const miniGame = new MiniGame();
 
 export { MiniGame, miniGame, MIN_CONSECUTIVE, REWARDS, ACHIEVEMENTS };
+

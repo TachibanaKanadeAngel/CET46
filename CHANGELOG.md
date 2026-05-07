@@ -1,4 +1,27 @@
-# CET46 科学记忆引擎 Pro v1.3 - 更新日志
+# CET46 科学记忆引擎 Pro v1.3.2 - 更新日志
+
+## 📅 2026-04-26 v1.3.2 - 功能优化与问题修复
+
+### 修复问题
+- 修复学习功能参数传递不完整导致的学习模式异常（`study.js` `startStudy` 参数签名统一）
+- 统一版本号至 v1.3.2（config.js、index.html、package.json）
+- 合并重复的全局错误处理逻辑（移除 index.html 和 main.js 底部的重复监听器）
+- 优化虚拟滚动性能，使用 `replaceChildren` 替代 `innerHTML`，减少 DOM 重排
+
+### 性能优化
+- 音频预加载改为并发批处理模式（限10并发），提升加载速度
+- IndexedDB 默认词库导入改为 `bulkSave` 批量操作
+- 添加语义图谱构建取消机制（`cleanupSemanticGraph`），`beforeunload` 时自动终止，防止内存泄漏
+
+### 安全性
+- 添加 `escapeHtml` 函数，对错误分析中的动态内容进行 HTML 转义，防范 XSS
+- 移除 `index.html` 中冗余的内联错误监听脚本
+
+### 代码质量
+- 提取魔法数字到 `CONSTANTS` 常量（学习限制、预加载并发等）
+- 添加 JSDoc 类型注释至核心函数（`startStudy`、`buildSemanticGraphAsync`、`prefetchAudioLibrary` 等）
+
+---
 
 ## 📅 2026-04-13 v1.3.0 - 支持本地文件直接打开
 
@@ -24,6 +47,20 @@ npm run build
 ### 验证结果
 - ✅ 词库列表、学习、复习、统计功能正常
 - ✅ 无控制台错误、无警告条、无闪烁白点
+
+---
+
+## 📅 2026-04-24 v1.3.1 - 全面代码修复
+
+### 修复问题
+- 缺失 `js/workers/fsrs-trainer-worker.js` Worker 文件，导致 FSRS 训练功能崩溃
+- `server.cjs` 路径遍历安全漏洞，添加路径校验和 OPTIONS 预检处理
+- 清理孤儿文件 `electron/main.js`
+- 补充 `vercel.json` 构建配置
+- 更新 `vite.config.js` 插件注释以反映实际功能
+- 修复 `index.html` 版本号不一致 (v1.0 → v1.3)
+- 更新 `electron-builder.json` 版权年份 (2024 → 2024-2026)
+- 优化 `build-apk.yml` 工作流，移除冗余 Capacitor 安装步骤
 
 ---
 

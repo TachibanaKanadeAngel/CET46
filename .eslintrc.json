@@ -9,7 +9,7 @@
     "sourceType": "module"
   },
   "rules": {
-    "no-unused-vars": "warn",
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     "no-undef": "error",
     "no-duplicate-imports": "error",
     "no-unreachable": "error",

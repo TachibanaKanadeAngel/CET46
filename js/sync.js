@@ -1,16 +1,81 @@
-import { CONFIG } from './config.js';
 import { Network } from './network.js';
 
 let webdavConfig = null;
+let syncPromise = null; // 使用 Promise 作为完美的互斥锁
+
+/**
+ * 辅助函数：从 LRUCache 或普通对象获取数据
+ * 支持向后兼容，处理两种数据类型
+ */
+function getCacheData(cache) {
+  if (!cache) return {};
+  // 如果是 LRUCache 实例，使用 toObject() 方法
+  if (typeof cache.toObject === 'function') {
+    return cache.toObject();
+  }
+  // 否则假设是普通对象
+  return { ...cache };
+}
+
+/**
+ * 辅助函数：获取 LRUCache 或普通对象的条目数组
+ */
+function getCacheEntries(cache) {
+  if (!cache) return [];
+  // 如果是 LRUCache 实例，使用 entries() 方法
+  if (typeof cache.entries === 'function') {
+    return cache.entries();
+  }
+  // 否则假设是普通对象
+  return Object.entries(cache);
+}
+
+/**
+ * 辅助函数：设置 LRUCache 或普通对象的值
+ */
+function setCacheValue(cache, key, value) {
+  if (!cache) return;
+  // 如果是 LRUCache 实例，使用 set() 方法
+  if (typeof cache.set === 'function' && typeof cache.get === 'function') {
+    cache.set(key, value);
+  } else {
+    // 否则假设是普通对象
+    cache[key] = value;
+  }
+}
+
+/**
+ * 辅助函数：从 LRUCache 或普通对象获取值
+ */
+function getCacheValue(cache, key) {
+  if (!cache) return undefined;
+  // 如果是 LRUCache 实例，使用 get() 方法
+  if (typeof cache.get === 'function') {
+    return cache.get(key);
+  }
+  // 否则假设是普通对象
+  return cache[key];
+}
+
+/**
+ * 辅助函数：获取 LRUCache 或普通对象的键数量
+ */
+function getCacheSize(cache) {
+  if (!cache) return 0;
+  if (typeof cache.size === 'number') {
+    return cache.size;
+  }
+  return Object.keys(cache).length;
+}
 
 const PBKDF2_ITERATIONS = 600000;
 
 const cryptoWorkerCode = `
-  const ITERATIONS = ${PBKDF2_ITERATIONS};
+  const PBKDF2_ITERATIONS = ${PBKDF2_ITERATIONS};
   self.onmessage = async (e) => {
     const { type, password, salt, iv, data, iterations } = e.data;
     const enc = new TextEncoder();
-    const ITERATIONS = iterations || ${ITERATIONS};
+    const ITERATIONS = iterations || PBKDF2_ITERATIONS;
     
     try {
       if (type === 'deriveKey') {
@@ -46,11 +111,29 @@ const cryptoWorkerCode = `
 
 const asyncCrypto = {
   worker: null,
+  blobUrl: null,
   init() {
     if (!this.worker) {
-      this.worker = new Worker(URL.createObjectURL(new Blob([cryptoWorkerCode], { type: 'text/javascript' })));
+      try {
+        const blob = new Blob([cryptoWorkerCode], { type: 'text/javascript' });
+        this.blobUrl = URL.createObjectURL(blob);
+        this.worker = new Worker(this.blobUrl);
+      } catch (e) {
+        console.error('❌ 创建 Crypto Worker 失败:', e.message);
+        return null;
+      }
     }
     return this.worker;
+  },
+  terminate() {
+    if (this.worker) {
+      this.worker.terminate();
+      this.worker = null;
+    }
+    if (this.blobUrl) {
+      URL.revokeObjectURL(this.blobUrl);
+      this.blobUrl = null;
+    }
   },
   async encrypt(text, password) {
     return new Promise((resolve, reject) => {
@@ -58,8 +141,13 @@ const asyncCrypto = {
       const salt = crypto.getRandomValues(new Uint8Array(16));
       const iv = crypto.getRandomValues(new Uint8Array(12));
       const data = new TextEncoder().encode(text);
-      
+
+      const timeout = setTimeout(() => {
+        reject(new Error('加密超时'));
+      }, 30000);
+
       worker.onmessage = (e) => {
+        clearTimeout(timeout);
         if (e.data.type === 'encrypted') {
           const combined = new Uint8Array(salt.length + iv.length + e.data.ciphertext.byteLength);
           combined.set(salt, 0);
@@ -70,31 +158,49 @@ const asyncCrypto = {
           reject(new Error(e.data.error));
         }
       };
-      
+
+      worker.onerror = (err) => {
+        clearTimeout(timeout);
+        reject(new Error('Worker 加密失败: ' + err.message));
+      };
+
       worker.postMessage({ type: 'encrypt', password, salt, iv, data, iterations: PBKDF2_ITERATIONS });
     });
   },
   async decrypt(encryptedBase64, password) {
     return new Promise((resolve, reject) => {
+      let combined;
       try {
-        const worker = this.init();
-        const combined = new Uint8Array(atob(encryptedBase64).split('').map(c => c.charCodeAt(0)));
-        const salt = combined.slice(0, 16);
-        const iv = combined.slice(16, 28);
-        const data = combined.slice(28);
-        
-        worker.onmessage = (e) => {
-          if (e.data.type === 'decrypted') {
-            resolve(new TextDecoder().decode(e.data.data));
-          } else if (e.data.type === 'error') {
-            resolve(null);
-          }
-        };
-        
-        worker.postMessage({ type: 'decrypt', password, salt, iv, data, iterations: PBKDF2_ITERATIONS });
+        combined = new Uint8Array(atob(encryptedBase64).split('').map(c => c.charCodeAt(0)));
       } catch (e) {
-        resolve(null);
+        reject(new Error('Base64 解码失败'));
+        return;
       }
+      const salt = combined.slice(0, 16);
+      const iv = combined.slice(16, 28);
+      const data = combined.slice(28);
+
+      const worker = this.init();
+
+      const timeout = setTimeout(() => {
+        reject(new Error('解密超时'));
+      }, 30000);
+
+      worker.onmessage = (e) => {
+        clearTimeout(timeout);
+        if (e.data.type === 'decrypted') {
+          resolve(new TextDecoder().decode(e.data.data));
+        } else if (e.data.type === 'error') {
+          reject(new Error(e.data.error));
+        }
+      };
+
+      worker.onerror = (err) => {
+        clearTimeout(timeout);
+        reject(new Error('Worker 解密失败: ' + err.message));
+      };
+
+      worker.postMessage({ type: 'decrypt', password, salt, iv, data, iterations: PBKDF2_ITERATIONS });
     });
   }
 };
@@ -182,14 +288,22 @@ async function testWebDAVConnection(config) {
 }
 
 function generateVectorClock(deviceId) {
-  const stored = localStorage.getItem('cet46_vector_clock');
-  let clock = stored ? JSON.parse(stored) : {};
-  
+  let clock = {};
+  try {
+    const stored = localStorage.getItem('cet46_vector_clock');
+    if (stored) {
+      clock = JSON.parse(stored);
+    }
+  } catch (e) {
+    console.warn('解析 vector clock 失败，重置为空:', e);
+    clock = {};
+  }
+
   if (!clock[deviceId]) {
     clock[deviceId] = 0;
   }
   clock[deviceId]++;
-  
+
   localStorage.setItem('cet46_vector_clock', JSON.stringify(clock));
   return { ...clock };
 }
@@ -247,7 +361,7 @@ class ConflictError extends Error {
   }
 }
 
-async function mergePropertyAwareInteractive(localWd, cloudWd, wordId) {
+async function mergePropertyAwareInteractive(localWd, cloudWd, _wordId) {
   try {
     return mergePropertyAware(localWd, cloudWd);
   } catch (e) {
@@ -274,7 +388,7 @@ function showConflictModal(local, cloud, field) {
     
     const counter = document.getElementById('conflict-counter');
     if (counter) {
-      counter.textContent = `请选择保留哪个版本的数据`;
+      counter.textContent = '请选择保留哪个版本的数据';
     }
     
     modal.classList.add('active');
@@ -300,6 +414,35 @@ function showConflictModal(local, cloud, field) {
   });
 }
 
+// 获取上次同步的基准数据，用于计算增量
+function getSyncBase() {
+  try {
+    return JSON.parse(localStorage.getItem('cet46_sync_base') || '{}');
+  } catch {
+    return {};
+  }
+}
+
+// 保存同步基准数据
+function saveSyncBase(data) {
+  localStorage.setItem('cet46_sync_base', JSON.stringify(data));
+}
+
+// 获取基准值，支持嵌套路径
+function getBaseValue(type, id, field = 'count') {
+  const base = getSyncBase();
+  const typeData = base[type];
+  if (!typeData) return 0;
+  
+  // heatmap 是简单的 date -> count 映射
+  if (type === 'heatmap') {
+    return typeData[id] || 0;
+  }
+  
+  // wrongWords 等是嵌套对象
+  return typeData[id]?.[field] || 0;
+}
+
 async function mergeLocalAndCloud(local, cloud, deviceId) {
   const mergedProgress = { ...cloud.progress };
   const mergedDeletedIds = new Set([...(local.deletedIds || []), ...(cloud.deletedIds || [])]);
@@ -321,6 +464,8 @@ async function mergeLocalAndCloud(local, cloud, deviceId) {
     }
   }
 
+  // 修复：使用增量合并策略（Delta Merge）替代 Math.max
+  // 解决多设备离线学习后同步导致的数据丢失问题
   const mergedWrongWords = { ...cloud.wrongWords };
   for (const [id, localWrong] of Object.entries(local.wrongWords)) {
     const cloudWrong = mergedWrongWords[id];
@@ -328,17 +473,26 @@ async function mergeLocalAndCloud(local, cloud, deviceId) {
     if (!cloudWrong) {
       mergedWrongWords[id] = localWrong;
     } else {
+      // 核心逻辑：云端数量 + 本地自上次同步后新增的数量
+      const baseCount = getBaseValue('wrongWords', id, 'count');
+      const localDelta = Math.max(0, (localWrong.count || 0) - baseCount);
+      
       mergedWrongWords[id] = {
-        count: Math.max(localWrong.count, cloudWrong.count),
+        count: (cloudWrong.count || 0) + localDelta, // 累加真实增量
         firstWrong: Math.min(localWrong.firstWrong || Infinity, cloudWrong.firstWrong || Infinity),
         lastWrong: Math.max(localWrong.lastWrong || 0, cloudWrong.lastWrong || 0)
       };
     }
   }
 
+  // 修复：热力图同样使用增量合并
   const mergedHeatmap = { ...cloud.heatmap };
-  for (const [date, count] of Object.entries(local.heatmap)) {
-    mergedHeatmap[date] = Math.max(mergedHeatmap[date] || 0, count);
+  for (const [date, localCount] of Object.entries(local.heatmap)) {
+    const cloudCount = cloud.heatmap[date] || 0;
+    const baseCount = getBaseValue('heatmap', date);
+    const localDelta = Math.max(0, localCount - baseCount);
+    
+    mergedHeatmap[date] = cloudCount + localDelta;
   }
 
   return { 
@@ -351,172 +505,198 @@ async function mergeLocalAndCloud(local, cloud, deviceId) {
 
 async function syncToWebDAV(db, memoryCache, deviceId) {
   if (!webdavConfig) throw new Error('请先配置 WebDAV');
-
-  const snapshot = {
-    timestamp: Date.now(),
-    data: {
-      progress: { ...memoryCache.progress },
-      wrongWords: { ...memoryCache.wrongWords },
-      heatmap: { ...memoryCache.heatmap },
-      deletedIds: Array.from(memoryCache.deletedIds || [])
-    }
-  };
-  await db.save('session', { key: 'last_snapshot', data: snapshot });
-
-  const dirtyEntries = Object.entries(memoryCache.progress).filter(([id, wd]) => wd.isDirty);
-  const deletedEntries = Array.from(memoryCache.deletedIds || []).map(id => ({
-    id: id,
-    action: 'delete',
-    mtime: Date.now()
-  }));
-
-  const hasWrongWordsChanges = memoryCache.wrongWordsDirty === true;
-  const hasHeatmapChanges = memoryCache.heatmapDirty === true;
-
-  if (dirtyEntries.length === 0 && deletedEntries.length === 0 && !hasWrongWordsChanges && !hasHeatmapChanges) {
-    return { status: 'no_changes', message: '数据已是最新，无需同步' };
+  
+  if (syncPromise) {
+    console.warn('🔄 同步已在进行中...');
+    updateWebDAVStatus('同步中，请稍候...', 'warning');
+    return syncPromise;
   }
 
-  const vectorClock = generateVectorClock(deviceId);
+  syncPromise = (async () => {
+    try {
+      updateWebDAVStatus('开始同步...', 'info');
 
-  const patchData = {
-    version: '1.0',
-    timestamp: Date.now(),
-    deviceId: deviceId,
-    vectorClock: vectorClock,
-    changes: [
-      ...dirtyEntries.map(([id, wd]) => ({
-        id: parseInt(id),
-        action: 'update',
-        data: { ...wd },
-        mtime: wd.mtime || Date.now(),
-        vectorClock: wd.vectorClock || vectorClock
-      })),
-      ...deletedEntries
-    ],
-    meta: {}
-  };
+      const snapshot = {
+        timestamp: Date.now(),
+        data: {
+          progress: getCacheData(memoryCache.progress),
+          wrongWords: getCacheData(memoryCache.wrongWords),
+          heatmap: getCacheData(memoryCache.heatmap),
+          deletedIds: Array.from(memoryCache.deletedIds || [])
+        }
+      };
+      await db.save('session', { key: 'last_snapshot', data: snapshot });
 
-  if (hasWrongWordsChanges) {
-    patchData.meta.wrongWords = { ...memoryCache.wrongWords };
-    patchData.meta.wrongWordsMtime = Date.now();
-  }
+      const dirtyEntries = getCacheEntries(memoryCache.progress).filter(([_id, wd]) => wd.isDirty);
+      const deletedEntries = Array.from(memoryCache.deletedIds || []).map(id => ({
+        id: id,
+        action: 'delete',
+        mtime: Date.now()
+      }));
 
-  if (hasHeatmapChanges) {
-    patchData.meta.heatmap = { ...memoryCache.heatmap };
-    patchData.meta.heatmapMtime = Date.now();
-  }
+      const hasWrongWordsChanges = memoryCache.wrongWordsDirty === true;
+      const hasHeatmapChanges = memoryCache.heatmapDirty === true;
 
-  let cloudETag = null;
-  let existingPatch = null;
-
-  try {
-    const cloudResponse = await Network.fetchWithRetry(webdavConfig.url + '/cet46_patch.json', {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Basic ' + btoa(webdavConfig.username + ':' + webdavConfig.password)
-      }
-    });
-    if (cloudResponse.ok) {
-      cloudETag = cloudResponse.headers.get('ETag');
-      existingPatch = await cloudResponse.json();
-    }
-  } catch (e) {
-    console.log('云端无增量日志，将创建新文件');
-  }
-
-  if (existingPatch && existingPatch.changes) {
-    const localMtime = new Map(dirtyEntries.map(([id, wd]) => [parseInt(id), wd.mtime || 0]));
-    const localDeleted = new Set(deletedEntries.map(d => d.id));
-
-    for (const change of existingPatch.changes) {
-      if (localDeleted.has(change.id)) continue;
-
-      if (change.action === 'delete') {
-        continue;
+      if (dirtyEntries.length === 0 && deletedEntries.length === 0 && !hasWrongWordsChanges && !hasHeatmapChanges) {
+        return { status: 'no_changes', message: '数据已是最新，无需同步' };
       }
 
-      if (!localMtime.has(change.id) || (change.mtime || 0) > (localMtime.get(change.id) || 0)) {
-        patchData.changes.push(change);
+      const vectorClock = generateVectorClock(deviceId);
+
+      const patchData = {
+        version: '1.0',
+        timestamp: Date.now(),
+        deviceId: deviceId,
+        vectorClock: vectorClock,
+        changes: [
+          ...dirtyEntries.map(([id, wd]) => ({
+            id: parseInt(id),
+            action: 'update',
+            data: { ...wd },
+            mtime: wd.mtime || Date.now(),
+            vectorClock: wd.vectorClock || vectorClock
+          })),
+          ...deletedEntries
+        ],
+        meta: {}
+      };
+
+      if (hasWrongWordsChanges) {
+        patchData.meta.wrongWords = getCacheData(memoryCache.wrongWords);
+        patchData.meta.wrongWordsMtime = Date.now();
       }
-    }
 
-    patchData.changes.sort((a, b) => (a.mtime || 0) - (b.mtime || 0));
-    if (patchData.changes.length > 1000) {
-      patchData.changes = patchData.changes.slice(-1000);
-    }
-
-    if (existingPatch.meta) {
-      if (!patchData.meta.wrongWords && existingPatch.meta.wrongWords) {
-        patchData.meta.wrongWords = existingPatch.meta.wrongWords;
-        patchData.meta.wrongWordsMtime = existingPatch.meta.wrongWordsMtime;
+      if (hasHeatmapChanges) {
+        patchData.meta.heatmap = getCacheData(memoryCache.heatmap);
+        patchData.meta.heatmapMtime = Date.now();
       }
-      if (!patchData.meta.heatmap && existingPatch.meta.heatmap) {
-        patchData.meta.heatmap = existingPatch.meta.heatmap;
-        patchData.meta.heatmapMtime = existingPatch.meta.heatmapMtime;
+
+      let cloudETag = null;
+      let existingPatch = null;
+
+      try {
+        const cloudResponse = await Network.fetchWithRetry(webdavConfig.url + '/cet46_patch.json', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Basic ' + btoa(webdavConfig.username + ':' + webdavConfig.password)
+          }
+        });
+        if (cloudResponse.ok) {
+          cloudETag = cloudResponse.headers.get('ETag');
+          existingPatch = await cloudResponse.json();
+        }
+      } catch (e) {
+        console.log('云端无增量日志，将创建新文件');
       }
+
+      if (existingPatch && existingPatch.changes) {
+        const localMtime = new Map(dirtyEntries.map(([id, wd]) => [parseInt(id), wd.mtime || 0]));
+        const localDeleted = new Set(deletedEntries.map(d => d.id));
+
+        for (const change of existingPatch.changes) {
+          if (localDeleted.has(change.id)) continue;
+
+          if (change.action === 'delete') {
+            continue;
+          }
+
+          if (!localMtime.has(change.id) || (change.mtime || 0) > (localMtime.get(change.id) || 0)) {
+            patchData.changes.push(change);
+          }
+        }
+
+        patchData.changes.sort((a, b) => (a.mtime || 0) - (b.mtime || 0));
+        if (patchData.changes.length > 1000) {
+          patchData.changes = patchData.changes.slice(-1000);
+        }
+
+        if (existingPatch.meta) {
+          if (!patchData.meta.wrongWords && existingPatch.meta.wrongWords) {
+            patchData.meta.wrongWords = existingPatch.meta.wrongWords;
+            patchData.meta.wrongWordsMtime = existingPatch.meta.wrongWordsMtime;
+          }
+          if (!patchData.meta.heatmap && existingPatch.meta.heatmap) {
+            patchData.meta.heatmap = existingPatch.meta.heatmap;
+            patchData.meta.heatmapMtime = existingPatch.meta.heatmapMtime;
+          }
+        }
+      }
+
+      const patchBlob = new Blob([JSON.stringify(patchData, null, 2)], { type: 'application/json' });
+
+      const patchHeaders = {
+        'Authorization': 'Basic ' + btoa(webdavConfig.username + ':' + webdavConfig.password),
+        'Content-Type': 'application/json'
+      };
+
+      if (cloudETag) {
+        patchHeaders['If-Match'] = cloudETag;
+      }
+
+      const patchResponse = await Network.fetchWithRetry(webdavConfig.url + '/cet46_patch.json', {
+        method: 'PUT',
+        headers: patchHeaders,
+        body: patchBlob
+      });
+
+      if (patchResponse.ok || patchResponse.status === 201) {
+        const tx = db.instance.transaction('progress', 'readwrite');
+        const store = tx.objectStore('progress');
+        dirtyEntries.forEach(([id, wd]) => {
+          delete wd.isDirty;
+          setCacheValue(memoryCache.progress, id, wd);
+          store.put({ id: parseInt(id), ...wd });
+        });
+
+        if (hasWrongWordsChanges) {
+          memoryCache.wrongWordsDirty = false;
+        }
+        if (hasHeatmapChanges) {
+          memoryCache.heatmapDirty = false;
+        }
+
+        const newETag = patchResponse.headers.get('ETag');
+        if (newETag) localStorage.setItem('cet46_last_etag', newETag);
+
+        localStorage.setItem('cet46_last_sync', Date.now().toString());
+
+        updateWebDAVStatus('同步成功', 'success');
+        return { status: 'success', changes: patchData.changes.length };
+      } else if (patchResponse.status === 412) {
+        throw new Error('云端数据已被其他设备修改，请重试');
+      } else {
+        throw new Error(`同步失败: ${patchResponse.status}`);
+      }
+    } catch (error) {
+      console.error('同步失败:', error);
+      updateWebDAVStatus('同步失败', 'error');
+      throw error;
+    } finally {
+      syncPromise = null;
     }
-  }
+  })();
 
-  const patchBlob = new Blob([JSON.stringify(patchData, null, 2)], { type: 'application/json' });
-
-  const patchHeaders = {
-    'Authorization': 'Basic ' + btoa(webdavConfig.username + ':' + webdavConfig.password),
-    'Content-Type': 'application/json'
-  };
-
-  if (cloudETag) {
-    patchHeaders['If-Match'] = cloudETag;
-  }
-
-  const patchResponse = await Network.fetchWithRetry(webdavConfig.url + '/cet46_patch.json', {
-    method: 'PUT',
-    headers: patchHeaders,
-    body: patchBlob
-  });
-
-  if (patchResponse.ok || patchResponse.status === 201) {
-    const tx = db.instance.transaction('progress', 'readwrite');
-    const store = tx.objectStore('progress');
-    dirtyEntries.forEach(([id, wd]) => {
-      delete wd.isDirty;
-      memoryCache.progress[id] = wd;
-      store.put({ id: parseInt(id), ...wd });
-    });
-
-    if (hasWrongWordsChanges) {
-      memoryCache.wrongWordsDirty = false;
-    }
-    if (hasHeatmapChanges) {
-      memoryCache.heatmapDirty = false;
-    }
-
-    const newETag = patchResponse.headers.get('ETag');
-    if (newETag) localStorage.setItem('cet46_last_etag', newETag);
-
-    localStorage.setItem('cet46_last_sync', Date.now().toString());
-
-    return { status: 'success', changes: patchData.changes.length };
-  } else if (patchResponse.status === 412) {
-    throw new Error('云端数据已被其他设备修改，请重试');
-  } else {
-    throw new Error(`同步失败: ${patchResponse.status}`);
-  }
+  return syncPromise;
 }
 
 async function syncFromWebDAV(db, memoryCache, deviceId) {
   if (!webdavConfig) throw new Error('请先配置 WebDAV');
 
-  const snapshot = {
-    timestamp: Date.now(),
-    data: {
-      progress: { ...memoryCache.progress },
-      wrongWords: { ...memoryCache.wrongWords },
-      heatmap: { ...memoryCache.heatmap },
-      deletedIds: Array.from(memoryCache.deletedIds || [])
-    }
-  };
-  await db.save('session', { key: 'last_snapshot', data: snapshot });
+  try {
+    const snapshot = {
+      timestamp: Date.now(),
+      data: {
+        progress: getCacheData(memoryCache.progress),
+        wrongWords: getCacheData(memoryCache.wrongWords),
+        heatmap: getCacheData(memoryCache.heatmap),
+        deletedIds: Array.from(memoryCache.deletedIds || [])
+      }
+    };
+    await db.save('session', { key: 'last_snapshot', data: snapshot });
+  } catch (e) {
+    console.warn('保存快照失败:', e);
+    // 继续同步，不阻断流程
+  }
 
   let patchData = null;
   try {
@@ -530,64 +710,85 @@ async function syncFromWebDAV(db, memoryCache, deviceId) {
       patchData = await patchResponse.json();
     }
   } catch (e) {
-    console.log('云端无增量日志');
+    console.log('云端无增量日志或获取失败:', e.message);
   }
 
   if (patchData && patchData.meta) {
-    if (patchData.meta.wrongWords) {
-      const cloudWrongWords = patchData.meta.wrongWords;
-      for (const [id, data] of Object.entries(cloudWrongWords)) {
-        if (!memoryCache.wrongWords[id] ||
-            (patchData.meta.wrongWordsMtime || 0) > (memoryCache.wrongWords[id].mtime || 0)) {
-          memoryCache.wrongWords[id] = data;
-          if (db.instance) {
-            await db.save('wrongWords', { id: parseInt(id), data });
+    try {
+      if (patchData.meta.wrongWords) {
+        const cloudWrongWords = patchData.meta.wrongWords;
+        for (const [id, data] of Object.entries(cloudWrongWords)) {
+          const localData = getCacheValue(memoryCache.wrongWords, id);
+          if (!localData ||
+              (patchData.meta.wrongWordsMtime || 0) > (localData.mtime || 0)) {
+            setCacheValue(memoryCache.wrongWords, id, data);
+            if (db.instance) {
+              await db.save('wrongWords', { id: parseInt(id), data });
+            }
           }
         }
       }
-    }
 
-    if (patchData.meta.heatmap) {
-      const cloudHeatmap = patchData.meta.heatmap;
-      for (const [date, count] of Object.entries(cloudHeatmap)) {
-        if (!memoryCache.heatmap[date] || count > memoryCache.heatmap[date]) {
-          memoryCache.heatmap[date] = count;
-          if (db.instance) {
-            await db.save('heatmap', { date, count });
+      if (patchData.meta.heatmap) {
+        const cloudHeatmap = patchData.meta.heatmap;
+        for (const [date, count] of Object.entries(cloudHeatmap)) {
+          const localCount = getCacheValue(memoryCache.heatmap, date);
+          if (!localCount || count > localCount) {
+            setCacheValue(memoryCache.heatmap, date, count);
+            if (db.instance) {
+              await db.save('heatmap', { date, count });
+            }
           }
         }
       }
+    } catch (e) {
+      console.warn('应用增量补丁失败:', e);
     }
   }
 
-  const response = await Network.fetchWithRetry(webdavConfig.url + '/cet46_backup.json', {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Basic ' + btoa(webdavConfig.username + ':' + webdavConfig.password)
-    }
-  });
+  let response;
+  try {
+    response = await Network.fetchWithRetry(webdavConfig.url + '/cet46_backup.json', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Basic ' + btoa(webdavConfig.username + ':' + webdavConfig.password)
+      }
+    });
+  } catch (e) {
+    throw new Error(`网络请求失败: ${e.message}`);
+  }
 
   if (response.ok) {
-    const cloudData = await response.json();
+    let cloudData;
+    try {
+      cloudData = await response.json();
+    } catch (e) {
+      throw new Error('云端数据解析失败: ' + e.message);
+    }
 
-    let merged = await mergeLocalAndCloud(
-      {
-        progress: memoryCache.progress,
-        wrongWords: memoryCache.wrongWords,
-        heatmap: memoryCache.heatmap,
-        deletedIds: Array.from(memoryCache.deletedIds || [])
-      },
-      {
-        progress: cloudData.progress || {},
-        wrongWords: cloudData.wrongWords || {},
-        heatmap: cloudData.heatmap || {},
-        deletedIds: cloudData.deletedIds || []
-      },
-      deviceId
-    );
+    let merged;
+    try {
+      merged = await mergeLocalAndCloud(
+        {
+          progress: getCacheData(memoryCache.progress),
+          wrongWords: getCacheData(memoryCache.wrongWords),
+          heatmap: getCacheData(memoryCache.heatmap),
+          deletedIds: Array.from(memoryCache.deletedIds || [])
+        },
+        {
+          progress: cloudData.progress || {},
+          wrongWords: cloudData.wrongWords || {},
+          heatmap: cloudData.heatmap || {},
+          deletedIds: cloudData.deletedIds || []
+        },
+        deviceId
+      );
+    } catch (e) {
+      throw new Error('合并数据失败: ' + e.message);
+    }
 
     if (cloudData.words && cloudData.words.length > 0) {
-      const localCount = Object.keys(memoryCache.progress).length;
+      const localCount = getCacheSize(memoryCache.progress);
       if (cloudData.words.length > localCount) {
         return {
           status: 'needs_full_sync',
@@ -598,21 +799,67 @@ async function syncFromWebDAV(db, memoryCache, deviceId) {
       }
     }
 
-    memoryCache.progress = merged.progress;
-    memoryCache.wrongWords = merged.wrongWords;
-    memoryCache.heatmap = merged.heatmap;
-    memoryCache.deletedIds = new Set(merged.deletedIds || []);
+    // 清空并重新填充 LRUCache
+    try {
+      if (memoryCache.progress && typeof memoryCache.progress.clear === 'function') {
+        memoryCache.progress.clear();
+        for (const [id, wd] of Object.entries(merged.progress)) {
+          memoryCache.progress.set(id, wd);
+        }
+      } else {
+        memoryCache.progress = merged.progress;
+      }
+
+      if (memoryCache.wrongWords && typeof memoryCache.wrongWords.clear === 'function') {
+        memoryCache.wrongWords.clear();
+        for (const [id, wrongData] of Object.entries(merged.wrongWords)) {
+          memoryCache.wrongWords.set(id, wrongData);
+        }
+      } else {
+        memoryCache.wrongWords = merged.wrongWords;
+      }
+
+      if (memoryCache.heatmap && typeof memoryCache.heatmap.clear === 'function') {
+        memoryCache.heatmap.clear();
+        for (const [date, count] of Object.entries(merged.heatmap)) {
+          memoryCache.heatmap.set(date, count);
+        }
+      } else {
+        memoryCache.heatmap = merged.heatmap;
+      }
+
+      memoryCache.deletedIds = new Set(merged.deletedIds || []);
+    } catch (e) {
+      console.error('更新内存缓存失败:', e);
+      throw new Error('更新本地缓存失败: ' + e.message);
+    }
 
     if (db.instance) {
-      for (const [id, wd] of Object.entries(merged.progress)) {
-        await db.save('progress', { id: parseInt(id), ...wd });
+      try {
+        for (const [id, wd] of Object.entries(merged.progress)) {
+          await db.save('progress', { id: parseInt(id), ...wd });
+        }
+        for (const [id, wrongData] of Object.entries(merged.wrongWords)) {
+          await db.save('wrongWords', { id: parseInt(id), data: wrongData });
+        }
+        for (const [date, count] of Object.entries(merged.heatmap)) {
+          await db.save('heatmap', { date, count });
+        }
+      } catch (e) {
+        console.error('保存到数据库失败:', e);
+        throw new Error('保存同步数据失败: ' + e.message);
       }
-      for (const [id, wrongData] of Object.entries(merged.wrongWords)) {
-        await db.save('wrongWords', { id: parseInt(id), data: wrongData });
-      }
-      for (const [date, count] of Object.entries(merged.heatmap)) {
-        await db.save('heatmap', { date, count });
-      }
+    }
+
+    // 同步成功后保存基准数据，用于下次增量计算
+    try {
+      saveSyncBase({
+        wrongWords: merged.wrongWords,
+        heatmap: merged.heatmap,
+        timestamp: Date.now()
+      });
+    } catch (e) {
+      console.warn('保存同步基准失败:', e);
     }
 
     return { status: 'success', merged };
@@ -648,5 +895,6 @@ export {
   saveWebDAVConfig, testWebDAVConnection,
   generateVectorClock, compareVectorClocks, mergePropertyAware, mergePropertyAwareInteractive, mergeLocalAndCloud, ConflictError,
   syncToWebDAV, syncFromWebDAV,
-  exportEncryptionKey, updateWebDAVStatus
+  exportEncryptionKey, updateWebDAVStatus,
+  getSyncBase, saveSyncBase, getBaseValue
 };

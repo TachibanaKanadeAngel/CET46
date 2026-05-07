@@ -32,7 +32,7 @@ class BKTree {
       return;
     }
     let curr = this.root;
-    while (true) {
+    while (curr) {
       const dist = this.calcDistance(curr.word, word);
       if (dist === 0) return;
       if (!curr.children.has(dist)) {
@@ -120,9 +120,22 @@ class BKTree {
   }
 }
 
+function safeText(value) {
+  if (value == null) return '';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+  if (Array.isArray(value)) return value.map(safeText).filter(Boolean).join(' ');
+  if (typeof value === 'object') {
+    const candidate = value.word ?? value.meaning ?? value.translation ?? value.text ?? value.value ?? '';
+    if (candidate) return safeText(candidate);
+    try { return JSON.stringify(value); } catch { return ''; }
+  }
+  return String(value);
+}
+
 function calculateLevenshtein(s1, s2) {
-  s1 = s1.toLowerCase().trim();
-  s2 = s2.toLowerCase().trim();
+  s1 = safeText(s1).toLowerCase().trim();
+  s2 = safeText(s2).toLowerCase().trim();
   if (s1 === s2) return 0;
   if (s1.length === 0) return s2.length;
   if (s2.length === 0) return s1.length;
@@ -151,7 +164,8 @@ function calculateLevenshtein(s1, s2) {
 function buildLengthGroups(words) {
   const groups = new Map();
   for (const word of words) {
-    const len = word.length;
+    const text = typeof word === 'string' ? word : safeText(word);
+    const len = text.length;
     if (!groups.has(len)) {
       groups.set(len, []);
     }
@@ -203,6 +217,27 @@ self.onmessage = function(e) {
   buildAndSaveTree(words, threshold);
 };
 
+async function buildBKTreeAsync(words, calcDistance, onProgress) {
+  const tree = new BKTree(calcDistance);
+  const total = words.length;
+  const SLICE_SIZE = 200;
+
+  for (let i = 0; i < total; i += SLICE_SIZE) {
+    const chunk = words.slice(i, i + SLICE_SIZE);
+
+    for (const word of chunk) {
+      tree.add(word);
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 0));
+
+    if (onProgress) {
+      onProgress(Math.min(1, (i + SLICE_SIZE) / total));
+    }
+  }
+  return tree;
+}
+
 async function buildAndSaveTree(words, threshold) {
   const results = {};
   const total = words.length;
@@ -210,40 +245,57 @@ async function buildAndSaveTree(words, threshold) {
   const sortedLengths = Array.from(lengthGroups.keys()).sort((a, b) => a - b);
 
   const trees = new Map();
+  let groupProcessed = 0;
+  const totalGroups = sortedLengths.length;
+
   for (const len of sortedLengths) {
-    trees.set(len, buildBKTreeForGroup(lengthGroups.get(len), calculateLevenshtein));
+    trees.set(len, await buildBKTreeAsync(lengthGroups.get(len), calculateLevenshtein, (progress) => {
+      const overallProgress = (groupProcessed + progress) / totalGroups;
+      self.postMessage({
+        type: 'progress',
+        progress: overallProgress,
+        message: `构建长度组 ${len}...`
+      });
+    }));
+    groupProcessed++;
   }
 
   let processed = 0;
   const dynamicThreshold = (word) => Math.min(threshold, Math.floor(word.length * 0.4));
+  const SLICE_SIZE = 200;
 
-  for (const word of words) {
-    const wordLen = word.length;
-    const tol = dynamicThreshold(word);
-    results[word] = [];
+  for (let i = 0; i < words.length; i += SLICE_SIZE) {
+    const slice = words.slice(i, i + SLICE_SIZE);
 
-    for (let checkLen = wordLen - tol; checkLen <= wordLen + tol; checkLen++) {
-      if (!trees.has(checkLen)) continue;
+    for (const word of slice) {
+      const wordLen = word.length;
+      const tol = dynamicThreshold(word);
+      results[word] = [];
 
-      const tree = trees.get(checkLen);
-      const matches = tree.search(word, tol);
+      for (let checkLen = wordLen - tol; checkLen <= wordLen + tol; checkLen++) {
+        if (!trees.has(checkLen)) continue;
 
-      for (const match of matches) {
-        if (!results[word].some(r => r.word === match.word)) {
-          results[word].push({ word: match.word, distance: match.distance });
+        const tree = trees.get(checkLen);
+        const matches = tree.search(word, tol);
+
+        for (const match of matches) {
+          if (!results[word].some(r => r.word === match.word)) {
+            results[word].push({ word: match.word, distance: match.distance });
+          }
         }
       }
+
+      processed++;
     }
 
-    processed++;
-    if (processed % 500 === 0) {
-      self.postMessage({
-        type: 'progress',
-        progress: processed / total,
-        processed,
-        total
-      });
-    }
+    await new Promise(resolve => setTimeout(resolve, 0));
+
+    self.postMessage({
+      type: 'progress',
+      progress: Math.min(1, processed / total),
+      processed,
+      total
+    });
   }
 
   const serializedTrees = {};
@@ -276,9 +328,15 @@ async function loadTreeFromCache(serializedTrees) {
       return false;
     }
 
+    // 修复：Map 没有 reduce 方法，改用 for...of 计算总数
+    let totalWords = 0;
+    for (const tree of trees.values()) {
+      totalWords += (tree.wordCount || 0);
+    }
+
     self.postMessage({
       type: 'info',
-      message: `✅ 从 IndexedDB 加载 BK-Tree，共 ${trees.size} 个长度组，总计 ${trees.reduce((sum, t) => sum + t.wordCount, 0)} 个单词`
+      message: `✅ 从 IndexedDB 加载 BK-Tree，共 ${trees.size} 个长度组，总计 ${totalWords} 个单词`
     });
 
     self.treeCache = trees;
@@ -290,38 +348,61 @@ async function loadTreeFromCache(serializedTrees) {
 }
 
 async function loadTreeFromDB() {
-  return new Promise(resolve => {
-    const serialized = localStorage.getItem('cet46_semantic_bktree');
-    if (!serialized) {
-      resolve(false);
-      return;
-    }
-
+  return new Promise((resolve, _reject) => {
     try {
-      const serializedTrees = JSON.parse(serialized);
-      const trees = new Map();
+      const request = indexedDB.open('CET46ProDB', 1);
 
-      for (const [len, data] of Object.entries(serializedTrees)) {
-        const tree = new BKTree(calculateLevenshtein);
-        if (tree.deserialize(data)) {
-          trees.set(parseInt(len), tree);
-        }
-      }
-
-      if (trees.size === 0) {
+      request.onerror = () => {
+        console.error('无法打开 IndexedDB');
         resolve(false);
-        return;
-      }
+      };
 
-      self.postMessage({
-        type: 'info',
-        message: `✅ 从 IndexedDB 加载 BK-Tree，共 ${trees.size} 个长度组`
-      });
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains('meta_store')) {
+          db.createObjectStore('meta_store', { keyPath: 'key' });
+        }
+      };
 
-      self.treeCache = trees;
-      resolve(true);
-    } catch (e) {
-      console.error('加载 BK-Tree 失败:', e);
+      request.onsuccess = (event) => {
+        const db = event.target.result;
+
+        if (!db.objectStoreNames.contains('meta_store')) {
+          db.close();
+          resolve(false);
+          return;
+        }
+
+        try {
+          const tx = db.transaction(['meta_store'], 'readonly');
+          const store = tx.objectStore('meta_store');
+          const getReq = store.get('bktree_cache');
+
+          getReq.onsuccess = () => {
+            const result = getReq.result;
+            db.close();
+
+            if (!result || !result.data) {
+              resolve(false);
+              return;
+            }
+
+            loadTreeFromCache(result.data).then(success => {
+              resolve(success);
+            });
+          };
+
+          getReq.onerror = () => {
+            db.close();
+            resolve(false);
+          };
+        } catch (err) {
+          db.close();
+          resolve(false);
+        }
+      };
+    } catch (err) {
+      console.error('IndexedDB 访问错误:', err);
       resolve(false);
     }
   });
@@ -333,11 +414,13 @@ function bruteforceSearch(words, threshold) {
 
   for (let i = 0; i < total; i++) {
     const word1 = words[i];
+    const t1 = safeText(word1);
     results[word1] = [];
 
     for (let j = i + 1; j < total; j++) {
       const word2 = words[j];
-      if (Math.abs(word1.length - word2.length) > threshold) continue;
+      const t2 = safeText(word2);
+      if (Math.abs(t1.length - t2.length) > threshold) continue;
 
       const distance = calculateLevenshtein(word1, word2);
       if (distance <= threshold && distance > 0) {
