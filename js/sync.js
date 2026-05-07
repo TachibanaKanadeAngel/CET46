@@ -881,11 +881,17 @@ function exportEncryptionKey() {
   };
 }
 
+let statusTimeoutId = null;
+
 function updateWebDAVStatus(message, type = 'info') {
   const statusEl = document.getElementById('webdav-status');
   if (statusEl) {
     statusEl.textContent = message;
-    setTimeout(() => { statusEl.textContent = ''; }, 5000);
+    if (statusTimeoutId) clearTimeout(statusTimeoutId);
+    statusTimeoutId = setTimeout(() => {
+      statusEl.textContent = '';
+      statusTimeoutId = null;
+    }, 5000);
   }
 }
 
