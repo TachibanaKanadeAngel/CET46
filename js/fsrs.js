@@ -1,12 +1,41 @@
 import { CONFIG } from './config.js';
 
-const DEFAULT_EF = CONFIG.FSRS.DEFAULT_EF;
-const MIN_EF = CONFIG.FSRS.MIN_EF;
-const MAX_EF = CONFIG.FSRS.MAX_EF;
-const TARGET_RETENTION = CONFIG.FSRS.TARGET_RETENTION;
+export const DEFAULT_EF = CONFIG.FSRS.DEFAULT_EF;
+export const MIN_EF = CONFIG.FSRS.MIN_EF;
+export const MAX_EF = CONFIG.FSRS.MAX_EF;
+export const TARGET_RETENTION = CONFIG.FSRS.TARGET_RETENTION;
 
-let FSRS_W = [...CONFIG.FSRS.DEFAULT_W];
-const DEFAULT_FSRS_W = [...CONFIG.FSRS.DEFAULT_W];
+let internal_FSRS_W = [...CONFIG.FSRS.DEFAULT_W];
+export const DEFAULT_FSRS_W = [...CONFIG.FSRS.DEFAULT_W];
+
+const FSRS_W = new Proxy([], {
+  get(target, prop) {
+    if (prop === 'length') return internal_FSRS_W.length;
+    if (typeof prop === 'string' && !isNaN(Number(prop))) {
+      return internal_FSRS_W[Number(prop)];
+    }
+    if (prop === Symbol.iterator) return internal_FSRS_W[Symbol.iterator].bind(internal_FSRS_W);
+    if (typeof internal_FSRS_W[prop] === 'function') {
+      return internal_FSRS_W[prop].bind(internal_FSRS_W);
+    }
+    return internal_FSRS_W[prop];
+  },
+  set(target, prop, value) {
+    if (prop === 'length') {
+      internal_FSRS_W.length = value;
+      return true;
+    }
+    if (typeof prop === 'string' && !isNaN(Number(prop))) {
+      internal_FSRS_W[Number(prop)] = value;
+      return true;
+    }
+    return false;
+  }
+});
+
+function getFSRSWeights() {
+  return [...internal_FSRS_W];
+}
 
 function loadFSRSWeights() {
   const saved = localStorage.getItem('cet46_fsrs_weights');
@@ -14,28 +43,48 @@ function loadFSRSWeights() {
     try {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length === 17) {
-        FSRS_W = parsed;
+        internal_FSRS_W = parsed;
         console.log('🔧 已加载用户自定义 FSRS 权重');
         return;
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('FSRS 权重解析失败，使用默认值');
+    }
   }
-  FSRS_W = [...DEFAULT_FSRS_W];
+  internal_FSRS_W = [...DEFAULT_FSRS_W];
 }
 
 function saveFSRSWeights() {
-  localStorage.setItem('cet46_fsrs_weights', JSON.stringify(FSRS_W));
+  localStorage.setItem('cet46_fsrs_weights', JSON.stringify(internal_FSRS_W));
 }
 
+function setFSRSWeights(weights) {
+  if (!Array.isArray(weights) || weights.length !== 17) {
+    console.warn('无效的 FSRS 权重格式');
+    return false;
+  }
+  internal_FSRS_W = [...weights];
+  saveFSRSWeights();
+  return true;
+}
+
+/**
+ * 基于 FSRS 4.5 算法计算单词的下一次复习间隔
+ * @param {number} s - 当前稳定性 (Stability)
+ * @param {number} [r=null] - 目标保持率，默认为 TARGET_RETENTION (0.9)
+ * @param {number} [circadianScore=0] - 生物钟评分 (-1 到 1)
+ * @returns {number} 下一次复习间隔（毫秒）
+ * @throws {Error} 如果稳定性为负数
+ */
 function calculateFSRSInterval(s, r = null, circadianScore = 0) {
-  const targetR = r || TARGET_RETENTION;
+  const targetR = r ?? CONFIG.FSRS.TARGET_RETENTION;
   const intervalDays = s * (Math.log(targetR) / Math.log(0.9));
   
   const k = 0.15;
   const circadianFactor = 1 + k * circadianScore;
   
   const rawInterval = Math.max(1, Math.round(intervalDays * circadianFactor)) * 24 * 60 * 60 * 1000;
-  return applyFuzz(rawInterval);
+  return rawInterval;
 }
 
 function getCircadianScore() {
@@ -48,9 +97,8 @@ function getCircadianScore() {
   if (stats.total < 10) return 0;
   
   const accuracy = stats.correct / stats.total;
-  const avgAccuracy = Object.values(hourStats)
-    .filter(s => s.total >= 10)
-    .reduce((sum, s) => sum + (s.correct / s.total), 0) / Math.max(1, Object.values(hourStats).filter(s => s.total >= 10).length);
+  const validHourStats = Object.values(hourStats).filter(s => s.total >= 10);
+  const avgAccuracy = validHourStats.reduce((sum, s) => sum + (s.correct / s.total), 0) / Math.max(1, validHourStats.length);
   
   const circadianScore = accuracy - avgAccuracy;
   
@@ -73,7 +121,7 @@ function updateHourStats(hour, correct) {
 function calculateForgettingDecay(wd, daysSinceReview) {
   if (!wd.stability || !wd.lastStudy) return 1;
   
-  const stability = wd.stability;
+  const stability = Math.max(0.1, wd.stability);
   const decayFactor = Math.exp(-daysSinceReview / stability);
   
   return Math.max(0.1, Math.min(1, decayFactor));
@@ -160,26 +208,47 @@ function calculateLevenshtein(s1, s2) {
   return prevRow[s2.length];
 }
 
+/**
+ * 基于 FSRS 4.5 算法更新单词的记忆状态
+ * @param {Object} wd - 当前单词的状态对象
+ * @param {number} wd.stability - 当前稳定性 (S)
+ * @param {number} wd.difficulty - 当前难度 (D)
+ * @param {number} quality - 用户的回忆质量评分 (1:重来, 2:困难, 3:良好, 4:容易)
+ * @returns {{stability: number, difficulty: number}} 计算后的新状态
+ * @throws {Error} 如果传入的 quality 不在 1-4 范围内
+ */
 function updateFSRS(wd, quality) {
-  let s = wd.stability || FSRS_W[0];
-  let d = wd.difficulty || FSRS_W[4] || FSRS_W[1];
+  if (quality < 1 || quality > 4) {
+    throw new Error('Quality 必须介于 1 和 4 之间');
+  }
+  
+  const W = internal_FSRS_W;
+  const s = wd.stability || W[0];
+  const d = wd.difficulty || W[4] || W[1];
 
-  let next_d = d - FSRS_W[6] * (quality - 3);
+  const qualityOffset = quality - 3;
+  let next_d = d - W[6] * qualityOffset;
   next_d = Math.min(Math.max(next_d, 1), 10);
-  next_d = FSRS_W[7] * (FSRS_W[4] || 5) + (1 - FSRS_W[7]) * next_d;
+  next_d = W[7] * (W[4] || 5) + (1 - W[7]) * next_d;
 
   let next_s;
   if (quality >= 3) {
-    let hard_penalty = (quality === 2) ? FSRS_W[15] : 1;
-    let easy_bonus = (quality === 4) ? FSRS_W[16] : 1;
+    const hard_penalty = (quality === 3) ? W[15] : 1;
+    const easy_bonus = (quality === 4) ? W[16] : 1;
 
-    const success_factor = Math.exp(FSRS_W[8]) * (11 - d) * Math.pow(s, -FSRS_W[9]) * (Math.exp(1 - quality / 5) - 1);
-
-    next_s = s * (1 + success_factor * FSRS_W[10] * easy_bonus * hard_penalty);
+    const expFactor = Math.exp(W[8]);
+    const difficultyFactor = 11 - d;
+    const stabilityFactor = Math.pow(Math.max(0.1, s), -W[9]);
+    const qualityFactor = Math.exp(1 - quality / 5) - 1;
+    
+    const success_factor = expFactor * difficultyFactor * stabilityFactor * qualityFactor;
+    next_s = s * (1 + success_factor * W[10] * easy_bonus * hard_penalty);
   } else {
+    const difficultyPow = Math.pow(Math.max(0.1, d), -W[12]);
+    const stabilityPow = Math.pow(Math.max(0.1, s), W[13]);
     next_s = Math.min(
       s,
-      FSRS_W[11] * Math.pow(d, -FSRS_W[12]) * Math.pow(s, FSRS_W[13]) * Math.exp(FSRS_W[14])
+      W[11] * difficultyPow * stabilityPow * Math.exp(W[14])
     );
   }
 
@@ -193,8 +262,8 @@ function migrateSM2ToFSRS(wd) {
     return wd;
   }
 
-  const s = wd.ef ? (wd.ef - MIN_EF) / (MAX_EF - MIN_EF) * 10 + 1 : FSRS_W[0];
-  const d = wd.level ? Math.max(1, 10 - wd.level) : FSRS_W[1];
+  const s = wd.ef ? (wd.ef - MIN_EF) / (MAX_EF - MIN_EF) * 10 + 1 : internal_FSRS_W[0];
+  const d = wd.level ? Math.max(1, 10 - wd.level) : internal_FSRS_W[1];
   
   return {
     ...wd,
@@ -220,7 +289,7 @@ function calculateInterval(wd, quality) {
   wd.stability = updated.stability;
   wd.difficulty = updated.difficulty;
   
-  return calculateOptimalInterval(wd, quality);
+  return applyFuzz(calculateOptimalInterval(wd, quality));
 }
 
 function evaluateLogLoss(logs, weights) {
@@ -263,29 +332,12 @@ function calculateGradientsForLogLoss(logs, weights) {
   return gradients;
 }
 
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-
-function escapeHTML(str) {
-  return (str || '').replace(/[&<>'"]/g, 
-    tag => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
-    }[tag] || tag)
-  );
-}
-
 loadFSRSWeights();
 
 export {
   FSRS_W,
-  DEFAULT_FSRS_W,
-  DEFAULT_EF,
-  MIN_EF,
-  MAX_EF,
+  getFSRSWeights,
+  setFSRSWeights,
   loadFSRSWeights,
   saveFSRSWeights,
   calculateFSRSInterval,
@@ -300,8 +352,6 @@ export {
   calculateInterval,
   evaluateLogLoss,
   calculateGradientsForLogLoss,
-  shuffle,
-  escapeHTML,
   getCircadianScore,
   updateHourStats
 };

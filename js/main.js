@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿import { CONFIG, SEMANTIC_CLUSTERS, CONFUSING_PAIRS } from './config.js';
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿import { CONFIG, SEMANTIC_CLUSTERS, CONFUSING_PAIRS } from './config.js';
 import { DEFAULT_WORDS } from './data/default_vocab.js';
 import { AppState, ReactiveAppState, watch, computed } from './state.js';
 import { performanceMonitor } from './utils/performance-monitor.js';
@@ -1503,8 +1503,7 @@ function getOrCreateListItem() {
   let div;
   if (listItemPool.length > 0) {
     div = listItemPool.pop();
-    // 閲嶇疆鍏冪礌鍐呭锛岀‘淇濈粨鏋勬纭?    div.innerHTML = '';
-    // 纭繚鏍峰紡姝ｇ‘
+    div.replaceChildren();
     div.className = 'list-item';
     div.style.cssText = `height: ${ITEM_HEIGHT}px; box-sizing: border-box; cursor: pointer;`;
   } else {
@@ -1656,12 +1655,7 @@ function renderList() {
     return matchSearch && matchLevel && matchStatus;
   });
   
-  console.log('[renderList] 绛涢€夊悗鍗曡瘝鏁伴噺:', filteredWords.length);
-  
-  // 如果筛选后结果为 0，则重置筛选条件并重新筛选
-  if (filteredWords.length === 0 && WORDS.length > 0) {
-    filteredWords = [...WORDS];
-  }
+  console.log('[renderList] 綃涢€夊悗鍗曡瘝鏁伴噺:', filteredWords.length);
 
   const container = document.getElementById('virtual-scroll-container');
   const pagination = document.getElementById('pagination-controls');

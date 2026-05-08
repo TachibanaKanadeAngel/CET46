@@ -28,12 +28,9 @@ export default defineConfig({
       }
     },
     sourcemap: false,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: false, // 保留 console 以便调试
-        drop_debugger: true
-      }
+    minify: 'esbuild',
+    esbuild: {
+      drop: ['debugger']
     }
   },
   plugins: [

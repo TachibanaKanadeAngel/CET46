@@ -144,9 +144,11 @@ async function setWordData(id, wd) {
   await pushAction(id, previousState);
 
   if (db.instance) {
-    db.save('progress', { id: parseInt(id), ...wd }).catch(err => {
+    try {
+      await db.save('progress', { id: parseInt(id), ...wd });
+    } catch (err) {
       console.error(`单词 ${id} 持久化失败:`, err);
-    });
+    }
   }
 
   return wd;

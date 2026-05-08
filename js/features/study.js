@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿import { getWordData, setWordData, addWrongWord } from '../core.js';
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿import { getWordData, setWordData, addWrongWord } from '../core.js';
 
 export const INITIAL_STUDY_EMPTY_STATE = {
   word: '准备开始',
@@ -345,6 +345,24 @@ export const StudyFeature = {
       const utterance = new SpeechSynthesisUtterance(word);
       utterance.lang = 'en-US';
       speechSynthesis.speak(utterance);
+    }
+  },
+
+  toggleClozeMode() {
+    console.log('[StudyFeature] toggleClozeMode not yet implemented');
+  },
+
+  handleSaveMnemonic(saveMnemonicFn) {
+    if (!this.studyQueue[this.studyIndex]) {
+      alert('请先开始学习');
+      return;
+    }
+    const w = this.studyQueue[this.studyIndex];
+    const existing = typeof saveMnemonicFn === 'function' ? saveMnemonicFn() : '';
+    const mnemonic = prompt('输入联想法记忆内容：', existing || '');
+    if (mnemonic !== null && typeof saveMnemonicFn === 'function') {
+      saveMnemonicFn(w.id, mnemonic);
+      alert('联想法已保存');
     }
   }
 };
