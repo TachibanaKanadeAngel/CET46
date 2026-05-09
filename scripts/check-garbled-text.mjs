@@ -14,7 +14,6 @@ const GARBLED_PATTERNS = [
   '鐨',
   '鍜',
   '搴',
-  '淇',
   '绛',
   '瑙',
   '濂'

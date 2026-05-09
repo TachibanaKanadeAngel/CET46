@@ -4,11 +4,11 @@ const BASE_GRID_SIZE = 9;
 const MIN_CONSECUTIVE = 50;
 
 const REWARDS = {
-  BRONZE: { threshold: 100, icon: '馃', name: '闈掗摐鎴愬氨' },
-  SILVER: { threshold: 300, icon: '馃', name: '鐧介摱鎴愬氨' },
-  GOLD: { threshold: 500, icon: '馃', name: '榛勯噾鎴愬氨' },
-  DIAMOND: { threshold: 800, icon: '馃拵', name: '閽荤煶鎴愬氨' },
-  MASTER: { threshold: 1000, icon: '馃憫', name: '瀹楀笀鎴愬氨' }
+  BRONZE: { threshold: 100, icon: '🥉', name: '青铜成就' },
+  SILVER: { threshold: 300, icon: '🥈', name: '白银成就' },
+  GOLD: { threshold: 500, icon: '🥇', name: '黄金成就' },
+  DIAMOND: { threshold: 800, icon: '💎', name: '钻石成就' },
+  MASTER: { threshold: 1000, icon: '👑', name: '宗师成就' }
 };
 
 const ACHIEVEMENTS = [
@@ -152,7 +152,7 @@ class MiniGame {
       gameModal.classList.add('active');
     }
     
-    console.log('馃幃 鍗曡瘝鍖归厤娓告垙寮€濮?- 闅惧害绛夌骇:', this.gridSize, 'x', this.gridSize);
+    console.log('单词匹配游戏开始 - 难度等级:', this.gridSize, 'x', this.gridSize);
   }
 
   generateGrid() {
@@ -317,7 +317,7 @@ class MiniGame {
     this.checkAchievements();
     
     if (typeof window.UI !== 'undefined') {
-      window.UI.toast(`+${10 + this.streak * 2} 鍒嗭紒杩炲嚮锛?{this.streak} ${reward ? '馃巵' : ''}`, 'success');
+      window.UI.toast(`+${10 + this.streak * 2} 分！连击：${this.streak} ${reward ? '🔓' : ''}`, 'success');
     }
     
     this.updateUI();
@@ -369,7 +369,7 @@ class MiniGame {
     localStorage.setItem('cet46_minigame_rewards', JSON.stringify(this.unlockedRewards));
     
     if (typeof window.UI !== 'undefined') {
-      window.UI.toast(`馃巵 瑙ｉ攣鎴愬氨锛?{reward.name} ${reward.icon}`, 'success');
+      window.UI.toast(`🔓 解锁成就：${reward.name} ${reward.icon}`, 'success');
     }
     
     setTimeout(() => {
@@ -409,7 +409,7 @@ class MiniGame {
         localStorage.setItem('cet46_minigame_achievements', JSON.stringify(this.achievements));
         
         if (typeof window.UI !== 'undefined') {
-          window.UI.toast(`馃弳 杈炬垚鎴愬氨锛?{achievement.name} ${achievement.icon}`, 'success');
+          window.UI.toast(`🏅 达成成就：${achievement.name} ${achievement.icon}`, 'success');
         }
       }
     }
@@ -522,12 +522,12 @@ class MiniGame {
     const highScore = parseInt(localStorage.getItem('cet46_minigame_highscore') || '0');
     if (this.score > highScore) {
       localStorage.setItem('cet46_minigame_highscore', this.score.toString());
-      console.log('馃帀 鏂扮邯褰曪紒', this.score);
+      console.log('🎉 新纪录！', this.score);
     }
     
     localStorage.setItem('cet46_today_study_count', '0');
     
-    console.log(`馃幃 娓告垙缁撴潫 - 寰楀垎锛?{this.score}, 杩炲嚮锛?{this.maxStreak}, 閿欒锛?{this.errors}`);
+    console.log(`游戏结束 - 得分：${this.score}, 连击：${this.maxStreak}, 错误：${this.errors}`);
   }
 
   bindEvents() {
