@@ -21,6 +21,7 @@
     "check": "npm run lint && npm run build",
     "format": "prettier --write \"js/**/*.js\" \"css/**/*.css\" \"*.html\"",
     "validate:vocab": "node scripts/validate-vocab.mjs",
+    "verify": "npm run validate:vocab && npm run check",
     "cap:init": "cap init CET46Pro com.cet46.app --web-dir dist",
     "cap:add-android": "cap add android",
     "cap:sync": "cap sync",
