@@ -40,7 +40,13 @@ export default defineConfig({
   ].filter(Boolean),
   server: {
     port: 3000,
-    open: true
+    open: true,
+    strictPort: true,
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+      clientPort: 3000
+    }
   },
   preview: {
     port: 4173

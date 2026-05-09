@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿import { CONFIG, SEMANTIC_CLUSTERS, CONFUSING_PAIRS } from './config.js';
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿import { CONFIG, SEMANTIC_CLUSTERS, CONFUSING_PAIRS } from './config.js';
 import { DEFAULT_WORDS } from './data/default_vocab.js';
 import { AppState, ReactiveAppState, watch, computed } from './state.js';
 import { performanceMonitor } from './utils/performance-monitor.js';
@@ -1889,7 +1889,7 @@ async function requestPersistentStorage() {
       }
       return isPersisted;
     } catch (e) {
-      console.warn('请求持久化存储失败', e);
+      console.info('持久化存储权限检查失败，本地数据不受影响', e);
       return false;
     }
   }
