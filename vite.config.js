@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 
-// 自定义插件：移除 CSP meta 标签（在 file:// 协议下会阻止脚本执行）
+const isFileBuild = process.env.npm_lifecycle_event === 'build:file';
+
 const removeCSP = () => ({
   name: 'remove-csp',
   transformIndexHtml(html) {
@@ -35,8 +36,8 @@ export default defineConfig({
   },
   plugins: [
     viteSingleFile(),
-    removeCSP()
-  ],
+    isFileBuild && removeCSP()
+  ].filter(Boolean),
   server: {
     port: 3000,
     open: true

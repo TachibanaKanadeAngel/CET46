@@ -197,16 +197,21 @@ async function checkSpelling() {
   const distance = calculateLevenshtein(input, correct);
   spellingChecked = true;
 
+  let quality;
   if (distance === 0) {
+    quality = lastSpellingQuality;
     inputEl.className = 'spelling-input correct';
     resultEl.className = 'spelling-result show success';
-    resultTextEl.textContent = '拼写完全正确';
+    resultTextEl.textContent = currentHintLevel > 0
+      ? `拼写正确（使用了 ${currentHintLevel} 次提示）`
+      : '拼写完全正确';
     answerEl.textContent = `答案: ${w.word}`;
 
-    await processSpellingResult(w, 5);
+    await processSpellingResult(w, quality);
     fireConfetti();
     playTone('success');
   } else if (distance === 1 && correct.length >= 4) {
+    quality = Math.max(2, lastSpellingQuality - 2);
     inputEl.className = 'spelling-input warning';
     inputEl.style.borderColor = 'var(--warning)';
     resultEl.className = 'spelling-result show warning';
@@ -216,15 +221,16 @@ async function checkSpelling() {
     resultTextEl.textContent = '几乎正确，检测到轻微拼写误差';
     answerEl.textContent = `正确答案: ${w.word}`;
 
-    await processSpellingResult(w, 3);
+    await processSpellingResult(w, quality);
     playTone('success');
   } else {
+    quality = 1;
     inputEl.className = 'spelling-input wrong';
     resultEl.className = 'spelling-result show error';
     resultTextEl.textContent = '拼写错误，和正确答案差距较大';
     answerEl.textContent = `正确答案: ${w.word}`;
 
-    await processSpellingResult(w, 1);
+    await processSpellingResult(w, quality);
     playTone('fail');
     addWrongWord(w.id, w);
   }
@@ -239,8 +245,18 @@ async function processSpellingResult(w, quality) {
 
   wd.stability = fsrs.stability;
   wd.difficulty = fsrs.difficulty;
-  wd.status = quality >= 3 ? 'mastered' : 'review';
-  wd.level = quality >= 3 ? 10 : 0;
+
+  if (quality >= 4) {
+    wd.level = Math.min((wd.level || 0) + 2, 10);
+  } else if (quality === 3) {
+    wd.level = Math.min((wd.level || 0) + 1, 10);
+  } else if (quality === 2) {
+    wd.level = Math.min((wd.level || 0) + 1, 10);
+  } else {
+    wd.level = Math.max(0, Math.floor((wd.level || 0) / 2));
+  }
+
+  wd.status = wd.level >= 10 ? 'mastered' : 'review';
   wd.lastStudy = Date.now();
   wd.reviewCount++;
 
