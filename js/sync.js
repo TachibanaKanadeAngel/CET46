@@ -443,13 +443,52 @@ function getBaseValue(type, id, field = 'count') {
   return typeData[id]?.[field] || 0;
 }
 
-function generateBackupData(memoryCache) {
+async function generateBackupData(memoryCache, db) {
+  let progress = {};
+  let wrongWords = {};
+  let heatmap = {};
+
+  if (db && db.instance) {
+    try {
+      const allProgress = await db.getAll('progress');
+      if (allProgress && allProgress.length > 0) {
+        for (const record of allProgress) {
+          const { id, ...wd } = record;
+          progress[id] = wd;
+        }
+      }
+
+      const allWrongWords = await db.getAll('wrongWords');
+      if (allWrongWords && allWrongWords.length > 0) {
+        for (const record of allWrongWords) {
+          wrongWords[record.id] = record.data;
+        }
+      }
+
+      const allHeatmap = await db.getAll('heatmap');
+      if (allHeatmap && allHeatmap.length > 0) {
+        for (const record of allHeatmap) {
+          heatmap[record.date] = record.count;
+        }
+      }
+    } catch (e) {
+      console.warn('从 IndexedDB 读取全量备份失败，退化到内存缓存:', e.message);
+      progress = getCacheData(memoryCache.progress);
+      wrongWords = getCacheData(memoryCache.wrongWords);
+      heatmap = getCacheData(memoryCache.heatmap);
+    }
+  } else {
+    progress = getCacheData(memoryCache.progress);
+    wrongWords = getCacheData(memoryCache.wrongWords);
+    heatmap = getCacheData(memoryCache.heatmap);
+  }
+
   return {
     version: `backup_${Date.now()}`,
     timestamp: Date.now(),
-    progress: getCacheData(memoryCache.progress),
-    wrongWords: getCacheData(memoryCache.wrongWords),
-    heatmap: getCacheData(memoryCache.heatmap),
+    progress,
+    wrongWords,
+    heatmap,
     deletedIds: Array.from(memoryCache.deletedIds || [])
   };
 }
@@ -553,7 +592,7 @@ async function syncToWebDAV(db, memoryCache, deviceId) {
 
       if (!backupExists) {
         updateWebDAVStatus('首次同步，创建完整备份...', 'info');
-        const backupData = generateBackupData(memoryCache);
+        const backupData = await generateBackupData(memoryCache, db);
         const backupBlob = JSON.stringify(backupData);
         const backupResponse = await Network.fetchWithRetry(webdavConfig.url + '/cet46_backup.json', {
           method: 'PUT',
