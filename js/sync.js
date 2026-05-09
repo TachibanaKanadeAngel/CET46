@@ -443,6 +443,17 @@ function getBaseValue(type, id, field = 'count') {
   return typeData[id]?.[field] || 0;
 }
 
+function generateBackupData(memoryCache) {
+  return {
+    version: `backup_${Date.now()}`,
+    timestamp: Date.now(),
+    progress: getCacheData(memoryCache.progress),
+    wrongWords: getCacheData(memoryCache.wrongWords),
+    heatmap: getCacheData(memoryCache.heatmap),
+    deletedIds: Array.from(memoryCache.deletedIds || [])
+  };
+}
+
 async function mergeLocalAndCloud(local, cloud, deviceId) {
   const mergedProgress = { ...cloud.progress };
   const mergedDeletedIds = new Set([...(local.deletedIds || []), ...(cloud.deletedIds || [])]);
@@ -526,6 +537,41 @@ async function syncToWebDAV(db, memoryCache, deviceId) {
         }
       };
       await db.save('session', { key: 'last_snapshot', data: snapshot });
+
+      let backupExists = false;
+      try {
+        const backupCheck = await Network.fetchWithRetry(webdavConfig.url + '/cet46_backup.json', {
+          method: 'HEAD',
+          headers: {
+            'Authorization': 'Basic ' + btoa(webdavConfig.username + ':' + webdavConfig.password)
+          }
+        });
+        backupExists = backupCheck.ok;
+      } catch (_e) {
+        backupExists = false;
+      }
+
+      if (!backupExists) {
+        updateWebDAVStatus('首次同步，创建完整备份...', 'info');
+        const backupData = generateBackupData(memoryCache);
+        const backupBlob = JSON.stringify(backupData);
+        const backupResponse = await Network.fetchWithRetry(webdavConfig.url + '/cet46_backup.json', {
+          method: 'PUT',
+          headers: {
+            'Authorization': 'Basic ' + btoa(webdavConfig.username + ':' + webdavConfig.password),
+            'Content-Type': 'application/json'
+          },
+          body: backupBlob
+        });
+        if (!backupResponse.ok && backupResponse.status !== 201) {
+          throw new Error(`创建备份失败: ${backupResponse.status}`);
+        }
+        saveSyncBase({
+          wrongWords: getCacheData(memoryCache.wrongWords),
+          heatmap: getCacheData(memoryCache.heatmap),
+          timestamp: Date.now()
+        });
+      }
 
       const dirtyEntries = getCacheEntries(memoryCache.progress).filter(([_id, wd]) => wd.isDirty);
       const deletedEntries = Array.from(memoryCache.deletedIds || []).map(id => ({
@@ -659,6 +705,12 @@ async function syncToWebDAV(db, memoryCache, deviceId) {
         if (newETag) localStorage.setItem('cet46_last_etag', newETag);
 
         localStorage.setItem('cet46_last_sync', Date.now().toString());
+
+        saveSyncBase({
+          wrongWords: getCacheData(memoryCache.wrongWords),
+          heatmap: getCacheData(memoryCache.heatmap),
+          timestamp: Date.now()
+        });
 
         updateWebDAVStatus('同步成功', 'success');
         return { status: 'success', changes: patchData.changes.length };
