@@ -1,6 +1,16 @@
+const getDebugFlag = () => {
+  try {
+    return Boolean(globalThis.__CET46_DEBUG__);
+  } catch (error) {
+    return false;
+  }
+};
+
 export const CONFIG = {
-  VERSION: '1.0',
+  VERSION: '1.3.2',
   SCHEMA_VERSION: '1.0',
+
+  DEBUG: getDebugFlag(),
   
   CORS_PROXIES: [
     'https://api.allorigins.win/raw?url=',
@@ -16,7 +26,7 @@ export const CONFIG = {
   DB_NAME: 'CET46_DB',
   DB_VERSION: 2,
   
-  CACHE_NAME: 'cet46-v1.0',
+  CACHE_NAME: 'cet46-v1.3.5',
   AUDIO_CACHE_NAME: 'cet46-audio-cache',
   MAX_AUDIO_CACHE_ITEMS: 500,
   MAX_CACHE_ITEMS: 8000,
@@ -50,13 +60,22 @@ export const CONFIG = {
   
   ITEM_HEIGHT: 80,
   VISIBLE_COUNT: 6,
-  
+
   FETCH_TIMEOUT: 15000,
   FETCH_RETRIES: 3,
   FETCH_BACKOFF: 1000,
   AUDIO_TIMEOUT: 8000,
   
   TOAST_DURATION: 3000,
+  
+  CHUNK_SIZE_DB: 500,
+  CHUNK_SIZE_WORKER: 100,
+  CHUNK_SIZE_VOCAB: 500,
+  SYNC_DEBOUNCE_MS: 1000,
+  
+  LRU_LIMIT_PROGRESS: 1000,
+  LRU_LIMIT_WRONGWORDS: 500,
+  LRU_LIMIT_HEATMAP: 365,
   
   ALLOWED_CONNECT_DOMAINS: [
     'api.allorigins.win',
@@ -65,7 +84,34 @@ export const CONFIG = {
     'dict.youdao.com',
     'cdn.jsdelivr.net',
     'raw.githubusercontent.com'
-  ]
+  ],
+
+  UI: {
+    CARD_FLIP_DELAY: 300,
+    VIRTUAL_SCROLL_BUFFER: 10,
+    BATCH_SIZE: 500,
+    SWIPE_TIME_THRESHOLD: 500,
+    SHORTCUT_GUIDE_DELAY: 1000,
+    INITIALIZATION_DELAY: 2000,
+    ANIMATION_DELAY: 500,
+    CELEBRATION_REMOVE_DELAY: 300,
+    TIMESTAMP_CHECK_DELAY: 5 * 60 * 1000,
+    WEBVITALS_THRESHOLDS: {
+      FID: { good: 100, poor: 300 },
+      TTFB: { good: 200, poor: 500 },
+      FCP: { good: 1000, poor: 3000 }
+    }
+  },
+
+  MILESTONES: {
+    FIRST_500: 500,
+    FIRST_1000: 1000
+  },
+
+  CONSTANTS: {
+    OVERLOAD_THRESHOLD: 200,
+    MS_PER_DAY: 24 * 60 * 60 * 1000
+  }
 };
 
 export const SEMANTIC_CLUSTERS = {

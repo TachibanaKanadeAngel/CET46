@@ -2,12 +2,12 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; connect-src 'self' https://api.allorigins.win https://corsproxy.io https://api.codetabs.com https://dict.youdao.com https://cdn.jsdelivr.net https://raw.githubusercontent.com; font-src 'self' data: https://fonts.gstatic.com;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://at.alicdn.com; img-src 'self' data:; connect-src 'self' https://api.allorigins.win https://corsproxy.io https://dict.youdao.com https://cdn.jsdelivr.net https://raw.githubusercontent.com; font-src 'self' data: https://fonts.gstatic.com https://at.alicdn.com;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#f3c951" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#e2a053" media="(prefers-color-scheme: dark)">
-  <meta name="description" content="基于FSRS 4.5算法的科学记忆系统，支持CET-4/6词汇学习，WebDAV多设备同步">
-  <meta name="keywords" content="CET4,CET6,英语,背单词,记忆算法,FSRS,间隔重复,单词记忆">
+  <meta name="description" content="基于FSRS 4.5算法的科学记忆系统，支持CET-4/6词汇学习与本地同步。">
+  <meta name="keywords" content="CET4,CET6,英语,背单词,FSRS,科学记忆,间隔重复,词汇学习">
   <meta name="author" content="CET46 Engine Team">
   <meta name="robots" content="index, follow">
 
@@ -18,19 +18,18 @@
   <meta name="format-detection" content="telephone=no">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="CET46 科学记忆引擎 Pro v1.0">
-  <meta property="og:description" content="基于FSRS 4.5算法的科学记忆系统，支持CET-4/6词汇学习与多设备同步">
+  <meta property="og:title" content="CET46 科学记忆引擎 Pro v1.3.5">
+  <meta property="og:description" content="基于FSRS 4.5算法的科学记忆系统，支持CET-4/6词汇学习与本地同步。">
   <meta property="og:image" content="icons/icon-512.svg">
   <meta property="og:url" content="https://cet46.app">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="CET46引擎">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CET46 科学记忆引擎 Pro v1.0">
-  <meta name="twitter:description" content="基于FSRS 4.5算法的科学记忆系统">
+  <meta name="twitter:title" content="CET46 科学记忆引擎 Pro v1.3.5">
+  <meta name="twitter:description" content="基于FSRS 4.5算法的科学记忆系统。">
   <meta name="twitter:image" content="icons/icon-512.svg">
 
-  <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <link rel="icon" type="image/svg+xml" sizes="192x192" href="icons/icon-192.svg">
   <link rel="apple-touch-icon" href="icons/icon-192.svg">
@@ -47,92 +46,121 @@
   <link rel="preload" href="css/styles.css" as="style">
   <link rel="preload" href="js/main.js" as="script" crossorigin>
 
-  <title>CET46 科学记忆引擎 Pro v1.0</title>
+  <title>CET46 科学记忆引擎 Pro v1.3.5</title>
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/list-fix.css">
+  <link rel="stylesheet" href="./css/theme-stardew.css">
+  <style>
+    /* 强制永久显示音标、释义和例句，无视翻转状态 */
+    .word-card .pronunciation,
+    .word-card .meaning,
+    .word-card .example {
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      max-height: none !important;
+    }
+  </style>
 </head>
 <body>
   <div id="a11y-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="farm-scene-layer" aria-hidden="true">
+    <div class="scene-tree scene-tree-left"></div>
+    <div class="scene-tree scene-tree-right"></div>
+    <div class="scene-cloud scene-cloud-left"></div>
+    <div class="scene-cloud scene-cloud-right"></div>
+    <div class="scene-vignette scene-windmill"></div>
+    <div class="scene-vignette scene-cottage"></div>
+    <div class="scene-fence"></div>
+    <div class="scene-books-corner"></div>
+  </div>
+
+  <div class="farm-sign" aria-hidden="true">
+    <span>&#x575A;&#x6301;&#x5B66;&#x4E60;</span>
+    <span>&#x6536;&#x83B7;&#x6210;&#x957F;</span>
+  </div>
   
-  <div class="app-container" role="main">
-    <header class="header">
+  <div class="app-container app-shell" role="main">
+    <header class="header engine-header">
       <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
         <div style="display: flex; align-items: center; gap: 8px;">
-          <button class="theme-toggle" data-action="toggle-theme" aria-label="切换深色/浅色主题" title="切换主题">🌙</button>
-          <span id="offline-indicator" style="font-size: 0.9rem; cursor: help;" title="检查网络状态...">🟡</span>
-          <span id="network-status-dot" class="status-online" title="在线模式"></span>
-          <button class="theme-toggle" data-action="show-shortcut-guide" aria-label="显示快捷键指南" title="快捷键指南">⌨️</button>
+          <button class="theme-toggle" data-action="toggle-theme" aria-label="切换主题" title="切换主题">??</button>
+          <span id="offline-indicator" data-action="show-resource-status" role="button" tabindex="0" style="font-size: 0.9rem; cursor: help;" title="资源状态" aria-label="资源状态">??</span>
+          <span id="network-status-dot" data-action="show-network-status" role="button" tabindex="0" class="status-online" title="网络状态" aria-label="网络状态"></span>
+          <button class="theme-toggle" data-action="show-shortcut-guide" aria-label="快捷键指南" title="快捷键指南">??</button>
         </div>
       </div>
-      <h1>🧠 CET46 科学记忆引擎 Pro v1.0</h1>
-      <div class="subtitle">FSRS 4.5 算法 + 向量时钟同步</div>
+      <h1>CET46 科学记忆引擎 Pro v1.3.5</h1>
+      <div class="subtitle">FSRS 4.5 算法 · 本地记忆同步</div>
       
-      <div id="engine-container" class="engine-core-container" role="region" aria-label="记忆引擎核心状态">
-        <div class="engine-sprite">
-          <div class="engine-core"></div>
+      <div id="engine-container" class="engine-core-container status-panel" role="region" aria-label="????????">
+        <div class="engine-sprite status-icon">
+          <span class="engine-icon-art" aria-hidden="true"></span>
         </div>
-        <div class="engine-status">
+        <div class="engine-status status-content">
           <div class="engine-bars">
-            <div class="engine-bar-item">
+            <div class="engine-bar-item status-row">
               <div class="sv-bar-label">
-                <span id="engine-fuel-label">燃料：20%</span>
+                <span id="engine-fuel-label">???20%</span>
                 <span>⛽</span>
               </div>
-              <div class="sv-bar-wrapper sv-fuel">
-                <div class="sv-bar-fill" id="engine-fuel-fill" style="width: 20%;"></div>
+              <div class="sv-bar-wrapper sv-fuel progress-bar">
+                <div class="sv-bar-fill progress-fill fuel-fill" id="engine-fuel-fill" style="width: 20%;"></div>
               </div>
             </div>
-            <div class="engine-bar-item">
+            <div class="engine-bar-item status-row">
               <div class="sv-bar-label">
-                <span id="engine-heat-label">温度：0%</span>
+                <span id="engine-heat-label">???0%</span>
                 <span>🔥</span>
               </div>
-              <div class="sv-bar-wrapper sv-heat">
-                <div class="sv-bar-fill" id="engine-heat-fill" style="width: 0%;"></div>
+              <div class="sv-bar-wrapper sv-heat progress-bar">
+                <div class="sv-bar-fill progress-fill temperature-fill" id="engine-heat-fill" style="width: 0%;"></div>
               </div>
             </div>
           </div>
-          <div class="engine-status-text" id="engine-status-text">
+          <div class="engine-status-text status-text" id="engine-status-text">
             * 引擎正在休眠 *
           </div>
         </div>
       </div>
       
       <div class="stats-row" role="status" aria-live="polite">
-        <div class="stat-box">
-          <span class="stat-num" id="stat-total">0</span>
+        <div class="stat-box stat-card">
+          <span class="stat-icon icon-total" aria-hidden="true"></span><span class="stat-num stat-number" id="stat-total">0</span>
           <span>总计</span>
         </div>
-        <div class="stat-box">
-          <span class="stat-num" id="stat-new">0</span>
+        <div class="stat-box stat-card">
+          <span class="stat-icon icon-new" aria-hidden="true"></span><span class="stat-num stat-number" id="stat-new">0</span>
           <span>新词</span>
         </div>
-        <div class="stat-box">
-          <span class="stat-num" id="stat-review">0</span>
+        <div class="stat-box stat-card">
+          <span class="stat-icon icon-review-book" aria-hidden="true"></span><span class="stat-num stat-number" id="stat-review">0</span>
           <span>待复习</span>
         </div>
-        <div class="stat-box">
-          <span class="stat-num" id="stat-mastered">0</span>
+        <div class="stat-box stat-card">
+          <span class="stat-icon icon-mastered" aria-hidden="true"></span><span class="stat-num stat-number" id="stat-mastered">0</span>
           <span>已掌握</span>
         </div>
       </div>
     </header>
 
-    <nav class="nav-tabs" role="tablist" aria-label="主导航">
-      <button class="tab-btn active" data-tab="study" data-action="nav-study" role="tab" aria-selected="true" aria-controls="view-study">📖 学习</button>
-      <button class="tab-btn" data-tab="review" data-action="nav-review" role="tab" aria-selected="false" aria-controls="view-review">🔄 复习</button>
-      <button class="tab-btn" data-tab="wrong" data-action="nav-wrong" role="tab" aria-selected="false" aria-controls="view-wrong">📝 错题</button>
-      <button class="tab-btn" data-tab="stats" data-action="nav-stats" role="tab" aria-selected="false" aria-controls="view-stats">📊 统计</button>
-      <button class="tab-btn" data-tab="list" data-action="nav-list" role="tab" aria-selected="false" aria-controls="view-list">📋 词库</button>
+    <nav class="nav-tabs tab-bar" role="tablist" aria-label="???">
+      <button class="tab-btn tab-button active" data-tab="study" data-action="nav-study" role="tab" aria-selected="true" aria-controls="view-study"><span class="tab-icon icon-study" aria-hidden="true"></span><span class="tab-label">学习</span></button>
+      <button class="tab-btn tab-button" data-tab="review" data-action="nav-review" role="tab" aria-selected="false" aria-controls="view-review"><span class="tab-icon icon-review" aria-hidden="true"></span><span class="tab-label">复习</span></button>
+      <button class="tab-btn tab-button" data-tab="wrong" data-action="nav-wrong" role="tab" aria-selected="false" aria-controls="view-wrong"><span class="tab-icon icon-wrong" aria-hidden="true"></span><span class="tab-label">错题</span></button>
+      <button class="tab-btn tab-button" data-tab="stats" data-action="nav-stats" role="tab" aria-selected="false" aria-controls="view-stats"><span class="tab-icon icon-stats" aria-hidden="true"></span><span class="tab-label">统计</span></button>
+      <button class="tab-btn tab-button" data-tab="list" data-action="nav-list" role="tab" aria-selected="false" aria-controls="view-list"><span class="tab-icon icon-vocab" aria-hidden="true"></span><span class="tab-label">词库</span></button>
     </nav>
 
     <div class="content">
       <div id="view-study" class="view active" role="tabpanel" aria-labelledby="tab-study">
         <div class="level-select">
-          <label for="study-level" class="visually-hidden">选择学习级别</label>
-          <select id="study-level" aria-label="选择学习级别">
-            <option value="all">全部单词 (CET4 + CET6)</option>
-            <option value="CET4">仅 CET-4</option>
-            <option value="CET6">仅 CET-6</option>
+          <label for="study-level" class="visually-hidden">??????</label>
+          <select id="study-level" class="level-select-input" aria-label="??????">
+            <option value="all">???? (CET4 + CET6)</option>
+            <option value="CET4" selected>? CET-4</option>
+            <option value="CET6">? CET-6</option>
           </select>
         </div>
 
@@ -142,31 +170,33 @@
           <div>完成: <span id="cycle-done">0</span></div>
         </div>
 
-        <div class="word-card" id="study-card" data-action="flip-card" role="button" tabindex="0" aria-label="单词卡片，点击翻转查看释义">
-          <button class="sound-btn" id="study-sound-btn" data-action="speak-study-word" aria-label="播放单词发音" title="发音">🔊</button>
-          <div class="word" id="study-word">点击开始学习</div>
+        <div class="word-card study-card" id="study-card" aria-label="学习卡片">
+          <button class="sound-btn" id="study-sound-btn" data-action="speak-study-word" aria-label="播放单词发音" title="发音">发音</button>
+          <span class="card-decor card-decor-leaf" aria-hidden="true"></span>
+          <span class="card-decor card-decor-bookmark" aria-hidden="true"></span>
+          <div class="word card-title" id="study-word">准备开始</div>
           <div class="pronunciation" id="study-pron" aria-label="音标"></div>
-          <div class="meaning" id="study-meaning" aria-label="释义">科学记忆，高效学习</div>
+          <div class="meaning card-subtitle" id="study-meaning" aria-label="释义">选择词库后点击开始学习</div>
           <div class="example" id="study-example" aria-label="例句"></div>
           <div id="semantic-warning" style="display:none; margin-top:10px; padding:8px; background: rgba(236,201,75,0.2); border-left: 4px solid var(--warning); font-size: 0.8rem; color: #b7791f; text-align: left;" role="alert" aria-live="polite">
             🚨 <strong>混淆词干预：</strong> 系统检测到形近词近期已复习，为防止认知干扰，已拉开本词复习间隔。
           </div>
           <div id="related-words" style="display:none; margin-top:8px; padding: 8px; background: rgba(102,126,234,0.2); border-radius: 8px; font-size: 0.8rem;">
-            <span style="color: rgba(255,255,255,0.7);">🔗 相关词:</span>
+            <span style="color: rgba(255,255,255,0.7);">?? ???:</span>
             <span id="related-words-list"></span>
           </div>
           <div id="mnemonic-container" style="display:none; margin-top:10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-            <label for="mnemonic-input" class="visually-hidden">助记口诀</label>
-            <textarea id="mnemonic-input" placeholder="写下你的助记口诀..." style="width:100%; border-radius:8px; padding:8px; font-size:0.85rem; border:1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9); color: var(--dark); resize: none; min-height: 60px;"></textarea>
-            <button class="text-btn" id="save-mnemonic-btn" data-action="save-mnemonic" style="font-size:0.75rem; color: white; margin-top: 5px; text-decoration: none; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 4px;">💾 保存笔记</button>
+            <label for="mnemonic-input" class="visually-hidden">????</label>
+            <textarea id="mnemonic-input" placeholder="????????..." style="width:100%; border-radius:8px; padding:8px; font-size:0.85rem; border:1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9); color: var(--dark); resize: none; min-height: 60px;"></textarea>
+            <button class="text-btn" id="save-mnemonic-btn" data-action="save-mnemonic" style="font-size:0.75rem; color: white; margin-top: 5px; text-decoration: none; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 4px;">保存联想</button>
           </div>
-          <div class="flip-hint">👆 点击卡片或按空格键查看释义</div>
+          <div class="flip-hint card-hint">点击卡片或按空格键查看释义</div>
         </div>
 
-        <div class="ef-display" id="ef-display" style="display: none;" aria-label="记忆参数">
+        <div class="ef-display" id="ef-display" style="display: none;" aria-label="????">
           <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
             <span>难度因子: <strong id="ef-value">2.5</strong></span>
-            <span id="retention-display">记忆留存: <strong id="retention-value">--</strong></span>
+            <span id="retention-display">????: <strong id="retention-value">--</strong></span>
           </div>
           <div class="ef-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><div class="ef-fill" id="ef-fill" style="width: 50%;"></div></div>
           <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--gray); margin-top: 4px;">
@@ -176,9 +206,9 @@
         </div>
 
         <div class="btn-group" id="study-buttons" style="display: none;">
-          <button class="btn btn-danger" id="btn-unknown" data-action="mark-unknown" aria-label="标记为不认识">❌ 不认识</button>
-          <button class="btn btn-warning" id="btn-spell" data-action="open-spelling" aria-label="进入拼写模式">✍️ 拼写</button>
-          <button class="btn btn-success" id="btn-known" data-action="mark-known" aria-label="标记为认识">✅ 认识</button>
+          <button class="btn btn-danger" id="btn-unknown" data-action="mark-unknown" aria-label="??????">? ???</button>
+          <button class="btn btn-warning" id="btn-spell" data-action="open-spelling" aria-label="??????">?? ??</button>
+          <button class="btn btn-success" id="btn-known" data-action="mark-known" aria-label="?????">? ??</button>
         </div>
 
         <div class="btn-group" id="cloze-toggle" style="display: none; margin-top: 8px;">
@@ -187,24 +217,35 @@
           </button>
         </div>
 
-        <button class="btn btn-primary" id="start-btn" data-action="start-study" style="width: 100%;" aria-label="开始学习新单词">🚀 开始学习</button>
+        <button class="btn btn-primary start-btn primary-btn" id="start-btn" data-action="start-study" style="width: 100%;" aria-label="开始学习">开始学习</button>
 
         <div class="progress-container" id="study-progress" style="display: none;">
           <div class="progress-estimate" id="study-estimate" style="text-align: center; font-size: 0.85rem; color: var(--warning); margin-bottom: 0.5rem; display: none;">
             🎯 预计完成: <strong id="study-est-date">--</strong>
           </div>
-          <div class="progress-text" id="progress-text" aria-live="polite">有效掌握: 0 / 0 (0%)</div>
+          <div class="progress-text" id="progress-text" aria-live="polite">????: 0 / 0 (0%)</div>
           <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-fill" id="progress-fill"></div>
           </div>
         </div>
 
-        <div class="controls-row">
-          <button class="text-btn" id="reset-progress-btn" data-action="reset-progress" aria-label="重置所有学习进度">⚠️ 重置进度</button>
-          <button class="text-btn" id="undo-btn" data-action="undo-action" aria-label="撤销上一步操作">↩️ 撤销 (Ctrl+Z)</button>
-          <span class="keyboard-hint" style="margin: 0;" aria-hidden="true">
-            <kbd>←</kbd> 不认识 <kbd>空格</kbd> 翻转 <kbd>→</kbd> 认识 <kbd>S</kbd> 拼写
-          </span>
+        <div class="controls-row shortcut-bar">
+          <div class="action-chip action-chip-warning">
+                    <button class="text-btn shortcut-action-btn shortcut-reset-btn" id="reset-progress-btn" data-action="reset-progress" aria-label="重置所有学习进度">
+                      <span class="shortcut-icon" aria-hidden="true"></span>
+                      <span>重置进度</span>
+                    </button>
+          </div>
+          <div class="action-chip">
+                    <button class="text-btn shortcut-action-btn shortcut-undo-btn" id="undo-btn" data-action="undo-action" aria-label="撤销上一步操作">
+                      <span class="shortcut-icon" aria-hidden="true"></span>
+                      <span>撤销 (Ctrl+Z)</span>
+                    </button>
+          </div>
+          <div class="action-chip" aria-hidden="true"><kbd>←</kbd><span>不认识</span></div>
+          <div class="action-chip" aria-hidden="true"><kbd>空格</kbd><span>翻转</span></div>
+          <div class="action-chip" aria-hidden="true"><kbd>→</kbd><span>认识</span></div>
+          <div class="action-chip" aria-hidden="true"><kbd>S</kbd><span>拼写</span></div>
         </div>
       </div>
 
@@ -220,19 +261,18 @@
           </div>
         </div>
 
-        <div class="word-card" id="review-card" data-action="flip-review" role="button" tabindex="0" aria-label="复习单词卡片，点击翻转查看释义">
-          <button class="sound-btn" id="review-sound-btn" data-action="speak-review-word" aria-label="播放单词发音" title="发音">🔊</button>
-          <div class="word" id="review-word">暂无待复习单词</div>
-          <div class="pronunciation" id="review-pron" aria-label="音标"></div>
-          <div class="meaning" id="review-meaning" aria-label="释义"></div>
-          <div class="example" id="review-example" aria-label="例句"></div>
-          <div class="flip-hint">👆 点击卡片查看释义</div>
+        <div class="word-card" id="review-card" aria-label="??????">
+          <button class="sound-btn" id="review-sound-btn" data-action="speak-review-word" aria-label="??????" title="??">??</button>
+          <div class="word" id="review-word">???????</div>
+          <div class="pronunciation" id="review-pron" aria-label="??"></div>
+          <div class="meaning" id="review-meaning" aria-label="??"></div>
+          <div class="example" id="review-example" aria-label="??"></div>
         </div>
 
-        <div class="ef-display" id="review-ef-display" style="display: none;" aria-label="记忆参数">
+        <div class="ef-display" id="review-ef-display" style="display: none;" aria-label="????">
           <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
             <span>难度因子: <strong id="review-ef-value">2.5</strong></span>
-            <span id="review-retention-display">记忆留存: <strong id="review-retention-value">--</strong></span>
+            <span id="review-retention-display">????: <strong id="review-retention-value">--</strong></span>
           </div>
           <div class="ef-bar"><div class="ef-fill" id="review-ef-fill" style="width: 50%;"></div></div>
           <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--gray); margin-top: 4px;">
@@ -242,8 +282,8 @@
         </div>
 
         <div class="btn-group" id="review-buttons" style="display: none;">
-          <button class="btn btn-danger" id="btn-review-unknown" data-action="review-unknown" aria-label="标记为还是不会">❌ 还是不会</button>
-          <button class="btn btn-success" id="btn-review-known" data-action="review-known" aria-label="标记为记住了">✅ 记住了</button>
+          <button class="btn btn-danger" id="btn-review-unknown" data-action="review-unknown" aria-label="???????">? ????</button>
+          <button class="btn btn-success" id="btn-review-known" data-action="review-known" aria-label="??????">? ???</button>
         </div>
       </div>
 
@@ -263,9 +303,9 @@
           <button class="btn btn-primary" id="wrong-study-btn" data-action="study-wrong" style="width: 100%;" aria-label="开始专项复习错题">🎯 专项复习错题</button>
         </div>
 
-        <div id="error-analysis-panel" style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;" role="region" aria-label="错误病理学分析">
-          <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--warning);">📊 错误病理学分析</div>
-          <div id="error-analysis-content" style="font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.6;"></div>
+        <div id="error-analysis-panel" style="background: var(--card-bg); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--sv-border-dark);" role="region" aria-label="错误病理学分析">
+          <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-color);">📊 错误病理学分析</div>
+          <div id="error-analysis-content" style="font-size: 0.85rem; color: var(--text-color); line-height: 1.6;"></div>
         </div>
 
         <div class="word-list" id="wrong-list" role="list" aria-label="错词列表"></div>
@@ -310,7 +350,7 @@
             <div class="review-stat-label">学习天数</div>
           </div>
           <div class="review-stat" style="border-left: 1px solid var(--border-color); padding-left: 1rem;">
-            <div class="review-stat-num" id="stats-est-date" style="font-size: 1.1rem; color: var(--warning);">计算中...</div>
+            <div class="review-stat-num" id="stats-est-date" style="font-size: 1.1rem; color: var(--text-color);">计算中...</div>
             <div class="review-stat-label">🎯 预估达成日期</div>
           </div>
         </div>
@@ -390,17 +430,18 @@
           <input type="text" class="search-input" id="search-input" placeholder="瞬时搜索词库..." aria-label="搜索词库">
           <label for="filter-level" class="visually-hidden">筛选级别</label>
           <select class="filter-select" id="filter-level" aria-label="筛选级别">
-            <option value="all">全部级别</option>
+            <option value="all">???? (CET4 + CET6)</option>
             <option value="CET4">CET-4</option>
-            <option value="CET6">CET-6</option>
+            <option value="CET6">? CET-6</option>
           </select>
           <label for="filter-status" class="visually-hidden">筛选状态</label>
           <select class="filter-select" id="filter-status" aria-label="筛选状态">
-            <option value="all">全部状态</option>
+            <option value="all">???? (CET4 + CET6)</option>
             <option value="new">未学习</option>
             <option value="review">待复习</option>
             <option value="mastered">已掌握</option>
           </select>
+          <button id="btn-apply-filter" class="btn btn-primary" style="padding: 8px 16px; border-radius: 8px; border: none; background: var(--primary); color: white; cursor: pointer; font-size: 14px;">应用筛选</button>
         </div>
         <div id="virtual-scroll-container" role="list" aria-label="单词列表" tabindex="0" style="height: 450px; overflow-y: auto; position: relative; border-radius: 12px; border: 1px solid var(--border-color);">
           <div id="virtual-scroll-spacer" style="position: absolute; top: 0; left: 0; right: 0;"></div>
@@ -557,6 +598,6 @@
     </div>
   </div>
 
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="./js/main.js"></script>
 </body>
 </html>
