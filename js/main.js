@@ -30,6 +30,8 @@ import {
   Skeleton
 } from './ui.js';
 
+import { setText, setHtml } from './utils/dom.js';
+
 import { StudyFeature, INITIAL_STUDY_EMPTY_STATE } from './features/study.js';
 import { ReviewFeature } from './features/review.js';
 import { SpellingFeature } from './features/spelling.js';
@@ -109,16 +111,6 @@ function repairInitialPlaceholderText() {
     soundBtn.setAttribute('title', '发音');
     soundBtn.setAttribute('aria-label', '播放单词发音');
   }
-}
-
-function setText(selector, text) {
-  const el = document.querySelector(selector);
-  if (el) el.textContent = text;
-}
-
-function setHtml(selector, html) {
-  const el = document.querySelector(selector);
-  if (el) el.innerHTML = html;
 }
 
 function setInputText(selector, { placeholder, ariaLabel, title, value } = {}) {
