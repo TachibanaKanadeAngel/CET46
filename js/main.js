@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿import { CONFIG, SEMANTIC_CLUSTERS, CONFUSING_PAIRS } from './config.js';
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿import { CONFIG, SEMANTIC_CLUSTERS, CONFUSING_PAIRS } from './config.js';
 import { DEFAULT_WORDS } from './data/default_vocab.js';
 import { AppState, ReactiveAppState, watch, computed } from './state.js';
 import { performanceMonitor } from './utils/performance-monitor.js';
@@ -75,10 +75,10 @@ function repairInitialPlaceholderText() {
   const startBtn = document.getElementById('start-btn');
   const soundBtn = document.getElementById('study-sound-btn');
 
-  document.title = 'CET46 科学记忆引擎 Pro v1.3.2';
+  document.title = 'CET46 科学记忆引擎 Pro v1.3.6';
 
   if (titleEl && hasCorruptedPlaceholderText(titleEl.textContent || '')) {
-    titleEl.textContent = 'CET46 科学记忆引擎 Pro v1.3.2';
+    titleEl.textContent = 'CET46 科学记忆引擎 Pro v1.3.6';
   }
 
   if (subtitleEl && hasCorruptedPlaceholderText(subtitleEl.textContent || '')) {
@@ -153,7 +153,7 @@ function setSelectOptions(selector, options) {
 function repairVisibleUIText() {
   repairInitialPlaceholderText();
 
-  setText('.engine-header h1', 'CET46 科学记忆引擎 Pro v1.3.2');
+  setText('.engine-header h1', 'CET46 科学记忆引擎 Pro v1.3.6');
   setText('.engine-header .subtitle', INITIAL_SUBTITLE_TEXT);
   setText('#engine-fuel-label', '燃料 20%');
   setText('#engine-heat-label', '温度 0%');

@@ -7,7 +7,7 @@ const getDebugFlag = () => {
 };
 
 export const CONFIG = {
-  VERSION: '1.3.2',
+  VERSION: '1.3.6',
   SCHEMA_VERSION: '1.0',
 
   DEBUG: getDebugFlag(),
@@ -26,7 +26,7 @@ export const CONFIG = {
   DB_NAME: 'CET46_DB',
   DB_VERSION: 2,
   
-  CACHE_NAME: 'cet46-v1.3.5',
+  CACHE_NAME: 'cet46-v1.3.6',
   AUDIO_CACHE_NAME: 'cet46-audio-cache',
   MAX_AUDIO_CACHE_ITEMS: 500,
   MAX_CACHE_ITEMS: 8000,
