@@ -1,4 +1,81 @@
-# CET46 科学记忆引擎 Pro v1.3.2 - 更新日志
+# CET46 科学记忆引擎 Pro v1.3.6 (local stable) - 更新日志
+
+## 📅 2026-05-11 v1.3.6 - 版本统一与工程化完善 (local stable)
+
+### 修复问题
+- 统一项目所有文件版本号至 v1.3.6（config.js、main.js、index.html、package.json、electron/index.js、tools/build-file-html.mjs、manifest.json、css/theme-stardew.css）
+- 修复 Vite HMR WebSocket 连接失败问题（简化 HMR 配置，端口改为 3001）
+- 清理重复的旧版 `CET46/` 源文件目录
+- 移除孤儿文件 `electron/main.js`、`js/widgets/review-widget.js` 等
+
+### 恢复文件
+- 恢复 PWA 关键文件 `sw.js`（Service Worker）和 `manifest.json`
+- 恢复项目文档 `ARCHITECTURE.md`、`BUILD_GUIDE.md`、`DEPLOY.md`
+- 恢复构建脚本 `build-exe.bat`、`build-exe-local.bat`
+
+### 安全性
+- UI 安全性改进：`ui.js` 中 `innerHTML` 替换为 DOM API，防范 XSS 注入
+- 新增 `js/utils.js` 工具模块，提供 `escapeHTML` 和 `escapeRegExp` 安全函数
+
+### 状态管理
+- 修复 `state.js` Proxy 中 `this` 绑定问题，方法调用时自动绑定目标对象
+- 修复 Map/Set 数据在 Proxy 下的读写兼容
+- 添加事件监听器去重，防止重复注册
+
+### 工程化
+- `dist-file/` 加入 `.gitignore`，避免构建产物被误提交
+- Electron 主进程入口整理（`electron/index.js`）
+- `manifest.json` 应用名版本号更新至 1.3.6
+
+### 新增文件
+- `css/list-fix.css` — 词库列表样式修复
+- `css/theme-stardew.css` — 星露谷主题皮肤
+- `js/utils.js` — 公共工具函数提取
+- `js/utils/logger.js` — 统一日志模块
+- `tools/build-file-html.mjs` — 单文件 HTML 构建脚本
+- `dist-file/` — 单文件 HTML 构建产物
+- `server.cjs` — 本地静态服务器
+- `scripts/clean_ui_assets.py` / `scripts/split_ui_assets.py` — UI 资源脚本
+- `scripts/convert_vocab.mjs` — 词库转换脚本
+- `public/` / `assets/` — 静态资源目录
+
+### 代码质量
+- 提取共享 DOM 辅助函数至 `js/utils.js`
+- 清理乱码文本修复逻辑
+- 添加乱码检测工具
+- 添加项目验证脚本
+- 补全项目 README 和词库校验脚本
+
+---
+
+## 📅 2026-05-08 v1.3.5 - WebDAV 同步增强
+
+### 修复问题
+- Phase 1.5：`generateBackupData` 改为从 IndexedDB 全量读取而非 LRU 缓存，确保备份数据完整
+
+### WebDAV Phase 1
+- 新增 `cet46_backup.json` 完整快照生成
+- 同步基准（sync_base）对称性修复
+- patch 增量日志上传与合并
+
+---
+
+## 📅 2026-05-07 v1.3.4 - 拼写评分与 CSP 双构建
+
+### 修复问题
+- 修复拼写评分策略（提示使用参与评分，避免一次正确直接 mastered）
+- CSP 双构建模式：网页/PWA 保留 CSP 安全策略，仅 `build:file` 单文件版本移除
+
+---
+
+## 📅 2026-05-06 v1.3.3 - 核心流程稳定
+
+### 修复问题
+- 稳定核心学习与复习流程
+- 修复学习功能参数传递不完整导致的学习模式异常
+- 优化虚拟滚动 DOM 复用逻辑
+
+---
 
 ## 📅 2026-04-26 v1.3.2 - 功能优化与问题修复
 
@@ -20,6 +97,20 @@
 ### 代码质量
 - 提取魔法数字到 `CONSTANTS` 常量（学习限制、预加载并发等）
 - 添加 JSDoc 类型注释至核心函数（`startStudy`、`buildSemanticGraphAsync`、`prefetchAudioLibrary` 等）
+
+---
+
+## 📅 2026-04-24 v1.3.1 - 全面代码修复
+
+### 修复问题
+- 缺失 `js/workers/fsrs-trainer-worker.js` Worker 文件，导致 FSRS 训练功能崩溃
+- `server.cjs` 路径遍历安全漏洞，添加路径校验和 OPTIONS 预检处理
+- 清理孤儿文件 `electron/main.js`
+- 补充 `vercel.json` 构建配置
+- 更新 `vite.config.js` 插件注释以反映实际功能
+- 修复 `index.html` 版本号不一致 (v1.0 → v1.3)
+- 更新 `electron-builder.json` 版权年份 (2024 → 2024-2026)
+- 优化 `build-apk.yml` 工作流，移除冗余 Capacitor 安装步骤
 
 ---
 
@@ -47,20 +138,6 @@ npm run build
 ### 验证结果
 - ✅ 词库列表、学习、复习、统计功能正常
 - ✅ 无控制台错误、无警告条、无闪烁白点
-
----
-
-## 📅 2026-04-24 v1.3.1 - 全面代码修复
-
-### 修复问题
-- 缺失 `js/workers/fsrs-trainer-worker.js` Worker 文件，导致 FSRS 训练功能崩溃
-- `server.cjs` 路径遍历安全漏洞，添加路径校验和 OPTIONS 预检处理
-- 清理孤儿文件 `electron/main.js`
-- 补充 `vercel.json` 构建配置
-- 更新 `vite.config.js` 插件注释以反映实际功能
-- 修复 `index.html` 版本号不一致 (v1.0 → v1.3)
-- 更新 `electron-builder.json` 版权年份 (2024 → 2024-2026)
-- 优化 `build-apk.yml` 工作流，移除冗余 Capacitor 安装步骤
 
 ---
 
