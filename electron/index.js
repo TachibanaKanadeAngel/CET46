@@ -171,7 +171,7 @@ function createMenu() {
               type: 'info',
               title: '关于 CET46 科学记忆引擎',
               message: 'CET46 科学记忆引擎 v1.3.6',
-              detail: '基于 FSRS 4.5 算法的科学记忆系统\n支持 CET-4/6 词汇学习与多设备同步\n\nCopyright © 2024 CET46 Team'
+              detail: '基于 FSRS 4.5 算法的科学记忆系统\n支持 CET-4/6 词汇学习与多设备同步\n\nCopyright © 2024-2026 CET46 Team'
             });
           }
         }

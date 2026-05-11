@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿import { CONFIG, SEMANTIC_CLUSTERS, CONFUSING_PAIRS } from './config.js';
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿import { CONFIG, SEMANTIC_CLUSTERS, CONFUSING_PAIRS } from './config.js';
 import { DEFAULT_WORDS } from './data/default_vocab.js';
 import { AppState, ReactiveAppState, watch, computed } from './state.js';
 import { performanceMonitor } from './utils/performance-monitor.js';
@@ -2737,7 +2737,7 @@ function setupGlobalEventDelegation() {
     actionElement.click();
   });
 
-  console.log('CET46 Pro v1.0: 事件委托系统已启用 (模块化架构 + FSRS增强)');
+  console.log('CET46 Pro v1.3.6: 事件委托系统已启用 (模块化架构 + FSRS增强)');
   console.log('[Debug] 已注册的动作处理器:', Object.keys(ACTION_HANDLERS));
 }
 

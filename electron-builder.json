@@ -1,7 +1,7 @@
 {
   "appId": "com.cet46.app",
   "productName": "CET46 科学记忆引擎",
-  "copyright": "Copyright © 2024 CET46 Team",
+  "copyright": "Copyright © 2024-2026 CET46 Team",
   "directories": {
     "output": "release",
     "app": "."
