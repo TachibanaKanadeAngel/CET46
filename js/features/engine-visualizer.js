@@ -1,4 +1,4 @@
-import { subscribeToStore, getMemoryCache } from '../store.js';
+/** @type {import('../store.js')} */
 
 export const EngineState = {
   SLEEPING: 'sleeping',
@@ -172,15 +172,15 @@ export class MemoryEngineFSM {
     
     if (to === EngineState.OVERHEATED) {
       if (typeof window.UI !== 'undefined') {
-        UI.toast('⚠️ 引擎过热！请复习错题降低温度', 'warning');
+        window.UI.toast('⚠️ 引擎过热！请复习错题降低温度', 'warning');
       }
     } else if (to === EngineState.JAMMED) {
       if (typeof window.UI !== 'undefined') {
-        UI.toast('⛽ 燃料耗尽！开始新的学习', 'warning');
+        window.UI.toast('⛽ 燃料耗尽！开始新的学习', 'warning');
       }
     } else if (to === EngineState.SMELTING) {
       if (typeof window.UI !== 'undefined') {
-        UI.toast('⚙️ 引擎正常运行中', 'success');
+        window.UI.toast('⚙️ 引擎正常运行中', 'success');
       }
     }
   }

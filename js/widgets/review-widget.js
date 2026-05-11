@@ -1,4 +1,4 @@
-self.addEventListener('widgetinstall', (event) => {
+self.addEventListener('widgetinstall', (_event) => {
   console.log('✅ Widget 已安装');
 });
 
@@ -17,9 +17,9 @@ self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'WIDGET_UPDATE') {
     const widgetData = event.data.data;
     
-    if (clients.matchAll) {
-      clients.matchAll({ type: 'window' }).then(clients => {
-        clients.forEach(client => {
+    if (self.clients.matchAll) {
+      self.clients.matchAll({ type: 'window' }).then(windowClients => {
+        windowClients.forEach(client => {
           client.postMessage({
             type: 'WIDGET_UPDATED',
             data: widgetData
