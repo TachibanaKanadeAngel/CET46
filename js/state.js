@@ -62,7 +62,7 @@ const AppState = {
   batchUpdate(updates) {
     const changes = [];
     for (const [key, value] of Object.entries(updates)) {
-      if (this.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(this, key)) {
         const oldValue = this[key];
         this[key] = value;
         changes.push({ key, newValue: value, oldValue });
@@ -102,6 +102,16 @@ function createReactiveState(state) {
   const handler = {
     get(target, prop, receiver) {
       const value = Reflect.get(target, prop, receiver);
+      
+      // 如果是方法，绑定正确的 this
+      if (typeof value === 'function') {
+        return value.bind(target);
+      }
+      
+      // 如果是 Map/Set 等内置对象，不要包装 Proxy
+      if (value instanceof Map || value instanceof Set || value instanceof WeakMap || value instanceof WeakSet) {
+        return value;
+      }
       
       if (typeof value === 'object' && value !== null && !prop.startsWith('_')) {
         return new Proxy(value, {
@@ -227,12 +237,16 @@ function computed(getter, deps) {
   };
 }
 
-window.addEventListener('online', () => {
-  ReactiveAppState.set('isOnline', true);
-});
+if (!window.__appStateListenersAdded) {
+  window.addEventListener('online', () => {
+    ReactiveAppState.set('isOnline', true);
+  });
 
-window.addEventListener('offline', () => {
-  ReactiveAppState.set('isOnline', false);
-});
+  window.addEventListener('offline', () => {
+    ReactiveAppState.set('isOnline', false);
+  });
+  
+  window.__appStateListenersAdded = true;
+}
 
 export { AppState, ReactiveAppState, watch, computed };
