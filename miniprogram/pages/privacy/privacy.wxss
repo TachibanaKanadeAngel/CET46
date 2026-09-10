@@ -1,0 +1,11 @@
+.content {
+  background: var(--sv-panel-light);
+  border-radius: 20rpx;
+  padding: 32rpx;
+  border: 3rpx solid var(--sv-border-dark);
+  box-shadow: 0 4rpx 0 var(--sv-panel-shadow);
+  font-size: 27rpx;
+  line-height: 1.8;
+  color: var(--sv-text-main);
+  white-space: pre-wrap;
+}

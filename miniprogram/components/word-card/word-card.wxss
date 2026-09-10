@@ -1,0 +1,368 @@
+.sv-card-perspective {
+  perspective: 1200rpx;
+  width: 100%;
+}
+
+.sv-word-card {
+  background: var(--sv-panel-light);
+  border: 3.5rpx solid var(--sv-border-dark);
+  border-radius: 24rpx;
+  width: 100%;
+  min-height: 400rpx;
+  padding: 28rpx 32rpx 36rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  box-shadow: 0 8rpx 0 var(--sv-panel-shadow), 0 16rpx 28rpx rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.sv-word-card:active {
+  transform: scale(0.985);
+}
+
+.sv-word-card.flipped {
+  animation: card-flip-bounce 0.32s ease-out;
+}
+
+@keyframes card-flip-bounce {
+  0% { transform: rotateX(-8deg) scale(0.95); }
+  50% { transform: rotateX(4deg) scale(1.02); }
+  100% { transform: rotateX(0deg) scale(1); }
+}
+
+/* 顶部栏：等级 Tag 与 音标/发音 */
+.sv-card-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 56rpx;
+}
+
+.sv-word-level {
+  background: rgba(66, 38, 19, 0.08);
+  border: 2rpx solid rgba(66, 38, 19, 0.15);
+  border-radius: 10rpx;
+  padding: 2rpx 14rpx;
+  font-size: 22rpx;
+  font-weight: 800;
+  color: var(--sv-text-main);
+  letter-spacing: 0.5rpx;
+}
+
+.sv-pronunciation-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.sv-pronunciation {
+  color: var(--light-gray);
+  font-size: 27rpx;
+  font-weight: 600;
+  letter-spacing: 0.5rpx;
+}
+
+/* 单词核心呈现区 */
+.sv-word-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32rpx 0 20rpx;
+  text-align: center;
+}
+
+.sv-word {
+  font-size: 60rpx;
+  font-weight: 900;
+  color: var(--sv-text-main);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  letter-spacing: 1rpx;
+  line-height: 1.2;
+}
+
+/* 翻开后的背面内容 */
+.sv-card-back-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fade-slide-in 0.25s ease-out;
+}
+
+@keyframes fade-slide-in {
+  0% { opacity: 0; transform: translateY(14rpx); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.sv-card-divider {
+  width: 100%;
+  height: 2rpx;
+  background: rgba(66, 38, 19, 0.12);
+  margin: 12rpx 0 20rpx;
+}
+
+.sv-meaning-box {
+  background: rgba(245, 217, 133, 0.25);
+  border: 2rpx dashed var(--sv-panel-shadow);
+  border-radius: 14rpx;
+  padding: 14rpx 24rpx;
+  width: 100%;
+  text-align: center;
+}
+
+.sv-meaning-text {
+  color: var(--sv-text-main);
+  font-size: 32rpx;
+  font-weight: 700;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.sv-example-box {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 14rpx;
+  margin-top: 16rpx;
+  padding: 14rpx 20rpx;
+  width: 100%;
+  text-align: left;
+}
+
+.sv-example-text {
+  color: var(--light-gray);
+  font-size: 26rpx;
+  font-style: italic;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.sv-example-box.cloze .sv-example-text {
+  color: var(--sv-text-main);
+  font-style: normal;
+  border-bottom: 2.5rpx dashed var(--sv-energy-green);
+}
+
+/* 翻牌提示 */
+.sv-flip-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  color: var(--light-gray);
+  font-size: 23rpx;
+  font-weight: 600;
+  margin-top: 16rpx;
+  padding: 8rpx 20rpx;
+  background: rgba(66, 38, 19, 0.05);
+  border-radius: 20rpx;
+  align-self: center;
+}
+
+.hint-icon {
+  font-size: 24rpx;
+}
+
+/* 听音模式遮罩 */
+.sv-listen-mask {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 0;
+}
+
+.sv-listen-icon {
+  font-size: 54rpx;
+  margin-bottom: 8rpx;
+}
+
+.sv-listen-text {
+  font-size: 32rpx;
+  font-weight: 800;
+  color: var(--sv-energy-green);
+}
+
+.sv-listen-sub {
+  font-size: 22rpx;
+  color: var(--light-gray);
+  margin-top: 6rpx;
+}
+
+/* 小节标签 */
+.sv-section-tag {
+  font-size: 21rpx;
+  font-weight: 800;
+  color: var(--sv-energy-dark);
+  margin-bottom: 8rpx;
+  letter-spacing: 0.5rpx;
+}
+
+/* 词根拆解区 */
+.sv-morphology-box {
+  width: 100%;
+  margin-top: 14rpx;
+  background: rgba(46, 125, 50, 0.06);
+  border-radius: 12rpx;
+  padding: 12rpx 16rpx;
+  text-align: left;
+}
+
+.sv-morph-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.sv-morph-chip {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  background: var(--sv-panel-light);
+  border: 1.5rpx solid rgba(46, 125, 50, 0.3);
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  font-size: 23rpx;
+}
+
+.sv-morph-chip.prefix {
+  border-color: #3b82f6;
+  background: #f0f7ff;
+}
+
+.sv-morph-chip.suffix {
+  border-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.morph-text {
+  font-weight: 800;
+  color: var(--sv-text-main);
+}
+
+.morph-meaning {
+  color: var(--light-gray);
+  font-size: 21rpx;
+}
+
+/* 常用搭配区 */
+.sv-collocation-box {
+  width: 100%;
+  margin-top: 12rpx;
+  background: rgba(245, 158, 11, 0.08);
+  border-radius: 12rpx;
+  padding: 12rpx 16rpx;
+  text-align: left;
+}
+
+.sv-collocation-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.sv-collocation-chip {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--sv-text-main);
+}
+
+/* 同根词族区 */
+.sv-family-box {
+  width: 100%;
+  margin-top: 12rpx;
+  background: rgba(59, 130, 246, 0.07);
+  border-radius: 12rpx;
+  padding: 12rpx 16rpx;
+  text-align: left;
+}
+
+.sv-family-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.sv-family-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: var(--sv-panel-light);
+  border: 1.5rpx solid rgba(59, 130, 246, 0.3);
+  padding: 6rpx 14rpx;
+  border-radius: 10rpx;
+  max-width: 100%;
+}
+
+.family-word {
+  font-weight: 800;
+  font-size: 25rpx;
+  color: var(--sv-text-main);
+}
+
+.family-meaning {
+  font-size: 20rpx;
+  color: var(--light-gray);
+  overflow-wrap: anywhere;
+}
+
+/* 例句原声朗读 / 跟读按钮 */
+.sv-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sv-section-head .sv-section-tag {
+  margin: 0;
+}
+
+.sv-example-actions {
+  display: flex;
+  gap: 10rpx;
+}
+
+.sv-mini-audio,
+.sv-mini-follow {
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  font-size: 21rpx;
+  font-weight: 700;
+  border: 1.5rpx solid rgba(59, 130, 246, 0.4);
+  color: var(--sv-primary);
+  background: rgba(59, 130, 246, 0.06);
+}
+
+.sv-mini-follow {
+  border-color: rgba(16, 185, 129, 0.45);
+  color: #0d9488;
+}
+
+/* 助记联想（学1记N） */
+.sv-mnemonic-box {
+  margin-top: 14rpx;
+  padding: 14rpx;
+  background: rgba(146, 64, 14, 0.06);
+  border: 2rpx solid rgba(250, 204, 21, 0.35);
+  border-radius: 12rpx;
+}
+
+.sv-mnemonic-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+  margin-top: 6rpx;
+}
+
+.sv-mnemonic-line {
+  font-size: 23rpx;
+  color: var(--sv-text-main);
+  line-height: 1.5;
+}

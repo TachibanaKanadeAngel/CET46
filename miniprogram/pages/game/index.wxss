@@ -1,0 +1,232 @@
+.game-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.intro-wrap {
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+}
+
+.intro-panel {
+  width: 100%;
+  text-align: center;
+  padding: 48rpx 28rpx;
+}
+
+.game-icon {
+  font-size: 88rpx;
+  margin-bottom: 12rpx;
+}
+
+.best-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16rpx;
+  margin-top: 28rpx;
+}
+
+.best-row view {
+  display: flex;
+  flex-direction: column;
+  padding: 16rpx;
+  background: var(--sv-panel-light);
+  border: 2rpx solid rgba(66, 38, 19, 0.15);
+  border-radius: 14rpx;
+}
+
+.best-num {
+  font-size: 40rpx;
+  font-weight: 900;
+  color: var(--sv-text-main);
+  line-height: 1.2;
+}
+
+.game-hud {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+  padding: 16rpx 20rpx !important;
+  margin-bottom: 16rpx !important;
+}
+
+.game-hud > view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hud-num {
+  font-size: 40rpx;
+  font-weight: 900;
+  color: var(--sv-text-main);
+  line-height: 1.15;
+}
+
+.hud-label,
+.target-label {
+  color: var(--light-gray);
+  font-size: 23rpx;
+  font-weight: 600;
+}
+
+.timer.urgent {
+  color: var(--sv-heat-red);
+  animation: urgent-pulse 0.5s infinite alternate;
+}
+
+@keyframes urgent-pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
+}
+
+.target-panel {
+  text-align: center;
+  padding: 20rpx 24rpx !important;
+  margin-bottom: 20rpx !important;
+}
+
+.target-head {
+  min-height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.skip-round {
+  min-width: 100rpx;
+  min-height: 48rpx;
+  height: 48rpx;
+  margin: 0;
+  padding: 0 16rpx;
+  border: 2rpx solid var(--sv-border-dark);
+  border-radius: 10rpx;
+  background: var(--sv-panel-light);
+  color: var(--sv-text-main);
+  font-size: 23rpx;
+  font-weight: 700;
+  line-height: 44rpx;
+}
+
+.skip-round::after {
+  border: 0;
+}
+
+.target-meaning {
+  min-height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+  font-weight: 800;
+  color: var(--sv-text-main);
+  line-height: 1.4;
+  margin-top: 8rpx;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14rpx;
+  width: 100%;
+}
+
+.choice-cell {
+  width: 100%;
+  height: 92rpx;
+  min-height: 92rpx;
+  min-width: 0;
+  padding: 6rpx 10rpx;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sv-panel-light);
+  border: 3rpx solid var(--sv-border-dark);
+  border-radius: 14rpx;
+  box-shadow: 0 5rpx 0 var(--sv-panel-shadow);
+  color: var(--sv-text-main);
+  font-size: 26rpx;
+  font-weight: 800;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  transition: transform 50ms, background-color 0.15s ease;
+}
+
+.choice-cell-hover,
+.choice-cell:active {
+  transform: translateY(3rpx);
+  box-shadow: 0 2rpx 0 var(--sv-panel-shadow);
+}
+
+.choice-cell.correct {
+  background: var(--sv-energy-green) !important;
+  border-color: var(--sv-energy-dark) !important;
+  color: #ffffff !important;
+  box-shadow: 0 5rpx 0 var(--sv-energy-dark);
+}
+
+.choice-cell.wrong {
+  background: var(--sv-heat-red) !important;
+  border-color: var(--sv-heat-dark) !important;
+  color: #ffffff !important;
+  box-shadow: 0 5rpx 0 var(--sv-heat-dark);
+}
+
+.final-score {
+  font-size: 88rpx;
+  line-height: 1.15;
+  font-weight: 900;
+  color: var(--sv-energy-green);
+  margin: 12rpx 0;
+}
+
+.summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10rpx;
+  align-items: center;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: var(--light-gray);
+  margin-top: 20rpx;
+}
+
+.achievement-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10rpx;
+  margin-top: 24rpx;
+}
+
+.achievement {
+  padding: 6rpx 16rpx;
+  background: #fff8e1;
+  border: 2rpx solid #d97706;
+  color: #b45309;
+  border-radius: 10rpx;
+  font-size: 23rpx;
+  font-weight: 700;
+}
+
+.battle-hud {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.battle-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 900;
+  color: var(--sv-heat-red);
+}
+
+.battle-tip {
+  margin-top: 14rpx;
+  color: var(--light-gray);
+  font-size: 23rpx;
+  font-weight: 600;
+}

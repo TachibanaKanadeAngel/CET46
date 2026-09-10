@@ -1,0 +1,250 @@
+.page-bg {
+  min-height: 100vh;
+  background: var(--sv-bg-base);
+}
+
+.header-panel {
+  text-align: center;
+  padding: 28rpx 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.setting-panel,
+.data-panel {
+  padding: 20rpx 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.panel-title {
+  font-size: 27rpx;
+  font-weight: 800;
+  color: var(--sv-text-main);
+  margin-bottom: 12rpx;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18rpx 0;
+  border-bottom: 2rpx solid rgba(66, 38, 19, 0.1);
+}
+
+.setting-name {
+  font-size: 28rpx;
+  color: var(--sv-text-main);
+  font-weight: 600;
+}
+
+.setting-info-col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.setting-desc {
+  font-size: 20rpx;
+  color: var(--sv-text-muted, #8a7058);
+  margin-top: 4rpx;
+}
+
+.setting-switch {
+  transform: scale(0.82);
+  transform-origin: right center;
+}
+
+.setting-divider {
+  height: 2rpx;
+  background: rgba(66, 38, 19, 0.08);
+  margin: 0;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-value {
+  font-size: 28rpx;
+  color: var(--light-gray);
+  font-weight: 700;
+}
+
+.setting-arrow {
+  font-size: 32rpx;
+  color: var(--light-gray);
+}
+
+.menu-card {
+  padding: 0 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26rpx 0;
+  border-bottom: 2rpx solid rgba(66, 38, 19, 0.1);
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-text {
+  font-size: 29rpx;
+  color: var(--sv-text-main);
+  font-weight: 700;
+}
+
+.menu-arrow {
+  font-size: 32rpx;
+  color: var(--light-gray);
+}
+
+.action-btn {
+  width: 100%;
+}
+
+.data-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14rpx;
+  margin-top: 14rpx;
+}
+
+.data-actions .sv-btn {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  font-size: 26rpx;
+  height: 76rpx;
+  min-height: 76rpx;
+}
+
+.reset-weights-btn {
+  width: 100%;
+  margin-top: 18rpx;
+  padding: 8rpx;
+  background: transparent;
+  color: var(--light-gray);
+  font-size: 23rpx;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.reset-weights-btn::after {
+  border: 0;
+}
+
+/* 备份/导入弹窗遮罩与卡片 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32rpx;
+  box-sizing: border-box;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 640rpx;
+  background: var(--sv-panel-base, #fffaf1);
+  border: 4rpx solid var(--sv-border, #422613);
+  border-radius: 20rpx;
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.25);
+  padding: 32rpx 28rpx;
+  box-sizing: border-box;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 800;
+  color: var(--sv-text-main, #33231a);
+}
+
+.modal-close {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: var(--light-gray, #72553a);
+  padding: 8rpx 16rpx;
+  line-height: 1;
+}
+
+.modal-subtitle {
+  font-size: 24rpx;
+  color: var(--sv-energy-green, #2e7d32);
+  font-weight: 600;
+  margin-bottom: 10rpx;
+}
+
+.modal-desc {
+  font-size: 24rpx;
+  color: var(--light-gray, #72553a);
+  margin-bottom: 16rpx;
+  line-height: 1.4;
+}
+
+.modal-textarea {
+  width: 100%;
+  height: 280rpx;
+  background: var(--sv-bg-base, #f6e6ba);
+  border: 2rpx solid var(--sv-border, #422613);
+  border-radius: 12rpx;
+  padding: 16rpx;
+  font-size: 24rpx;
+  font-family: monospace;
+  color: var(--sv-text-main, #33231a);
+  box-sizing: border-box;
+  margin-bottom: 24rpx;
+}
+
+.modal-placeholder {
+  color: rgba(66, 38, 19, 0.4);
+  font-size: 24rpx;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-footer-dual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16rpx;
+}
+
+.modal-footer .sv-btn {
+  margin: 0;
+  height: 72rpx;
+  min-height: 72rpx;
+  font-size: 28rpx;
+}
+
+.sv-btn-outline {
+  background: transparent !important;
+  color: var(--sv-text-main, #33231a) !important;
+  border: 2rpx solid var(--sv-border, #422613) !important;
+}
+
+.sv-btn-primary {
+  background: var(--sv-energy-green, #2e7d32) !important;
+  color: #ffffff !important;
+  border: 2rpx solid var(--sv-energy-dark, #1b5e20) !important;
+}
+

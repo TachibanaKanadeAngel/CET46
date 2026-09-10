@@ -1,0 +1,183 @@
+<view class="page-bg">
+  <view class="container" wx:if="{{!finished}}">
+    <!-- 顶部状态栏：模式切换 + 磨耳朵 + Combo 连击 -->
+    <view class="top-nav-panel">
+      <!-- 题型切换 Segment Control -->
+      <view class="mode-segmented-control" aria-role="tablist">
+        <view class="segment-tab {{studyMode === 'card' ? 'active' : ''}}" data-mode="card" bindtap="onModeSwitch">
+          抽认卡
+        </view>
+        <view class="segment-tab {{studyMode === 'choice' ? 'active' : ''}}" data-mode="choice" bindtap="onModeSwitch">
+          选汉测试
+        </view>
+        <view class="segment-tab {{studyMode === 'listen' ? 'active' : ''}}" data-mode="listen" bindtap="onModeSwitch">
+          听音辨义
+        </view>
+      </view>
+
+      <!-- 右侧磨耳朵电台快捷胶囊 -->
+      <view class="earworm-pill {{isEarwormPlaying ? 'playing' : ''}}" bindtap="toggleEarworm" aria-label="磨耳朵连续播放">
+        <text class="earworm-icon">{{isEarwormPlaying ? '⏸️' : '🎧'}}</text>
+        <text class="earworm-label">{{isEarwormPlaying ? '连播中' : '磨耳朵'}}</text>
+      </view>
+    </view>
+
+    <!-- 学习进度条与 Combo 连击激励 -->
+    <view class="study-progress-card">
+      <view class="progress-left">
+        <progress-bar class="study-progress" percent="{{studyProgress}}" type="normal" label="学习进度" showPercent />
+      </view>
+      <view class="progress-right">
+        <!-- 错词回炉标识 -->
+        <text class="retry-tag" wx:if="{{currentWord._isRetry}}">🔥 回炉强化</text>
+        <!-- 连击 Combo 勋章 -->
+        <view class="combo-badge {{combo >= 3 ? 'combo-fire' : ''}}" wx:if="{{combo >= 2}}">
+          <text class="combo-icon">⚡</text>
+          <text class="combo-num">Combo x{{combo}}</text>
+        </view>
+        <view class="progress-badge" wx:else>{{currentIndex + 1}} / {{total}}</view>
+      </view>
+    </view>
+
+    <!-- 单词卡片展示区 -->
+    <view class="study-card-toolbar" wx:if="{{studyMode === 'card'}}">
+      <view class="difficulty-toggle-pill {{autoShowMeaning ? 'mode-open' : 'mode-test'}}" bindtap="toggleMeaningMode" aria-label="切换释义显示模式">
+        <text class="pill-icon">{{autoShowMeaning ? '📖' : '🧠'}}</text>
+        <text class="pill-title">{{autoShowMeaning ? '直接看释义' : '自测模式 (加大难度)'}}</text>
+        <text class="pill-action">{{autoShowMeaning ? '轻触切换自测' : '轻触卡片查看'}}</text>
+      </view>
+    </view>
+
+    <word-card
+      word="{{currentWord}}"
+      flipped="{{showAnswer}}"
+      cloze="{{clozeMode}}"
+      listenMode="{{studyMode === 'listen'}}"
+      wordFamily="{{wordFamily}}"
+      mnemonicHints="{{mnemonicHints}}"
+      bind:flip="onShowAnswer"
+      bind:revealexample="onRevealExample"
+    />
+
+    <!-- 造句排序（产出性练习自检，仅抽认卡模式） -->
+    <view class="build-toggle-row" wx:if="{{buildEnabled && studyMode === 'card'}}">
+      <button class="build-toggle-btn" hover-class="build-toggle-hover" bindtap="toggleBuild">
+        {{buildShow ? '收起造句' : '造句挑战'}}
+      </button>
+    </view>
+    <view class="build-zone" wx:if="{{buildShow}}">
+      <view class="build-title">点击词块，按正确顺序拼出英文例句（产出性练习）</view>
+      <view class="build-slots">
+        <text class="build-slot {{item.filled ? 'filled' : 'empty'}}" wx:for="{{buildSlots}}" wx:key="index">{{item.filled ? item.text : '_'}}</text>
+      </view>
+      <view class="build-bank">
+        <text class="build-chip" hover-class="build-chip-hover" wx:for="{{buildBank}}" wx:key="uid" data-uid="{{item.uid}}" bindtap="onTapBuildToken">{{item.text}}</text>
+      </view>
+      <view class="build-result" wx:if="{{buildResult}}">{{buildResult}}</view>
+      <view class="build-actions">
+        <button class="build-btn" hover-class="build-btn-hover" bindtap="checkBuild">检查</button>
+        <button class="build-btn plain" hover-class="build-btn-hover" bindtap="resetBuild">重置</button>
+      </view>
+    </view>
+
+    <!-- 题型 1: 4 选 1 测验选项卡 (看英选汉 / 听音辨义) -->
+    <view class="choices-container" wx:if="{{(studyMode === 'choice' || studyMode === 'listen') && !showAnswer}}">
+      <view
+        class="choice-item {{selectedChoiceId === item.id ? (choiceStatus === 'correct' ? 'choice-correct' : 'choice-wrong') : (choiceStatus === 'wrong' && item.isCorrect ? 'choice-correct' : '')}}"
+        hover-class="choice-item-hover"
+        wx:for="{{choiceOptions}}"
+        wx:key="id"
+        data-choice="{{item}}"
+        bindtap="onSelectChoice"
+      >
+        <text class="choice-prefix">{{index === 0 ? 'A' : index === 1 ? 'B' : index === 2 ? 'C' : 'D'}}.</text>
+        <text class="choice-text">{{item.meaning}}</text>
+        <text class="choice-icon" wx:if="{{selectedChoiceId === item.id}}">{{choiceStatus === 'correct' ? '✅' : '❌'}}</text>
+        <text class="choice-icon" wx:elif="{{choiceStatus === 'wrong' && item.isCorrect}}">✅</text>
+      </view>
+    </view>
+
+    <!-- 交互操作区 -->
+    <view class="action-area">
+      <!-- 抽认卡模式下的认识/不认识操作 -->
+      <view class="btn-row answer-row" wx:if="{{studyMode === 'card'}}">
+        <button class="sv-btn sv-btn-danger" hover-class="sv-btn-danger-hover" bindtap="onUnknown">
+          不认识
+        </button>
+        <button class="sv-btn sv-btn-success" hover-class="sv-btn-success-hover" bindtap="onKnown">
+          认识
+        </button>
+      </view>
+
+      <!-- 4选1/听音模式下答错翻开卡片后的继续操作 -->
+      <view class="btn-row answer-row" wx:elif="{{showAnswer && (studyMode === 'choice' || studyMode === 'listen')}}">
+        <button class="sv-btn sv-btn-success" hover-class="sv-btn-success-hover" bindtap="nextWord">
+          <text class="btn-icon">➔</text> 我记住了，下一词
+        </button>
+      </view>
+
+      <!-- 快速消词与工具操作栏 -->
+      <view class="utility-row">
+        <!-- 核心一键斩词 (百词斩风格秒杀出库) -->
+        <button class="utility-btn chop-btn" hover-class="utility-btn-hover" bindtap="onChopWord">
+          斩！太简单
+        </button>
+        
+        <button class="utility-btn" wx:if="{{!showAnswer && studyMode === 'card'}}" hover-class="utility-btn-hover" bindtap="onShowAnswer">
+          🔍 翻看释义
+        </button>
+        <button class="utility-btn" wx:elif="{{showAnswer && hasClozeExample}}" hover-class="utility-btn-hover" bindtap="toggleCloze">
+          {{clozeMode ? '显示原句' : '重新挖空'}}
+        </button>
+        <button class="utility-btn utility-secondary" hover-class="utility-btn-hover" bindtap="onSkip">
+          跳过
+        </button>
+      </view>
+
+      <button class="undo-btn" wx:if="{{canUndo}}" bindtap="onUndo">撤销上一题</button>
+    </view>
+
+    <!-- 记忆辅助与速记面板 (翻开后呈现) -->
+    <view class="sv-panel memory-note" wx:if="{{showAnswer}}">
+      <view class="memory-heading">🌾 FSRS 记忆模型辅助</view>
+      <view class="memory-meta" wx:if="{{hasMemoryHistory}}">
+        <view class="meta-item">
+          <text class="meta-value">{{memoryInfo.stability}}</text>
+          <text class="meta-label">稳定性（天）</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-value">{{memoryInfo.difficulty}}</text>
+          <text class="meta-label">难度系数</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-value">{{memoryInfo.reviewCount}}</text>
+          <text class="meta-label">作答次数</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-value" style="color: {{memoryInfo.retentionColor}}">{{memoryInfo.retention}}</text>
+          <text class="meta-label">记忆保留</text>
+        </view>
+      </view>
+      <view class="related-row" wx:if="{{relatedWords.length}}">
+        <text class="related-label">易混词：</text>
+        <text class="related-word" wx:for="{{relatedWords}}" wx:key="id" data-word="{{item}}" bindtap="onRelatedTap">{{item.word}}</text>
+      </view>
+      <view class="memory-editor">
+        <input class="memory-input" value="{{mnemonicDraft}}" maxlength="120" placeholder="写下自己的记忆助记提示..." bindinput="onMnemonicInput" />
+        <button class="memory-save" bindtap="saveMnemonic">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学习完成界面 -->
+  <view class="container finish-view" wx:if="{{finished}}">
+    <view class="sv-panel finish-panel">
+      <view class="finish-icon pixel-bounce-animate">🎉</view>
+      <view class="title">学习完成</view>
+      <view class="subtitle">本次学习了 {{todayCount}} 个新词，打卡成功！</view>
+      <view class="max-combo-tag" wx:if="{{maxCombo >= 3}}">🔥 最高达成连击 Combo x{{maxCombo}}！</view>
+      <button class="undo-btn mt-24" wx:if="{{canUndo}}" bindtap="onUndo">返回上一题</button>
+      <button class="sv-btn sv-btn-success mt-32 finish-btn" hover-class="sv-btn-success-hover" bindtap="finish">返回首页</button>
+    </view>
+  </view>
+</view>

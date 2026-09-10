@@ -1,0 +1,87 @@
+<view class="page-bg">
+  <view class="container">
+    <view class="sv-panel header-panel">
+      <view class="title">📊 学习统计</view>
+      <view class="subtitle">记忆成长与复习预测</view>
+    </view>
+
+    <!-- 今日学习核心卡片 -->
+    <view class="sv-panel today-panel">
+      <view class="today-label">🌱 今日学习答题</view>
+      <view class="big-number">{{todayTotal}}</view>
+      <view class="today-detail">
+        <view class="detail-badge"><text>✔️ 正确 {{todayCorrect}}</text></view>
+        <view class="detail-badge highlight"><text>🎯 正确率 {{todayAccuracy}}%</text></view>
+      </view>
+    </view>
+
+    <!-- 累计指标行 -->
+    <view class="sv-panel stats-panel">
+      <view class="stats-row">
+        <stat-item icon="/assets/icons/total.webp" num="{{totalLearned}}" label="累计学习" />
+        <stat-item icon="/assets/icons/mastered.webp" num="{{totalMastered}}" label="已掌握" />
+        <stat-item icon="/assets/icons/new.webp" num="{{streakDays}}" label="连续天数" />
+      </view>
+    </view>
+
+    <!-- 7天热力图 -->
+    <view class="sv-panel heatmap-panel">
+      <view class="panel-title">🔥 近 7 天学习热力</view>
+      <view class="heatmap">
+        <view class="heatmap-item" wx:for="{{heatmap}}" wx:key="date">
+          <view class="heatmap-cell heatmap-level-{{item.level}}"></view>
+          <text class="heatmap-date">{{item.date}}</text>
+          <text class="heatmap-count">{{item.total}} 词</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 月度打卡日历 + 连续天数勋章 -->
+    <view class="sv-panel calendar-panel">
+      <view class="panel-title">🗓️ 本月打卡日历 · 打卡 {{monthlyCount}} 天
+        <text class="calendar-medal" wx:if="{{streakDays > 0}}">🔥 连续 {{streakDays}} 天</text>
+      </view>
+      <view class="cal-weekdays">
+        <text class="cal-weekday" wx:for="{{weekdays}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view class="cal-weeks" wx:for="{{calendar}}" wx:key="index" wx:for-item="week">
+        <view class="cal-row">
+          <view class="cal-cell {{cell.padding ? 'cal-pad' : ''}} {{cell.total > 0 ? 'cal-lv' + cell.level : ''}} {{cell.isToday ? 'cal-today' : ''}}"
+            wx:for="{{week}}" wx:key="key" wx:for-item="cell">
+            <text class="cal-day" wx:if="{{!cell.padding}}">{{cell.day}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="calendar-legend">
+        <text class="legend-item"><view class="legend-dot legend-1"></view>1-9词</text>
+        <text class="legend-item"><view class="legend-dot legend-2"></view>10-29</text>
+        <text class="legend-item"><view class="legend-dot legend-3"></view>30-59</text>
+        <text class="legend-item"><view class="legend-dot legend-4"></view>60+</text>
+      </view>
+    </view>
+
+    <!-- 未来复习安排 -->
+    <view class="sv-panel upcoming-panel">
+      <view class="panel-title">📅 未来 7 天复习规划 · 共 {{upcomingTotal}} 词</view>
+      <view class="upcoming-chart">
+        <view class="upcoming-item" wx:for="{{upcoming}}" wx:key="date">
+          <text class="upcoming-count">{{item.count}}</text>
+          <view class="upcoming-track"><view class="upcoming-bar" style="height: {{item.percent}}%"></view></view>
+          <text class="upcoming-label">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- FSRS 记忆模型深度参数 -->
+    <view class="sv-panel memory-panel">
+      <view class="panel-title">🧠 FSRS 记忆模型状态</view>
+      <view class="memory-grid">
+        <view class="memory-card"><text class="memory-num">{{averageStability}}</text><text class="memory-label">平均稳定性 / 天</text></view>
+        <view class="memory-card"><text class="memory-num">{{averageDifficulty}}</text><text class="memory-label">平均难度指数</text></view>
+        <view class="memory-card"><text class="memory-num">{{totalReviews}}</text><text class="memory-label">累计复习次数</text></view>
+        <view class="memory-card"><text class="memory-num error">{{totalErrors}}</text><text class="memory-label">累计错答次数</text></view>
+      </view>
+      <view class="estimate-text" wx:if="{{estimateText}}">💡 {{estimateText}}</view>
+    </view>
+  </view>
+</view>

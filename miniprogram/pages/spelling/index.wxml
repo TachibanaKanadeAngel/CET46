@@ -1,0 +1,60 @@
+<view class="container spelling-page">
+  <view class="toolbar sv-panel" wx:if="{{!finished}}">
+    <picker mode="selector" range="{{sourceOptions}}" range-key="label" value="{{sourceIndex}}" bindchange="onSourceChange">
+      <view class="source-picker">题目来源：{{sourceOptions[sourceIndex].label}} <text>›</text></view>
+    </picker>
+    <progress-bar percent="{{progressPercent}}" type="normal" label="拼写进度" showPercent />
+    <view class="progress-text">{{currentIndex + 1}} / {{total}}</view>
+  </view>
+
+  <view wx:if="{{!finished && currentWord}}">
+    <view class="mode-segment" aria-role="group" aria-label="拼写提示模式">
+      <button class="mode-btn {{mode === 'meaning' ? 'active' : ''}}" data-mode="meaning" bindtap="onModeChange">释义模式</button>
+      <button class="mode-btn {{mode === 'phonetic' ? 'active' : ''}}" data-mode="phonetic" bindtap="onModeChange">音标模式</button>
+    </view>
+
+    <view class="sv-panel prompt-panel">
+      <view class="prompt-label">根据提示拼写单词</view>
+      <view class="prompt-value" wx:if="{{mode === 'meaning'}}">{{currentWord.meaning}}</view>
+      <view class="prompt-value phonetic" wx:else>{{currentWord.phonetic || '暂无音标，请切换到释义模式'}}</view>
+      <view class="letter-count">{{currentWord.word.length}} 个字母</view>
+    </view>
+
+    <view class="hint-line" wx:if="{{hintText}}">提示：{{hintText}}</view>
+    <input
+      class="spelling-input {{resultType}}"
+      value="{{inputValue}}"
+      disabled="{{checked}}"
+      placeholder="输入英文单词"
+      confirm-type="done"
+      bindinput="onInput"
+      bindconfirm="onSubmit"
+      maxlength="64"
+      focus="{{!checked}}"
+      cursor-spacing="30"
+      adjust-position="{{true}}"
+    />
+
+    <view class="result-panel {{resultType}}" wx:if="{{checked}}">
+      <view class="result-title">{{resultText}}</view>
+      <view class="result-answer">正确答案：{{answerText}}</view>
+    </view>
+
+    <view class="action-row">
+      <button class="sv-btn hint-btn" hover-class="sv-btn-hover" bindtap="onHint" disabled="{{checked}}">💡 提示</button>
+      <button class="sv-btn skip-btn" hover-class="sv-btn-hover" bindtap="onSkip" disabled="{{checked}}">跳过</button>
+      <button class="sv-btn sv-btn-success submit-btn" hover-class="sv-btn-success-hover" bindtap="onSubmit">{{checked ? '下一词 ➔' : '提交答案'}}</button>
+    </view>
+  </view>
+
+  <view class="finish-view" wx:if="{{finished}}">
+    <view class="sv-panel finish-panel">
+      <view class="finish-icon pixel-bounce-animate">✍️</view>
+      <view class="title">拼写训练完成</view>
+      <view class="subtitle" wx:if="{{total > 0}}">正确 {{correctCount}} / {{total}}，跳过 {{skippedCount}}</view>
+      <view class="subtitle" wx:else>当前来源没有可训练的单词</view>
+      <button class="sv-btn sv-btn-success mt-32" hover-class="sv-btn-success-hover" bindtap="restart" wx:if="{{total > 0}}">再练一组</button>
+      <button class="sv-btn mt-24" hover-class="sv-btn-hover" bindtap="finish">返回首页</button>
+    </view>
+  </view>
+</view>

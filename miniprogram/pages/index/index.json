@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "46英语",
+  "usingComponents": {
+    "progress-bar": "/components/progress-bar/progress-bar"
+  }
+}

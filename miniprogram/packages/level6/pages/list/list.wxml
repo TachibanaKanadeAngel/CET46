@@ -1,0 +1,35 @@
+<view class="container">
+  <view class="title">{{levelTitle || level}} 词库</view>
+  <view class="subtitle">显示 {{totalCount}} / {{libraryTotal}} 词</view>
+  <view class="filter-panel">
+    <view class="search-row">
+      <input class="search-input" value="{{query}}" placeholder="搜索单词或释义" bindinput="onSearchInput" confirm-type="search" />
+      <button class="clear-btn" wx:if="{{query}}" bindtap="clearSearch" aria-label="清除搜索">×</button>
+    </view>
+    <picker mode="selector" range="{{statusOptions}}" range-key="label" value="{{statusIndex}}" bindchange="onStatusChange">
+      <view class="status-picker">{{statusOptions[statusIndex].label}} <text>›</text></view>
+    </picker>
+  </view>
+  <view class="empty-state" wx:if="{{totalCount === 0}}">
+    <view class="empty-icon pixel-sprout-animate">🌾</view>
+    <view class="empty-text">没有符合条件的单词</view>
+  </view>
+  <view class="word-list">
+    <view class="word-group" wx:for="{{wordsGroup}}" wx:key="index" wx:for-item="group">
+      <view class="word-item" hover-class="word-item-hover" wx:for="{{group}}" wx:key="id" data-word="{{item}}" bindtap="onWordTap">
+        <view class="word-header">
+          <view class="word-title-group">
+            <text class="word-text">{{item.word}}</text>
+            <view class="sv-audio-btn list-audio-btn {{playingWord === item.word ? 'playing' : ''}}" data-word="{{item.word}}" catchtap="onPlayAudio" aria-label="播放发音">
+              <text class="sv-audio-icon">🔊</text>
+            </view>
+          </view>
+          <text class="status-tag {{item.status}}">{{item.statusLabel}}</text>
+        </view>
+        <text class="word-phonetic" wx:if="{{item.phonetic}}">{{item.phonetic}}</text>
+        <text class="word-meaning">{{item.meaning}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="list-footer" wx:if="{{hasMore}}">继续上滑加载更多（{{loadedCount}} / {{totalCount}}）</view>
+</view>

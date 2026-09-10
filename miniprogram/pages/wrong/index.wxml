@@ -1,0 +1,54 @@
+<view class="page-bg">
+  <view class="container">
+    <view class="sv-panel header-panel wrong-header">
+      <view class="header-left">
+        <view class="title">{{currentLevel}} 错词本</view>
+        <view class="subtitle" wx:if="{{loading}}">正在加载词库...</view>
+        <view class="subtitle" wx:elif="{{!empty}}">共 {{totalCount}} 个错词待巩固</view>
+        <view class="subtitle" wx:else>暂无错词，去学新词吧！</view>
+      </view>
+      <view class="header-actions">
+        <view class="header-action-btn primary" hover-class="header-action-btn-hover" bindtap="goWrongSpelling">拼写专项</view>
+        <view class="header-action-btn" hover-class="header-action-btn-hover" bindtap="goVocabList">完整词库</view>
+      </view>
+    </view>
+
+    <view class="analysis-grid" wx:if="{{!empty && !loading}}">
+      <view class="analysis-item"><text class="analysis-num">{{totalErrors}}</text><text>累计错答</text></view>
+      <view class="analysis-item"><text class="analysis-num">{{dueWrongCount}}</text><text>当前到期</text></view>
+      <view class="analysis-item"><text class="analysis-word">{{hardestWord}}</text><text>重点巩固</text></view>
+    </view>
+
+    <view class="empty-state" wx:if="{{empty && !loading}}">
+      <view class="empty-icon pixel-sprout-animate">🌾</view>
+      <view class="empty-text">错词本空空如也，真棒！</view>
+      <button class="sv-btn sv-btn-success mt-32 empty-btn" hover-class="sv-btn-success-hover" bindtap="goReview">去复习</button>
+    </view>
+
+    <view class="sv-panel error-panel" wx:if="{{loadError}}">
+      <view class="subtitle">词库加载失败：{{loadError}}</view>
+      <button class="sv-btn mt-24" bindtap="onRetryVocab">重新加载</button>
+    </view>
+
+    <view class="word-list" wx:if="{{!empty && !loading}}">
+      <view class="word-group" wx:for="{{wordsGroup}}" wx:key="index" wx:for-item="group">
+        <view class="word-item sv-panel" wx:for="{{group}}" wx:key="id" data-word="{{item}}" bindtap="onWordTap">
+          <view class="word-info">
+            <view class="word-title-row">
+              <text class="word-text">{{item.word}}</text>
+              <view class="sv-audio-btn list-audio-btn {{playingWord === item.word ? 'playing' : ''}}" data-word="{{item.word}}" catchtap="onPlayAudio" aria-label="播放发音">
+                <text class="sv-audio-icon">🔊</text>
+              </view>
+              <text class="error-count">错 {{item.errorCount}} 次</text>
+            </view>
+            <text class="word-meaning">{{item.meaning}}</text>
+          </view>
+          <view class="word-action">
+            <view class="remove-btn" hover-class="remove-btn-hover" data-id="{{item.id}}" catchtap="onRemove">移除</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="list-footer" wx:if="{{hasMore}}">继续上滑加载更多</view>
+  </view>
+</view>

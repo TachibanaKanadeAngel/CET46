@@ -1,0 +1,93 @@
+<view class="sv-card-perspective">
+  <view class="sv-word-card {{flipped ? 'flipped' : ''}}" bindtap="onFlip">
+    <view class="sv-card-top-bar">
+      <text class="sv-word-level" wx:if="{{word.level}}">{{word.level}}</text>
+      <view class="sv-pronunciation-wrap" wx:if="{{word.phonetic || word.word}}">
+        <text class="sv-pronunciation" wx:if="{{word.phonetic}}">{{word.phonetic}}</text>
+        <view class="sv-audio-btn {{isPlaying ? 'playing' : ''}}" catchtap="onPlayAudio" aria-label="播放发音">
+          <text class="sv-audio-icon">🔊</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 单词主体 (支持听音模式遮罩) -->
+    <view class="sv-word-body">
+      <block wx:if="{{listenMode && !flipped}}">
+        <view class="sv-listen-mask">
+          <text class="sv-listen-icon pixel-bounce-animate">🎧</text>
+          <text class="sv-listen-text">听音辨词中...</text>
+          <text class="sv-listen-sub">点击喇叭重新发音 / 翻卡查看答案</text>
+        </view>
+      </block>
+      <block wx:else>
+        <text class="sv-word">{{word.word}}</text>
+      </block>
+    </view>
+
+    <!-- 卡片背面深度研读区 (释义 / 例句 / 词根词缀 / 搭配) -->
+    <view class="sv-card-back-content" wx:if="{{flipped}}">
+      <view class="sv-card-divider"></view>
+      <view class="sv-meaning-box">
+        <text class="sv-meaning-text">{{word.meaning}}</text>
+      </view>
+
+      <!-- 词根词缀智能解构 -->
+      <view class="sv-morphology-box" wx:if="{{morphology}}">
+        <view class="sv-section-tag">🌱 词根拆解</view>
+        <view class="sv-morph-chips">
+          <view class="sv-morph-chip {{part.type}}" wx:for="{{morphology.parts}}" wx:for-item="part" wx:key="index">
+            <text class="morph-text">{{part.text}}</text>
+            <text class="morph-meaning">{{part.meaning}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 高频短语与搭配 -->
+      <view class="sv-collocation-box" wx:if="{{collocations && collocations.length}}">
+        <view class="sv-section-tag">🔗 常用搭配</view>
+        <view class="sv-collocation-chips">
+          <view class="sv-collocation-chip" wx:for="{{collocations}}" wx:for-item="phrase" wx:key="index">
+            <text class="collocation-text">📌 {{phrase}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 助记联想（学1记N 记忆钩子） -->
+      <view class="sv-mnemonic-box" wx:if="{{mnemonicHints && mnemonicHints.length}}">
+        <view class="sv-section-tag">💡 助记联想</view>
+        <view class="sv-mnemonic-lines">
+          <text class="sv-mnemonic-line" wx:for="{{mnemonicHints}}" wx:key="index">{{item}}</text>
+        </view>
+      </view>
+
+      <!-- 双语例句 (支持挖空点按揭晓 + 原声朗读 / 跟读) -->
+      <view class="sv-example-box {{cloze ? 'cloze' : ''}}" wx:if="{{word.example}}" catchtap="onRevealCloze">
+        <view class="sv-section-head">
+          <text class="sv-section-tag">语境例句</text>
+          <view class="sv-example-actions">
+            <view class="sv-mini-audio" catchtap="onPlayExampleAudio" aria-label="朗读例句">🔊 例句</view>
+            <view class="sv-mini-follow" catchtap="onFollowRead" aria-label="跟读">📣 跟读</view>
+          </view>
+        </view>
+        <text class="sv-example-text">{{displayExample}}</text>
+      </view>
+
+      <!-- 同根词族：学词族而非孤立单词 -->
+      <view class="sv-family-box" wx:if="{{wordFamily && wordFamily.length}}">
+        <view class="sv-section-tag">👨‍👩‍👧 同根词族</view>
+        <view class="sv-family-wrap">
+          <view class="sv-family-item" wx:for="{{wordFamily}}" wx:key="id" data-word="{{item}}" bindtap="onPreviewFamily">
+            <text class="family-word">{{item.word}}</text>
+            <text class="family-meaning">{{item.meaning}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 卡片未翻开时的引导提示 -->
+    <view class="sv-flip-hint" wx:if="{{!flipped}}">
+      <text class="hint-icon">💡</text>
+      <text class="hint-text">轻触卡片翻看深度释义与词根</text>
+    </view>
+  </view>
+</view>

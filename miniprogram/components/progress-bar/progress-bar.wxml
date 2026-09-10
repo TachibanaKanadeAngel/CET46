@@ -1,0 +1,9 @@
+<view class="sv-progress {{typeClass}}">
+  <view class="sv-progress-label" wx:if="{{label}}">
+    <text>{{label}}</text>
+    <text wx:if="{{showPercent}}">{{percent}}%</text>
+  </view>
+  <view class="sv-bar-wrapper">
+    <view class="sv-bar-fill" style="width: {{percent}}%;"></view>
+  </view>
+</view>

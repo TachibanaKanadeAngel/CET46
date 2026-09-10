@@ -1,0 +1,51 @@
+{
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
+  "overrides": [
+    {
+      "files": ["**/*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "ecmaFeatures": { "jsx": false }
+      },
+      "rules": {
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_" }]
+      }
+    }
+  ],
+  "rules": {
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+    "no-undef": "error",
+    "no-duplicate-imports": "error",
+    "no-unreachable": "error",
+    "no-constant-condition": "warn",
+    "no-debugger": "warn",
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "no-unsafe-finally": "error",
+    "no-async-promise-executor": "error",
+    "no-promise-executor-return": "warn",
+    "no-return-await": "error",
+    "prefer-promise-reject-errors": "off",
+    "eqeqeq": ["warn", "smart"],
+    "no-eval": "error",
+    "no-implied-eval": "error",
+    "no-new-func": "error",
+    "no-implicit-globals": "error",
+    "no-useless-return": "warn",
+    "no-var": "error",
+    "prefer-const": "warn",
+    "no-shadow": "off"
+  }
+}

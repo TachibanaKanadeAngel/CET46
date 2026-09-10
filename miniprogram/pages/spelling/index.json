@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "拼写训练",
+  "usingComponents": {
+    "progress-bar": "/components/progress-bar/progress-bar"
+  }
+}

@@ -1,0 +1,104 @@
+<view class="page-bg">
+  <view class="container" wx:if="{{!finished && !empty}}">
+    <!-- 顶部复习进度 -->
+    <view class="review-progress-card">
+      <progress-bar class="review-progress" percent="{{reviewProgress}}" type="normal" label="复习进度" showPercent />
+      <view class="progress-badge">{{currentIndex + 1}} / {{total}}</view>
+    </view>
+
+    <!-- 单词卡片 -->
+    <word-card word="{{currentWord}}" flipped="{{showAnswer}}" cloze="{{clozeMode}}" wordFamily="{{wordFamily}}" mnemonicHints="{{mnemonicHints}}" bind:flip="onShowAnswer" bind:revealexample="onRevealExample" />
+
+    <!-- 交互操作区 -->
+    <view class="action-area">
+      <!-- 翻牌前操作 -->
+      <view class="utility-row" wx:if="{{!showAnswer}}">
+        <button class="sv-btn sv-btn-success reveal-btn" hover-class="sv-btn-success-hover" bindtap="onShowAnswer">
+          显示释义 (翻牌)
+        </button>
+        <button class="utility-btn utility-secondary" hover-class="utility-btn-hover" bindtap="onSkip">
+          跳过
+        </button>
+      </view>
+
+      <!-- 翻牌后 FSRS 评分区 -->
+      <view class="rating-group" wx:if="{{showAnswer}}">
+        <view class="btn-row rating-row">
+          <button class="sv-btn sv-btn-danger" hover-class="sv-btn-danger-hover" bindtap="onHard">
+            忘记
+          </button>
+          <button class="sv-btn" hover-class="sv-btn-hover" bindtap="onGood">
+            记得
+          </button>
+          <button class="sv-btn sv-btn-success" hover-class="sv-btn-success-hover" bindtap="onEasy">
+            简单
+          </button>
+        </view>
+        <view class="utility-row mt-12">
+          <button class="utility-btn chop-btn" hover-class="utility-btn-hover" bindtap="onChopWord">
+            斩！已熟记
+          </button>
+          <button class="utility-btn" wx:if="{{hasClozeExample}}" hover-class="utility-btn-hover" bindtap="toggleCloze">
+            {{clozeMode ? '原句' : '挖空'}}
+          </button>
+          <button class="utility-btn utility-secondary" hover-class="utility-btn-hover" bindtap="onSkip">
+            跳过
+          </button>
+        </view>
+      </view>
+
+      <button class="undo-btn" wx:if="{{canUndo}}" bindtap="onUndo">返回上一题</button>
+    </view>
+
+    <!-- 记忆辅助与速记面板 -->
+    <view class="sv-panel memory-note" wx:if="{{showAnswer}}">
+      <view class="memory-heading">🌾 FSRS 记忆参数与辅助</view>
+      <view class="memory-meta" wx:if="{{hasMemoryHistory}}">
+        <view class="meta-item">
+          <text class="meta-value">{{memoryInfo.stability}}</text>
+          <text class="meta-label">稳定性（天）</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-value">{{memoryInfo.difficulty}}</text>
+          <text class="meta-label">难度系数</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-value">{{memoryInfo.reviewCount}}</text>
+          <text class="meta-label">作答次数</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-value" style="color: {{memoryInfo.retentionColor}}">{{memoryInfo.retention}}</text>
+          <text class="meta-label">记忆保留</text>
+        </view>
+      </view>
+      <view class="related-row" wx:if="{{relatedWords.length}}">
+        <text class="related-label">易混词：</text>
+        <text class="related-word" wx:for="{{relatedWords}}" wx:key="id" data-word="{{item}}" bindtap="onRelatedTap">{{item.word}}</text>
+      </view>
+      <view class="memory-editor">
+        <input class="memory-input" value="{{mnemonicDraft}}" maxlength="120" placeholder="写下自己的记忆助记提示..." bindinput="onMnemonicInput" />
+        <button class="memory-save" bindtap="saveMnemonic">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="container finish-view" wx:if="{{empty}}">
+    <view class="sv-panel finish-panel">
+      <view class="finish-icon pixel-sprout-animate">🌾</view>
+      <view class="title">暂无到期复习</view>
+      <view class="subtitle">已完成当前复习任务，可以继续学习新词！</view>
+      <button class="sv-btn sv-btn-success mt-32 finish-btn" hover-class="sv-btn-success-hover" bindtap="goStudy">🌾 学习新词</button>
+      <button class="sv-btn mt-24 finish-btn" hover-class="sv-btn-hover" bindtap="finish">返回首页</button>
+    </view>
+  </view>
+
+  <view class="container finish-view" wx:if="{{finished}}">
+    <view class="sv-panel finish-panel">
+      <view class="finish-icon pixel-bounce-animate">🎉</view>
+      <view class="title">复习完成</view>
+      <view class="subtitle">本次复习了 {{todayCount}} 个单词，巩固成功！</view>
+      <button class="undo-btn mt-24" wx:if="{{canUndo}}" bindtap="onUndo">返回上一题</button>
+      <button class="sv-btn sv-btn-success mt-32 finish-btn" hover-class="sv-btn-success-hover" bindtap="finish">返回首页</button>
+    </view>
+  </view>
+</view>

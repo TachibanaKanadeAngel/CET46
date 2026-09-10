@@ -1,0 +1,82 @@
+﻿{
+  "appId": "com.cet46.app",
+  "productName": "46英语",
+  "copyright": "Copyright © 2024-2026 CET46 Team",
+  "directories": {
+    "output": "release"
+  },
+  "files": [
+    "dist/**/*",
+    "electron/**/*",
+    "icons/**/*.png",
+    "package.json"
+  ],
+  "publish": {
+    "provider": "github",
+    "owner": "CET46-Team",
+    "repo": "cet46-pro"
+  },
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      },
+      {
+        "target": "portable",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "icons/icon-512.png"
+  },
+  "mac": {
+    "target": ["dmg", "zip"],
+    "icon": "icons/icon-512.png",
+    "category": "public.app-category.education",
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false
+  },
+  "linux": {
+    "target": ["AppImage", "deb"],
+    "icon": "icons/icon-512.png",
+    "category": "Education"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "46英语",
+    "packElevateHelper": false
+  },
+  "portable": {
+    "artifactName": "46英语-Portable-${version}.exe"
+  },
+  "dmg": {
+    "artifactName": "46英语-${version}-mac.dmg",
+    "contents": [
+      {
+        "x": 130,
+        "y": 220
+      },
+      {
+        "x": 410,
+        "y": 220,
+        "type": "link",
+        "path": "/Applications"
+      }
+    ]
+  },
+  "appImage": {
+    "artifactName": "46英语-${version}-linux.AppImage"
+  },
+  "deb": {
+    "artifactName": "CET46-${version}-amd64.deb",
+    "depends": ["gconf2", "gconf-service", "libnotify4", "libappindicator1", "libxtst6", "libnss3"]
+  },
+  "asar": true,
+  "electronDownload": {
+    "cache": "./electron-cache",
+    "mirror": "https://npmmirror.com/mirrors/electron/"
+  }
+}

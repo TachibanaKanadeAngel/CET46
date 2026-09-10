@@ -1,0 +1,5 @@
+<view class="sv-stat-item">
+  <image class="sv-stat-icon" src="{{icon}}" mode="aspectFit" wx:if="{{icon}}" />
+  <view class="sv-stat-num">{{num}}</view>
+  <view class="sv-stat-label">{{label}}</view>
+</view>

@@ -1,0 +1,118 @@
+/* 词库列表容器样式 */
+#virtual-scroll-container {
+  position: relative;
+  z-index: 10;
+  background: var(--sv-panel-base);
+  height: 450px;
+  overflow-y: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+#virtual-scroll-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+  min-width: 0;
+}
+
+#virtual-scroll-spacer {
+  display: block;
+}
+
+/* 列表项样式增强 */
+.list-item {
+  background: rgba(255, 255, 255, 0.9);
+  margin-bottom: 10px;
+  border: 2px solid var(--sv-border-dark);
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  min-height: 80px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  width: 100%;
+  min-width: 0;
+  flex-direction: row;
+  gap: 12px;
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+}
+
+.list-item:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.list-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+  align-items: flex-start;
+  writing-mode: horizontal-tb;
+}
+
+.list-item-word {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--sv-text-main);
+  max-width: 100%;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+}
+
+.list-item-word small {
+  font-size: 0.75rem;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  color: var(--sv-text-main);
+}
+
+.list-item-pron {
+  color: var(--gray);
+  font-size: 0.9rem;
+  font-style: italic;
+  max-width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+}
+
+.list-item-meaning {
+  color: var(--gray);
+  font-size: 0.95rem;
+  word-break: break-word;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border: 1px solid var(--sv-border-dark);
+  white-space: nowrap;
+  margin-left: 10px;
+}

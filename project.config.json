@@ -1,0 +1,26 @@
+{
+  "description": "46英语 - 微信小程序版",
+  "miniprogramRoot": "miniprogram/",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "useCompilerPlugins": [
+      "typescript"
+    ],
+    "bundle": false
+  },
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "tests"
+      }
+    ]
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.16.2",
+  "appid": "touristappid",
+  "projectname": "46-english-miniprogram"
+}

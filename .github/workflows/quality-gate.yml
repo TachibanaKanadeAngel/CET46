@@ -1,0 +1,302 @@
+name: Quality Gate
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    - cron: '0 3 * * 1'  # 每周一凌晨3点自动运行质量评估
+  workflow_dispatch:      # 支持手动触发
+
+env:
+  QUALITY_THRESHOLD: 75
+  SECURITY_THRESHOLD: 70
+  CODE_QUALITY_THRESHOLD: 70
+  COVERAGE_THRESHOLD_STATEMENTS: 20
+  COVERAGE_THRESHOLD_BRANCHES: 15
+
+jobs:
+  # 质量评估
+  quality-assessment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Run ESLint check (JSON output)
+        run: |
+          npx eslint . --format json --output-file reports/eslint-report.json || true
+
+      - name: Run Vitest coverage
+        run: npm run test:coverage
+
+      - name: Run security audit
+        run: npm audit --json > reports/npm-audit.json || true
+
+      - name: Run quality assessment script
+        run: node scripts/quality/quality-score.js
+
+      - name: Upload quality report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-report
+          path: reports/
+
+      - name: Quality gate check
+        run: |
+          echo "=== 质量门禁检查 ==="
+
+          # 读取质量评分
+          if [ -f reports/quality-score.json ]; then
+            OVERALL_SCORE=$(node -e "const s=require('./reports/quality-score.json'); console.log(s.overall ?? s.score ?? 0)")
+            CODE_QUALITY=$(node -e "const s=require('./reports/quality-score.json'); console.log(s.codeQuality ?? s.code_quality ?? 0)")
+            SECURITY_SCORE=$(node -e "const s=require('./reports/quality-score.json'); console.log(s.security ?? 0)")
+            COVERAGE_STATEMENTS=$(node -e "const s=require('./reports/quality-score.json'); console.log(s.coverage?.statements ?? s.statements ?? 0)")
+            COVERAGE_BRANCHES=$(node -e "const s=require('./reports/quality-score.json'); console.log(s.coverage?.branches ?? s.branches ?? 0)")
+          else
+            echo "⚠️ 未找到质量评分文件，使用默认值"
+            OVERALL_SCORE=0
+            CODE_QUALITY=0
+            SECURITY_SCORE=0
+            COVERAGE_STATEMENTS=0
+            COVERAGE_BRANCHES=0
+          fi
+
+          echo "综合评分: ${OVERALL_SCORE} (阈值: ${QUALITY_THRESHOLD})"
+          echo "代码质量: ${CODE_QUALITY} (阈值: ${CODE_QUALITY_THRESHOLD})"
+          echo "安全性:   ${SECURITY_SCORE} (阈值: ${SECURITY_THRESHOLD})"
+          echo "语句覆盖率: ${COVERAGE_STATEMENTS}% (阈值: ${COVERAGE_THRESHOLD_STATEMENTS}%)"
+          echo "分支覆盖率: ${COVERAGE_BRANCHES}% (阈值: ${COVERAGE_THRESHOLD_BRANCHES}%)"
+
+          FAILED=false
+
+          # 综合分检查
+          if [ "$(echo "$OVERALL_SCORE < $QUALITY_THRESHOLD" | bc -l)" -eq 1 ]; then
+            echo "❌ 综合评分 ${OVERALL_SCORE} 低于阈值 ${QUALITY_THRESHOLD}"
+            FAILED=true
+          else
+            echo "✅ 综合评分通过"
+          fi
+
+          # 代码质量检查
+          if [ "$(echo "$CODE_QUALITY < $CODE_QUALITY_THRESHOLD" | bc -l)" -eq 1 ]; then
+            echo "❌ 代码质量 ${CODE_QUALITY} 低于阈值 ${CODE_QUALITY_THRESHOLD}"
+            FAILED=true
+          else
+            echo "✅ 代码质量通过"
+          fi
+
+          # 安全性检查
+          if [ "$(echo "$SECURITY_SCORE < $SECURITY_THRESHOLD" | bc -l)" -eq 1 ]; then
+            echo "❌ 安全性 ${SECURITY_SCORE} 低于阈值 ${SECURITY_THRESHOLD}"
+            FAILED=true
+          else
+            echo "✅ 安全性通过"
+          fi
+
+          # 覆盖率检查（初期仅警告，不阻断）
+          if [ "$(echo "$COVERAGE_STATEMENTS < $COVERAGE_THRESHOLD_STATEMENTS" | bc -l)" -eq 1 ]; then
+            echo "⚠️ 语句覆盖率 ${COVERAGE_STATEMENTS}% 低于阈值 ${COVERAGE_THRESHOLD_STATEMENTS}%（初期仅警告）"
+          else
+            echo "✅ 语句覆盖率通过"
+          fi
+
+          if [ "$(echo "$COVERAGE_BRANCHES < $COVERAGE_THRESHOLD_BRANCHES" | bc -l)" -eq 1 ]; then
+            echo "⚠️ 分支覆盖率 ${COVERAGE_BRANCHES}% 低于阈值 ${COVERAGE_THRESHOLD_BRANCHES}%（初期仅警告）"
+          else
+            echo "✅ 分支覆盖率通过"
+          fi
+
+          if [ "$FAILED" = true ]; then
+            echo ""
+            echo "🚫 质量门禁未通过"
+            exit 1
+          fi
+
+          echo ""
+          echo "🎉 质量门禁通过"
+
+  # 回归测试
+  regression-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: quality-assessment
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Run full test suite
+        run: npm run test:coverage
+
+      - name: Compare with baseline
+        run: |
+          if [ -f reports/test-baseline.json ]; then
+            echo "=== 与基线对比 ==="
+            node -e "
+              const baseline = require('./reports/test-baseline.json');
+              const current = require('./coverage/coverage-summary.json');
+              const compare = (key, label) => {
+                const base = baseline.total?.[key]?.pct ?? 0;
+                const curr = current.total?.[key]?.pct ?? 0;
+                const diff = (curr - base).toFixed(2);
+                const icon = diff >= 0 ? '📈' : '📉';
+                console.log(icon + ' ' + label + ': ' + base + '% → ' + curr + '% (' + (diff >= 0 ? '+' : '') + diff + '%)');
+              };
+              compare('lines', '行覆盖率');
+              compare('statements', '语句覆盖率');
+              compare('branches', '分支覆盖率');
+              compare('functions', '函数覆盖率');
+            "
+          else
+            echo "⚠️ 未找到测试基线文件，跳过对比"
+          fi
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-test-report
+          path: |
+            coverage/
+            reports/
+
+  # 质量报告
+  quality-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: regression-test
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Download quality report
+        uses: actions/download-artifact@v4
+        with:
+          name: quality-report
+          path: reports/
+
+      - name: Download test report
+        uses: actions/download-artifact@v4
+        with:
+          name: regression-test-report
+          path: coverage/
+        continue-on-error: true
+
+      - name: Generate quality trend summary
+        run: |
+          echo "=== 质量趋势摘要 ==="
+          echo "日期: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "分支: ${{ github.ref_name }}"
+          echo "提交: ${{ github.sha }}"
+          echo ""
+
+          if [ -f reports/quality-score.json ]; then
+            echo "--- 质量评分 ---"
+            node -e "
+              const s = require('./reports/quality-score.json');
+              const items = [
+                ['综合评分', s.overall ?? s.score],
+                ['代码质量', s.codeQuality ?? s.code_quality],
+                ['安全性', s.security],
+              ];
+              items.forEach(([label, val]) => {
+                if (val !== undefined) console.log(label + ': ' + val);
+              });
+              if (s.coverage) {
+                console.log('语句覆盖率: ' + (s.coverage.statements ?? 'N/A') + '%');
+                console.log('分支覆盖率: ' + (s.coverage.branches ?? 'N/A') + '%');
+              }
+            "
+          fi
+
+          if [ -f coverage/coverage-summary.json ]; then
+            echo ""
+            echo "--- 测试覆盖率 ---"
+            node -e "
+              const c = require('./coverage/coverage-summary.json');
+              const t = c.total || {};
+              ['lines', 'statements', 'branches', 'functions'].forEach(k => {
+                if (t[k]) console.log(k + ': ' + t[k].pct + '%');
+              });
+            "
+          fi
+
+      - name: Comment quality score on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let body = '## 📊 质量门禁报告\n\n';
+
+            if (fs.existsSync('reports/quality-score.json')) {
+              const score = JSON.parse(fs.readFileSync('reports/quality-score.json', 'utf8'));
+              const overall = score.overall ?? score.score ?? 'N/A';
+              const codeQuality = score.codeQuality ?? score.code_quality ?? 'N/A';
+              const security = score.security ?? 'N/A';
+
+              const icon = (val, threshold) => {
+                if (val === undefined || val === 'N/A') return '⚪';
+                return val >= threshold ? '✅' : '❌';
+              };
+
+              body += '| 指标 | 评分 | 阈值 | 状态 |\n';
+              body += '|------|------|------|------|\n';
+              body += `| 综合评分 | ${overall} | ${{ env.QUALITY_THRESHOLD }} | ${icon(overall, ${{ env.QUALITY_THRESHOLD }})} |\n`;
+              body += `| 代码质量 | ${codeQuality} | ${{ env.CODE_QUALITY_THRESHOLD }} | ${icon(codeQuality, ${{ env.CODE_QUALITY_THRESHOLD }})} |\n`;
+              body += `| 安全性 | ${security} | ${{ env.SECURITY_THRESHOLD }} | ${icon(security, ${{ env.SECURITY_THRESHOLD }})} |\n`;
+
+              if (score.coverage) {
+                body += `| 语句覆盖率 | ${score.coverage.statements ?? 'N/A'}% | ${{ env.COVERAGE_THRESHOLD_STATEMENTS }}% | ⚠️ |\n`;
+                body += `| 分支覆盖率 | ${score.coverage.branches ?? 'N/A'}% | ${{ env.COVERAGE_THRESHOLD_BRANCHES }}% | ⚠️ |\n`;
+              }
+            } else {
+              body += '> ⚠️ 未找到质量评分数据\n';
+            }
+
+            body += '\n---\n*由 Quality Gate 工作流自动生成*';
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+      - name: Commit quality report to reports directory
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        run: |
+          mkdir -p reports/quality-history
+          TIMESTAMP=$(date -u '+%Y%m%d-%H%M%S')
+          if [ -f reports/quality-score.json ]; then
+            cp reports/quality-score.json "reports/quality-history/quality-${TIMESTAMP}.json"
+          fi
+          if [ -f coverage/coverage-summary.json ]; then
+            cp coverage/coverage-summary.json "reports/quality-history/coverage-${TIMESTAMP}.json"
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reports/quality-history/ || true
+          git diff --staged --quiet || git commit -m "chore: update quality report [skip ci]"
+          git push || echo "No changes to push or push failed"

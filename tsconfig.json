@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowJs": true,
+    "checkJs": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": false,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["js/*"],
+      "@ts/*": ["ts/*"],
+      "@types/*": ["ts/types/*"]
+    },
+    "typeRoots": ["./ts/types", "./node_modules/@types"]
+  },
+  "include": ["ts/declarations.d.ts", "js/**/*.ts", "js/**/*.js", "ts/**/*.ts", "ts/**/*.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}

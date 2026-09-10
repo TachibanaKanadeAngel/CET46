@@ -1,0 +1,153 @@
+<view class="page-bg">
+  <view class="container">
+    <view class="sv-panel header-panel">
+      <view class="title">⚙️ 设置与偏好</view>
+      <view class="subtitle">个性化配置 · 本地数据管理</view>
+    </view>
+
+    <!-- 界面与发音个性化配置 -->
+    <view class="sv-panel setting-panel">
+      <view class="panel-title">🎨 界面与发音</view>
+      
+      <view class="setting-item">
+        <view class="setting-info-col">
+          <text class="setting-name">直接显示单词释义</text>
+          <text class="setting-desc">开启直接看释义，关闭可自测加大难度</text>
+        </view>
+        <switch class="setting-switch" color="#2e7d32" checked="{{autoShowMeaning}}" bindchange="onAutoShowMeaningChange" />
+      </view>
+
+      <view class="setting-divider"></view>
+
+      <picker mode="selector" range="{{accentOptions}}" range-key="label" value="{{accentIndex}}" bindchange="onAccentChange">
+        <view class="setting-item">
+          <text class="setting-name">发音口音</text>
+          <text class="setting-value">{{accentLabel}}　›</text>
+        </view>
+      </picker>
+
+      <view class="setting-divider"></view>
+
+      <view class="setting-item">
+        <text class="setting-name">翻牌自动发音</text>
+        <switch class="setting-switch" color="#2e7d32" checked="{{autoPlay}}" bindchange="onAutoPlayChange" />
+      </view>
+    </view>
+
+    <!-- 目标留存率 -->
+    <view class="sv-panel setting-panel">
+      <view class="panel-title">🎯 FSRS 记忆目标</view>
+      <picker mode="selector" range="{{retentionOptions}}" range-key="label" value="{{retentionIndex}}" bindchange="onRetentionChange">
+        <view class="setting-item">
+          <text class="setting-name">目标留存率</text>
+          <text class="setting-value">{{retentionLabel}}　›</text>
+        </view>
+      </picker>
+      <view class="setting-divider"></view>
+      <picker mode="selector" range="{{goalOptions}}" range-key="label" value="{{dailyGoalIndex}}" bindchange="onDailyGoalChange">
+        <view class="setting-item">
+          <text class="setting-name">每日目标</text>
+          <text class="setting-value">{{dailyGoalLabel}}　›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 训练题量 -->
+    <view class="sv-panel setting-panel">
+      <view class="panel-title">📝 每组训练题量</view>
+      <picker mode="selector" range="{{limitOptions}}" range-key="label" value="{{studyLimitIndex}}" bindchange="onStudyLimitChange">
+        <view class="setting-item">
+          <text class="setting-name">新词学习</text>
+          <text class="setting-value">{{studyLimitLabel}}　›</text>
+        </view>
+      </picker>
+      <view class="setting-divider"></view>
+      <picker mode="selector" range="{{limitOptions}}" range-key="label" value="{{spellingLimitIndex}}" bindchange="onSpellingLimitChange">
+        <view class="setting-item">
+          <text class="setting-name">拼写训练</text>
+          <text class="setting-value">{{spellingLimitLabel}}　›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 本地存储与备份 -->
+    <view class="sv-panel data-panel">
+      <view class="panel-title">💾 数据管理 (占用: {{storageInfo}})</view>
+      <view class="data-actions">
+        <button class="sv-btn" bindtap="exportData" loading="{{backupBusy}}" disabled="{{backupBusy}}">📤 导出进度备份</button>
+        <button class="sv-btn" bindtap="importData" disabled="{{backupBusy}}">📥 恢复进度备份</button>
+      </view>
+      <button class="reset-weights-btn" bindtap="resetFSRSWeights">重置默认 FSRS 权重</button>
+    </view>
+
+    <!-- 个人词库 -->
+    <view class="sv-panel data-panel">
+      <view class="panel-title">📚 个人自定义词库 · {{customWordCount}} 词</view>
+      <view class="data-actions">
+        <button class="sv-btn" bindtap="importCustomVocab" disabled="{{backupBusy}}">导入 JSON 词库</button>
+        <button class="sv-btn" bindtap="clearCustomVocab" disabled="{{customWordCount === 0}}">清空个人词库</button>
+      </view>
+    </view>
+
+    <!-- 关于与政策 -->
+    <view class="sv-panel menu-card">
+      <view class="menu-item" bindtap="showPrivacy">
+        <text class="menu-text">🔒 隐私政策</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="showAbout">
+        <text class="menu-text">🌾 关于 46英语</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+
+    <button class="sv-btn sv-btn-danger mt-32 action-btn" hover-class="sv-btn-danger-hover" bindtap="clearData">⚠️ 清除所有本地学习记录</button>
+  </view>
+
+  <!-- 导出备份文本弹窗 -->
+  <view class="modal-mask" wx:if="{{exportModalVisible}}" catchtouchmove="preventTouchMove">
+    <view class="modal-card">
+      <view class="modal-header">
+        <text class="modal-title">📤 学习进度备份</text>
+        <view class="modal-close" bindtap="closeExportModal">✕</view>
+      </view>
+      <view class="modal-subtitle" wx:if="{{exportSummary}}">{{exportSummary}}</view>
+      <view class="modal-desc">长按下方文本框即可全选并复制备份内容：</view>
+      <textarea
+        class="modal-textarea"
+        value="{{exportJsonText}}"
+        maxlength="-1"
+        auto-height="{{false}}"
+        show-confirm-bar="{{false}}"
+      />
+      <view class="modal-footer">
+        <button class="sv-btn sv-btn-primary" bindtap="closeExportModal">完成</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 恢复备份 / 导入自定义词库文本弹窗 -->
+  <view class="modal-mask" wx:if="{{importModalVisible}}" catchtouchmove="preventTouchMove">
+    <view class="modal-card">
+      <view class="modal-header">
+        <text class="modal-title">{{importModalTitle}}</text>
+        <view class="modal-close" bindtap="closeImportModal">✕</view>
+      </view>
+      <view class="modal-desc">{{importModalTip}}</view>
+      <textarea
+        class="modal-textarea"
+        placeholder="{{importModalPlaceholder}}"
+        placeholder-class="modal-placeholder"
+        value="{{importJsonInput}}"
+        bindinput="onImportJsonInput"
+        maxlength="-1"
+        auto-height="{{false}}"
+        show-confirm-bar="{{false}}"
+      />
+      <view class="modal-footer modal-footer-dual">
+        <button class="sv-btn sv-btn-outline" bindtap="closeImportModal">取消</button>
+        <button class="sv-btn sv-btn-primary" bindtap="confirmImportModal">确认</button>
+      </view>
+    </view>
+  </view>
+</view>

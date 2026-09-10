@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "学习统计",
+  "usingComponents": {
+    "stat-item": "/components/stat-item/stat-item"
+  }
+}

@@ -1,0 +1,102 @@
+# Dependencies
+node_modules/
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+dist-file/
+release/
+android/
+ios/
+
+# Local SDK / toolchain (keep source repo lean)
+android-sdk/
+
+# Historical reference data (regenerable, not imported by runtime)
+archive/
+
+# Test reports (regenerable)
+playwright-report/
+test-results/
+
+# Electron cache
+electron-cache/
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Project temp / reference materials
+素材/
+修改建议.txt
+
+# OS generated files
+Thumbs.db
+.DS_Store
+*.pem
+
+# Cache
+.cache/
+*.cache
+.npm-cache-local/
+.npm-logs/
+npm-logs/
+
+# Local tool / agent working state (regenerable, not product source)
+.trae/
+.workbuddy/
+
+# Redundant build archives
+miniprogram.zip
+dist-*.zip
+
+# Generated vocabulary export (regenerable from scripts)
+exports/
+reports/quality-score.json
+
+# Ad-hoc debug scripts
+debug-browser.js
+
+# Executables and Portable User Data
+*.exe
+/CET46-Data/
+
+# WeChat Mini Program private user settings
+project.private.config.json
+*.private.config.json
+
+# Documentation, internal reports and review records (excluded from repository)
+*.md
+!/README.md
+docs/
+reports/
+CODEOWNERS
+
+
+

@@ -1,0 +1,70 @@
+<view class="container game-page">
+  <view wx:if="{{!gameActive && !finished}}" class="intro-wrap">
+    <view class="sv-panel intro-panel">
+      <view class="game-icon pixel-bounce-animate">🎯</view>
+      <view class="title">单词匹配挑战</view>
+      <view class="subtitle">根据中文释义，在网格中快速找到对应英文单词</view>
+      <view class="best-row">
+        <view><text class="best-num">{{bestScore}}</text><text class="hud-label">最高得分</text></view>
+        <view><text class="best-num">{{bestStreak}}</text><text class="hud-label">最高连击</text></view>
+      </view>
+      <button class="sv-btn sv-btn-success mt-32" hover-class="sv-btn-success-hover" data-mode="solo" bindtap="startGame">单人 · 60 秒挑战</button>
+      <button class="sv-btn sv-btn-primary mt-24" hover-class="sv-btn-hover" data-mode="battle" bindtap="startGame">🤖 人机对战 · 同级动态难度</button>
+      <view class="battle-tip" wx:if="{{bestAiScore > 0}}">AI 最高分 {{bestAiScore}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{gameActive}}">
+    <view class="game-hud sv-panel">
+      <view><text class="hud-num">{{score}}</text><text class="hud-label">当前得分</text></view>
+      <view><text class="hud-num">{{streak}}</text><text class="hud-label">🔥 连击数</text></view>
+      <view><text class="hud-num timer {{timeLeft <= 10 ? 'urgent' : ''}}">{{timeLeft}}</text><text class="hud-label">剩余秒数</text></view>
+    </view>
+    <view class="game-hud sv-panel battle-hud" wx:if="{{gameMode === 'battle'}}">
+      <view><text class="hud-num">{{score}}</text><text class="hud-label">🟢 我</text></view>
+      <view class="battle-vs">VS</view>
+      <view><text class="hud-num">{{aiScore}}</text><text class="hud-label">🔴 AI</text></view>
+      <view><text class="hud-num">{{aiAccuracy}}%</text><text class="hud-label">🎚️ AI 难度</text></view>
+    </view>
+    <view class="sv-panel target-panel">
+      <view class="target-head">
+        <view class="target-label">请选择对应英文单词</view>
+        <button class="skip-round" hover-class="sv-btn-hover" bindtap="onSkip">跳过</button>
+      </view>
+      <view class="target-meaning">{{target.meaning}}</view>
+    </view>
+    <view class="choice-grid">
+      <button
+        wx:for="{{choices}}"
+        wx:key="choiceKey"
+        class="choice-cell {{selectedId === item.choiceKey ? selectedState : ''}}"
+        hover-class="choice-cell-hover"
+        data-id="{{item.choiceKey}}"
+        bindtap="onChoiceTap"
+      >{{item.word}}</button>
+    </view>
+  </view>
+
+  <view wx:if="{{finished}}" class="intro-wrap">
+    <view class="sv-panel intro-panel">
+      <view class="game-icon pixel-bounce-animate">🏆</view>
+      <view class="title">{{gameMode === 'battle' ? (aiResult === 'win' ? '你赢了，战胜了 AI！' : aiResult === 'lose' ? '再接再厉，AI 略胜一筹' : '势均力敌，打平了！') : '挑战结束'}}</view>
+      <view class="final-score">{{score}}</view>
+      <view class="summary-row" wx:if="{{gameMode !== 'battle'}}">
+        <text>最高连击 {{maxStreak}}</text>
+        <text>失误 {{errors}}</text>
+        <text>跳过 {{skipped}}</text>
+      </view>
+      <view class="summary-row" wx:else>
+        <text>我 {{score}}</text>
+        <text>AI {{aiScore}}</text>
+        <text>AI 难度 {{aiAccuracy}}%</text>
+      </view>
+      <view class="achievement-list" wx:if="{{achievements.length}}">
+        <text class="achievement" wx:for="{{achievements}}" wx:key="*this">🎖️ {{item}}</text>
+      </view>
+      <button class="sv-btn sv-btn-success mt-32" hover-class="sv-btn-success-hover" data-mode="{{gameMode}}" bindtap="startGame">🔄 再战一局</button>
+      <button class="sv-btn mt-24" hover-class="sv-btn-hover" bindtap="exitGame">返回主页</button>
+    </view>
+  </view>
+</view>

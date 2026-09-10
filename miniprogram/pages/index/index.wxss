@@ -1,0 +1,391 @@
+page {
+  background-color: var(--sv-bg-base);
+  min-height: 100vh;
+}
+
+/* 主内容容器 */
+.container {
+  padding: 20rpx 24rpx;
+  padding-bottom: calc(180rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(180rpx + env(safe-area-inset-bottom));
+}
+
+/* 头部 Header */
+.header {
+  margin-bottom: 16rpx;
+  padding-top: 6rpx;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4rpx;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+}
+
+.title-icon {
+  font-size: 40rpx;
+  margin-right: 10rpx;
+}
+
+.title-text {
+  font-size: 38rpx;
+  font-weight: 800;
+  color: var(--sv-text-main);
+  letter-spacing: 1rpx;
+}
+
+.level-badge {
+  display: flex;
+  align-items: center;
+  padding: 8rpx 22rpx;
+  background: var(--sv-panel-light);
+  border: 3rpx solid var(--sv-border-dark);
+  border-radius: 30rpx;
+  box-shadow: 0 4rpx 0 var(--sv-panel-shadow);
+  transition: transform 60ms;
+}
+
+.level-badge:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 2rpx 0 var(--sv-panel-shadow);
+}
+
+.level-badge-text {
+  font-size: 26rpx;
+  font-weight: 800;
+  color: var(--sv-text-main);
+}
+
+.level-badge-arrow {
+  font-size: 20rpx;
+  color: var(--light-gray);
+  margin-left: 10rpx;
+}
+
+.header .subtitle {
+  font-size: 23rpx;
+  color: var(--light-gray);
+  margin-top: 4rpx;
+  padding-left: 4rpx;
+  font-weight: 500;
+}
+
+/* 仪表盘面板 */
+.dashboard-panel {
+  padding: 16rpx !important;
+  margin-bottom: 20rpx !important;
+}
+
+/* 核心大卡片网格 */
+.stat-grid-primary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14rpx;
+  margin-bottom: 12rpx;
+}
+
+.stat-card {
+  text-align: center;
+  background: var(--sv-panel-light);
+  border: 2.5rpx solid rgba(66, 38, 19, 0.25);
+  border-radius: 14rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.stat-card.primary {
+  padding: 18rpx 0;
+  min-height: 120rpx;
+}
+
+.stat-card.primary .stat-num {
+  font-size: 44rpx;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.stat-card.primary .stat-label {
+  font-size: 23rpx;
+  margin-top: 4rpx;
+}
+
+/* 颜色高亮：今日已答 */
+.stat-card.primary.green {
+  background: var(--sv-energy-light);
+  border-color: var(--sv-energy-green);
+}
+.stat-card.primary.green .stat-num {
+  color: var(--sv-energy-green);
+}
+.stat-card.primary.green .stat-label {
+  color: var(--sv-energy-dark);
+  font-weight: 700;
+}
+
+/* 颜色高亮：待复习 */
+.stat-card.primary.red {
+  background: var(--sv-heat-light);
+  border-color: var(--sv-heat-red);
+}
+.stat-card.primary.red .stat-num {
+  color: var(--sv-heat-red);
+}
+.stat-card.primary.red .stat-label {
+  color: var(--sv-heat-dark);
+  font-weight: 700;
+}
+
+/* 次要指标 2x2 网格 */
+.stat-grid-secondary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10rpx;
+}
+
+.stat-card.secondary {
+  padding: 10rpx 0;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.stat-card.secondary .stat-num {
+  font-size: 32rpx;
+  font-weight: 800;
+  color: var(--sv-text-main);
+  line-height: 1.2;
+}
+
+.stat-card.secondary .stat-label {
+  font-size: 22rpx;
+  color: var(--light-gray);
+  margin-top: 2rpx;
+}
+
+.stat-card.secondary.blue {
+  background: #f0f7ff;
+  border-color: #3b82f6;
+}
+.stat-card.secondary.blue .stat-num {
+  color: #2563eb;
+}
+.stat-card.secondary.blue .stat-label {
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.stat-card.secondary.yellow {
+  background: #fffbeb;
+  border-color: #f59e0b;
+}
+.stat-card.secondary.yellow .stat-num {
+  color: #d97706;
+}
+.stat-card.secondary.yellow .stat-label {
+  color: #b45309;
+  font-weight: 600;
+}
+
+/* 每日目标进度 */
+.daily-goal-row {
+  margin: 12rpx 0;
+  background: rgba(46, 125, 50, 0.06);
+  border: 2rpx solid rgba(46, 125, 50, 0.2);
+  border-radius: 14rpx;
+  padding: 12rpx 16rpx;
+}
+
+.daily-goal-row.goal-done {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: #f59e0b;
+}
+
+.daily-goal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+
+.daily-goal-label {
+  font-size: 24rpx;
+  font-weight: 800;
+  color: var(--sv-text-main);
+}
+
+.daily-goal-status {
+  font-size: 22rpx;
+  font-weight: 700;
+  color: var(--sv-energy-green);
+}
+
+.daily-goal-row.goal-done .daily-goal-status {
+  color: #d97706;
+}
+
+.daily-goal-bar {
+  width: 100%;
+}
+
+/* 操作按钮区域 */
+.action-area {
+  margin-top: 18rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+}
+
+/* 核心 CTA 主按钮 */
+.main-btn.btn-primary {
+  width: 100% !important;
+  height: 94rpx !important;
+  min-height: 94rpx !important;
+  line-height: 94rpx !important;
+  font-size: 32rpx !important;
+  font-weight: 800;
+  background-color: var(--sv-energy-green) !important;
+  border: 3.5rpx solid var(--sv-energy-dark) !important;
+  box-shadow: 0 6rpx 0 var(--sv-energy-dark) !important;
+  border-radius: 18rpx !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #ffffff !important;
+}
+
+.btn-primary-hover {
+  transform: translateY(4rpx) !important;
+  box-shadow: 0 2rpx 0 var(--sv-energy-dark) !important;
+}
+
+/* 副按钮矩阵排布 */
+.sub-btn-row {
+  display: flex;
+  gap: 14rpx;
+  width: 100%;
+}
+
+.sub-btn {
+  flex: 1;
+  margin: 0 !important;
+  width: auto !important;
+  height: 78rpx !important;
+  min-height: 78rpx !important;
+  line-height: 78rpx !important;
+  font-size: 27rpx !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 3rpx solid var(--sv-border-dark) !important;
+  border-radius: 14rpx !important;
+  box-shadow: 0 5rpx 0 var(--sv-panel-shadow) !important;
+}
+
+.sub-btn-hover {
+  transform: translateY(3rpx) !important;
+  box-shadow: 0 2rpx 0 var(--sv-panel-shadow) !important;
+}
+
+/* 动力状态面板 (温馨农场蒸汽/水车风格) */
+.engine-panel {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 16rpx 20rpx !important;
+  border-radius: 18rpx;
+  margin-top: 8rpx !important;
+}
+
+.engine-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 130rpx;
+  flex-shrink: 0;
+}
+
+.engine-sprite {
+  width: 60rpx !important;
+  height: 60rpx !important;
+  border: 3rpx solid var(--sv-border-dark);
+  border-radius: 12rpx;
+  background: linear-gradient(135deg, #e6af6c 0%, #c4823f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: inset 0 2rpx 6rpx rgba(0, 0, 0, 0.2);
+}
+
+.engine-icon {
+  width: 36rpx;
+  height: 36rpx;
+  z-index: 1;
+}
+
+.engine-core {
+  position: absolute;
+  width: 18rpx;
+  height: 18rpx;
+  background: radial-gradient(circle, #fff7c2 0%, #f59e0b 80%);
+  border: 2rpx solid var(--sv-border-dark);
+  border-radius: 50%;
+  box-shadow: 0 0 10rpx #f59e0b;
+  animation: engine-pulse 2s infinite ease-in-out;
+}
+
+@keyframes engine-pulse {
+  0%, 100% { transform: scale(0.95); opacity: 0.85; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+.engine-status-label {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: var(--light-gray);
+  margin-top: 4rpx;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.engine-status {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.engine-bar {
+  width: 100%;
+}
+
+/* 错误提示卡片 */
+.error-panel {
+  background: var(--sv-heat-light);
+  border-color: var(--sv-heat-red);
+}
+
+.error-title {
+  font-size: 28rpx;
+  color: var(--sv-heat-red);
+  font-weight: 700;
+}
+
+.error-msg {
+  font-size: 24rpx;
+  color: var(--sv-heat-red);
+  word-break: break-all;
+  margin-top: 8rpx;
+}

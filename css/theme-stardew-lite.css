@@ -1,0 +1,95 @@
+body {
+  background:
+    linear-gradient(180deg, #8fd3f9 0%, #b7e68a 100%),
+    linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08));
+  background-attachment: fixed;
+  font-family: 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+}
+
+.farm-scene-layer,
+.farm-sign,
+.scene-tree,
+.scene-cloud,
+.scene-vignette,
+.scene-fence,
+.scene-books-corner,
+.card-decor,
+.engine-icon-art,
+.tab-icon,
+.stat-icon {
+  display: none !important;
+  background-image: none !important;
+}
+
+.app-container.app-shell {
+  width: min(960px, calc(100vw - 32px));
+  margin: 24px auto 40px;
+  border: 3px solid #7a4a25;
+  border-radius: 18px;
+  background: linear-gradient(to bottom, #fff9e3, #fff1c6);
+  box-shadow: 0 18px 32px rgba(52, 28, 12, 0.2);
+}
+
+.engine-header,
+.stat-card,
+.status-panel,
+.level-select,
+.filter-controls,
+.review-stats,
+.heatmap-container,
+.data-panel,
+#error-analysis-panel,
+#virtual-scroll-container,
+.word-list,
+.study-card,
+#review-card,
+.spelling-box,
+#study-progress,
+.shortcut-bar {
+  background: linear-gradient(to bottom, #fff9e3, #fff1c6) !important;
+  box-shadow: none !important;
+}
+
+.tab-bar,
+#study-buttons {
+  background: linear-gradient(to bottom, #996131, #7a4a25) !important;
+}
+
+.tab-button,
+.btn,
+.text-btn,
+#btn-apply-filter,
+.mode-btn {
+  box-shadow: none !important;
+}
+
+.theme-toggle,
+#offline-indicator,
+#network-status-dot {
+  background-image: none !important;
+}
+
+.engine-header h1 {
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.engine-header h1::before,
+.engine-header h1::after,
+.start-btn.primary-btn::before {
+  content: none !important;
+}
+
+.start-btn.primary-btn,
+#start-btn.start-btn.primary-btn {
+  min-height: 56px;
+  background: linear-gradient(to bottom, #8bd85c, #4f9c34) !important;
+  border-radius: 10px;
+}
+
+.start-btn.primary-btn::after,
+#start-btn.start-btn.primary-btn::after {
+  content: '开始学习' !important;
+  font-size: 18px;
+  color: #fffdf5;
+}

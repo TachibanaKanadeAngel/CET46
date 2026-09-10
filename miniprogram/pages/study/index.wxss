@@ -1,0 +1,628 @@
+.page-bg {
+  min-height: 100vh;
+  background: var(--sv-bg-base);
+}
+
+/* 顶部状态栏：模式切换 + 磨耳朵 */
+.top-nav-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+  gap: 12rpx;
+}
+
+.mode-segmented-control {
+  flex: 1;
+  display: flex;
+  background: rgba(66, 38, 19, 0.12);
+  padding: 4rpx;
+  border-radius: 14rpx;
+  border: 2rpx solid var(--sv-border-dark);
+}
+
+.segment-tab {
+  flex: 1;
+  text-align: center;
+  padding: 8rpx 0;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: var(--sv-text-main);
+  border-radius: 10rpx;
+  transition: all 0.15s ease;
+}
+
+.segment-tab.active {
+  background: var(--sv-panel-light);
+  color: var(--sv-energy-dark);
+  font-weight: 800;
+  border: 2rpx solid var(--sv-border-dark);
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.12);
+}
+
+/* 磨耳朵胶囊 */
+.earworm-pill {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  background: var(--sv-panel-light);
+  border: 2.5rpx solid var(--sv-border-dark);
+  border-radius: 14rpx;
+  padding: 8rpx 18rpx;
+  box-shadow: 0 3rpx 0 var(--sv-panel-shadow);
+  transition: transform 60ms;
+}
+
+.earworm-pill:active {
+  transform: translateY(2rpx);
+}
+
+.earworm-pill.playing {
+  background: var(--sv-energy-light);
+  border-color: var(--sv-energy-green);
+  animation: pulse-border 1.5s infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+.earworm-icon {
+  font-size: 24rpx;
+}
+
+.earworm-label {
+  font-size: 22rpx;
+  font-weight: 800;
+  color: var(--sv-text-main);
+}
+
+/* 学习进度条与 Combo 连击区域 */
+.study-progress-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+  background: var(--sv-panel-base);
+  border: 3rpx solid var(--sv-border-dark);
+  border-radius: 16rpx;
+  padding: 12rpx 20rpx;
+  box-shadow: 0 4rpx 0 var(--sv-panel-shadow);
+}
+
+.progress-left {
+  flex: 1;
+}
+
+.progress-right {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.progress-badge {
+  font-size: 24rpx;
+  font-weight: 800;
+  color: var(--sv-text-main);
+  background: var(--sv-panel-light);
+  border: 2rpx solid var(--sv-border-dark);
+  border-radius: 20rpx;
+  padding: 4rpx 14rpx;
+  white-space: nowrap;
+}
+
+/* 错词回炉标签 */
+.retry-tag {
+  font-size: 20rpx;
+  font-weight: 800;
+  color: #ffffff;
+  background: #dc2626;
+  border-radius: 16rpx;
+  padding: 4rpx 12rpx;
+  letter-spacing: 0.5rpx;
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* 连击 Combo 勋章 */
+.combo-badge {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  background: #fef3c7;
+  border: 2rpx solid #f59e0b;
+  border-radius: 20rpx;
+  padding: 4rpx 14rpx;
+  animation: bounce-in 0.3s ease-out;
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0.7); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.combo-fire {
+  background: #fee2e2;
+  border-color: #ef4444;
+  box-shadow: 0 0 12rpx rgba(239, 68, 68, 0.4);
+}
+
+.combo-icon {
+  font-size: 22rpx;
+}
+
+.combo-num {
+  font-size: 22rpx;
+  font-weight: 900;
+  color: #b45309;
+}
+
+.combo-fire .combo-num {
+  color: #b91c1c;
+}
+
+/* 造句排序（产出性练习） */
+.build-toggle-row {
+  margin-top: 16rpx;
+}
+
+.build-toggle-btn {
+  width: 100%;
+  background: rgba(59, 130, 246, 0.10);
+  color: var(--sv-primary);
+  border: 2rpx solid rgba(59, 130, 246, 0.35);
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  font-weight: 700;
+  padding: 12rpx 0;
+  line-height: 1.4;
+}
+
+.build-toggle-hover { background: rgba(59, 130, 246, 0.18); }
+
+.build-zone {
+  margin-top: 12rpx;
+  padding: 16rpx;
+  background: var(--sv-panel-light);
+  border: 2rpx solid rgba(59, 130, 246, 0.2);
+  border-radius: 14rpx;
+}
+
+.build-title {
+  font-size: 22rpx;
+  color: var(--light-gray);
+  margin-bottom: 12rpx;
+}
+
+.build-slots,
+.build-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.build-slot {
+  min-width: 44rpx;
+  text-align: center;
+  padding: 8rpx 12rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  border-bottom: 2rpx solid transparent;
+}
+
+.build-slot.filled {
+  background: rgba(46, 125, 50, 0.12);
+  border-bottom-color: var(--sv-energy-green);
+}
+
+.build-slot.empty { color: var(--light-gray); }
+
+.build-bank { margin: 14rpx 0; }
+
+.build-chip {
+  padding: 8rpx 16rpx;
+  background: var(--sv-panel-light);
+  border: 1.5rpx solid rgba(59, 130, 246, 0.35);
+  border-radius: 10rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: var(--sv-text-main);
+}
+
+.build-chip-hover { background: rgba(59, 130, 246, 0.15); }
+
+.build-result {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: var(--sv-energy-green);
+  margin-bottom: 10rpx;
+}
+
+.build-actions {
+  display: flex;
+  gap: 14rpx;
+}
+
+.build-btn {
+  flex: 1;
+  background: var(--sv-energy-green);
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: 700;
+  border-radius: 10rpx;
+  padding: 8rpx 0;
+}
+
+.build-btn.plain {
+  background: transparent;
+  color: var(--sv-primary);
+  border: 2rpx solid rgba(59, 130, 246, 0.35);
+}
+
+/* 4 选 1 测验选项卡容器 (百词斩风格) */
+.choices-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.choice-item {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 24rpx;
+  background: var(--sv-panel-light);
+  border: 3rpx solid var(--sv-border-dark);
+  border-radius: 16rpx;
+  box-shadow: 0 5rpx 0 var(--sv-panel-shadow);
+  transition: transform 60ms, background 0.2s;
+}
+
+.choice-item-hover {
+  transform: translateY(3rpx);
+  box-shadow: 0 2rpx 0 var(--sv-panel-shadow);
+}
+
+.choice-prefix {
+  font-size: 28rpx;
+  font-weight: 900;
+  color: var(--sv-energy-dark);
+  margin-right: 14rpx;
+}
+
+.choice-text {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--sv-text-main);
+  line-height: 1.35;
+}
+
+.choice-icon {
+  font-size: 32rpx;
+  margin-left: 10rpx;
+}
+
+/* 选项点击正确反馈 */
+.choice-item.choice-correct {
+  background: var(--sv-energy-light) !important;
+  border-color: var(--sv-energy-green) !important;
+  box-shadow: 0 5rpx 0 var(--sv-energy-dark) !important;
+  animation: correct-jump 0.35s ease-out;
+}
+
+@keyframes correct-jump {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* 选项点击错误反馈 */
+.choice-item.choice-wrong {
+  background: var(--sv-heat-light) !important;
+  border-color: var(--sv-heat-red) !important;
+  box-shadow: 0 5rpx 0 var(--sv-heat-dark) !important;
+  animation: wrong-shake 0.35s ease-in-out;
+}
+
+@keyframes wrong-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8rpx); }
+  75% { transform: translateX(8rpx); }
+}
+
+/* 交互操作区 */
+.action-area {
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+}
+
+.answer-row {
+  display: flex;
+  gap: 16rpx;
+  width: 100%;
+}
+
+.answer-row .sv-btn {
+  flex: 1;
+  height: 90rpx !important;
+  min-height: 90rpx !important;
+  font-size: 32rpx !important;
+  font-weight: 800;
+}
+
+.btn-icon {
+  margin-right: 8rpx;
+  font-size: 28rpx;
+}
+
+.utility-row {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  min-height: 68rpx;
+}
+
+.utility-btn,
+.utility-status {
+  flex: 1;
+  min-width: 0;
+  min-height: 68rpx;
+  height: 68rpx;
+  padding: 0 16rpx;
+  background: var(--sv-panel-light);
+  border: 2.5rpx solid var(--sv-border-dark);
+  border-radius: 12rpx;
+  color: var(--sv-text-main);
+  font-size: 26rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 0 var(--sv-panel-shadow);
+  transition: transform 50ms;
+}
+
+.utility-btn:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 2rpx 0 var(--sv-panel-shadow);
+}
+
+.utility-secondary {
+  flex: 0.8;
+}
+
+/* 一键斩词专属高亮样式 */
+.chop-btn {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%) !important;
+  border-color: #d97706 !important;
+  color: #92400e !important;
+  font-weight: 800 !important;
+}
+
+.utility-btn::after {
+  border: 0;
+}
+
+.finish-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 75vh;
+}
+
+.finish-panel {
+  text-align: center;
+  width: 100%;
+  padding: 60rpx 32rpx;
+}
+
+.finish-icon {
+  font-size: 88rpx;
+  margin-bottom: 16rpx;
+}
+
+.max-combo-tag {
+  margin-top: 14rpx;
+  font-size: 26rpx;
+  font-weight: 800;
+  color: #d97706;
+  background: #fffbeb;
+  display: inline-block;
+  padding: 6rpx 20rpx;
+  border-radius: 20rpx;
+  border: 2rpx solid #f59e0b;
+}
+
+.finish-btn {
+  width: 80%;
+  margin: 32rpx auto 0;
+}
+
+/* 记忆辅助面板 */
+.memory-note {
+  padding: 20rpx !important;
+  margin-top: 0;
+  border-radius: 16rpx;
+}
+
+.memory-heading {
+  font-size: 26rpx;
+  font-weight: 800;
+  color: var(--sv-text-main);
+  line-height: 1.4;
+}
+
+.memory-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 14rpx;
+  background: var(--sv-panel-light);
+  border: 2rpx solid rgba(66, 38, 19, 0.15);
+  border-radius: 12rpx;
+  padding: 8rpx 0;
+}
+
+.meta-item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6rpx 4rpx;
+  border-right: 2rpx solid rgba(66, 38, 19, 0.12);
+}
+
+.meta-item:last-child {
+  border-right: 0;
+}
+
+.meta-value {
+  color: var(--sv-text-main);
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.meta-label {
+  margin-top: 4rpx;
+  color: var(--gray);
+  font-size: 22rpx;
+  text-align: center;
+}
+
+.memory-editor {
+  display: flex;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.memory-input {
+  flex: 1;
+  min-width: 0;
+  height: 72rpx;
+  padding: 0 20rpx;
+  background: #ffffff;
+  border: 2.5rpx solid var(--sv-border-dark);
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  color: var(--sv-text-main);
+}
+
+.memory-save {
+  flex: 0 0 120rpx;
+  width: 120rpx;
+  height: 72rpx;
+  min-height: 72rpx;
+  margin: 0;
+  padding: 0;
+  background: var(--sv-energy-light);
+  border: 2.5rpx solid var(--sv-energy-green);
+  color: var(--sv-energy-dark);
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  font-weight: 700;
+  line-height: 68rpx;
+}
+
+.related-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10rpx;
+  margin-top: 14rpx;
+}
+
+.related-label {
+  color: var(--light-gray);
+  font-size: 23rpx;
+  font-weight: 600;
+}
+
+.related-word {
+  padding: 4rpx 14rpx;
+  background: #fff8e1;
+  border: 2rpx solid #d97706;
+  color: #b45309;
+  border-radius: 8rpx;
+  font-size: 23rpx;
+  font-weight: 600;
+}
+
+.undo-btn {
+  min-height: 56rpx;
+  margin: 8rpx auto 0;
+  padding: 0;
+  background: transparent;
+  color: var(--light-gray);
+  font-size: 25rpx;
+  font-weight: 600;
+  line-height: 52rpx;
+}
+
+.undo-btn::after {
+  border: 0;
+}
+
+/* 释义显示模式 / 自测难度切换条 */
+.study-card-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12rpx;
+}
+
+.difficulty-toggle-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 24rpx;
+  font-size: 22rpx;
+  font-weight: 700;
+  border: 2rpx solid var(--sv-border-dark);
+  box-shadow: 0 3rpx 0 var(--sv-panel-shadow);
+  transition: all 0.15s ease;
+}
+
+.difficulty-toggle-pill:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 1rpx 0 var(--sv-panel-shadow);
+}
+
+.difficulty-toggle-pill.mode-open {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+.difficulty-toggle-pill.mode-test {
+  background: #fff3e0;
+  color: #b26a00;
+}
+
+.difficulty-toggle-pill .pill-icon {
+  font-size: 22rpx;
+}
+
+.difficulty-toggle-pill .pill-title {
+  font-size: 22rpx;
+  font-weight: 800;
+}
+
+.difficulty-toggle-pill .pill-action {
+  font-size: 20rpx;
+  color: #666;
+  margin-left: 8rpx;
+  opacity: 0.85;
+}

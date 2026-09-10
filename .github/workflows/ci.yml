@@ -1,0 +1,129 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    - cron: '0 2 * * 1'  # 每周一凌晨2点自动运行完整检查
+  workflow_dispatch:      # 支持手动触发
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Test with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+
+  # 专项检查 - PR和push都执行
+  special-checks:
+    runs-on: ubuntu-latest
+    needs: lint-test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Validate vocab
+        run: npm run validate:vocab
+
+      - name: Check garbled text
+        run: npm run check:garbled
+
+      - name: Check imports
+        run: npm run check:imports
+
+      - name: Check CSS assets
+        run: npm run check:css
+
+      - name: Check code quality
+        run: npm run check:quality
+
+  build:
+    runs-on: ubuntu-latest
+    needs: lint-test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Check build size
+        run: |
+          echo "Build size:"
+          du -sh dist/
+          # 检查构建产物大小（阈值10MB）
+          MAX_SIZE=10240  # 10MB in KB
+          CURRENT_SIZE=$(du -sk dist/ | cut -f1)
+          echo "Current size: ${CURRENT_SIZE}KB"
+          if [ $CURRENT_SIZE -gt $MAX_SIZE ]; then
+            echo "⚠️ Build size exceeds limit: ${CURRENT_SIZE}KB > ${MAX_SIZE}KB"
+            exit 1
+          fi
+          echo "✅ Build size is within limit"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  # 完整检查日志 - 仅push和schedule执行（含基线对比）
+  check-log:
+    runs-on: ubuntu-latest
+    needs: [lint-test, special-checks]
+    if: github.event_name == 'schedule' || github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Full check with logging
+        run: npm run check:log
+
+      - name: Upload check logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: check-logs
+          path: reports/check-logs/

@@ -1,0 +1,105 @@
+<view class="container">
+  <!-- 头部区域，融入等级选择 -->
+  <view class="header">
+    <view class="header-main">
+      <view class="brand-group">
+        <text class="title-icon">🌱</text>
+        <text class="title-text">46英语</text>
+      </view>
+      <picker mode="selector" range="{{levels}}" range-key="label" value="{{levelIndex}}" bindchange="onLevelChange">
+        <view class="level-badge">
+          <text class="level-badge-text">{{currentLevel}}</text>
+          <text class="level-badge-arrow">▼</text>
+        </view>
+      </picker>
+    </view>
+    <view class="subtitle">基于 FSRS 的科学调度 · 离线存储</view>
+  </view>
+
+  <!-- 仪表盘面板 (2大核心 + 4项次级指标) -->
+  <view class="sv-panel dashboard-panel">
+    <view class="stat-grid-primary">
+      <view class="stat-card primary green">
+        <text class="stat-num">{{todayReviewCount}}</text>
+        <text class="stat-label">今日已答</text>
+      </view>
+      <view class="stat-card primary red">
+        <text class="stat-num">{{todayReviewDueCount}}</text>
+        <text class="stat-label">待复习</text>
+      </view>
+    </view>
+
+    <!-- 每日目标进度 (激励：量化今日需要完成的小目标) -->
+    <view class="daily-goal-row {{goalReached ? 'goal-done' : ''}}">
+      <view class="daily-goal-head">
+        <text class="daily-goal-label">🎯 今日目标</text>
+        <text class="daily-goal-status">{{goalReached ? '✅ 已完成 ' + dailyGoal + ' 词' : '已完成 ' + todayReviewCount + ' / ' + dailyGoal + ' 词'}}</text>
+      </view>
+      <progress-bar class="daily-goal-bar" percent="{{todayGoalPercent}}" type="{{goalReached ? 'heat' : 'fuel'}}" showPercent />
+    </view>
+
+    <view class="stat-grid-secondary">
+      <view class="stat-card secondary blue">
+        <text class="stat-num">{{todayNewCount}}</text>
+        <text class="stat-label">今日新词</text>
+      </view>
+      <view class="stat-card secondary yellow">
+        <text class="stat-num">{{streakDays}}</text>
+        <text class="stat-label">连续天数</text>
+      </view>
+      <view class="stat-card secondary">
+        <text class="stat-num">{{stats.total}}</text>
+        <text class="stat-label">词库总计</text>
+      </view>
+      <view class="stat-card secondary">
+        <text class="stat-num">{{stats.masteredCount}}</text>
+        <text class="stat-label">已掌握</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮矩阵 -->
+  <view class="action-area">
+    <button class="sv-btn main-btn btn-primary" hover-class="btn-primary-hover" bindtap="goStudy" disabled="{{loading}}">
+      {{loading ? '加载中...' : '🌾 开始学习新词'}}
+    </button>
+    <view class="sub-btn-row">
+      <button class="sv-btn sub-btn" hover-class="sub-btn-hover" bindtap="goReview" disabled="{{loading}}">
+        🔄 开始复习
+      </button>
+      <button class="sv-btn sub-btn" hover-class="sub-btn-hover" bindtap="goSpelling" disabled="{{loading}}">
+        ✍️ 拼写训练
+      </button>
+    </view>
+    <view class="sub-btn-row">
+      <button class="sv-btn sub-btn" hover-class="sub-btn-hover" bindtap="goVocabList" disabled="{{loading}}">
+        📖 浏览词库
+      </button>
+      <button class="sv-btn sub-btn" hover-class="sub-btn-hover" bindtap="goGame" disabled="{{loading}}">
+        🎯 单词游戏
+      </button>
+    </view>
+  </view>
+
+  <!-- 动力状态面板 -->
+  <view class="sv-panel engine-panel">
+    <view class="engine-left">
+      <view class="engine-sprite">
+        <image class="engine-icon pixel-art" src="/assets/icons/engine.webp" mode="aspectFit" />
+        <view class="engine-core"></view>
+      </view>
+      <text class="engine-status-label">{{engineStatus}}</text>
+    </view>
+    <view class="engine-status">
+      <progress-bar class="engine-bar" percent="{{fuelPercent}}" type="fuel" label="燃料储备" showPercent />
+      <progress-bar class="engine-bar" percent="{{heatPercent}}" type="heat" label="热量过载" showPercent />
+    </view>
+  </view>
+
+  <!-- 错误提示 -->
+  <view class="sv-panel error-panel" wx:if="{{loadError}}">
+    <view class="error-title">加载出错</view>
+    <view class="error-msg">{{loadError}}</view>
+    <button class="sv-btn mt-16" hover-class="sv-btn-hover" bindtap="onRetryVocab">重新加载</button>
+  </view>
+</view>

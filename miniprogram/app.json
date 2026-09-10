@@ -1,0 +1,84 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/study/index",
+    "pages/review/index",
+    "pages/spelling/index",
+    "pages/game/index",
+    "pages/wrong/index",
+    "pages/stats/index",
+    "pages/settings/index",
+    "pages/privacy/privacy"
+  ],
+  "subPackages": [
+    {
+      "root": "packages/level4",
+      "name": "level4",
+      "pages": [
+        "pages/list/list"
+      ]
+    },
+    {
+      "root": "packages/level6",
+      "name": "level6",
+      "pages": [
+        "pages/list/list"
+      ]
+    },
+    {
+      "root": "packages/level5",
+      "name": "level5",
+      "pages": [
+        "pages/list/list"
+      ]
+    }
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#f6e6ba",
+    "navigationBarTitleText": "46英语",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f6e6ba"
+  },
+  "tabBar": {
+    "color": "#72553a",
+    "selectedColor": "#2e7d32",
+    "backgroundColor": "#fffaf1",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "学习",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/wrong/index",
+        "text": "错词本",
+        "iconPath": "assets/icons/wrong.png",
+        "selectedIconPath": "assets/icons/wrong-active.png"
+      },
+      {
+        "pagePath": "pages/stats/index",
+        "text": "统计",
+        "iconPath": "assets/icons/stats.png",
+        "selectedIconPath": "assets/icons/stats-active.png"
+      },
+      {
+        "pagePath": "pages/settings/index",
+        "text": "我的",
+        "iconPath": "assets/icons/profile.png",
+        "selectedIconPath": "assets/icons/profile-active.png"
+      }
+    ]
+  },
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": ["level4"]
+    }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
