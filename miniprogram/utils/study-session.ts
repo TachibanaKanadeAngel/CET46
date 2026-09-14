@@ -2,6 +2,7 @@
 // 记录当前学习队列、进度，退出学习页后可接续上次未学完的单词
 const { storage, STORAGE_KEYS } = require('./storage');
 const logger = require('./logger');
+const { VOCAB_LEVELS } = require('./config');
 
 const MAX_QUEUE = 200;
 
@@ -74,7 +75,7 @@ function clearSession(level) {
   if (globalRaw && globalRaw.level) {
     storage.remove(`${STORAGE_KEYS.SESSION}_${globalRaw.level}`);
   }
-  const knownLevels = ['CET4', 'CET6', 'CET4_HIGH', 'CET6_HIGH', 'KAOYAN'];
+  const knownLevels = Object.values(VOCAB_LEVELS);
   for (const lvl of knownLevels) {
     storage.remove(`${STORAGE_KEYS.SESSION}_${lvl}`);
   }

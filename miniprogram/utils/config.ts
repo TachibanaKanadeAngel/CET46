@@ -38,4 +38,38 @@ const CONFIG = {
   },
 };
 
-module.exports = { CONFIG };
+const WORD_STATUS = Object.freeze({
+  NEW: 'new',
+  REVIEW: 'review',
+  MASTERED: 'mastered',
+});
+
+const STUDY_MODE = Object.freeze({
+  CARD: 'card',
+  CHOICE: 'choice',
+  LISTEN: 'listen',
+});
+
+const FSRS_RATING = Object.freeze({
+  AGAIN: 'again',
+  HARD: 'hard',
+  GOOD: 'good',
+  EASY: 'easy',
+});
+
+const VOCAB_LEVELS = Object.freeze({
+  CET4: 'CET4',
+  CET6: 'CET6',
+  CET4_HIGH: 'CET4_HIGH',
+  CET6_HIGH: 'CET6_HIGH',
+  KAOYAN: 'KAOYAN',
+});
+
+module.exports = {
+  CONFIG,
+  WORD_STATUS,
+  STUDY_MODE,
+  FSRS_RATING,
+  VOCAB_LEVELS,
+};
+

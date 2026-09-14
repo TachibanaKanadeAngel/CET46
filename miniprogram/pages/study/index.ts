@@ -10,6 +10,7 @@ const { EarwormPlayer } = require('../../utils/earworm');
 const { stopWordAudio } = require('../../utils/audio');
 const studyReviewMixin = require('../../utils/study-review-mixin');
 const { saveSession, loadSession, clearSession } = require('../../utils/study-session');
+const { STUDY_MODE } = require('../../utils/config');
 
 Page({
   data: {
@@ -25,7 +26,7 @@ Page({
     studyProgress: 0,
     
     // 多维学习模式: 'card' (抽认卡) | 'choice' (4选1辨义) | 'listen' (听音辨义)
-    studyMode: 'card',
+    studyMode: STUDY_MODE.CARD,
     choiceOptions: [],
     selectedChoiceId: '',
     choiceStatus: '', // 'correct' | 'wrong' | ''
@@ -282,7 +283,7 @@ Page({
   onModeSwitch(e) {
     const mode = e.currentTarget.dataset.mode;
     if (mode === this.data.studyMode) return;
-    const isCard = mode === 'card';
+    const isCard = mode === STUDY_MODE.CARD;
     this.setData({
       studyMode: mode,
       showAnswer: isCard ? this.data.autoShowMeaning : false,
@@ -290,7 +291,7 @@ Page({
       selectedChoiceId: '',
       choiceLock: false,
     });
-    if (mode === 'choice' || mode === 'listen') {
+    if (mode === STUDY_MODE.CHOICE || mode === STUDY_MODE.LISTEN) {
       this._refreshChoices();
     }
   },
@@ -308,7 +309,7 @@ Page({
     }
     this.setData({
       autoShowMeaning: nextVal,
-      showAnswer: this.data.studyMode === 'card' ? nextVal : false,
+      showAnswer: this.data.studyMode === STUDY_MODE.CARD ? nextVal : false,
     });
     wx.showToast({
       title: nextVal ? '📖 已开启：直接看释义' : '🧠 已开启：自测加难模式',

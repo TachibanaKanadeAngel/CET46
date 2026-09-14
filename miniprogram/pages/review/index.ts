@@ -4,7 +4,7 @@ function getAppInstance() {
 
 const { calculateInterval } = require('../../utils/fsrs');
 const { getReviewWords } = require('../../utils/vocab');
-const { CONFIG } = require('../../utils/config');
+const { CONFIG, WORD_STATUS } = require('../../utils/config');
 const { createAnswerHandler, goNextWord, goHome } = require('../../utils/study-common');
 const { stopWordAudio } = require('../../utils/audio');
 const studyReviewMixin = require('../../utils/study-review-mixin');
@@ -37,7 +37,7 @@ Page({
       return;
     }
 
-    const reviewWords = getReviewWords(words, app.globalData.progress, 50);
+    const reviewWords = getReviewWords(words, app.globalData.progress, CONFIG.CONSTANTS.QUICK_REVIEW_LIMIT);
     if (reviewWords.length === 0) {
       this.setData({ empty: true, words: [], currentWord: null, total: 0, reviewProgress: 0 });
       return;
@@ -88,12 +88,12 @@ Page({
     if (!app) return;
 
     const wd = app.getWordData(currentWord.id);
-    wd.status = 'mastered';
+    wd.status = WORD_STATUS.MASTERED;
     wd.stability = 100;
     wd.difficulty = 1;
     wd.reviewCount = (wd.reviewCount || 0) + 1;
     wd.lastStudy = Date.now();
-    wd.nextReview = Date.now() + 365 * 24 * 3600 * 1000;
+    wd.nextReview = Date.now() + CONFIG.CONSTANTS.MAX_REVIEW_INTERVAL_MS;
 
     app.setWordData(currentWord.id, wd);
     app.removeWrongWord(currentWord.id);
@@ -112,7 +112,7 @@ Page({
     const app = getAppInstance();
     if (!app) return;
     const wd = app.getWordData(currentWord.id);
-    const wasMastered = wd.status === 'mastered';
+    const wasMastered = wd.status === WORD_STATUS.MASTERED;
     const interval = calculateInterval(wd, quality);
 
     wd.lastStudy = Date.now();
@@ -123,12 +123,12 @@ Page({
       wd.nextReview = Date.now() + interval;
       wd.status = wasMastered ||
         (wd.reviewCount >= CONFIG.CONSTANTS.LEVEL_MASTERED && wd.stability >= 10)
-        ? 'mastered'
-        : 'review';
+        ? WORD_STATUS.MASTERED
+        : WORD_STATUS.REVIEW;
       app.removeWrongWord(currentWord.id);
     } else {
       wd.nextReview = Date.now() + CONFIG.CONSTANTS.MS_PER_DAY;
-      wd.status = 'review';
+      wd.status = WORD_STATUS.REVIEW;
       app.addWrongWord(currentWord.id);
     }
 

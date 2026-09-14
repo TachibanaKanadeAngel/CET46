@@ -1,15 +1,16 @@
 // 基于 FSRS 17 维权重的调度实现（微信小程序适配版）
-// 从主项目 js/fsrs.js 迁移，移除浏览器 localStorage/window 依赖
+// 纯数学核心已抽取至 ./fsrs-core.js，本模块专注于小程序存储和运行时状态适配
 
 const { CONFIG } = require('./config');
 const logger = require('./logger');
 const { storage, STORAGE_KEYS } = require('./storage');
+const fsrsCore = require('./fsrs-core');
 
-const DEFAULT_TARGET_RETENTION = CONFIG.FSRS.TARGET_RETENTION;
+const DEFAULT_TARGET_RETENTION = fsrsCore.DEFAULT_TARGET_RETENTION;
+const DEFAULT_FSRS_W = [...fsrsCore.DEFAULT_FSRS_W];
 
-let FSRS_W = [...CONFIG.FSRS.DEFAULT_W];
+let FSRS_W = [...DEFAULT_FSRS_W];
 let currentTargetRetention = DEFAULT_TARGET_RETENTION;
-const DEFAULT_FSRS_W = [...CONFIG.FSRS.DEFAULT_W];
 
 function getFSRSWeights() {
   return [...FSRS_W];
@@ -24,13 +25,12 @@ function loadFSRSWeights() {
   if (saved) {
     try {
       const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length === 17 &&
-          parsed.every(w => typeof w === 'number' && Number.isFinite(w))) {
+      if (fsrsCore.validateWeights(parsed)) {
         FSRS_W = parsed;
         logger.info('已加载用户自定义 FSRS 权重');
         return;
       } else {
-        logger.warn('FSRS 权重包含非有限数值，使用默认值');
+        logger.warn('FSRS 权重包含非有限数值或超出范围，使用默认值');
       }
     } catch (e) {
       logger.warn('FSRS 权重解析失败，使用默认值');
@@ -44,12 +44,8 @@ function saveFSRSWeights() {
 }
 
 function setFSRSWeights(weights) {
-  if (!Array.isArray(weights) || weights.length !== 17) {
-    logger.warn('无效的 FSRS 权重格式');
-    return false;
-  }
-  if (!weights.every(w => typeof w === 'number' && Number.isFinite(w) && Math.abs(w) <= 100)) {
-    logger.warn('FSRS 权重包含非有限数值或超出 [-100, 100] 范围');
+  if (!fsrsCore.validateWeights(weights)) {
+    logger.warn('无效的 FSRS 权重格式或数值超出范围');
     return false;
   }
   FSRS_W = [...weights];
@@ -76,18 +72,7 @@ function getTargetRetention() {
 
 function calculateFSRSInterval(s, r = null, circadianScore = 0) {
   const targetR = r ?? currentTargetRetention;
-  if (typeof s !== 'number' || !Number.isFinite(s) || s <= 0) s = DEFAULT_FSRS_W[0];
-  if (typeof targetR !== 'number' || !Number.isFinite(targetR) || targetR <= 0 || targetR >= 1) {
-    return CONFIG.CONSTANTS.MS_PER_DAY;
-  }
-  const safeCircadian = (typeof circadianScore === 'number' && Number.isFinite(circadianScore))
-    ? Math.max(-1, Math.min(1, circadianScore))
-    : 0;
-  const intervalDays = 9 * s * (1 / targetR - 1);
-  const k = 0.15;
-  const circadianFactor = 1 + k * safeCircadian;
-  const rawInterval = Math.max(1, Math.round(intervalDays * circadianFactor)) * CONFIG.CONSTANTS.MS_PER_DAY;
-  return Number.isFinite(rawInterval) && rawInterval > 0 ? rawInterval : CONFIG.CONSTANTS.MS_PER_DAY;
+  return fsrsCore.calculateFSRSInterval(s, targetR, circadianScore, CONFIG.CONSTANTS.MS_PER_DAY);
 }
 
 let _hourStatsCache = null;
@@ -148,36 +133,22 @@ function restoreHourStats(snapshot) {
 }
 
 function calculateForgettingDecay(wd, daysSinceReview) {
-  if (wd.stability == null || wd.lastStudy == null) return 1;
-  const stability = Math.max(0.1, wd.stability);
-  const safeDays = Math.max(0, Number(daysSinceReview) || 0);
-  const decayFactor = Math.pow(1 + safeDays / (9 * stability), -1);
-  return Math.max(0.1, Math.min(1, decayFactor));
+  if (!wd || wd.stability == null || wd.lastStudy == null) return 1;
+  return fsrsCore.calculateForgettingDecay(wd.stability, daysSinceReview);
 }
 
 function calculateShortTermMemory(wd, quality) {
-  if (!wd.shortTermReps) wd.shortTermReps = 0;
-  if (!wd.lastShortTermReview) wd.lastShortTermReview = 0;
-
-  const now = Date.now();
-  const timeSinceLastReview = now - wd.lastShortTermReview;
-  const SHORT_TERM_WINDOW = CONFIG.CONSTANTS.MS_PER_DAY;
-
-  if (timeSinceLastReview > SHORT_TERM_WINDOW) {
-    wd.shortTermReps = quality >= 3 ? 1 : 0;
-  } else {
-    if (quality >= 3) {
-      wd.shortTermReps = Math.min(wd.shortTermReps + 1, 5);
-    } else {
-      wd.shortTermReps = Math.max(0, wd.shortTermReps - 1);
-    }
-  }
-
-  wd.lastShortTermReview = now;
-  return {
-    reps: wd.shortTermReps,
-    bonus: 1 + wd.shortTermReps * 0.1,
-  };
+  if (!wd) return { reps: 0, bonus: 1 };
+  const res = fsrsCore.calculateShortTermMemory(
+    wd.shortTermReps,
+    wd.lastShortTermReview,
+    quality,
+    Date.now(),
+    CONFIG.CONSTANTS.MS_PER_DAY
+  );
+  wd.shortTermReps = res.reps;
+  wd.lastShortTermReview = res.lastReview;
+  return { reps: res.reps, bonus: res.bonus };
 }
 
 function calculateOptimalInterval(wd, quality) {
@@ -201,66 +172,16 @@ function calculateOptimalInterval(wd, quality) {
 }
 
 function applyFuzz(interval) {
-  if (!Number.isFinite(interval) || interval <= 0) return CONFIG.CONSTANTS.MS_PER_DAY;
-  if (interval < CONFIG.CONSTANTS.MS_PER_DAY) return interval;
-  const fuzzRange = 0.05;
-  const randomFactor = 1 + (Math.random() * fuzzRange * 2 - fuzzRange);
-  return Math.round(interval * randomFactor);
+  return fsrsCore.applyFuzz(interval, CONFIG.CONSTANTS.MS_PER_DAY);
 }
 
 function updateFSRS(wd, quality) {
-  if (quality < 1 || quality > 4) {
-    throw new Error('Quality 必须介于 1 和 4 之间');
-  }
-
-  const W = FSRS_W;
-  const isFirstReview = wd.stability == null || wd.difficulty == null || isNaN(wd.stability) || isNaN(wd.difficulty);
-
-  if (isFirstReview) {
-    const s = W[quality - 1];
-    let next_d = W[4] - W[5] * (quality - 3);
-    next_d = Math.min(Math.max(next_d, 1), 10);
-    return { stability: Math.max(0.1, s), difficulty: next_d };
-  }
-
-  const s = wd.stability;
-  let next_d;
-  const d = wd.difficulty;
-  const qualityOffset = quality - 3;
-  next_d = d - W[6] * qualityOffset;
-  next_d = W[7] * W[4] + (1 - W[7]) * next_d;
-  next_d = Math.min(Math.max(next_d, 1), 10);
-
-  let next_s;
-  if (quality >= 2) {
-    const hard_penalty = quality === 2 ? W[15] : 1;
-    const easy_bonus = quality === 4 ? W[16] : 1;
-    const elapsedDays = wd.lastStudy
-      ? Math.max(0, (Date.now() - wd.lastStudy) / (CONFIG.CONSTANTS.MS_PER_DAY))
-      : 0;
-    const R = Math.pow(1 + elapsedDays / (9 * Math.max(0.1, s)), -1);
-    const expFactor = Math.exp(W[8]);
-    const difficultyFactor = 11 - next_d;
-    const stabilityFactor = Math.pow(Math.max(0.1, s), -W[9]);
-    const retrievabilityFactor = Math.exp((1 - R) * W[10]) - 1;
-    const success_factor = expFactor * difficultyFactor * stabilityFactor * retrievabilityFactor;
-    next_s = s * (1 + success_factor * hard_penalty * easy_bonus);
-  } else {
-    const difficultyPow = Math.pow(Math.max(0.1, next_d), -W[12]);
-    const stabilityPow = Math.pow(Math.max(0.1, s), W[13]);
-    next_s = W[11] * difficultyPow * stabilityPow * Math.exp(W[14]);
-  }
-
-  if (!Number.isFinite(next_s) || next_s <= 0) next_s = W[quality - 1];
-  if (!Number.isFinite(next_d)) next_d = W[4];
-
-  return { stability: Math.max(0.1, next_s), difficulty: next_d };
+  return fsrsCore.updateFSRS(wd, quality, FSRS_W, Date.now(), CONFIG.CONSTANTS.MS_PER_DAY);
 }
 
 function calculateInterval(wd, quality) {
   if (!wd) return CONFIG.CONSTANTS.MS_PER_DAY;
   const q = Math.max(1, Math.min(4, quality));
-  // 先更新 FSRS 状态，再用新的 stability/difficulty 计算本次间隔
   const updated = updateFSRS(wd, q);
   wd.stability = updated.stability;
   wd.difficulty = updated.difficulty;

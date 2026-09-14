@@ -1,4 +1,5 @@
 // 词库工具函数
+const { WORD_STATUS } = require('./config');
 
 /**
  * 获取新词列表（未学习或状态为 new 的词）
@@ -10,7 +11,7 @@
 function getNewWords(words, progress, limit = 20, shuffle = true) {
   const filtered = words.filter(w => {
     const wd = progress[String(w.id)];
-    return !wd || wd.status === 'new' || wd.status === undefined;
+    return !wd || wd.status === WORD_STATUS.NEW || wd.status === undefined;
   });
 
   if (shuffle) {
@@ -27,7 +28,7 @@ function getNewWords(words, progress, limit = 20, shuffle = true) {
 }
 
 function isDueForReview(wordData, now = Date.now()) {
-  if (!wordData || (wordData.status !== 'review' && wordData.status !== 'mastered')) {
+  if (!wordData || (wordData.status !== WORD_STATUS.REVIEW && wordData.status !== WORD_STATUS.MASTERED)) {
     return false;
   }
   return Number.isFinite(wordData.nextReview) && wordData.nextReview > 0 && now >= wordData.nextReview;
@@ -70,11 +71,11 @@ function getStats(words, progress) {
 
   words.forEach(w => {
     const wd = progress[String(w.id)];
-    if (!wd || wd.status === 'new' || !wd.status) {
+    if (!wd || wd.status === WORD_STATUS.NEW || !wd.status) {
       newCount++;
-    } else if (wd.status === 'review') {
+    } else if (wd.status === WORD_STATUS.REVIEW) {
       reviewCount++;
-    } else if (wd.status === 'mastered') {
+    } else if (wd.status === WORD_STATUS.MASTERED) {
       masteredCount++;
     }
   });

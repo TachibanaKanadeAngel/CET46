@@ -1,1 +1,1 @@
-npm run check:quality && npm run quality:check
+npm run check:imports && npm run mp:test

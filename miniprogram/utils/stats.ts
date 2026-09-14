@@ -1,6 +1,7 @@
 // 统计相关工具函数
 
 const { localDateStr } = require('./date');
+const { CONFIG, WORD_STATUS } = require('./config');
 
 /**
  * 计算连续学习天数
@@ -31,7 +32,7 @@ function calculateStreakDays(heatmap, referenceDate = new Date()) {
 function calculateUpcomingReviews(progress, days = 7, referenceDate = new Date()) {
   const start = new Date(referenceDate);
   start.setHours(0, 0, 0, 0);
-  const dayMs = 24 * 60 * 60 * 1000;
+  const dayMs = CONFIG.CONSTANTS.MS_PER_DAY;
   const buckets = Array.from({ length: days }, (_, index) => {
     const date = new Date(start.getTime() + index * dayMs);
     return {
@@ -43,7 +44,7 @@ function calculateUpcomingReviews(progress, days = 7, referenceDate = new Date()
   });
 
   Object.values(progress || {}).forEach((data: any) => {
-    if (!data || !['review', 'mastered'].includes(data.status) || !Number.isFinite(data.nextReview)) return;
+    if (!data || ![WORD_STATUS.REVIEW, WORD_STATUS.MASTERED].includes(data.status) || !Number.isFinite(data.nextReview)) return;
     const rawIndex = Math.floor((data.nextReview - start.getTime()) / dayMs);
     const index = rawIndex < 0 ? 0 : rawIndex;
     if (index < buckets.length) buckets[index].count++;
@@ -63,9 +64,9 @@ function calculateMemoryMetrics(progress) {
   const stabilities = [];
   const difficulties = [];
   Object.values(progress || {}).forEach((data: any) => {
-    if (!data || !data.status || data.status === 'new') return;
+    if (!data || !data.status || data.status === WORD_STATUS.NEW) return;
     learned++;
-    if (data.status === 'mastered') mastered++;
+    if (data.status === WORD_STATUS.MASTERED) mastered++;
     totalReviews += Math.max(0, Number(data.reviewCount) || 0);
     totalErrors += Math.max(0, Number(data.errorCount) || 0);
     if (Number.isFinite(data.stability)) stabilities.push(data.stability);
