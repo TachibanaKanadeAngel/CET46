@@ -1,9 +1,17 @@
 <view class="page-bg">
   <view class="container" wx:if="{{!finished && !empty}}">
-    <!-- 顶部复习进度 -->
+    <!-- 顶部复习进度卡片 -->
     <view class="review-progress-card">
-      <progress-bar class="review-progress" percent="{{reviewProgress}}" type="normal" label="复习进度" showPercent />
-      <view class="progress-badge">{{currentIndex + 1}} / {{total}}</view>
+      <view class="progress-header-row">
+        <text class="progress-header-title">复习进度</text>
+        <view class="progress-header-badges">
+          <text class="progress-percent-text">{{reviewProgress}}%</text>
+          <view class="progress-badge">{{currentIndex + 1}} / {{total}}</view>
+        </view>
+      </view>
+      <view class="progress-track-wrapper">
+        <view class="progress-track-fill" style="width: {{reviewProgress}}%;"></view>
+      </view>
     </view>
 
     <!-- 单词卡片 -->
@@ -12,36 +20,36 @@
     <!-- 交互操作区 -->
     <view class="action-area">
       <!-- 翻牌前操作 -->
-      <view class="utility-row" wx:if="{{!showAnswer}}">
+      <view class="reveal-grid-row" wx:if="{{!showAnswer}}">
         <button class="sv-btn sv-btn-success reveal-btn" hover-class="sv-btn-success-hover" bindtap="onShowAnswer">
           显示释义 (翻牌)
         </button>
-        <button class="utility-btn utility-secondary" hover-class="utility-btn-hover" bindtap="onSkip">
+        <button class="utility-btn utility-skip" hover-class="utility-btn-hover" bindtap="onSkip">
           跳过
         </button>
       </view>
 
-      <!-- 翻牌后 FSRS 评分区 -->
+      <!-- 翻牌后 FSRS 评分区 (2行3列严格对齐工整网格) -->
       <view class="rating-group" wx:if="{{showAnswer}}">
-        <view class="btn-row rating-row">
+        <view class="rating-grid-row">
           <button class="sv-btn sv-btn-danger" hover-class="sv-btn-danger-hover" bindtap="onHard">
             忘记
           </button>
-          <button class="sv-btn" hover-class="sv-btn-hover" bindtap="onGood">
+          <button class="sv-btn rating-btn-normal" hover-class="sv-btn-hover" bindtap="onGood">
             记得
           </button>
           <button class="sv-btn sv-btn-success" hover-class="sv-btn-success-hover" bindtap="onEasy">
             简单
           </button>
         </view>
-        <view class="utility-row mt-12">
+        <view class="utility-grid-row">
           <button class="utility-btn chop-btn" hover-class="utility-btn-hover" bindtap="onChopWord">
             斩！已熟记
           </button>
-          <button class="utility-btn" wx:if="{{hasClozeExample}}" hover-class="utility-btn-hover" bindtap="toggleCloze">
-            {{clozeMode ? '原句' : '挖空'}}
+          <button class="utility-btn {{hasClozeExample ? '' : 'utility-btn-disabled'}}" hover-class="{{hasClozeExample ? 'utility-btn-hover' : ''}}" bindtap="toggleCloze">
+            {{hasClozeExample ? (clozeMode ? '原句' : '挖空') : '挖空'}}
           </button>
-          <button class="utility-btn utility-secondary" hover-class="utility-btn-hover" bindtap="onSkip">
+          <button class="utility-btn utility-skip" hover-class="utility-btn-hover" bindtap="onSkip">
             跳过
           </button>
         </view>

@@ -31,6 +31,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Prepare reports directory
+        run: mkdir -p reports reports/check-logs
+
       - name: Run ESLint check (JSON output)
         run: |
           npx eslint . --format json --output-file reports/eslint-report.json || true
@@ -50,6 +53,7 @@ jobs:
         with:
           name: quality-report
           path: reports/
+          if-no-files-found: ignore
 
       - name: Quality gate check
         run: |

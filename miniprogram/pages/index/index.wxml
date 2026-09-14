@@ -61,8 +61,12 @@
   <!-- 操作按钮矩阵 -->
   <view class="action-area">
     <button class="sv-btn main-btn btn-primary" hover-class="btn-primary-hover" bindtap="goStudy" disabled="{{loading}}">
-      {{loading ? '加载中...' : '🌾 开始学习新词'}}
+      {{loading ? '加载中...' : (hasUnfinishedSession ? '🌾 继续上次学习 (' + sessionProgress + '，剩' + sessionRemain + '词)' : '🌾 开始学习新词')}}
     </button>
+    <view class="resume-hint-row" wx:if="{{hasUnfinishedSession && !loading}}">
+      <text class="resume-hint-text">发现上次未完成学习进度</text>
+      <text class="resume-reset-btn" bindtap="onResetSession">重新开始新一轮</text>
+    </view>
     <view class="sub-btn-row">
       <button class="sv-btn sub-btn" hover-class="sub-btn-hover" bindtap="goReview" disabled="{{loading}}">
         🔄 开始复习

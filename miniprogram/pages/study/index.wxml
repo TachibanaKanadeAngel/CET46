@@ -24,18 +24,22 @@
 
     <!-- 学习进度条与 Combo 连击激励 -->
     <view class="study-progress-card">
-      <view class="progress-left">
-        <progress-bar class="study-progress" percent="{{studyProgress}}" type="normal" label="学习进度" showPercent />
-      </view>
-      <view class="progress-right">
-        <!-- 错词回炉标识 -->
-        <text class="retry-tag" wx:if="{{currentWord._isRetry}}">🔥 回炉强化</text>
-        <!-- 连击 Combo 勋章 -->
-        <view class="combo-badge {{combo >= 3 ? 'combo-fire' : ''}}" wx:if="{{combo >= 2}}">
-          <text class="combo-icon">⚡</text>
-          <text class="combo-num">Combo x{{combo}}</text>
+      <view class="study-progress-header">
+        <text class="study-progress-title">学习进度</text>
+        <view class="study-progress-badges">
+          <text class="study-percent-text">{{studyProgress}}%</text>
+          <!-- 错词回炉标识 -->
+          <text class="retry-tag" wx:if="{{currentWord._isRetry}}">🔥 回炉强化</text>
+          <!-- 连击 Combo 勋章 -->
+          <view class="combo-badge {{combo >= 3 ? 'combo-fire' : ''}}" wx:if="{{combo >= 2}}">
+            <text class="combo-icon">⚡</text>
+            <text class="combo-num">Combo x{{combo}}</text>
+          </view>
+          <view class="progress-badge" wx:else>{{currentIndex + 1}} / {{total}}</view>
         </view>
-        <view class="progress-badge" wx:else>{{currentIndex + 1}} / {{total}}</view>
+      </view>
+      <view class="study-track-wrapper">
+        <view class="study-track-fill" style="width: {{studyProgress}}%;"></view>
       </view>
     </view>
 
@@ -129,7 +133,7 @@
         <button class="utility-btn" wx:elif="{{showAnswer && hasClozeExample}}" hover-class="utility-btn-hover" bindtap="toggleCloze">
           {{clozeMode ? '显示原句' : '重新挖空'}}
         </button>
-        <button class="utility-btn utility-secondary" hover-class="utility-btn-hover" bindtap="onSkip">
+        <button class="utility-btn" hover-class="utility-btn-hover" bindtap="onSkip">
           跳过
         </button>
       </view>

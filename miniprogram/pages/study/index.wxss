@@ -81,35 +81,67 @@
 /* 学习进度条与 Combo 连击区域 */
 .study-progress-card {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16rpx;
+  flex-direction: column;
+  gap: 12rpx;
   margin-bottom: 20rpx;
   background: var(--sv-panel-base);
   border: 3rpx solid var(--sv-border-dark);
   border-radius: 16rpx;
-  padding: 12rpx 20rpx;
+  padding: 16rpx 20rpx;
   box-shadow: 0 4rpx 0 var(--sv-panel-shadow);
+  box-sizing: border-box;
 }
 
-.progress-left {
-  flex: 1;
-}
-
-.progress-right {
+.study-progress-header {
   display: flex;
   align-items: center;
-  gap: 10rpx;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.study-progress-title {
+  font-size: 26rpx;
+  font-weight: 800;
+  color: var(--sv-text-main);
+  letter-spacing: 0.5rpx;
+}
+
+.study-progress-badges {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.study-percent-text {
+  font-size: 24rpx;
+  font-weight: 800;
+  color: #d97706;
+}
+
+.study-track-wrapper {
+  width: 100%;
+  height: 16rpx;
+  background: rgba(66, 38, 19, 0.15);
+  border-radius: 10rpx;
+  overflow: hidden;
+  border: 1.5rpx solid var(--sv-border-dark);
+}
+
+.study-track-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d97706 0%, #f59e0b 100%);
+  border-radius: 8rpx;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .progress-badge {
   font-size: 24rpx;
   font-weight: 800;
   color: var(--sv-text-main);
-  background: var(--sv-panel-light);
-  border: 2rpx solid var(--sv-border-dark);
+  background: #ffffff;
+  border: 2.5rpx solid var(--sv-border-dark);
   border-radius: 20rpx;
-  padding: 4rpx 14rpx;
+  padding: 2rpx 16rpx;
   white-space: nowrap;
 }
 
@@ -371,21 +403,22 @@
 .utility-row {
   display: flex;
   width: 100%;
-  flex-wrap: wrap;
-  gap: 12rpx;
-  min-height: 68rpx;
+  gap: 14rpx;
+  min-height: 72rpx;
+  box-sizing: border-box;
 }
 
 .utility-btn,
 .utility-status {
   flex: 1;
   min-width: 0;
-  min-height: 68rpx;
-  height: 68rpx;
-  padding: 0 16rpx;
-  background: var(--sv-panel-light);
+  min-height: 72rpx;
+  height: 72rpx;
+  padding: 0 8rpx;
+  margin: 0 !important;
+  background: #ffffff;
   border: 2.5rpx solid var(--sv-border-dark);
-  border-radius: 12rpx;
+  border-radius: 14rpx;
   color: var(--sv-text-main);
   font-size: 26rpx;
   font-weight: 700;
@@ -393,16 +426,13 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 4rpx 0 var(--sv-panel-shadow);
+  box-sizing: border-box;
   transition: transform 50ms;
 }
 
 .utility-btn:active {
   transform: translateY(2rpx);
   box-shadow: 0 2rpx 0 var(--sv-panel-shadow);
-}
-
-.utility-secondary {
-  flex: 0.8;
 }
 
 /* 一键斩词专属高亮样式 */
@@ -505,14 +535,18 @@
 
 .memory-editor {
   display: flex;
+  align-items: center;
   gap: 12rpx;
   margin-top: 16rpx;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .memory-input {
   flex: 1;
   min-width: 0;
-  height: 72rpx;
+  height: 74rpx;
+  box-sizing: border-box;
   padding: 0 20rpx;
   background: #ffffff;
   border: 2.5rpx solid var(--sv-border-dark);
@@ -522,19 +556,28 @@
 }
 
 .memory-save {
-  flex: 0 0 120rpx;
-  width: 120rpx;
-  height: 72rpx;
-  min-height: 72rpx;
-  margin: 0;
+  flex: 0 0 128rpx;
+  width: 128rpx;
+  height: 74rpx;
+  min-height: 74rpx;
+  max-height: 74rpx;
+  box-sizing: border-box;
+  margin: 0 !important;
   padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: var(--sv-energy-light);
   border: 2.5rpx solid var(--sv-energy-green);
   color: var(--sv-energy-dark);
   border-radius: 12rpx;
   font-size: 26rpx;
   font-weight: 700;
-  line-height: 68rpx;
+  line-height: normal;
+}
+
+.memory-save::after {
+  border: 0;
 }
 
 .related-row {

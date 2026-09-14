@@ -28,6 +28,9 @@ Page({
     engineStatus: '* 引擎正在休眠 *',
     loading: true,
     loadError: '',
+    hasUnfinishedSession: false,
+    sessionProgress: '',
+    sessionRemain: 0,
   },
   onLoad() {
     this._loadGeneration = 0;
@@ -47,6 +50,7 @@ Page({
 
     this.updateTodayStats();
     this.updateStats();
+    this.updateStudySession();
 
     if (app && app.globalData && app.globalData.loadedLevel !== currentLevel && !this.data.loading) {
       this.requestVocab(currentLevel);
@@ -216,6 +220,49 @@ Page({
 
   goGame() {
     if (this.canOpenCurrentVocab()) wx.navigateTo({ url: '/pages/game/index' });
+  },
+
+  updateStudySession() {
+    try {
+      const { loadSession } = require('../../utils/study-session');
+      const saved = loadSession(this.data.currentLevel);
+      if (saved && saved.queueIds && saved.currentIndex < saved.queueIds.length) {
+        const current = saved.currentIndex + 1;
+        const total = saved.totalCount || saved.queueIds.length;
+        const remain = saved.queueIds.length - saved.currentIndex;
+        this.setData({
+          hasUnfinishedSession: true,
+          sessionProgress: `${current}/${total}`,
+          sessionRemain: remain,
+        });
+      } else {
+        this.setData({
+          hasUnfinishedSession: false,
+          sessionProgress: '',
+          sessionRemain: 0,
+        });
+      }
+    } catch (_) {}
+  },
+
+  onResetSession() {
+    wx.showModal({
+      title: '重置当前学习进度？',
+      content: '确定要放弃未完成的学习进度，重新抽取一批新词吗？',
+      confirmText: '确定重置',
+      confirmColor: '#dc2626',
+      cancelText: '继续学习',
+      success: res => {
+        if (res.confirm) {
+          const { clearSession } = require('../../utils/study-session');
+          clearSession(this.data.currentLevel);
+          this.updateStudySession();
+          wx.showToast({ title: '已重置，可开启新一轮', icon: 'none' });
+        } else {
+          this.goStudy();
+        }
+      },
+    });
   },
 
   goVocabList() {

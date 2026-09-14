@@ -55,7 +55,7 @@ Page({
   },
   ...studyReviewMixin.methods,
 
-  onLoad() {
+  onLoad(query) {
     this._isAnswering = false;
     this._allVocab = [];
     this._sessionTimer = null;
@@ -73,29 +73,31 @@ Page({
 
     this._allVocab = words;
     const studyLimit = (app.globalData.settings && app.globalData.settings.studyLimit) || 20;
-    const newWords = getNewWords(words, app.globalData.progress, studyLimit);
-    if (newWords.length === 0) {
-      wx.showToast({ title: '当前等级新词已全部学完！', icon: 'none' });
-      goHome();
-      return;
+
+    // 检查是否有指定强制开启新一轮标记
+    const forceNew = Boolean(query && (query.action === 'new' || query.restart === '1'));
+    if (forceNew) {
+      clearSession(app.globalData.currentLevel);
     }
 
-    // 默认：开启新一轮学习
-    this._initQueue(newWords, studyLimit, 0);
-
-    // 断点续学：存在同一词库的未完成会话时，询问是否继续
-    const saved = loadSession(app.globalData.currentLevel);
-    if (saved) {
+    // 断点续学优先检测：存在同一词库的未完成会话时直接无缝恢复，绝不提前用新词覆盖！
+    const saved = !forceNew ? loadSession(app.globalData.currentLevel) : null;
+    if (saved && this._canRestoreSession(saved)) {
+      this._restoreSession(saved);
       const remain = saved.queueIds.length - saved.currentIndex;
-      wx.showModal({
-        title: '继续上次学习？',
-        content: `检测到上次还有 ${remain} 个单词未完成，点"继续上次"可接着上次进度。`,
-        confirmText: '继续上次',
-        cancelText: '重新开始',
-        success: res => {
-          if (res.confirm) this._restoreSession(saved);
-        },
+      wx.showToast({
+        title: `已接续上次进度 (剩 ${remain} 词)`,
+        icon: 'none',
+        duration: 2000,
       });
+    } else {
+      const newWords = getNewWords(words, app.globalData.progress, studyLimit);
+      if (newWords.length === 0) {
+        wx.showToast({ title: '当前等级新词已全部学完！', icon: 'none' });
+        goHome();
+        return;
+      }
+      this._initQueue(newWords, studyLimit, 0);
     }
 
     this._initEarworm();
@@ -134,6 +136,15 @@ Page({
     this._flushStudySession();
   },
 
+  // 校验已保存的会话是否可在当前词库下安全恢复
+  _canRestoreSession(saved) {
+    if (!saved || !Array.isArray(saved.queueIds) || saved.queueIds.length === 0) return false;
+    if (!this._allVocab || this._allVocab.length === 0) return false;
+    const wordsMap = new Map(this._allVocab.map(w => [String(w.id), w]));
+    const validCount = saved.queueIds.filter(id => wordsMap.has(String(id))).length;
+    return validCount > 0 && Number(saved.currentIndex) < saved.queueIds.length;
+  },
+
   // 以指定队列开启一轮学习
   _initQueue(queueWords, studyLimit, startIndex) {
     const app = getAppInstance();
@@ -147,6 +158,7 @@ Page({
     this.setData({
       words: queue,
       currentWord,
+      currentIndex: idx,
       total: queue.length,
       todayCount: 0,
       studyLimit,
@@ -178,6 +190,7 @@ Page({
     this.setData({
       words: queue,
       currentWord,
+      currentIndex: idx,
       total: queue.length,
       todayCount: saved.todayCount || 0,
       studyLimit: this.data.studyLimit,
@@ -239,7 +252,9 @@ Page({
       clearTimeout(this._sessionTimer);
       this._sessionTimer = null;
     }
-    clearSession();
+    const app = getAppInstance();
+    const level = app && app.globalData && app.globalData.currentLevel;
+    clearSession(level);
   },
 
   _initEarworm() {

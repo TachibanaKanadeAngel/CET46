@@ -23,6 +23,8 @@ function saveSession(session) {
     totalCount: Math.max(1, Number(session.totalCount) || queueIds.length),
     updatedAt: Date.now(),
   };
+  const levelKey = `${STORAGE_KEYS.SESSION}_${session.level}`;
+  storage.set(levelKey, payload);
   const ok = storage.set(STORAGE_KEYS.SESSION, payload);
   if (!ok) logger.warn('[study-session] save failed');
   return ok;
@@ -30,12 +32,16 @@ function saveSession(session) {
 
 /**
  * 读取指定词库等级的学习会话
- * @param {string} level 'CET4' | 'CET6'
+ * @param {string} level 'CET4' | 'CET6' | 'CET4_HIGH'
  * @returns {object|null}
  */
 function loadSession(level) {
   if (!level) return null;
-  const raw = storage.get(STORAGE_KEYS.SESSION);
+  const levelKey = `${STORAGE_KEYS.SESSION}_${level}`;
+  let raw = storage.get(levelKey);
+  if (!raw || typeof raw !== 'object' || raw.level !== level) {
+    raw = storage.get(STORAGE_KEYS.SESSION);
+  }
   if (!raw || typeof raw !== 'object' || raw.level !== level) return null;
   if (!Array.isArray(raw.queueIds) || raw.queueIds.length === 0) return null;
   const queueIds = raw.queueIds.map(String);
@@ -53,8 +59,25 @@ function loadSession(level) {
 
 /**
  * 清除学习会话
+ * @param {string} [level]
  */
-function clearSession() {
+function clearSession(level) {
+  if (level) {
+    storage.remove(`${STORAGE_KEYS.SESSION}_${level}`);
+    const globalRaw = storage.get(STORAGE_KEYS.SESSION);
+    if (globalRaw && globalRaw.level === level) {
+      storage.remove(STORAGE_KEYS.SESSION);
+    }
+    return true;
+  }
+  const globalRaw = storage.get(STORAGE_KEYS.SESSION);
+  if (globalRaw && globalRaw.level) {
+    storage.remove(`${STORAGE_KEYS.SESSION}_${globalRaw.level}`);
+  }
+  const knownLevels = ['CET4', 'CET6', 'CET4_HIGH', 'CET6_HIGH', 'KAOYAN'];
+  for (const lvl of knownLevels) {
+    storage.remove(`${STORAGE_KEYS.SESSION}_${lvl}`);
+  }
   return storage.remove(STORAGE_KEYS.SESSION);
 }
 
