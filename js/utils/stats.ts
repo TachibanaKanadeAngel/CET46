@@ -103,7 +103,7 @@ export function renderHeatmap(): void {
   if (!grid) return;
   const today = new Date();
   const fragment = document.createDocumentFragment();
-  grid.innerHTML = '';
+  grid.replaceChildren();
 
   const daySquares: HTMLDivElement[] = [];
   for (let i = 49; i >= 0; i--) {
@@ -285,7 +285,7 @@ export function renderAchievements(learnedCount: number, allData: any, masteredC
     sessions: currentStreak,
   };
   const badges = evaluateAchievements(statsInput);
-  container.innerHTML = '';
+  container.replaceChildren();
   if (badges.length === 0) return;
   const title = document.createElement('span');
   title.className = 'achievements-title';

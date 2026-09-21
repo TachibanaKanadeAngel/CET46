@@ -11,13 +11,14 @@ import {
   exportEncryptionKey,
   updateWebDAVStatus,
 } from '../sync.js';
+import { CONFIG } from '../config.js';
 import { UI } from '../ui.js';
 import logger from '../utils/logger.js';
 
 const getWebdavConfig = (): any => (SyncService as any).webdavConfig;
 
 // 设备ID：使用crypto.randomUUID()生成唯一标识，持久化存储
-const DEVICE_ID_KEY = 'cet46_device_id';
+const DEVICE_ID_KEY = CONFIG.STORAGE_KEYS.DEVICE_ID;
 let fallbackDeviceId: string | null = null;
 
 function getDeviceId(): string {

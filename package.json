@@ -15,10 +15,10 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "build:file": "vite build",
-    "vercel-build": "vite build",
+    "dev": "vite --configLoader native",
+    "build": "vite build --configLoader native",
+    "build:file": "vite build --configLoader native",
+    "vercel-build": "vite build --configLoader native",
     "preview": "vite preview",
     "lint": "eslint js/ --ext .js,.ts",
     "lint:fix": "eslint js/ --ext .js,.ts --fix",
@@ -35,6 +35,7 @@
     "mp:split-vocab": "node scripts/sync-vocab.mjs",
     "mp:backfill-examples": "node scripts/backfill-examples.cjs && node scripts/sync-vocab.mjs",
     "mp:test": "node tests/miniprogram/run-all.cjs && node miniprogram/tests/run-all.cjs",
+    "test:web": "node scripts/test-web-core.cjs",
     "mp:typecheck": "node ./node_modules/typescript/bin/tsc --noEmit -p miniprogram/tsconfig.json",
     "validate:vocab": "node scripts/validate-vocab.mjs",
     "check:garbled": "node scripts/check-garbled-text.mjs",

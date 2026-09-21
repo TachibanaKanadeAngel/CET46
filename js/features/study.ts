@@ -52,7 +52,7 @@ export const StudyFeature: StudyFeatureType = {
   pendingSession: null as any,
   lastMemoryCache: null as any,
   lastDb: null as any,
-  SESSION_KEY: 'cet46_study_session',
+  SESSION_KEY: CONFIG.STORAGE_KEYS.STUDY_SESSION,
   _submitting: false,
   _retryCount: {} as Record<string, number>,
   MAX_RETRY: 5,
@@ -361,7 +361,7 @@ export const StudyFeature: StudyFeatureType = {
         elExample.textContent = '';
         elExample.style.display = 'none';
       } else if (AppState.clozeModeEnabled && w.example) {
-        elExample.innerHTML = '';
+        elExample.replaceChildren();
         setHtml(elExample, generateCloze(w.word, w.example));
         elExample.style.display = 'block';
       } else {
@@ -701,7 +701,6 @@ export const StudyFeature: StudyFeatureType = {
     if (enabling) {
       this._originalExample = w.example || '';
       const clozeHtml = generateCloze(w.word, w.example);
-      elExample.innerHTML = '';
       setHtml(elExample, clozeHtml);
       btnCloze.textContent = '📝 完形填空: 开启';
       btnCloze.setAttribute('aria-pressed', 'true');

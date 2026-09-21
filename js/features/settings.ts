@@ -152,6 +152,133 @@ async function exportData(): Promise<void> {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+// 防止原型污染 - 递归过滤对象与数组元素
+export function sanitizeImportObject(obj: any): any {
+  if (typeof obj !== 'object' || obj === null) return obj;
+  if (Array.isArray(obj)) return obj.map(sanitizeImportObject);
+  const result: Record<string, any> = Object.create(null);
+  for (const key of Object.keys(obj)) {
+    if (key !== '__proto__' && key !== 'constructor' && key !== 'prototype') {
+      result[key] = sanitizeImportObject(obj[key]);
+    }
+  }
+  return result;
+}
+
+// 还原备份数据并同步 IndexedDB 与内存缓存
+async function applyMigratedBackup(migratedData: any): Promise<void> {
+  if (migratedData.words && Array.isArray(migratedData.words) && migratedData.words.length > 0) {
+    const originalWords = getWordsFn();
+    let backupWords = null;
+    try {
+      if (db.instance) {
+        backupWords = await db.getAll('words').catch(() => null);
+        await db.clear('words');
+        await bulkImportStore(db, 'words', migratedData.words);
+      }
+      setWordsArray(migratedData.words);
+      buildWordMaps();
+    } catch (dbErr) {
+      if (db.instance && backupWords && backupWords.length > 0) {
+        await db.clear('words').catch(() => {});
+        await bulkImportStore(db, 'words', backupWords).catch(() => {});
+      }
+      setWordsArray(originalWords);
+      buildWordMaps();
+      throw dbErr;
+    }
+  }
+
+  if (migratedData.progress) {
+    let backupProgress = null;
+    try {
+      if (db.instance) {
+        backupProgress = await db.getAll('progress').catch(() => null);
+        await db.clear('progress');
+        await bulkImportStore(
+          db,
+          'progress',
+          Object.entries(migratedData.progress),
+          ([id, wd]) => {
+            const numId = parseInt(id, 10);
+            return { ...wd, id: Number.isNaN(numId) ? id : numId };
+          }
+        );
+      }
+      if (memoryCache.progress && typeof memoryCache.progress.fromObject === 'function') {
+        memoryCache.progress.fromObject(migratedData.progress);
+      }
+    } catch (dbErr) {
+      if (db.instance && backupProgress && backupProgress.length > 0) {
+        await db.clear('progress').catch(() => {});
+        await bulkImportStore(db, 'progress', backupProgress).catch(() => {});
+      }
+      throw dbErr;
+    }
+  }
+
+  if (migratedData.wrongWords) {
+    let backupWrongWords = null;
+    try {
+      if (db.instance) {
+        backupWrongWords = await db.getAll('wrongWords').catch(() => null);
+        await db.clear('wrongWords');
+        await bulkImportStore(
+          db,
+          'wrongWords',
+          Object.entries(migratedData.wrongWords),
+          ([id, wrongData]) => {
+            const numId = parseInt(id, 10);
+            return { id: Number.isNaN(numId) ? id : numId, data: wrongData };
+          }
+        );
+      }
+      if (memoryCache.wrongWords && typeof memoryCache.wrongWords.fromObject === 'function') {
+        memoryCache.wrongWords.fromObject(migratedData.wrongWords);
+      }
+    } catch (dbErr) {
+      if (db.instance && backupWrongWords && backupWrongWords.length > 0) {
+        await db.clear('wrongWords').catch(() => {});
+        await bulkImportStore(db, 'wrongWords', backupWrongWords).catch(() => {});
+      }
+      throw dbErr;
+    }
+  }
+
+  if (migratedData.heatmap) {
+    let backupHeatmap = null;
+    try {
+      if (db.instance) {
+        backupHeatmap = await db.getAll('heatmap').catch(() => null);
+        await db.clear('heatmap');
+        await bulkImportStore(
+          db,
+          'heatmap',
+          Object.entries(migratedData.heatmap),
+          ([date, count]) => ({ date, count })
+        );
+      }
+      if (memoryCache.heatmap && typeof memoryCache.heatmap.fromObject === 'function') {
+        memoryCache.heatmap.fromObject(migratedData.heatmap);
+      }
+    } catch (dbErr) {
+      if (db.instance && backupHeatmap && backupHeatmap.length > 0) {
+        await db.clear('heatmap').catch(() => {});
+        await bulkImportStore(db, 'heatmap', backupHeatmap).catch(() => {});
+      }
+      throw dbErr;
+    }
+  }
+
+  if (migratedData.deletedIds) {
+    memoryCache.deletedIds = new Set(migratedData.deletedIds);
+  }
+
+  if (migratedData.fsrsWeights) {
+    setFSRSWeights(migratedData.fsrsWeights);
+  }
+}
+
 async function importData(event: any): Promise<void> {
   const file = event.target.files[0];
   if (!file) return;
@@ -177,140 +304,9 @@ async function importData(event: any): Promise<void> {
         throw new Error('无效的备份文件结构');
       }
 
-      // 防止原型污染 - 递归过滤（包括数组元素）
-      function sanitizeObject(obj: any): any {
-        if (typeof obj !== 'object' || obj === null) return obj;
-        // 数组也要递归，防止 [{__proto__:...}] 绕过过滤
-        if (Array.isArray(obj)) return obj.map(sanitizeObject);
-        const result: Record<string, any> = Object.create(null);
-        for (const key of Object.keys(obj)) {
-          if (key !== '__proto__' && key !== 'constructor' && key !== 'prototype') {
-            result[key] = sanitizeObject(obj[key]);
-          }
-        }
-        return result;
-      }
-
-      const data = sanitizeObject(raw);
-
+      const data = sanitizeImportObject(raw);
       const migratedData = migrateData(data);
-
-      if (
-        migratedData.words &&
-        Array.isArray(migratedData.words) &&
-        migratedData.words.length > 0
-      ) {
-        const originalWords = getWordsFn();
-        let backupWords = null;
-        try {
-          if (db.instance) {
-            // 先备份旧数据，导入失败时恢复
-            backupWords = await db.getAll('words').catch(() => null);
-            await db.clear('words');
-            await bulkImportStore(db, 'words', migratedData.words);
-          }
-          // 数据库写入成功后再修改内存
-          setWordsArray(migratedData.words);
-          buildWordMaps();
-        } catch (dbErr) {
-          // 数据库写入失败，恢复 DB 备份并回滚内存
-          if (db.instance && backupWords && backupWords.length > 0) {
-            await db.clear('words').catch(() => {});
-            await bulkImportStore(db, 'words', backupWords).catch(() => {});
-          }
-          setWordsArray(originalWords);
-          buildWordMaps();
-          throw dbErr;
-        }
-      }
-
-      if (migratedData.progress) {
-        let backupProgress = null;
-        try {
-          if (db.instance) {
-            backupProgress = await db.getAll('progress').catch(() => null);
-            await db.clear('progress');
-            await bulkImportStore(
-              db,
-              'progress',
-              Object.entries(migratedData.progress),
-              // 修复：{ ...wd, id } 确保 id 不被 wd.id 覆盖；验证 NaN
-              ([id, wd]) => {
-                const numId = parseInt(id, 10);
-                return { ...wd, id: Number.isNaN(numId) ? id : numId };
-              }
-            );
-          }
-          if (memoryCache.progress && typeof memoryCache.progress.fromObject === 'function') {
-            memoryCache.progress.fromObject(migratedData.progress);
-          }
-        } catch (dbErr) {
-          if (db.instance && backupProgress && backupProgress.length > 0) {
-            await db.clear('progress').catch(() => {});
-            await bulkImportStore(db, 'progress', backupProgress).catch(() => {});
-          }
-          throw dbErr;
-        }
-      }
-      if (migratedData.wrongWords) {
-        let backupWrongWords = null;
-        try {
-          if (db.instance) {
-            backupWrongWords = await db.getAll('wrongWords').catch(() => null);
-            await db.clear('wrongWords');
-            await bulkImportStore(
-              db,
-              'wrongWords',
-              Object.entries(migratedData.wrongWords),
-              ([id, wrongData]) => {
-                const numId = parseInt(id, 10);
-                return { id: Number.isNaN(numId) ? id : numId, data: wrongData };
-              }
-            );
-          }
-          if (memoryCache.wrongWords && typeof memoryCache.wrongWords.fromObject === 'function') {
-            memoryCache.wrongWords.fromObject(migratedData.wrongWords);
-          }
-        } catch (dbErr) {
-          if (db.instance && backupWrongWords && backupWrongWords.length > 0) {
-            await db.clear('wrongWords').catch(() => {});
-            await bulkImportStore(db, 'wrongWords', backupWrongWords).catch(() => {});
-          }
-          throw dbErr;
-        }
-      }
-      if (migratedData.heatmap) {
-        let backupHeatmap = null;
-        try {
-          if (db.instance) {
-            backupHeatmap = await db.getAll('heatmap').catch(() => null);
-            await db.clear('heatmap');
-            await bulkImportStore(
-              db,
-              'heatmap',
-              Object.entries(migratedData.heatmap),
-              ([date, count]) => ({ date, count })
-            );
-          }
-          if (memoryCache.heatmap && typeof memoryCache.heatmap.fromObject === 'function') {
-            memoryCache.heatmap.fromObject(migratedData.heatmap);
-          }
-        } catch (dbErr) {
-          if (db.instance && backupHeatmap && backupHeatmap.length > 0) {
-            await db.clear('heatmap').catch(() => {});
-            await bulkImportStore(db, 'heatmap', backupHeatmap).catch(() => {});
-          }
-          throw dbErr;
-        }
-      }
-
-      if (migratedData.deletedIds) {
-        memoryCache.deletedIds = new Set(migratedData.deletedIds);
-      }
-
-      if (migratedData.fsrsWeights) {
-        setFSRSWeights(migratedData.fsrsWeights);
-      }
+      await applyMigratedBackup(migratedData);
 
       if (updateStats) updateStats();
       if (renderList) renderList();
@@ -348,6 +344,12 @@ const AUTO_TUNE = {
   cooldownMs: 7 * 24 * 60 * 60 * 1000, // 每 7 天最多自动训练一次
   cooldownKey: 'cet46_fsrs_autoTuneLastRun',
   disableKey: 'cet46_fsrs_autoTuneDisabled',
+};
+
+const TRAINING = {
+  timeoutMs: 5 * 60 * 1000, // 看门狗超时，防止训练死循环
+  trainSetRatio: 0.8, // 训练集占比，剩余作为验证集
+  minManualSamples: 50, // 手动训练所需的最少复习记录数
 };
 
 let autoTunedThisSession = false;
@@ -402,7 +404,7 @@ function isAutoFSRSTuningEnabled() {
 
 function trainFSRSWeights(auto = false) {
   const reviewLogs = collectReviewLogs();
-  const minSamples = auto ? AUTO_TUNE.minReviewLogs : 50;
+  const minSamples = auto ? AUTO_TUNE.minReviewLogs : TRAINING.minManualSamples;
   if (reviewLogs.length < minSamples) {
     if (auto) {
       logger.info(`[Auto-Tune] 有效复习记录不足（${reviewLogs.length}/${minSamples}），跳过自动微调`);
@@ -420,7 +422,7 @@ function trainFSRSWeights(auto = false) {
   setFitScoreText('启动 Worker 训练中...');
 
   shuffle(reviewLogs);
-  const splitIdx = Math.floor(reviewLogs.length * 0.8);
+  const splitIdx = Math.floor(reviewLogs.length * TRAINING.trainSetRatio);
   const trainSet = reviewLogs.slice(0, splitIdx);
   const testSet = reviewLogs.slice(splitIdx);
 
@@ -446,7 +448,7 @@ function trainFSRSWeights(auto = false) {
   };
   currentTrainingController = controller;
 
-  // 5分钟超时看门狗 - 防止训练死循环
+  // 超时看门狗 - 防止训练死循环
   currentTrainingController.timeoutId = setTimeout(
     () => {
       if (currentTrainingController && !currentTrainingController.cancelled) {
@@ -455,10 +457,19 @@ function trainFSRSWeights(auto = false) {
         UI.toast('训练超时，已强制终止。请检查数据量或稍后重试。', 'error');
       }
     },
-    5 * 60 * 1000
+    TRAINING.timeoutMs
   );
 
   const initialLogLoss = evaluateLogLoss(testSet, DEFAULT_FSRS_W);
+
+  // 结束训练：释放定时器与 worker，清空控制器
+  const finishTraining = () => {
+    if (currentTrainingController?.timeoutId) {
+      clearTimeout(currentTrainingController.timeoutId);
+    }
+    worker.terminate();
+    currentTrainingController = null;
+  };
 
   worker.onmessage = function (e) {
     // 如果已取消，忽略后续消息
@@ -471,11 +482,6 @@ function trainFSRSWeights(auto = false) {
     } else if (type === 'info') {
       logger.info(message);
     } else if (type === 'complete') {
-      // 清理超时定时器
-      if (currentTrainingController.timeoutId) {
-        clearTimeout(currentTrainingController.timeoutId);
-      }
-
       const newLogLoss = evaluateLogLoss(testSet, result.weights);
 
       if (newLogLoss < initialLogLoss) {
@@ -492,8 +498,7 @@ function trainFSRSWeights(auto = false) {
         if (!auto) UI.toast('模型过拟合预警，已回退至原权重', 'warning');
       }
 
-      worker.terminate();
-      currentTrainingController = null;
+      finishTraining();
     } else if (type === 'error') {
       logger.error('Worker 错误:', error);
       if (!auto) {
@@ -501,13 +506,7 @@ function trainFSRSWeights(auto = false) {
         setFitScoreText('训练失败');
       }
 
-      // 清理超时定时器
-      if (currentTrainingController && currentTrainingController.timeoutId) {
-        clearTimeout(currentTrainingController.timeoutId);
-      }
-
-      worker.terminate();
-      currentTrainingController = null;
+      finishTraining();
     }
   };
 
@@ -518,13 +517,7 @@ function trainFSRSWeights(auto = false) {
       setFitScoreText('训练失败');
     }
 
-    // 清理超时定时器
-    if (currentTrainingController && currentTrainingController.timeoutId) {
-      clearTimeout(currentTrainingController.timeoutId);
-    }
-
-    worker.terminate();
-    currentTrainingController = null;
+    finishTraining();
   };
 
   worker.postMessage({
@@ -556,9 +549,22 @@ export const SettingsFeature = {
   resetProgress: handleResetProgress,
   exportData,
   importData,
+  sanitizeImportObject,
+  applyMigratedBackup,
   trainFSRSWeights,
   cancelFSRSTraining,
   resetFSRSWeights,
   scheduleAutoFSRSTuning,
   isAutoFSRSTuningEnabled,
+};
+
+export {
+  init,
+  setWords,
+  exportData,
+  importData,
+  applyMigratedBackup,
+  trainFSRSWeights,
+  cancelFSRSTraining,
+  resetFSRSWeights,
 };

@@ -12,7 +12,7 @@ import {
   updateStats,
   registerStudyFeature as registerStatsStudy,
 } from '../utils/stats.js';
-import { registerStudyFeature as registerWrongWordsStudy } from '../utils/wrong-words.ts';
+import { registerStudyFeature as registerWrongWordsStudy } from '../features/wrong-words.ts';
 import { buildWordMaps } from '../utils/semantic-graph-ui.js';
 import { renderList } from '../utils/vocab-list.js';
 import logger from '../utils/logger.js';

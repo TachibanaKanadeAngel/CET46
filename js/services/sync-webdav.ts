@@ -1,4 +1,4 @@
-﻿import { Network } from '../network.js';
+import { Network } from '../network.js';
 import { Security } from './sync-crypto.js';
 import { CONFIG } from '../config.js';
 import {
@@ -12,9 +12,29 @@ import {
   generateBackupData,
   saveSyncBase,
 } from './sync-core.js';
-import { updateWebDAVStatus } from './sync-ui.js';
 import { mergeWithId } from '../utils.js';
 import logger from '../utils/logger.js';
+
+/** 同步状态提示自动清空延时（毫秒） */
+const STATUS_AUTO_CLEAR_MS = 5000;
+const WEBDAV_STATUS_ELEMENT_ID = 'webdav-status';
+let statusClearTimer: any = null;
+
+/**
+ * 更新 WebDAV 同步状态提示，延时后自动清空
+ */
+export function updateWebDAVStatus(message: string): void {
+  if (typeof document === 'undefined') return;
+  const statusEl = document.getElementById(WEBDAV_STATUS_ELEMENT_ID);
+  if (!statusEl) return;
+
+  statusEl.textContent = message;
+  clearTimeout(statusClearTimer);
+  statusClearTimer = setTimeout(() => {
+    statusEl.textContent = '';
+    statusClearTimer = null;
+  }, STATUS_AUTO_CLEAR_MS);
+}
 
 export let webdavConfig: any = null;
 let syncToPromise: Promise<any> | null = null;
@@ -45,13 +65,14 @@ export function clearWebDAVPlaintextCredentials(): void {
   }
 }
 
-async function ensureCredentialsForSync(): Promise<void> {
+async function ensureCredentialsForSync(providedMasterKey?: string): Promise<void> {
   if (webdavConfig && webdavConfig.username && webdavConfig.password) return;
   if (!webdavConfig || !webdavConfig.encryptedAuth) return;
-  const masterKeyInput = typeof document !== 'undefined'
-    ? (document.getElementById('webdav-master-key') as HTMLInputElement | null)
-    : null;
-  const masterKey = masterKeyInput ? masterKeyInput.value : '';
+  const masterKey = providedMasterKey || (
+    typeof document !== 'undefined'
+      ? (document.getElementById('webdav-master-key') as HTMLInputElement | null)?.value || ''
+      : ''
+  );
   if (masterKey) {
     try {
       await decryptWebDAVCredentials(masterKey);
@@ -167,7 +188,7 @@ async function ensureBackupExists(memoryCache: any, db: any): Promise<void> {
   }
 
   if (!backupExists) {
-    updateWebDAVStatus('首次同步，创建完整备份...', 'info');
+    updateWebDAVStatus('首次同步，创建完整备份...');
     const backupData = await generateBackupData(memoryCache, db);
     const backupBlob = JSON.stringify(backupData);
     const backupResponse = await Network.fetchWithRetry(
@@ -386,17 +407,17 @@ async function commitPatchToDB(
   return { status: 'success', changes: patchData.changes.length };
 }
 
-export function syncToWebDAV(db: any, memoryCache: any, deviceId: string): Promise<any> {
+export function syncToWebDAV(db: any, memoryCache: any, deviceId: string, masterKey?: string): Promise<any> {
   if (!webdavConfig) throw new Error('请先配置 WebDAV');
 
   if (syncToPromise) {
     logger.warn('🔄 上传同步已在进行中...');
-    updateWebDAVStatus('同步中，请稍候...', 'warning');
+    updateWebDAVStatus('同步中，请稍候...');
     return syncToPromise;
   }
 
   const runSync = syncMutexQueue.then(() =>
-    doSyncToWebDAV(db, memoryCache, deviceId)
+    doSyncToWebDAV(db, memoryCache, deviceId, masterKey)
   );
 
   syncMutexQueue = runSync.catch(() => {});
@@ -404,10 +425,10 @@ export function syncToWebDAV(db: any, memoryCache: any, deviceId: string): Promi
   return syncToPromise;
 }
 
-async function doSyncToWebDAV(db: any, memoryCache: any, deviceId: string): Promise<any> {
-  await ensureCredentialsForSync();
+async function doSyncToWebDAV(db: any, memoryCache: any, deviceId: string, masterKey?: string): Promise<any> {
+  await ensureCredentialsForSync(masterKey);
   try {
-    updateWebDAVStatus('开始同步...', 'info');
+    updateWebDAVStatus('开始同步...');
 
     await saveSnapshotToSession(db, memoryCache);
     await ensureBackupExists(memoryCache, db);
@@ -424,11 +445,11 @@ async function doSyncToWebDAV(db: any, memoryCache: any, deviceId: string): Prom
       patch.hasWrongWordsChanges, patch.hasHeatmapChanges, patchResponse
     );
 
-    updateWebDAVStatus('同步成功', 'success');
+    updateWebDAVStatus('同步成功');
     return result;
   } catch (error) {
     logger.error('同步失败:', error);
-    updateWebDAVStatus('同步失败', 'error');
+    updateWebDAVStatus('同步失败');
     throw error;
   } finally {
     clearWebDAVPlaintextCredentials();
@@ -599,25 +620,25 @@ function updateMemoryCacheFromMerged(memoryCache: any, merged: any): void {
   }
 }
 
-export function syncFromWebDAV(db: any, memoryCache: any, deviceId: string): Promise<any> {
+export function syncFromWebDAV(db: any, memoryCache: any, deviceId: string, masterKey?: string): Promise<any> {
   if (!webdavConfig) throw new Error('请先配置 WebDAV');
 
   if (syncFromPromise) {
     logger.warn('下载同步已在进行中...');
-    updateWebDAVStatus('同步中，请稍候...', 'warning');
+    updateWebDAVStatus('同步中，请稍候...');
     return syncFromPromise;
   }
 
   const runSync = syncMutexQueue.then(() =>
-    doSyncFromWebDAV(db, memoryCache, deviceId)
+    doSyncFromWebDAV(db, memoryCache, deviceId, masterKey)
   );
   syncMutexQueue = runSync.catch(() => {});
   syncFromPromise = runSync;
   return syncFromPromise;
 }
 
-async function doSyncFromWebDAV(db: any, memoryCache: any, deviceId: string): Promise<any> {
-  await ensureCredentialsForSync();
+async function doSyncFromWebDAV(db: any, memoryCache: any, deviceId: string, masterKey?: string): Promise<any> {
+  await ensureCredentialsForSync(masterKey);
   try {
     await saveLocalSnapshotForDownload(db, memoryCache);
 

@@ -25,15 +25,12 @@ const webdavMock = {
   syncToWebDAV: vi.fn(),
   syncFromWebDAV: vi.fn(),
   exportEncryptionKey: vi.fn(),
-};
-
-const syncUiMock = {
+  // sync-ui.ts 已合并进 sync-webdav.ts
   updateWebDAVStatus: vi.fn(),
 };
 
 vi.mock('../js/services/sync-core.js', () => coreMock);
 vi.mock('../js/services/sync-webdav.js', () => webdavMock);
-vi.mock('../js/services/sync-ui.js', () => syncUiMock);
 
 describe('js/sync.js exports', () => {
   beforeEach(() => {
@@ -67,8 +64,9 @@ describe('js/sync.js exports', () => {
   });
 
   it('re-exports sync UI updater', async () => {
+    // sync-ui.ts 已合并进 sync-webdav.ts
     const sync = await import('../js/sync.js');
-    expect(sync.updateWebDAVStatus).toBe(syncUiMock.updateWebDAVStatus);
+    expect(sync.updateWebDAVStatus).toBe(webdavMock.updateWebDAVStatus);
   });
 });
 

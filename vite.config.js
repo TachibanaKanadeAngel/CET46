@@ -51,6 +51,7 @@ export default defineConfig({
     },
     sourcemap: false,
     minify: 'esbuild',
+    cssMinify: 'esbuild',
     esbuild: { drop: ['debugger'] }
   } : {
     // Web 构建：多文件，代码分割，适合 Vercel/Pages
@@ -59,6 +60,7 @@ export default defineConfig({
     cssCodeSplit: true,
     sourcemap: false,
     minify: 'esbuild',
+    cssMinify: 'esbuild',
     esbuild: { drop: ['debugger'] },
     rollupOptions: {
       output: {

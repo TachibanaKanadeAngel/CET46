@@ -31,7 +31,7 @@ import {
 import {
   renderWrongList,
   startWrongWordsStudy,
-} from '../utils/wrong-words.ts';
+} from '../features/wrong-words.ts';
 import {
   renderList,
   showWordDetail,
@@ -43,10 +43,6 @@ import {
   showResourceStatusPanel,
   showNetworkStatusPanel,
 } from '../utils/network-status.ts';
-import {
-  repairVisibleUIText,
-  repairRuntimeCorruptedUIText,
-} from './ui-repair.js';
 
 import { StudyFeature } from '../features/study.js';
 import { ReviewFeature } from '../features/review.js';
@@ -128,9 +124,6 @@ export function switchTab(tab) {
     renderHeatmap();
     renderStorageInfo();
   }
-
-  repairVisibleUIText();
-  repairRuntimeCorruptedUIText();
 }
 
 export async function handleUndo() {
@@ -199,178 +192,180 @@ export function initFilterEventListeners() {
   }
 }
 
+// 系统与环境辅助动作
+const SYSTEM_ACTIONS = {
+  'toggle-theme': () => toggleTheme(),
+  'show-resource-status': () => showResourceStatusPanel(),
+  'show-network-status': () => showNetworkStatusPanel(),
+  'show-shortcut-guide': () => UI.showShortcutGuide(),
+  'undo-action': () => handleUndo(),
+};
+
+// 视图导航动作
+const NAV_ACTIONS = {
+  'nav-study': () => {
+    logger.info('[Nav] 切换到学习视图');
+    switchTab('study');
+  },
+  'nav-review': () => {
+    logger.info('[Nav] 切换到复习视图');
+    switchTab('review');
+  },
+  'nav-wrong': () => {
+    logger.info('[Nav] 切换到错题视图');
+    switchTab('wrong');
+  },
+  'nav-stats': () => {
+    logger.info('[Nav] 切换到统计视图');
+    switchTab('stats');
+  },
+  'nav-list': () => {
+    logger.info('[Nav] 切换到词库视图');
+    switchTab('list');
+  },
+};
+
+// 单词学习核心动作
+const STUDY_ACTIONS = {
+  'start-study': () => {
+    const levelSelect = document.getElementById('study-level');
+    const level = levelSelect ? levelSelect.value : 'all';
+    logger.info(`[Start Study] 级别：${level}`);
+
+    if (StudyFeature.startStudy) {
+      const result = StudyFeature.startStudy(
+        level,
+        CONFIG.CONSTANTS.DEFAULT_STUDY_LIMIT,
+        getData,
+        memoryCache,
+        db
+      );
+      if (result) logger.info('[Start Study] 学习已启动');
+      else logger.warn('[Start Study] 学习启动失败');
+    } else {
+      logger.error('[Start Study] StudyFeature 未定义！');
+      UI.toast('学习功能尚未就绪，请稍后重试', 'warning');
+    }
+  },
+  'resume-study': async () => {
+    logger.info('[Resume Study] 继续学习');
+    try {
+      const sessionResult = await StudyFeature.checkStudySession(memoryCache, db);
+      if (!sessionResult || !sessionResult.hasSession || !sessionResult.session) {
+        UI.toast && UI.toast('恢复学习会话失败，已开始新会话', 'warning');
+        const levelSelect = document.getElementById('study-level');
+        const level = levelSelect ? levelSelect.value : 'all';
+        StudyFeature.startStudy(level, CONFIG.CONSTANTS.DEFAULT_STUDY_LIMIT, getData, memoryCache, db);
+        return;
+      }
+
+      const session = sessionResult.session;
+      const levelSelect = document.getElementById('study-level');
+      if (levelSelect && session.level) {
+        levelSelect.value = session.level;
+      }
+
+      const resumed = await StudyFeature.resumeFromSession(session, memoryCache, db);
+      if (resumed) {
+        UI.toast && UI.toast('已恢复上次学习会话', 'success');
+      } else {
+        UI.toast && UI.toast('恢复学习会话失败，已开始新会话', 'warning');
+        StudyFeature.startStudy(session.level || 'all', CONFIG.CONSTANTS.DEFAULT_STUDY_LIMIT, getData, memoryCache, db);
+      }
+    } catch (e) {
+      logger.error('[resume-study] 恢复学习会话失败:', e);
+      UI.toast && UI.toast('恢复学习会话失败', 'error');
+    }
+  },
+  'mark-known': () => {
+    logger.info('[Mark Known] 标记为认识');
+    if (StudyFeature.markWord) StudyFeature.markWord(true);
+  },
+  'mark-unknown': () => {
+    logger.info('[Mark Unknown] 标记为不认识');
+    if (StudyFeature.markWord) StudyFeature.markWord(false);
+  },
+  'set-study-mode': e => {
+    const btn = e.target.closest('[data-action="set-study-mode"]');
+    if (btn && btn.dataset.mode) StudyFeature.setStudyMode(btn.dataset.mode);
+  },
+  'select-choice': e => {
+    const el = e.target.closest('[data-action="select-choice"]');
+    if (el && el.dataset.choiceId) StudyFeature.onSelectChoice(el.dataset.choiceId);
+  },
+  'next-choice-word': () => StudyFeature.nextChoiceWord(),
+  'toggle-cloze': () => StudyFeature.toggleClozeMode(),
+  'save-mnemonic': () => StudyFeature.handleSaveMnemonic(saveMnemonic),
+  'speak-study-word': e => {
+    e.stopPropagation();
+    StudyFeature.speakCurrentWord();
+  },
+};
+
+// 智能复习与错题动作
+const REVIEW_WRONG_ACTIONS = {
+  'flip-review': () => ReviewFeature.flipReviewCard(),
+  'review-known': () => ReviewFeature.markReviewWord(true, getReviewCallbacks()),
+  'review-unknown': () => ReviewFeature.markReviewWord(false, getReviewCallbacks()),
+  'speak-review-word': e => {
+    e.stopPropagation();
+    ReviewFeature.speakReviewWord();
+  },
+  'study-wrong': () => startWrongWordsStudy(),
+};
+
+// 拼写挑战动作
+const SPELLING_ACTIONS = {
+  'open-spelling': () => SpellingFeature.openSpellingChallenge(),
+  'close-spelling': () => {
+    removeVisualViewportListener();
+    SpellingFeature.closeSpellingModal();
+  },
+  'submit-spelling': () => SpellingFeature.checkSpelling(),
+  'spelling-mode-meaning': () => SpellingFeature.setSpellingMode('meaning'),
+  'spelling-mode-phonetic': () => SpellingFeature.setSpellingMode('phonetic'),
+  'spelling-mode-audio': () => SpellingFeature.setSpellingMode('audio'),
+  'spelling-hint': () => SpellingFeature.giveSpellingHint(),
+  'speak-spelling-word': () => SpellingFeature.replaySpellingAudio(),
+};
+
+// WebDAV 同步与设置动作
+const SYNC_SETTINGS_ACTIONS = {
+  'toggle-webdav': () => withWebDAV(w => w.toggleWebDAVConfig()),
+  'save-webdav': () => withWebDAV(w => w.handleSaveWebDAVConfig()),
+  'test-webdav': () => withWebDAV(w => w.handleTestWebDAVConnection()),
+  'sync-up': () => withWebDAV(w => w.handleSyncToWebDAV()),
+  'sync-down': () => withWebDAV(w => w.handleSyncFromWebDAV()),
+  'export-key': () => withWebDAV(w => w.handleExportEncryptionKey()),
+
+  'train-fsrs': () => withSettings(s => s.trainFSRSWeights()),
+  'reset-fsrs': () => withSettings(s => s.resetFSRSWeights()),
+  'reset-progress': () => withSettings(s => s.resetProgress()),
+  'export-data': () => withSettings(s => s.exportData()),
+  'import-data': () => document.getElementById('import-file')?.click(),
+  'load-vocab': () => document.getElementById('vocab-file')?.click(),
+  'show-detail': e => {
+    const target = e.target.closest('[data-action="show-detail"]');
+    if (target && target.dataset.id) {
+      showWordDetail(parseInt(target.dataset.id, 10));
+    }
+  },
+};
+
+const ACTION_HANDLERS = {
+  ...SYSTEM_ACTIONS,
+  ...NAV_ACTIONS,
+  ...STUDY_ACTIONS,
+  ...REVIEW_WRONG_ACTIONS,
+  ...SPELLING_ACTIONS,
+  ...SYNC_SETTINGS_ACTIONS,
+};
+
 export function setupGlobalEventDelegation() {
-  // 监听其他模块发出的标签切换请求（避免依赖 window 全局污染）
-  window.addEventListener('cet46:switch-tab', (e) => {
+  window.addEventListener('cet46:switch-tab', e => {
     const tab = e?.detail?.tab;
     if (tab) switchTab(tab);
   });
-
-  const ACTION_HANDLERS = {
-    'toggle-theme': () => toggleTheme(),
-    'show-resource-status': () => showResourceStatusPanel(),
-    'show-network-status': () => showNetworkStatusPanel(),
-    'show-shortcut-guide': () => UI.showShortcutGuide(),
-
-    'nav-study': () => {
-      logger.info('[Nav] 切换到学习视图');
-      switchTab('study');
-    },
-    'nav-review': () => {
-      logger.info('[Nav] 切换到复习视图');
-      switchTab('review');
-    },
-    'nav-wrong': () => {
-      logger.info('[Nav] 切换到错题视图');
-      switchTab('wrong');
-    },
-    'nav-stats': () => {
-      logger.info('[Nav] 切换到统计视图');
-      switchTab('stats');
-    },
-    'nav-list': () => {
-      logger.info('[Nav] 切换到词库视图');
-      switchTab('list');
-    },
-
-    'start-study': () => {
-      const levelSelect = document.getElementById('study-level');
-      const level = levelSelect ? levelSelect.value : 'all';
-      logger.info(`[Start Study] 级别：${level}`);
-
-      if (StudyFeature.startStudy) {
-        const result = StudyFeature.startStudy(
-          level,
-          CONFIG.CONSTANTS.DEFAULT_STUDY_LIMIT,
-          getData,
-          memoryCache,
-          db
-        );
-        if (result) {
-          logger.info('[Start Study] 学习已启动');
-        } else {
-          logger.warn('[Start Study] 学习启动失败');
-        }
-      } else {
-        logger.error('[Start Study] StudyFeature 未定义！');
-        UI.toast('学习功能尚未就绪，请稍后重试', 'warning');
-      }
-    },
-    'resume-study': async () => {
-      logger.info('[Resume Study] 继续学习');
-      try {
-        const sessionResult = await StudyFeature.checkStudySession(memoryCache, db);
-        if (!sessionResult || !sessionResult.hasSession || !sessionResult.session) {
-          UI.toast && UI.toast('恢复学习会话失败，已开始新会话', 'warning');
-          const levelSelect = document.getElementById('study-level');
-          const level = levelSelect ? levelSelect.value : 'all';
-          StudyFeature.startStudy(
-            level,
-            CONFIG.CONSTANTS.DEFAULT_STUDY_LIMIT,
-            getData,
-            memoryCache,
-            db
-          );
-          return;
-        }
-
-        const session = sessionResult.session;
-        const levelSelect = document.getElementById('study-level');
-        if (levelSelect && session.level) {
-          levelSelect.value = session.level;
-        }
-
-        const resumed = await StudyFeature.resumeFromSession(session, memoryCache, db);
-        if (resumed) {
-          UI.toast && UI.toast('已恢复上次学习会话', 'success');
-        } else {
-          UI.toast && UI.toast('恢复学习会话失败，已开始新会话', 'warning');
-          StudyFeature.startStudy(
-            session.level || 'all',
-            CONFIG.CONSTANTS.DEFAULT_STUDY_LIMIT,
-            getData,
-            memoryCache,
-            db
-          );
-        }
-      } catch (e) {
-        logger.error('[resume-study] 恢复学习会话失败:', e);
-        UI.toast && UI.toast('恢复学习会话失败', 'error');
-      }
-    },
-    'mark-known': () => {
-      logger.info('[Mark Known] 标记为认识');
-      if (StudyFeature.markWord) {
-        StudyFeature.markWord(true);
-      }
-    },
-    'mark-unknown': () => {
-      logger.info('[Mark Unknown] 标记为不认识');
-      if (StudyFeature.markWord) {
-        StudyFeature.markWord(false);
-      }
-    },
-    'set-study-mode': e => {
-      const btn = e.target.closest('[data-action="set-study-mode"]');
-      if (btn && btn.dataset.mode) StudyFeature.setStudyMode(btn.dataset.mode);
-    },
-    'select-choice': e => {
-      const el = e.target.closest('[data-action="select-choice"]');
-      if (el && el.dataset.choiceId) StudyFeature.onSelectChoice(el.dataset.choiceId);
-    },
-    'next-choice-word': () => StudyFeature.nextChoiceWord(),
-    'open-spelling': () => SpellingFeature.openSpellingChallenge(),
-    'toggle-cloze': () => StudyFeature.toggleClozeMode(),
-    'save-mnemonic': () => StudyFeature.handleSaveMnemonic(saveMnemonic),
-    'undo-action': () => handleUndo(),
-
-    'flip-review': () => ReviewFeature.flipReviewCard(),
-    'review-known': () => ReviewFeature.markReviewWord(true, getReviewCallbacks()),
-    'review-unknown': () => ReviewFeature.markReviewWord(false, getReviewCallbacks()),
-
-    'study-wrong': () => startWrongWordsStudy(),
-
-    'close-spelling': () => {
-      removeVisualViewportListener();
-      SpellingFeature.closeSpellingModal();
-    },
-    'submit-spelling': () => SpellingFeature.checkSpelling(),
-    'spelling-mode-meaning': () => SpellingFeature.setSpellingMode('meaning'),
-    'spelling-mode-phonetic': () => SpellingFeature.setSpellingMode('phonetic'),
-    'spelling-mode-audio': () => SpellingFeature.setSpellingMode('audio'),
-    'spelling-hint': () => SpellingFeature.giveSpellingHint(),
-
-    'speak-study-word': e => {
-      e.stopPropagation();
-      StudyFeature.speakCurrentWord();
-    },
-    'speak-review-word': e => {
-      e.stopPropagation();
-      ReviewFeature.speakReviewWord();
-    },
-    'speak-spelling-word': () => SpellingFeature.replaySpellingAudio(),
-
-    'toggle-webdav': () => withWebDAV(w => w.toggleWebDAVConfig()),
-    'save-webdav': () => withWebDAV(w => w.handleSaveWebDAVConfig()),
-    'test-webdav': () => withWebDAV(w => w.handleTestWebDAVConnection()),
-    'sync-up': () => withWebDAV(w => w.handleSyncToWebDAV()),
-    'sync-down': () => withWebDAV(w => w.handleSyncFromWebDAV()),
-    'export-key': () => withWebDAV(w => w.handleExportEncryptionKey()),
-
-    'train-fsrs': () => withSettings(s => s.trainFSRSWeights()),
-    'reset-fsrs': () => withSettings(s => s.resetFSRSWeights()),
-    'reset-progress': () => withSettings(s => s.resetProgress()),
-    'export-data': () => withSettings(s => s.exportData()),
-    'import-data': () => document.getElementById('import-file')?.click(),
-    'load-vocab': () => document.getElementById('vocab-file')?.click(),
-
-    'show-detail': e => {
-      const target = e.target.closest('[data-action="show-detail"]');
-      if (target && target.dataset.id) {
-        showWordDetail(parseInt(target.dataset.id, 10));
-      }
-    },
-  };
 
   document.addEventListener('click', e => {
     const actionElement = e.target.closest('[data-action]');

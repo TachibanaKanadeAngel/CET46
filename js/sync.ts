@@ -23,5 +23,5 @@ export {
   syncToWebDAV,
   syncFromWebDAV,
   exportEncryptionKey,
+  updateWebDAVStatus,
 } from './services/sync-webdav.js';
-export { updateWebDAVStatus } from './services/sync-ui.js';

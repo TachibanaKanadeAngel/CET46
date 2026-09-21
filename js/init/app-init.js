@@ -29,7 +29,6 @@ import {
   initSemanticGraphInBackground,
   cleanupSemanticGraph,
 } from '../utils/semantic-graph-ui.js';
-import { repairVisibleUIText } from './ui-repair.js';
 
 import { StudyFeature } from '../features/study.js';
 import { ReviewFeature } from '../features/review.js';
@@ -113,8 +112,6 @@ function bindStudyStartButton(session) {
       StudyFeature.resetStudyCard();
     }
   }
-
-  repairVisibleUIText();
 }
 
 async function requestPersistentStorage() {
@@ -232,7 +229,6 @@ export async function initApp() {
 
   const sessionResult = await StudyFeature.checkStudySession(memoryCache, db);
   bindStudyStartButton(sessionResult);
-  repairVisibleUIText();
 
   const runIdleTasks = () => {
     saveDailyProgressSnapshot();

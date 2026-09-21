@@ -27,11 +27,6 @@ import { getData } from './core.js';
 import { UI } from './ui.js';
 import { WORDS } from './data/vocab-store.js';
 import { initSemanticGraphUI } from './utils/semantic-graph-ui.js';
-import {
-  repairVisibleUIText,
-  repairRuntimeCorruptedUIText,
-  ensureUIRepairObserver,
-} from './init/ui-repair.js';
 import { registerServiceWorker } from './utils/sw-registration.js';
 import { setupKeyboardShortcuts } from './utils/keyboard-shortcuts.js';
 
@@ -91,9 +86,6 @@ async function initApplication() {
   initFilterEventListeners();
 
   setupGlobalEventDelegation();
-  repairVisibleUIText();
-  repairRuntimeCorruptedUIText();
-  ensureUIRepairObserver();
 
   try {
     await initApp();

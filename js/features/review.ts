@@ -10,39 +10,57 @@ import { CONFIG } from '../config.js';
 import type { WordData } from '../../ts/types/word';
 import type { StudyQueueItem, ReviewState } from '../../ts/types/features';
 
-let reviewQueue: StudyQueueItem[] = [];
-let reviewIndex = 0;
-let reviewFlipped = false;
-let currentReviewWord: StudyQueueItem | null = null;
-let reviewSubmitting = false;
-let getWordsFn: () => WordData[] = () => [];
+export interface ReviewSession {
+  queue: StudyQueueItem[];
+  index: number;
+  flipped: boolean;
+  currentWord: StudyQueueItem | null;
+  submitting: boolean;
+  getWordsFn: () => WordData[];
+}
+
+const createInitialReviewSession = (): ReviewSession => ({
+  queue: [],
+  index: 0,
+  flipped: false,
+  currentWord: null,
+  submitting: false,
+  getWordsFn: () => [],
+});
+
+export const reviewSession: ReviewSession = createInitialReviewSession();
+const session = reviewSession;
+
+export function resetReviewSession(): void {
+  Object.assign(session, createInitialReviewSession());
+}
 
 export function setWords(words: WordData[] | (() => WordData[])): void {
   if (typeof words === 'function') {
-    getWordsFn = words as () => WordData[];
+    session.getWordsFn = words as () => WordData[];
   } else {
-    getWordsFn = () => words;
+    session.getWordsFn = () => words;
   }
 }
 
 export function getWords(): WordData[] {
-  return getWordsFn();
+  return session.getWordsFn();
 }
 
 export function getReviewState(): ReviewState {
   return {
-    queue: reviewQueue,
-    index: reviewIndex,
-    flipped: reviewFlipped,
-    current: currentReviewWord,
+    queue: session.queue,
+    index: session.index,
+    flipped: session.flipped,
+    current: session.currentWord,
   };
 }
 
 export function updateReview(getWordDataFn?: (id: number | string) => any): void {
   const now = Date.now();
-  reviewQueue = [];
+  session.queue = [];
 
-  let WORDS = getWordsFn();
+  let WORDS = session.getWordsFn();
 
   if (!WORDS || WORDS.length === 0) {
     logger.warn('[Review] 检测到词库为空，正在尝试从全局重新抓取...');
@@ -55,20 +73,20 @@ export function updateReview(getWordDataFn?: (id: number | string) => any): void
   WORDS.forEach(w => {
     const wd = getWordDataInstance(w.id);
     if (wd && wd.status === 'review' && wd.nextReview > 0 && now >= wd.nextReview) {
-      reviewQueue.push({ ...w, wordData: wd });
+      session.queue.push({ ...w, wordData: wd });
       if (now > wd.nextReview + CONFIG.CONSTANTS.MS_PER_DAY) overdueCount++;
     }
   });
 
-  shuffle(reviewQueue);
-  reviewIndex = 0;
+  shuffle(session.queue);
+  session.index = 0;
 
   const reviewCountEl = byId('review-count');
   const reviewOverdueEl = byId('review-overdue');
-  if (reviewCountEl) reviewCountEl.textContent = String(reviewQueue.length);
+  if (reviewCountEl) reviewCountEl.textContent = String(session.queue.length);
   if (reviewOverdueEl) reviewOverdueEl.textContent = String(overdueCount);
 
-  if (reviewQueue.length > 0) {
+  if (session.queue.length > 0) {
     showReviewWord();
     const reviewButtons = byId('review-buttons');
     if (reviewButtons) reviewButtons.style.display = 'flex';
@@ -89,9 +107,9 @@ export function updateReview(getWordDataFn?: (id: number | string) => any): void
 }
 
 export function showReviewWord(): { needsUpdate: boolean } {
-  if (reviewIndex >= reviewQueue.length) {
-    currentReviewWord = null;
-    reviewSubmitting = false;
+  if (session.index >= session.queue.length) {
+    session.currentWord = null;
+    session.submitting = false;
     const elWord = byId('review-word');
     if (elWord) elWord.textContent = '暂无待复习单词';
     const elPron = byId('review-pron');
@@ -107,11 +125,11 @@ export function showReviewWord(): { needsUpdate: boolean } {
     return { needsUpdate: true };
   }
 
-  currentReviewWord = reviewQueue[reviewIndex];
-  const w = currentReviewWord;
+  session.currentWord = session.queue[session.index];
+  const w = session.currentWord;
 
   if (!w) {
-    logger.warn('[showReviewWord] 当前索引无单词数据:', reviewIndex);
+    logger.warn('[showReviewWord] 当前索引无单词数据:', session.index);
     return { needsUpdate: true };
   }
 
@@ -128,7 +146,7 @@ export function showReviewWord(): { needsUpdate: boolean } {
   if (reviewMeaning) reviewMeaning.textContent = w.meaning || (w as any).translation || '';
   if (reviewExample) reviewExample.textContent = w.example || '';
 
-  reviewFlipped = false;
+  session.flipped = false;
   if (reviewCard) {
     reviewCard.classList.remove('flipped');
     reviewCard.setAttribute('aria-pressed', 'false');
@@ -186,16 +204,16 @@ export function showReviewWord(): { needsUpdate: boolean } {
 }
 
 export function flipReviewCard(): void {
-  reviewFlipped = !reviewFlipped;
+  session.flipped = !session.flipped;
 
   const reviewCard = byId('review-card');
   if (reviewCard) {
-    reviewCard.classList.toggle('flipped', reviewFlipped);
-    reviewCard.setAttribute('aria-pressed', String(reviewFlipped));
+    reviewCard.classList.toggle('flipped', session.flipped);
+    reviewCard.setAttribute('aria-pressed', String(session.flipped));
   }
 
   if (typeof announceForAccessibility === 'function') {
-    announceForAccessibility(reviewFlipped ? '已显示释义和例句' : '已隐藏释义，显示单词');
+    announceForAccessibility(session.flipped ? '已显示释义和例句' : '已隐藏释义，显示单词');
   }
 }
 
@@ -216,8 +234,8 @@ export interface ReviewDeps {
 }
 
 export async function markReviewWord(known: boolean, deps: ReviewDeps): Promise<void> {
-  if (reviewSubmitting) return;
-  reviewSubmitting = true;
+  if (session.submitting) return;
+  session.submitting = true;
 
   try {
     const {
@@ -236,7 +254,7 @@ export async function markReviewWord(known: boolean, deps: ReviewDeps): Promise<
       fireConfetti,
     } = deps;
 
-    const w = currentReviewWord;
+    const w = session.currentWord;
     if (!w) {
       logger.warn('[markReviewWord] 当前无复习单词');
       return;
@@ -278,10 +296,10 @@ export async function markReviewWord(known: boolean, deps: ReviewDeps): Promise<
       const maxInterval = CONFIG.CONSTANTS.MAX_REVIEW_INTERVAL_MS;
       wd.nextReview = Date.now() + Math.min(adjustForSemanticInterference(w.id, fuzzedInterval), maxInterval);
 
-      const alreadyInQueue = reviewQueue.slice(reviewIndex + 1).some(item => item.id === w.id);
+      const alreadyInQueue = session.queue.slice(session.index + 1).some(item => item.id === w.id);
       if (!alreadyInQueue) {
         w.wordData = wd;
-        reviewQueue.push(w);
+        session.queue.push(w);
       }
       playTone('fail');
       addWrongWord(w.id, w);
@@ -290,7 +308,7 @@ export async function markReviewWord(known: boolean, deps: ReviewDeps): Promise<
     wd.lastStudy = Date.now();
     await setWordData(w.id, wd);
     w.wordData = wd;
-    reviewIndex++;
+    session.index++;
     recordHeatmap();
     saveDailyProgressSnapshot();
     updateStats();
@@ -301,35 +319,37 @@ export async function markReviewWord(known: boolean, deps: ReviewDeps): Promise<
       UI.toast('标记复习结果失败，请重试', 'error');
     }
   } finally {
-    reviewSubmitting = false;
+    session.submitting = false;
   }
 }
 
 export function speakReviewWord(): void {
-  if (currentReviewWord) speak(currentReviewWord.word);
+  if (session.currentWord) speak(session.currentWord.word);
 }
 
 export const ReviewFeature = {
   setWords,
   getWords,
   getReviewState,
+  resetReviewSession,
   updateReview,
   showReviewWord,
   flipReviewCard,
   markReviewWord,
   speakReviewWord,
   get reviewQueue() {
-    return reviewQueue;
+    return session.queue;
   },
   get reviewIndex() {
-    return reviewIndex;
+    return session.index;
   },
   get reviewFlipped() {
-    return reviewFlipped;
+    return session.flipped;
   },
   get currentReviewWord() {
-    return currentReviewWord;
+    return session.currentWord;
   },
+  session: reviewSession,
 };
 
 export default ReviewFeature;

@@ -304,11 +304,6 @@ export async function loadFromIndexedDB(): Promise<void> {
   }
 }
 
-export async function saveToIndexedDB(storeName: string, data: any): Promise<void> {
-  if (!db.instance) return;
-  await db.save(storeName, data);
-}
-
 export async function bulkSaveToIndexedDB(
   storeName: string,
   dataArray: any[],
@@ -588,10 +583,6 @@ export function getMemoryCache(): typeof memoryCache {
 
 export function getReactiveCache(): any {
   return ReactiveCache;
-}
-
-export function clearProxyCache(): void {
-  logger.info('[Store] WeakMap 无法手动清空，依赖自动垃圾回收');
 }
 
 export class MemoryStorage implements Storage {

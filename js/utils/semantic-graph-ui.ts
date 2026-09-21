@@ -4,30 +4,53 @@ import { db } from '../db.js';
 import { isFileProtocol } from './worker-pool.js';
 import { AppState } from '../state.js';
 
-let _wordIdMap = new Map<number | string, any>();
-let _wordMap = new Map<string, any>();
+const _wordIdMap = new Map<number | string, any>();
+const _wordMap = new Map<string, any>();
 
-let semanticGraphWorker: Worker | null = null;
-let semanticGraphCache: any = null;
-let semanticGraphBuilding = false;
-let semanticGraphCancelled = false;
-let semanticGraphTimerId: any = null;
-let pendingResolve: ((val: any) => void) | null = null;
-let pendingReject: ((err: any) => void) | null = null;
+interface SemanticTaskState {
+  worker: Worker | null;
+  cache: any;
+  building: boolean;
+  cancelled: boolean;
+  timerId: any;
+  pendingResolve: ((val: any) => void) | null;
+  pendingReject: ((err: any) => void) | null;
+}
 
-// External dependencies injected via init
-let _getWORDS: (() => any[]) | null = null;
-let _getData: (() => any) | null = null;
-let _CONSTANTS: any = null;
+const semanticTask: SemanticTaskState = {
+  worker: null,
+  cache: null,
+  building: false,
+  cancelled: false,
+  timerId: null,
+  pendingResolve: null,
+  pendingReject: null,
+};
+
+interface SemanticDeps {
+  getWORDS: (() => any[]) | null;
+  getData: (() => any) | null;
+  CONSTANTS: any;
+}
+
+const semanticDeps: SemanticDeps = {
+  getWORDS: null,
+  getData: null,
+  CONSTANTS: null,
+};
 
 function buildWordMaps(): void {
-  const WORDS = _getWORDS ? _getWORDS() : [];
-  _wordIdMap = new Map(WORDS.map(w => [w.id, w]));
-  _wordMap = new Map(WORDS.map(w => [w.word, w]));
+  const WORDS = semanticDeps.getWORDS ? semanticDeps.getWORDS() : [];
+  _wordIdMap.clear();
+  _wordMap.clear();
+  WORDS.forEach(w => {
+    _wordIdMap.set(w.id, w);
+    _wordMap.set(w.word, w);
+  });
 }
 
 function initSemanticGraphWorker(): void {
-  if (semanticGraphWorker) return;
+  if (semanticTask.worker) return;
 
   if (typeof Worker === 'undefined' || isFileProtocol()) {
     logger.info('[Semantic] Worker 不可用或在 file:// 协议下，跳过 Worker');
@@ -36,18 +59,18 @@ function initSemanticGraphWorker(): void {
 
   try {
     const workerUrl = new URL('../workers/semantic-worker.js', import.meta.url);
-    semanticGraphWorker = new Worker(workerUrl, {
+    semanticTask.worker = new Worker(workerUrl, {
       type: 'module',
     });
   } catch (e: any) {
     logger.info('[Semantic] 创建 Semantic Worker 失败，使用降级模式:', e?.message);
-    semanticGraphWorker = null;
+    semanticTask.worker = null;
   }
 }
 
 async function buildSemanticGraphAsync(words: any[], threshold: number = 2): Promise<any> {
-  if (semanticGraphCache) return semanticGraphCache;
-  if (semanticGraphBuilding) return null;
+  if (semanticTask.cache) return semanticTask.cache;
+  if (semanticTask.building) return null;
 
   let cachedBKTree: any = null;
   if (db.instance) {
@@ -58,40 +81,40 @@ async function buildSemanticGraphAsync(words: any[], threshold: number = 2): Pro
     }
   }
 
-  semanticGraphBuilding = true;
-  semanticGraphCancelled = false;
+  semanticTask.building = true;
+  semanticTask.cancelled = false;
   initSemanticGraphWorker();
 
-  if (semanticGraphCancelled) {
-    semanticGraphBuilding = false;
+  if (semanticTask.cancelled) {
+    semanticTask.building = false;
     return Promise.resolve(null);
   }
 
-  if (!semanticGraphWorker) {
+  if (!semanticTask.worker) {
     logger.info('[Semantic] Worker 不可用，跳过语义图谱构建');
-    semanticGraphBuilding = false;
+    semanticTask.building = false;
     return Promise.resolve(null);
   }
 
   return new Promise((resolve, reject) => {
-    pendingResolve = resolve;
-    pendingReject = reject;
+    semanticTask.pendingResolve = resolve;
+    semanticTask.pendingReject = reject;
 
-    const worker = semanticGraphWorker;
+    const worker = semanticTask.worker;
     if (!worker) {
-      semanticGraphBuilding = false;
-      pendingResolve = null;
-      pendingReject = null;
+      semanticTask.building = false;
+      semanticTask.pendingResolve = null;
+      semanticTask.pendingReject = null;
       resolve(null);
       return;
     }
 
-    if (semanticGraphCancelled) {
+    if (semanticTask.cancelled) {
       worker.terminate();
-      semanticGraphWorker = null;
-      semanticGraphBuilding = false;
-      pendingResolve = null;
-      pendingReject = null;
+      semanticTask.worker = null;
+      semanticTask.building = false;
+      semanticTask.pendingResolve = null;
+      semanticTask.pendingReject = null;
       resolve(null);
       return;
     }
@@ -111,12 +134,12 @@ async function buildSemanticGraphAsync(words: any[], threshold: number = 2): Pro
     }
 
     worker.onmessage = async (e: MessageEvent) => {
-      if (semanticGraphCancelled) {
-        semanticGraphWorker?.terminate();
-        semanticGraphWorker = null;
-        semanticGraphBuilding = false;
-        pendingResolve = null;
-        pendingReject = null;
+      if (semanticTask.cancelled) {
+        semanticTask.worker?.terminate();
+        semanticTask.worker = null;
+        semanticTask.building = false;
+        semanticTask.pendingResolve = null;
+        semanticTask.pendingReject = null;
         resolve(null);
         return;
       }
@@ -133,38 +156,38 @@ async function buildSemanticGraphAsync(words: any[], threshold: number = 2): Pro
       }
 
       if (e.data.type === 'complete' || e.data.type === 'ready') {
-        semanticGraphCache = e.data.results || null;
+        semanticTask.cache = e.data.results || null;
 
-        if (semanticGraphCache && db.instance) {
+        if (semanticTask.cache && db.instance) {
           try {
-            await db.save('session', { key: 'semantic_graph_cache', data: semanticGraphCache });
+            await db.save('session', { key: 'semantic_graph_cache', data: semanticTask.cache });
             logger.info('语义图谱已持久化到 IndexedDB');
           } catch (e) {
             logger.warn('语义图谱缓存保存失败:', e);
           }
         }
 
-        semanticGraphWorker?.terminate();
-        semanticGraphWorker = null;
-        semanticGraphBuilding = false;
-        pendingResolve = null;
-        pendingReject = null;
+        semanticTask.worker?.terminate();
+        semanticTask.worker = null;
+        semanticTask.building = false;
+        semanticTask.pendingResolve = null;
+        semanticTask.pendingReject = null;
 
-        resolve(semanticGraphCache);
+        resolve(semanticTask.cache);
       } else if (e.data.type === 'progress') {
         logger.info(`语义图谱构建进度：${Math.round(e.data.progress * 100)}%`);
       }
     };
 
     worker.onerror = (err: ErrorEvent) => {
-      if (semanticGraphWorker) {
-        semanticGraphWorker.terminate();
-        semanticGraphWorker = null;
+      if (semanticTask.worker) {
+        semanticTask.worker.terminate();
+        semanticTask.worker = null;
       }
-      semanticGraphBuilding = false;
-      const rejectFn = pendingReject;
-      pendingResolve = null;
-      pendingReject = null;
+      semanticTask.building = false;
+      const rejectFn = semanticTask.pendingReject;
+      semanticTask.pendingResolve = null;
+      semanticTask.pendingReject = null;
       if (rejectFn) {
         rejectFn(new Error('语义图谱 Worker 错误: ' + (err.message || 'unknown')));
       }
@@ -186,51 +209,51 @@ function findConfusingWords(word: string): string[] {
     confusing.push(...semanticCluster);
   }
 
-  if (semanticGraphCache && semanticGraphCache[word]) {
-    confusing.push(...semanticGraphCache[word].map((item: any) => item.word));
+  if (semanticTask.cache && semanticTask.cache[word]) {
+    confusing.push(...semanticTask.cache[word].map((item: any) => item.word));
   }
 
   return [...new Set(confusing)];
 }
 
 async function initSemanticGraphInBackground(): Promise<void> {
-  if (semanticGraphCache || semanticGraphBuilding) return;
-  const WORDS = _getWORDS ? _getWORDS() : [];
-  semanticGraphTimerId = setTimeout(() => {
-    if (!semanticGraphCancelled) {
+  if (semanticTask.cache || semanticTask.building) return;
+  const WORDS = semanticDeps.getWORDS ? semanticDeps.getWORDS() : [];
+  semanticTask.timerId = setTimeout(() => {
+    if (!semanticTask.cancelled) {
       buildSemanticGraphAsync(WORDS, 2);
     }
-  }, _CONSTANTS?.SEMANTIC_GRAPH_DEFER_MS || 5000);
+  }, semanticDeps.CONSTANTS?.SEMANTIC_GRAPH_DEFER_MS || 5000);
 }
 
 function cleanupSemanticGraph(): void {
-  semanticGraphCancelled = true;
-  if (semanticGraphTimerId) {
-    clearTimeout(semanticGraphTimerId);
-    semanticGraphTimerId = null;
+  semanticTask.cancelled = true;
+  if (semanticTask.timerId) {
+    clearTimeout(semanticTask.timerId);
+    semanticTask.timerId = null;
   }
-  if (semanticGraphWorker) {
-    semanticGraphWorker.terminate();
-    semanticGraphWorker = null;
+  if (semanticTask.worker) {
+    semanticTask.worker.terminate();
+    semanticTask.worker = null;
   }
-  semanticGraphBuilding = false;
-  if (pendingResolve) {
-    pendingResolve(null);
-    pendingResolve = null;
-    pendingReject = null;
+  semanticTask.building = false;
+  if (semanticTask.pendingResolve) {
+    semanticTask.pendingResolve(null);
+    semanticTask.pendingResolve = null;
+    semanticTask.pendingReject = null;
   }
-  semanticGraphCache = null;
+  semanticTask.cache = null;
 }
 
 function adjustForSemanticInterference(wordId: any, baseInterval: number): number {
-  const word = _wordIdMap.get(wordId) || (_getWORDS ? _getWORDS().find(w => w.id === wordId) : null);
+  const word = _wordIdMap.get(wordId) || (semanticDeps.getWORDS ? semanticDeps.getWORDS().find(w => w.id === wordId) : null);
   if (!word) return baseInterval;
 
   const confusingWords = findConfusingWords(word.word);
   if (confusingWords.length === 0) return baseInterval;
 
   let interferenceCount = 0;
-  const data = _getData ? _getData() : {};
+  const data = semanticDeps.getData ? semanticDeps.getData() : {};
 
   for (const confusingWord of confusingWords) {
     const confusingEntry = _wordMap.get(confusingWord);
@@ -256,9 +279,9 @@ function adjustForSemanticInterference(wordId: any, baseInterval: number): numbe
 }
 
 function initSemanticGraphUI({ getWORDS, getData, CONSTANTS }: { getWORDS: () => any[]; getData: () => any; CONSTANTS: any }): void {
-  _getWORDS = getWORDS;
-  _getData = getData;
-  _CONSTANTS = CONSTANTS;
+  semanticDeps.getWORDS = getWORDS;
+  semanticDeps.getData = getData;
+  semanticDeps.CONSTANTS = CONSTANTS;
   buildWordMaps();
 }
 

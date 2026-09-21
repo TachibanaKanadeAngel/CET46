@@ -6,70 +6,157 @@ import logger from '../utils/logger.js';
 import type { WordProgress } from '../../ts/types/word';
 import type { StudyQueueItem, SpellingMode, SpellingInitConfig } from '../../ts/types/features';
 
-let spellingMode: SpellingMode = 'meaning';
-let spellingChecked = false;
-let spellingSubmitting = false;
-let currentHintLevel = 0;
-let lastSpellingQuality = 4;
-let cleanupFocusTrap: (() => void) | null = null;
+export interface SpellingSessionState {
+  mode: SpellingMode;
+  checked: boolean;
+  submitting: boolean;
+  hintLevel: number;
+  lastQuality: number;
+  cleanupFocusTrap: (() => void) | null;
+  viewportResizeHandler: (() => void) | null;
+}
 
-let getStudyQueueFn: (() => StudyQueueItem[]) | null = null;
-let getStudyIndexFn: (() => number) | null = null;
-let getWordData: ((id: number | string) => WordProgress | any) | null = null;
-let setWordData: ((id: number | string, data: WordProgress | any) => Promise<any>) | null = null;
-let addWrongWord: ((id: number | string, word: any) => void) | null = null;
-let removeWrongWord: ((id: number | string) => void) | null = null;
-let saveStudySession: (() => Promise<any>) | null = null;
-let updateStats: (() => void) | null = null;
-let updateProgress: (() => void) | null = null;
-let showStudyWord: (() => void) | null = null;
-let removeStudyWordFn: ((id: number | string) => void) | null = null;
+export const SpellingSession: SpellingSessionState = {
+  mode: 'meaning',
+  checked: false,
+  submitting: false,
+  hintLevel: 0,
+  lastQuality: 4,
+  cleanupFocusTrap: null,
+  viewportResizeHandler: null,
+};
+
+export function resetSpellingSession(): void {
+  SpellingSession.checked = false;
+  SpellingSession.submitting = false;
+  SpellingSession.hintLevel = 0;
+  SpellingSession.lastQuality = 4;
+  if (SpellingSession.cleanupFocusTrap) {
+    SpellingSession.cleanupFocusTrap();
+    SpellingSession.cleanupFocusTrap = null;
+  }
+}
+
+interface SpellingDepsContainer {
+  getStudyQueue: () => StudyQueueItem[];
+  getStudyIndex: () => number;
+  getWordData: ((id: number | string) => WordProgress | any) | null;
+  setWordData: ((id: number | string, data: WordProgress | any) => Promise<any>) | null;
+  addWrongWord: ((id: number | string, word: any) => void) | null;
+  removeWrongWord: ((id: number | string) => void) | null;
+  saveStudySession: (() => Promise<any>) | null;
+  updateStats: (() => void) | null;
+  updateProgress: (() => void) | null;
+  showStudyWord: (() => void) | null;
+  removeStudyWord: ((id: number | string) => void) | null;
+}
+
+const spellingDeps: SpellingDepsContainer = {
+  getStudyQueue: () => [],
+  getStudyIndex: () => 0,
+  getWordData: null,
+  setWordData: null,
+  addWrongWord: null,
+  removeWrongWord: null,
+  saveStudySession: null,
+  updateStats: null,
+  updateProgress: null,
+  showStudyWord: null,
+  removeStudyWord: null,
+};
+
+export interface SpellingEvaluation {
+  distance: number;
+  quality: number;
+  fsrsGrade: number;
+  isExact: boolean;
+  isClose: boolean;
+}
+
+export function evaluateSpellingAttempt(
+  input: string,
+  target: string,
+  baseQuality: number = 4
+): SpellingEvaluation {
+  const normalizedInput = (input || '').trim().toLowerCase();
+  const normalizedTarget = (target || '').trim().toLowerCase();
+  const distance = calculateLevenshtein(normalizedInput, normalizedTarget);
+
+  if (distance === 0) {
+    return {
+      distance: 0,
+      quality: baseQuality,
+      fsrsGrade: Math.min(baseQuality, 4),
+      isExact: true,
+      isClose: false,
+    };
+  }
+
+  if (distance === 1 && normalizedTarget.length >= 4) {
+    const quality = Math.max(2, baseQuality - 2);
+    return {
+      distance,
+      quality,
+      fsrsGrade: Math.min(quality, 4),
+      isExact: false,
+      isClose: true,
+    };
+  }
+
+  return {
+    distance,
+    quality: 1,
+    fsrsGrade: 1,
+    isExact: false,
+    isClose: false,
+  };
+}
 
 export function getStudyQueue(): StudyQueueItem[] {
-  return getStudyQueueFn ? getStudyQueueFn() : [];
+  return spellingDeps.getStudyQueue();
 }
 
 export function getStudyIndex(): number {
-  return getStudyIndexFn ? getStudyIndexFn() : 0;
+  return spellingDeps.getStudyIndex();
 }
 
 export function init(config: SpellingInitConfig | any): void {
-  getStudyQueueFn =
+  spellingDeps.getStudyQueue =
     typeof config.getStudyQueue === 'function'
       ? config.getStudyQueue
       : () => config.studyQueue || [];
 
-  getStudyIndexFn =
+  spellingDeps.getStudyIndex =
     typeof config.getStudyIndex === 'function'
       ? config.getStudyIndex
       : () => Number(config.studyIndex || 0);
 
-  getWordData = config.getWordData;
-  setWordData = config.setWordData;
-  addWrongWord = config.addWrongWord;
-  removeWrongWord = config.removeWrongWord;
-  saveStudySession = config.saveStudySession;
-  updateStats = config.updateStats;
-  updateProgress = config.updateProgress;
-  showStudyWord = config.showStudyWord;
-  removeStudyWordFn = config.removeStudyWord || null;
+  spellingDeps.getWordData = config.getWordData || null;
+  spellingDeps.setWordData = config.setWordData || null;
+  spellingDeps.addWrongWord = config.addWrongWord || null;
+  spellingDeps.removeWrongWord = config.removeWrongWord || null;
+  spellingDeps.saveStudySession = config.saveStudySession || null;
+  spellingDeps.updateStats = config.updateStats || null;
+  spellingDeps.updateProgress = config.updateProgress || null;
+  spellingDeps.showStudyWord = config.showStudyWord || null;
+  spellingDeps.removeStudyWord = config.removeStudyWord || null;
 }
 
 export function setStudyQueue(queue?: StudyQueueItem[], index?: number): void {
   if (Array.isArray(queue)) {
-    getStudyQueueFn = () => queue;
+    spellingDeps.getStudyQueue = () => queue;
   }
   if (typeof index === 'number') {
-    getStudyIndexFn = () => index;
+    spellingDeps.getStudyIndex = () => index;
   }
 }
 
 export function getSpellingMode(): SpellingMode {
-  return spellingMode;
+  return SpellingSession.mode;
 }
 
 export function setSpellingMode(mode: SpellingMode): void {
-  spellingMode = mode;
+  SpellingSession.mode = mode;
   qsa('.mode-btn').forEach(btn => btn.classList.remove('active'));
   const modeBtn = byId(`mode-${mode}`);
   if (modeBtn) modeBtn.classList.add('active');
@@ -114,17 +201,17 @@ export function giveSpellingHint(): void {
   const w = currentQueue[currentIndex];
   if (!w) return;
 
-  currentHintLevel++;
+  SpellingSession.hintLevel++;
   const word = w.word;
   const hintLevelDisplay = byId('hint-level-display');
 
   let hint = '';
-  if (currentHintLevel === 1) {
+  if (SpellingSession.hintLevel === 1) {
     hint = `首字母: ${word[0].toUpperCase()}`;
-  } else if (currentHintLevel === 2) {
+  } else if (SpellingSession.hintLevel === 2) {
     hint = `前两字母: ${word.substring(0, 2)}`;
-  } else if (currentHintLevel >= 3) {
-    const showCount = Math.min(currentHintLevel, Math.floor(word.length / 2) + 1);
+  } else if (SpellingSession.hintLevel >= 3) {
+    const showCount = Math.min(SpellingSession.hintLevel, Math.floor(word.length / 2) + 1);
     hint = `提示: ${word.substring(0, showCount)}${'_'.repeat(word.length - showCount)}`;
   }
 
@@ -132,22 +219,20 @@ export function giveSpellingHint(): void {
   if (spellingInputEl) spellingInputEl.placeholder = hint;
   if (!hintLevelDisplay) return;
   hintLevelDisplay.style.display = 'inline';
-  hintLevelDisplay.textContent = `提示等级: ${currentHintLevel}`;
+  hintLevelDisplay.textContent = `提示等级: ${SpellingSession.hintLevel}`;
 
-  lastSpellingQuality = Math.max(2, 5 - currentHintLevel);
+  SpellingSession.lastQuality = Math.max(2, 5 - SpellingSession.hintLevel);
 
   const hintBtn = byId('hint-btn');
-  if (hintBtn) hintBtn.textContent = `再提示 (${lastSpellingQuality} 分)`;
+  if (hintBtn) hintBtn.textContent = `再提示 (${SpellingSession.lastQuality} 分)`;
 }
-
-let viewportResizeHandler: (() => void) | null = null;
 
 function setupViewportAdaptation(modalEl: HTMLElement | null): void {
   if (typeof window === 'undefined' || !window.visualViewport || !modalEl) return;
   const contentEl = typeof modalEl.querySelector === 'function' ? modalEl.querySelector<HTMLElement>('.modal-content') : null;
   if (!contentEl) return;
 
-  viewportResizeHandler = () => {
+  SpellingSession.viewportResizeHandler = () => {
     if (!modalEl.classList || !modalEl.classList.contains('active')) return;
     const vpHeight = window.visualViewport?.height ?? window.innerHeight;
     const winHeight = window.innerHeight;
@@ -163,15 +248,15 @@ function setupViewportAdaptation(modalEl: HTMLElement | null): void {
     }
   };
 
-  window.visualViewport.addEventListener('resize', viewportResizeHandler);
-  window.visualViewport.addEventListener('scroll', viewportResizeHandler);
+  window.visualViewport.addEventListener('resize', SpellingSession.viewportResizeHandler);
+  window.visualViewport.addEventListener('scroll', SpellingSession.viewportResizeHandler);
 }
 
 function removeViewportAdaptation(modalEl: HTMLElement | null): void {
-  if (viewportResizeHandler && typeof window !== 'undefined' && window.visualViewport) {
-    window.visualViewport.removeEventListener('resize', viewportResizeHandler);
-    window.visualViewport.removeEventListener('scroll', viewportResizeHandler);
-    viewportResizeHandler = null;
+  if (SpellingSession.viewportResizeHandler && typeof window !== 'undefined' && window.visualViewport) {
+    window.visualViewport.removeEventListener('resize', SpellingSession.viewportResizeHandler);
+    window.visualViewport.removeEventListener('scroll', SpellingSession.viewportResizeHandler);
+    SpellingSession.viewportResizeHandler = null;
   }
   if (modalEl && typeof modalEl.querySelector === 'function') {
     const contentEl = modalEl.querySelector<HTMLElement>('.modal-content');
@@ -188,13 +273,13 @@ export function openSpellingChallenge(): void {
     return;
   }
 
-  currentHintLevel = 0;
-  lastSpellingQuality = 5;
+  SpellingSession.hintLevel = 0;
+  SpellingSession.lastQuality = 5;
 
   const spellingModal = byId('spelling-modal');
   if (spellingModal) {
     spellingModal.classList.add('active');
-    cleanupFocusTrap = createFocusTrap(spellingModal);
+    SpellingSession.cleanupFocusTrap = createFocusTrap(spellingModal);
     setupViewportAdaptation(spellingModal);
   }
   const spellingInput = byId('spelling-input') as HTMLInputElement | null;
@@ -226,11 +311,11 @@ export function openSpellingChallenge(): void {
   if (hintDisplay) hintDisplay.style.display = 'none';
   const hintBtn = byId('hint-btn');
   if (hintBtn) hintBtn.textContent = '提示';
-  spellingChecked = false;
+  SpellingSession.checked = false;
   const spellingSubmit = byId('spelling-submit');
   if (spellingSubmit) spellingSubmit.textContent = '提交';
 
-  setSpellingMode(spellingMode);
+  setSpellingMode(SpellingSession.mode);
 
   setTimeout(() => {
     const el = byId('spelling-input') as HTMLInputElement | null;
@@ -243,22 +328,19 @@ export function closeSpellingModal(): void {
   if (spellingModal) {
     spellingModal.classList.remove('active');
     removeViewportAdaptation(spellingModal);
-    if (cleanupFocusTrap) {
-      cleanupFocusTrap();
-      cleanupFocusTrap = null;
-    }
+    resetSpellingSession();
   }
 }
 
 export async function checkSpelling(): Promise<void> {
-  if (spellingSubmitting) return;
-  if (spellingChecked) {
+  if (SpellingSession.submitting) return;
+  if (SpellingSession.checked) {
     closeSpellingModal();
-    if (showStudyWord) showStudyWord();
+    if (spellingDeps.showStudyWord) spellingDeps.showStudyWord();
     return;
   }
 
-  spellingSubmitting = true;
+  SpellingSession.submitting = true;
 
   try {
     const currentQueue = getStudyQueue();
@@ -278,30 +360,27 @@ export async function checkSpelling(): Promise<void> {
       return;
     }
 
-    const input = inputEl.value.trim().toLowerCase();
-    const correct = w.word.toLowerCase();
+    const input = inputEl.value;
+    const evaluation = evaluateSpellingAttempt(input, w.word, SpellingSession.lastQuality);
 
-    const distance = calculateLevenshtein(input, correct);
-
-    let quality: number;
-    if (distance === 0) {
-      quality = lastSpellingQuality;
+    if (evaluation.isExact) {
       inputEl.className = 'spelling-input correct';
       resultEl.className = 'spelling-result show success';
       resultTextEl.textContent =
-        currentHintLevel > 0 ? `拼写正确（使用了 ${currentHintLevel} 次提示）` : '拼写完全正确';
+        SpellingSession.hintLevel > 0
+          ? `拼写正确（使用了 ${SpellingSession.hintLevel} 次提示）`
+          : '拼写完全正确';
       answerEl.textContent = `答案: ${w.word}`;
 
       try {
-        await processSpellingResult(w, quality);
-        spellingChecked = true;
+        await processSpellingResult(w, evaluation.quality);
+        SpellingSession.checked = true;
       } catch (e) {
         logger.error('[checkSpelling] 保存结果失败:', e);
       }
       fireConfetti();
       playTone('success');
-    } else if (distance === 1 && correct.length >= 4) {
-      quality = Math.max(2, lastSpellingQuality - 2);
+    } else if (evaluation.isClose) {
       inputEl.className = 'spelling-input warning';
       inputEl.style.borderColor = 'var(--warning)';
       resultEl.className = 'spelling-result show warning';
@@ -312,38 +391,37 @@ export async function checkSpelling(): Promise<void> {
       answerEl.textContent = `正确答案: ${w.word}`;
 
       try {
-        await processSpellingResult(w, quality);
-        spellingChecked = true;
+        await processSpellingResult(w, evaluation.quality);
+        SpellingSession.checked = true;
       } catch (e) {
         logger.error('[checkSpelling] 保存结果失败:', e);
       }
       playTone('success');
     } else {
-      quality = 1;
       inputEl.className = 'spelling-input wrong';
       resultEl.className = 'spelling-result show error';
       resultTextEl.textContent = '拼写错误，和正确答案差距较大';
       answerEl.textContent = `正确答案: ${w.word}`;
 
       try {
-        await processSpellingResult(w, quality);
-        spellingChecked = true;
+        await processSpellingResult(w, evaluation.quality);
+        SpellingSession.checked = true;
       } catch (e) {
         logger.error('[checkSpelling] 保存结果失败:', e);
       }
       playTone('fail');
-      if (addWrongWord) addWrongWord(w.id, w);
+      if (spellingDeps.addWrongWord) spellingDeps.addWrongWord(w.id, w);
     }
 
     const spellingSubmit = byId('spelling-submit');
     if (spellingSubmit) spellingSubmit.textContent = '继续';
   } finally {
-    spellingSubmitting = false;
+    SpellingSession.submitting = false;
   }
 }
 
 async function processSpellingResult(w: StudyQueueItem, quality: number): Promise<void> {
-  const raw = getWordData ? getWordData(w.id) : null;
+  const raw = spellingDeps.getWordData ? spellingDeps.getWordData(w.id) : null;
   const wd: WordProgress = raw
     ? { ...raw }
     : { status: 'new', level: 0, reviewCount: 0, ef: 2.5, stability: 1.0, difficulty: 5.0, lastStudy: 0, nextReview: 0 };
@@ -367,10 +445,10 @@ async function processSpellingResult(w: StudyQueueItem, quality: number): Promis
   wd.lastStudy = Date.now();
   wd.reviewCount = (wd.reviewCount || 0) + 1;
 
-  if (setWordData) await setWordData(w.id, wd);
+  if (spellingDeps.setWordData) await spellingDeps.setWordData(w.id, wd);
   if (quality >= 3) {
-    if (removeStudyWordFn) {
-      removeStudyWordFn(w.id);
+    if (spellingDeps.removeStudyWord) {
+      spellingDeps.removeStudyWord(w.id);
     } else {
       const currentQueue = getStudyQueue();
       const currentIndex = getStudyIndex();
@@ -382,16 +460,16 @@ async function processSpellingResult(w: StudyQueueItem, quality: number): Promis
         currentQueue.splice(currentIndex, 1);
       }
     }
-    if (removeWrongWord) removeWrongWord(w.id);
+    if (spellingDeps.removeWrongWord) spellingDeps.removeWrongWord(w.id);
   }
 
   try {
-    if (saveStudySession) await saveStudySession();
+    if (spellingDeps.saveStudySession) await spellingDeps.saveStudySession();
   } catch (e) {
     logger.warn('[spelling] saveStudySession failed:', e);
   }
-  if (updateStats) updateStats();
-  if (updateProgress) updateProgress();
+  if (spellingDeps.updateStats) spellingDeps.updateStats();
+  if (spellingDeps.updateProgress) spellingDeps.updateProgress();
 }
 
 export function handleSpellingKeydown(e: KeyboardEvent): void {
@@ -415,6 +493,9 @@ export const SpellingFeature = {
   closeSpellingModal,
   checkSpelling,
   handleSpellingKeydown,
+  resetSpellingSession,
+  evaluateSpellingAttempt,
+  session: SpellingSession,
 };
 
 export default SpellingFeature;

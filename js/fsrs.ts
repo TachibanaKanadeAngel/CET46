@@ -7,27 +7,23 @@ export const MIN_EF: number = CONFIG.FSRS.MIN_EF;
 export const MAX_EF: number = CONFIG.FSRS.MAX_EF;
 export const TARGET_RETENTION: number = CONFIG.FSRS.TARGET_RETENTION;
 
-export const DEFAULT_FSRS_W: FSRSWeights = [...CONFIG.FSRS.DEFAULT_W] as FSRSWeights;
+export const DEFAULT_FSRS_W: FSRSWeights = Object.freeze([...CONFIG.FSRS.DEFAULT_W]) as unknown as FSRSWeights;
 let internal_FSRS_W: FSRSWeights = [...CONFIG.FSRS.DEFAULT_W] as FSRSWeights;
 
-// FSRS_W 使用只读代理，防止外部直接修改绕过验证
-const FSRS_W: FSRSWeights = new Proxy({} as any, {
-  get(_target: unknown, prop: string | symbol) {
-    if (prop === 'length') return internal_FSRS_W.length;
-    if (typeof prop === 'string' && !isNaN(Number(prop))) {
-      return internal_FSRS_W[Number(prop)];
-    }
-    if (prop === Symbol.iterator) return internal_FSRS_W[Symbol.iterator].bind(internal_FSRS_W);
-    if (typeof (internal_FSRS_W as any)[prop] === 'function') {
-      return (internal_FSRS_W as any)[prop].bind(internal_FSRS_W);
-    }
-    return (internal_FSRS_W as any)[prop];
-  },
-  set() {
-    logger.warn('[FSRS_W] 禁止直接修改权重，请使用 setFSRSWeights()');
-    return false;
-  },
-});
+/**
+ * FSRS 四级评分对象（Again / Hard / Good / Easy）
+ */
+const FSRSGrade = Object.freeze({
+  Again: 1,
+  Hard: 2,
+  Good: 3,
+  Easy: 4,
+} as const);
+
+export type FSRSGrade = (typeof FSRSGrade)[keyof typeof FSRSGrade];
+
+// 导出只读权重数组引用，杜绝复杂 Proxy 反射
+let FSRS_W: readonly number[] = Object.freeze([...internal_FSRS_W]);
 
 /**
  * 获取 FSRS 权重数组的副本（防止外部直接修改内部状态）
@@ -57,6 +53,7 @@ function loadFSRSWeights(): void {
         parsed.every((w: unknown) => typeof w === 'number' && Number.isFinite(w))
       ) {
         internal_FSRS_W = parsed as FSRSWeights;
+        FSRS_W = Object.freeze([...internal_FSRS_W]);
         logger.info('🔧 已加载用户自定义 FSRS 权重');
         return;
       } else {
@@ -67,6 +64,7 @@ function loadFSRSWeights(): void {
     }
   }
   internal_FSRS_W = [...DEFAULT_FSRS_W] as FSRSWeights;
+  FSRS_W = Object.freeze([...internal_FSRS_W]);
 }
 
 /**
@@ -89,6 +87,7 @@ function setFSRSWeights(weights: number[]): boolean {
     return false;
   }
   internal_FSRS_W = [...weights] as FSRSWeights;
+  FSRS_W = Object.freeze([...internal_FSRS_W]);
   saveFSRSWeights();
   return true;
 }
@@ -449,6 +448,7 @@ function calculateGradientsForLogLoss(logs: any[], weights: number[]): number[] 
 loadFSRSWeights();
 
 export {
+  FSRSGrade,
   FSRS_W,
   getFSRSWeights,
   getFSRSWeight,

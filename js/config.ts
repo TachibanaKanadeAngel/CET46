@@ -60,6 +60,8 @@ export const CONFIG = {
     ENGINE_STATE: 'cet46_engine_state',
     MILESTONES: 'cet46_milestones',
     SEMANTIC_BKTREE: 'cet46_semantic_bktree',
+    STUDY_SESSION: 'cet46_study_session',
+    DEVICE_ID: 'cet46_device_id',
   },
 
   RETENTION_THRESHOLDS: {

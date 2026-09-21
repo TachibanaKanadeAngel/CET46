@@ -14,15 +14,3 @@ export function findWordById(id) {
   const numId = typeof id === 'number' ? id : Number(id);
   return _wordMap.get(numId) || null;
 }
-
-export function findWordByText(text) {
-  return WORDS.find(w => w.word === text);
-}
-
-export function getUniqueLevels() {
-  const levels = new Set();
-  WORDS.forEach(w => {
-    if (w.level) levels.add(w.level);
-  });
-  return [...levels];
-}
