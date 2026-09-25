@@ -46,16 +46,18 @@ const WORDS_N = [
     "word": "nightmare",
     "phonetic": "/ˈnaɪt.mɛə/",
     "meaning": "n 噩梦",
-    "example": "",
-    "level": "CET4"
+    "example": "at night (在夜里)",
+    "level": "CET4",
+    "exampleRoot": "night"
   },
   {
     "id": 489,
     "word": "notion",
     "phonetic": "/ˈnəʊʃən/",
     "meaning": "n 想法，观点",
-    "example": "",
-    "level": "CET4"
+    "example": "no longer (不再)",
+    "level": "CET4",
+    "exampleRoot": "no"
   },
   {
     "id": 490,
@@ -312,8 +314,9 @@ const WORDS_N = [
     "word": "naturally",
     "phonetic": "/ˈnætʃ(ə)ɹəli/",
     "meaning": "adv 自然地；天然地",
-    "example": "",
-    "level": "CET4"
+    "example": "natural gas (天然气)",
+    "level": "CET4",
+    "exampleRoot": "natural"
   },
   {
     "id": 5840,
@@ -360,8 +363,9 @@ const WORDS_N = [
     "word": "nearby",
     "phonetic": "/ˈnɪə.baɪ/",
     "meaning": "adj 附近的；adv 在附近",
-    "example": "",
-    "level": "CET4"
+    "example": "come near (走进；险些；可与…相比（多用于否定句）)",
+    "level": "CET4",
+    "exampleRoot": "near"
   },
   {
     "id": 5846,
@@ -571,16 +575,18 @@ const WORDS_N = [
     "word": "nineteen",
     "phonetic": "/naɪnˈtiːn/",
     "meaning": "num 十九，十九个",
-    "example": "",
-    "level": "CET4"
+    "example": "nine out of ten (十分之九，百分之九十)",
+    "level": "CET4",
+    "exampleRoot": "nine"
   },
   {
     "id": 5872,
     "word": "ninety",
     "phonetic": "/ˈnaɪn.ti/",
     "meaning": "num 九十，九十个",
-    "example": "",
-    "level": "CET4"
+    "example": "nine out of ten (十分之九，百分之九十)",
+    "level": "CET4",
+    "exampleRoot": "nine"
   },
   {
     "id": 5873,
@@ -651,8 +657,9 @@ const WORDS_N = [
     "word": "none",
     "phonetic": "/nɒn/",
     "meaning": "pron 没有人；adv 毫不",
-    "example": "",
-    "level": "CET4"
+    "example": "no longer (不再)",
+    "level": "CET4",
+    "exampleRoot": "no"
   },
   {
     "id": 5882,
@@ -707,8 +714,9 @@ const WORDS_N = [
     "word": "northeast",
     "phonetic": "/ˌnɔːθˈiːst/",
     "meaning": "n 东北；adj 位于东北的",
-    "example": "",
-    "level": "CET4"
+    "example": "north america (北美洲)",
+    "level": "CET4",
+    "exampleRoot": "north"
   },
   {
     "id": 5889,

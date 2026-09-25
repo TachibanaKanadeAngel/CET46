@@ -3,7 +3,7 @@
  * 纯函数工具，不依赖任何业务状态
  */
 
-import { CONFIG } from './config.js';
+import { MS_PER_DAY } from './config.js';
 
 /**
  * 防止 XSS 攻击的 HTML 字符转义工具
@@ -130,8 +130,7 @@ export function safeJSONParse<T = any>(jsonString: string, defaultValue: T | nul
 export function daysBetween(date1: Date | string | number, date2: Date | string | number): number {
   const d1 = new Date(date1).getTime();
   const d2 = new Date(date2).getTime();
-  const msPerDay = (CONFIG.CONSTANTS?.MS_PER_DAY || 86400000);
-  return Math.abs(Math.floor((d2 - d1) / msPerDay));
+  return Math.abs(Math.floor((d2 - d1) / MS_PER_DAY));
 }
 
 /**

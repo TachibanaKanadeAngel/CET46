@@ -22,8 +22,9 @@ const WORDS_C = [
     "word": "chronicle",
     "phonetic": "/ˈkɹɒnɪkəl/",
     "meaning": "v 记录",
-    "example": "",
-    "level": "CET6"
+    "example": "chronic disease ([医]慢性病)",
+    "level": "CET6",
+    "exampleRoot": "chronic"
   },
   {
     "id": 121,
@@ -102,8 +103,9 @@ const WORDS_C = [
     "word": "confrontational",
     "phonetic": "/ˌkɒn.frʌnˈteɪ.ʃən.əl/",
     "meaning": "adj 对抗的，有敌意的",
-    "example": "",
-    "level": "CET6"
+    "example": "confront with (使面临)",
+    "level": "CET6",
+    "exampleRoot": "confront"
   },
   {
     "id": 156,
@@ -231,8 +233,9 @@ const WORDS_C = [
     "word": "commentator",
     "phonetic": "/ˈkɑmənˌteɪtəɹ/",
     "meaning": "n 评论员",
-    "example": "",
-    "level": "CET6"
+    "example": "comment on (对……评论)",
+    "level": "CET6",
+    "exampleRoot": "comment"
   },
   {
     "id": 999,
@@ -257,8 +260,9 @@ const WORDS_C = [
     "word": "counterpart",
     "phonetic": "/ˈkaʊntəˌpɑːt/",
     "meaning": "n 对等物",
-    "example": "",
-    "level": "CET6"
+    "example": "counter measure (对策；防范措施；反措施)",
+    "level": "CET6",
+    "exampleRoot": "counter"
   },
   {
     "id": 1065,
@@ -306,8 +310,9 @@ const WORDS_C = [
     "word": "chronically",
     "phonetic": "/ˈkrɒn.ɪ.kəl.i/",
     "meaning": "adv 慢性地；持久地",
-    "example": "",
-    "level": "CET6"
+    "example": "chronic disease ([医]慢性病)",
+    "level": "CET6",
+    "exampleRoot": "chronic"
   },
   {
     "id": 1160,
@@ -331,8 +336,9 @@ const WORDS_C = [
     "word": "cropland",
     "phonetic": "/ˈkrɒp.lænd/",
     "meaning": "n 农田",
-    "example": "",
-    "level": "CET6"
+    "example": "in crop ((土地)种着庄稼)",
+    "level": "CET6",
+    "exampleRoot": "crop"
   },
   {
     "id": 1217,
@@ -461,8 +467,9 @@ const WORDS_C = [
     "word": "courteous",
     "phonetic": "/ˈkɜːti.əs/",
     "meaning": "adj 有礼貌的，谦恭的",
-    "example": "",
-    "level": "CET6"
+    "example": "people's court (人民法院；人民法庭（美国一种电视节目）)",
+    "level": "CET6",
+    "exampleRoot": "court"
   },
   {
     "id": 1405,
@@ -742,8 +749,9 @@ const WORDS_C = [
     "word": "courtesy",
     "phonetic": "/ˈkɜːtəsi/",
     "meaning": "n 礼貌，谦恭",
-    "example": "",
-    "level": "CET6"
+    "example": "people's court (人民法院；人民法庭（美国一种电视节目）)",
+    "level": "CET6",
+    "exampleRoot": "court"
   },
   {
     "id": 2159,
@@ -1178,8 +1186,9 @@ const WORDS_C = [
     "word": "corpse",
     "phonetic": "/ˈkoːps/",
     "meaning": "n 死尸， 尸体",
-    "example": "",
-    "level": "CET6"
+    "example": "corps of engineers (陆军工兵部队)",
+    "level": "CET6",
+    "exampleRoot": "corps"
   },
   {
     "id": 3254,
@@ -1235,8 +1244,9 @@ const WORDS_C = [
     "word": "crystallize",
     "phonetic": "/ˈkɹɪstəlaɪz/",
     "meaning": "v 结晶； 变得清晰而明确； 使具体化",
-    "example": "",
-    "level": "CET6"
+    "example": "liquid crystal (液晶)",
+    "level": "CET6",
+    "exampleRoot": "crystal"
   },
   {
     "id": 3396,

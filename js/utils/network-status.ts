@@ -21,6 +21,40 @@ function showStatusPanel(title: string, rows: StatusRow[], options?: StatusPanel
   }).showStatusPanel(title, rows, options);
 }
 
+async function queryOfflineAudioCount(): Promise<number | null> {
+  if (!navigator.serviceWorker?.controller) return null;
+  try {
+    const cacheNames = await caches.keys();
+    const audioCache = cacheNames.find(name => name.includes('audio'));
+    if (!audioCache) return null;
+
+    const cache = await caches.open(audioCache);
+    const keys = await cache.keys();
+    return keys.length;
+  } catch (e) {
+    logger.debug('[Offline] 缓存键枚举失败:', (e as Error).message);
+    return null;
+  }
+}
+
+async function updateOfflineIndicator(indicator: HTMLElement, isOnline: boolean): Promise<void> {
+  if (!isOnline) {
+    indicator.textContent = '📴';
+    indicator.title = '资源状态：当前为离线模式';
+    indicator.setAttribute('aria-label', '资源状态');
+    return;
+  }
+
+  indicator.textContent = '📦';
+  indicator.title = '资源状态';
+  indicator.setAttribute('aria-label', '资源状态');
+
+  const count = await queryOfflineAudioCount();
+  if (count !== null && count > 100) {
+    indicator.title = `资源状态：已缓存 ${count} 项离线资源`;
+  }
+}
+
 function setupNetworkStatusListener(): void {
   const banner = document.getElementById('offline-banner');
   const offlineIndicator = document.getElementById('offline-indicator');
@@ -34,31 +68,7 @@ function setupNetworkStatusListener(): void {
     }
 
     if (offlineIndicator) {
-      if (isOnline) {
-        offlineIndicator.textContent = '📦';
-        offlineIndicator.title = '资源状态';
-        offlineIndicator.setAttribute('aria-label', '资源状态');
-
-        if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-          try {
-            const cacheNames = await caches.keys();
-            const audioCache = cacheNames.find(name => name.includes('audio'));
-            if (audioCache) {
-              const cache = await caches.open(audioCache);
-              const keys = await cache.keys();
-              if (keys.length > 100) {
-                offlineIndicator.title = `资源状态：已缓存 ${keys.length} 项离线资源`;
-              }
-            }
-          } catch (e) {
-            logger.debug('[Offline] 缓存键枚举失败:', (e as Error).message);
-          }
-        }
-      } else {
-        offlineIndicator.textContent = '📴';
-        offlineIndicator.title = '资源状态：当前为离线模式';
-        offlineIndicator.setAttribute('aria-label', '资源状态');
-      }
+      await updateOfflineIndicator(offlineIndicator, isOnline);
     }
 
     if (statusDot) {

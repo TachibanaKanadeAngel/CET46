@@ -279,8 +279,9 @@ const WORDS_S = [
     "word": "successively",
     "phonetic": "/səkˈses.ɪv.li/",
     "meaning": "adv 接连着地，继续地",
-    "example": "",
-    "level": "CET6"
+    "example": "legal successor (法定继承人；合法继承人)",
+    "level": "CET6",
+    "exampleRoot": "successor"
   },
   {
     "id": 872,
@@ -343,8 +344,9 @@ const WORDS_S = [
     "word": "subsequently",
     "phonetic": "/ˈsʌb.sɪ.kwənt.li/",
     "meaning": "adv 随后",
-    "example": "",
-    "level": "CET6"
+    "example": "consequent on (随之而来；跟着…发生的)",
+    "level": "CET6",
+    "exampleRoot": "consequent"
   },
   {
     "id": 1115,
@@ -561,8 +563,9 @@ const WORDS_S = [
     "word": "suitcase",
     "phonetic": "/ˈsutkeɪs/",
     "meaning": "n 手提箱，衣箱",
-    "example": "",
-    "level": "CET6"
+    "example": "suit oneself (随自己的意愿做事)",
+    "level": "CET6",
+    "exampleRoot": "suit"
   },
   {
     "id": 1555,
@@ -585,8 +588,9 @@ const WORDS_S = [
     "word": "systematically",
     "phonetic": "/ˌsɪs.təˈmæt.ɪ.kəl.i/",
     "meaning": "adv 系统地，有规则地",
-    "example": "",
-    "level": "CET6"
+    "example": "systematic analysis (系统分析)",
+    "level": "CET6",
+    "exampleRoot": "systematic"
   },
   {
     "id": 1589,
@@ -650,8 +654,9 @@ const WORDS_S = [
     "word": "shove",
     "phonetic": "/ʃʌv/",
     "meaning": "v 推，（使劲）推",
-    "example": "",
-    "level": "CET6"
+    "example": "power shovel (电铲；机铲，动力铲；挖土机)",
+    "level": "CET6",
+    "exampleRoot": "shovel"
   },
   {
     "id": 1683,
@@ -690,8 +695,9 @@ const WORDS_S = [
     "word": "slumber",
     "phonetic": "/slʌmbə/",
     "meaning": "n 睡眠；沉睡状态",
-    "example": "",
-    "level": "CET6"
+    "example": "economic slump (经济衰退)",
+    "level": "CET6",
+    "exampleRoot": "slum"
   },
   {
     "id": 1806,
@@ -900,8 +906,9 @@ const WORDS_S = [
     "word": "stairway",
     "phonetic": "/ˈsteə.weɪ/",
     "meaning": "n 楼梯",
-    "example": "",
-    "level": "CET6"
+    "example": "below stairs (在地下室；在楼下)",
+    "level": "CET6",
+    "exampleRoot": "stair"
   },
   {
     "id": 2113,
@@ -1053,8 +1060,9 @@ const WORDS_S = [
     "word": "sham",
     "phonetic": "/ʃæm/",
     "meaning": "n 假冒；膺品；v 假装",
-    "example": "",
-    "level": "CET6"
+    "example": "put to shame (使蒙羞；使自愧不如)",
+    "level": "CET6",
+    "exampleRoot": "shame"
   },
   {
     "id": 2305,
@@ -1648,8 +1656,9 @@ const WORDS_S = [
     "word": "sparkle",
     "phonetic": "/ˈspɑːkəl/",
     "meaning": "vi 发光，闪耀，闪烁；活跃，焕发；n 闪光， 闪耀， 闪烁； 活力， 生气",
-    "example": "",
-    "level": "CET6"
+    "example": "spark plug (n. 火花塞；带头人；中坚分子)",
+    "level": "CET6",
+    "exampleRoot": "spark"
   },
   {
     "id": 3303,
@@ -1697,8 +1706,9 @@ const WORDS_S = [
     "word": "setback",
     "phonetic": "/ˈsɛtbæk/",
     "meaning": "n 挫折， 倒退， 失败",
-    "example": "",
-    "level": "CET6"
+    "example": "set up (v. 建立；装配；开业；竖立)",
+    "level": "CET6",
+    "exampleRoot": "set"
   },
   {
     "id": 3385,
@@ -1729,8 +1739,9 @@ const WORDS_S = [
     "word": "stab",
     "phonetic": "/stæb/",
     "meaning": "n&v 刺， 戳",
-    "example": "",
-    "level": "CET6"
+    "example": "stable quality (质量稳定)",
+    "level": "CET6",
+    "exampleRoot": "stable"
   },
   {
     "id": 3419,
@@ -1890,8 +1901,9 @@ const WORDS_S = [
     "word": "slum",
     "phonetic": "/slʌm/",
     "meaning": "n 贫民窟",
-    "example": "",
-    "level": "CET6"
+    "example": "economic slump (经济衰退)",
+    "level": "CET6",
+    "exampleRoot": "slump"
   },
   {
     "id": 3670,
@@ -1922,8 +1934,9 @@ const WORDS_S = [
     "word": "sensational",
     "phonetic": "/senˈseɪ.ʃən.əl/",
     "meaning": "adj 轰动的， 耸人听闻的； 使人感动的， 非常好的",
-    "example": "",
-    "level": "CET6"
+    "example": "sensible heat (显热；焓)",
+    "level": "CET6",
+    "exampleRoot": "sensible"
   },
   {
     "id": 3757,

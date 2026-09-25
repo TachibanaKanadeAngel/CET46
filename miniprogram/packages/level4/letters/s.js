@@ -247,8 +247,9 @@ const WORDS_S = [
     "word": "startle",
     "phonetic": "/ˈstɑːt(ə)l/",
     "meaning": "v 使惊讶",
-    "example": "",
-    "level": "CET4"
+    "example": "start something ([美国口语] 制造麻烦；引起争吵(或打斗))",
+    "level": "CET4",
+    "exampleRoot": "start"
   },
   {
     "id": 701,
@@ -263,8 +264,9 @@ const WORDS_S = [
     "word": "stereotype",
     "phonetic": "/ˈstɛ.ɹi.əˌtaɪp/",
     "meaning": "n 刻板印象，固有印象",
-    "example": "",
-    "level": "CET4"
+    "example": "stereo system (n. 立体音响系统)",
+    "level": "CET4",
+    "exampleRoot": "stereo"
   },
   {
     "id": 703,
@@ -930,8 +932,9 @@ const WORDS_S = [
     "word": "summit",
     "phonetic": "/ˈsʌmɪt/",
     "meaning": "n 顶点，最高点；极度",
-    "example": "",
-    "level": "CET4"
+    "example": "sum up (总结；概述；计算…的总数)",
+    "level": "CET4",
+    "exampleRoot": "sum"
   },
   {
     "id": 2612,
@@ -1242,8 +1245,9 @@ const WORDS_S = [
     "word": "suburb",
     "phonetic": "/ˈsʌbɜːb/",
     "meaning": "n 郊区， 郊外， 近郊",
-    "example": "",
-    "level": "CET4"
+    "example": "suburban district (郊区)",
+    "level": "CET4",
+    "exampleRoot": "suburban"
   },
   {
     "id": 3393,

@@ -17,14 +17,21 @@ const SUFFIXES = ['able','ible','al','ance','ence','ant','ent','ate','ation','it
 
 function getMorphologyRoot(wordText) {
   if (!wordText || typeof wordText !== 'string') return '';
-  const word = wordText.trim().toLowerCase();
-  if (word.length < 5) return word;
-  let remaining = word;
+  let remaining = wordText.trim().toLowerCase();
+  if (remaining.length < 5) return remaining;
   for (const p of PREFIXES) {
-    if (word.startsWith(p) && word.length - p.length >= 3) { remaining = remaining.slice(p.length); break; }
+    if (remaining.startsWith(p) && remaining.length - p.length >= 3) { remaining = remaining.slice(p.length); break; }
   }
-  for (const s of SUFFIXES) {
-    if (remaining.endsWith(s) && remaining.length - s.length >= 2) { remaining = remaining.slice(0, -s.length); break; }
+  for (let iter = 0; iter < 3; iter++) {
+    let matched = false;
+    for (const s of SUFFIXES) {
+      if (remaining.endsWith(s) && remaining.length - s.length >= 3) {
+        remaining = remaining.slice(0, -s.length);
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) break;
   }
   return remaining;
 }
@@ -35,7 +42,8 @@ const words = data.words;
 
 // 预计算 wordId -> example 与 root，避免 O(n^2)
 const rootMap = new Map(); // root -> [{word, example}]
-for (const w of words) {
+const withExample = words.filter(w => w.example && w.example.trim());
+for (const w of withExample) {
   const root = getMorphologyRoot(w.word);
   if (!root || root.length < 3) continue;
   if (!rootMap.has(root)) rootMap.set(root, []);
@@ -52,7 +60,16 @@ for (const w of words) {
   if (w.example && w.example.trim()) continue;
   const root = getMorphologyRoot(w.word);
   const siblings = root && root.length >= 3 ? (rootMap.get(root) || []) : [];
-  const source = siblings.find(x => String(x.id) !== String(w.id) && x.example && x.example.trim());
+  let source = siblings.find(x => String(x.id) !== String(w.id) && x.example && x.example.trim());
+  if (!source) {
+    // 词干前缀容错匹配（如 adventurer -> adventure）
+    const lower = w.word.toLowerCase();
+    source = withExample.find(x => {
+      const xLower = x.word.toLowerCase();
+      return (lower.startsWith(xLower) && lower.length - xLower.length <= 4) ||
+             (xLower.startsWith(lower) && xLower.length - lower.length <= 4);
+    });
+  }
   if (!source) { stillEmpty++; continue; }
   w.example = source.example;
   w.exampleRoot = source.word; // 标注例句词源（词族代表词）

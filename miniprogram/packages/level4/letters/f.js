@@ -175,8 +175,9 @@ const WORDS_F = [
     "word": "furious",
     "phonetic": "/ˈfjʊə.ɹɪəs/",
     "meaning": "adj 生气的；激烈的",
-    "example": "",
-    "level": "CET4"
+    "example": "fur coat (皮毛大衣)",
+    "level": "CET4",
+    "exampleRoot": "fur"
   },
   {
     "id": 328,
@@ -624,8 +625,9 @@ const WORDS_F = [
     "word": "furthermore",
     "phonetic": "/ˈfɜː(ɹ).ðə(ɹ).mɔː(ɹ)/",
     "meaning": "adv 而且， 此外",
-    "example": "",
-    "level": "CET4"
+    "example": "further development (进一步的发展)",
+    "level": "CET4",
+    "exampleRoot": "further"
   },
   {
     "id": 3732,
@@ -664,8 +666,9 @@ const WORDS_F = [
     "word": "feeble",
     "phonetic": "/ˈfiːbəl/",
     "meaning": "adj 虚弱的， 衰弱的， 无力的； 无效的， 无益的",
-    "example": "",
-    "level": "CET4"
+    "example": "service fee (酬金；劳务费)",
+    "level": "CET4",
+    "exampleRoot": "fee"
   },
   {
     "id": 4103,
@@ -729,16 +732,18 @@ const WORDS_F = [
     "word": "foothold",
     "phonetic": "/ˈfʊt.həʊld/",
     "meaning": "n 立足处（攀登时脚踩的地方）",
-    "example": "",
-    "level": "CET4"
+    "example": "on foot (步行；在进行中)",
+    "level": "CET4",
+    "exampleRoot": "foot"
   },
   {
     "id": 4111,
     "word": "fortunately",
     "phonetic": "/ˈfɔːt͡ʃənɪtli/",
     "meaning": "adv 幸运地",
-    "example": "",
-    "level": "CET4"
+    "example": "fortunate in (有好运气；于…很幸运)",
+    "level": "CET4",
+    "exampleRoot": "fortunate"
   },
   {
     "id": 4268,
@@ -787,16 +792,18 @@ const WORDS_F = [
     "word": "foreseeable",
     "phonetic": "/fɔːˈsiː.ə.bəl/",
     "meaning": "adj 可以预见的",
-    "example": "",
-    "level": "CET4"
+    "example": "to the fore (在前面；在近处；在手头)",
+    "level": "CET4",
+    "exampleRoot": "foresee"
   },
   {
     "id": 4357,
     "word": "fundamentally",
     "phonetic": "/ˌfʌn.dəˈmen.təl.i/",
     "meaning": "adv 根本上",
-    "example": "",
-    "level": "CET4"
+    "example": "fundamental principle (基本原则)",
+    "level": "CET4",
+    "exampleRoot": "fundamental"
   },
   {
     "id": 4364,
@@ -940,8 +947,9 @@ const WORDS_F = [
     "word": "far",
     "phonetic": "/fɑː/",
     "meaning": "adj 远的；adv 远，遥远",
-    "example": "",
-    "level": "CET4"
+    "example": "bus fare (公共汽车票钱；公车票；公车费率)",
+    "level": "CET4",
+    "exampleRoot": "fare"
   },
   {
     "id": 5155,
@@ -1053,8 +1061,9 @@ const WORDS_F = [
     "word": "favourite",
     "phonetic": "/ˈfeɪv.ɹɪt/",
     "meaning": "adj 特别受喜爱的",
-    "example": "",
-    "level": "CET4"
+    "example": "in favour of (支持，赞成)",
+    "level": "CET4",
+    "exampleRoot": "favour"
   },
   {
     "id": 5169,
@@ -1229,8 +1238,9 @@ const WORDS_F = [
     "word": "finally",
     "phonetic": "/ˈfaɪ.nəl.i/",
     "meaning": "adv 最后；不可更改的",
-    "example": "",
-    "level": "CET4"
+    "example": "ministry of finance (财政部)",
+    "level": "CET4",
+    "exampleRoot": "finance"
   },
   {
     "id": 5191,
@@ -1277,8 +1287,9 @@ const WORDS_F = [
     "word": "fireman",
     "phonetic": "/ˈfaɪəmən/",
     "meaning": "n 消防队员；司炉工",
-    "example": "",
-    "level": "CET4"
+    "example": "on fire (adv. 着火；起火；在兴头上；非常激动)",
+    "level": "CET4",
+    "exampleRoot": "fire"
   },
   {
     "id": 5197,
@@ -1518,8 +1529,9 @@ const WORDS_F = [
     "word": "footstep",
     "phonetic": "/ˈfʊtstɛp/",
     "meaning": "n 脚步；脚步声；足迹",
-    "example": "",
-    "level": "CET4"
+    "example": "on foot (步行；在进行中)",
+    "level": "CET4",
+    "exampleRoot": "foot"
   },
   {
     "id": 5227,
@@ -1534,8 +1546,9 @@ const WORDS_F = [
     "word": "forbid",
     "phonetic": "/fəˈbɪd/",
     "meaning": "v 禁止，不许；阻止",
-    "example": "",
-    "level": "CET4"
+    "example": "for all (尽管；虽然)",
+    "level": "CET4",
+    "exampleRoot": "for"
   },
   {
     "id": 5229,
@@ -1832,8 +1845,9 @@ const WORDS_F = [
     "word": "from",
     "phonetic": "/fɹɒm/",
     "meaning": "prep 从…来；离开",
-    "example": "",
-    "level": "CET4"
+    "example": "frown on (不悦，不满)",
+    "level": "CET4",
+    "exampleRoot": "fro"
   },
   {
     "id": 5266,
@@ -1848,8 +1862,9 @@ const WORDS_F = [
     "word": "frost",
     "phonetic": "/fɹɑst/",
     "meaning": "n 冰冻，严寒；霜",
-    "example": "",
-    "level": "CET4"
+    "example": "frown on (不悦，不满)",
+    "level": "CET4",
+    "exampleRoot": "fro"
   },
   {
     "id": 5268,
@@ -1881,8 +1896,9 @@ const WORDS_F = [
     "word": "fulfil",
     "phonetic": "/fʊlˈfɪl/",
     "meaning": "v 履行；满足；完成",
-    "example": "",
-    "level": "CET4"
+    "example": "fulfill oneself (v. 完全实现自己的抱负)",
+    "level": "CET4",
+    "exampleRoot": "fulfill"
   },
   {
     "id": 5272,
@@ -1953,8 +1969,9 @@ const WORDS_F = [
     "word": "fourfold",
     "phonetic": "/ˈfɔːr.fəʊld/",
     "meaning": "adv 四倍， 四重；adj 四倍的，四重的",
-    "example": "",
-    "level": "CET4"
+    "example": "four seasons (四季)",
+    "level": "CET4",
+    "exampleRoot": "four"
   },
   {
     "id": 6572,

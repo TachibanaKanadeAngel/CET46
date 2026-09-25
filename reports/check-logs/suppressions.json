@@ -1,0 +1,95 @@
+{
+  "version": "1.0",
+  "description": "统一抑制清单 - 记录所有被抑制/排除的检查项，与 accepted-issues.json 互补",
+  "lastUpdated": "2026-06-03",
+  "entries": [
+    {
+      "id": "SUP-001",
+      "pattern": "js/data/**",
+      "check": "check-code-quality",
+      "reason": "数据文件为自动生成，不进行代码质量检查",
+      "addedAt": "2026-06-03",
+      "addedBy": "project-lead"
+    },
+    {
+      "id": "SUP-002",
+      "pattern": "js/data/default_vocab.js",
+      "check": "all",
+      "reason": "738KB词库数据文件，排除所有检查",
+      "addedAt": "2026-06-03",
+      "addedBy": "project-lead"
+    },
+    {
+      "id": "SUP-003",
+      "pattern": "js/workers/*.js",
+      "check": "all",
+      "reason": "Worker中无法使用自定义logger，console是唯一日志方式",
+      "addedAt": "2026-06-03",
+      "addedBy": "project-lead"
+    },
+    {
+      "id": "SUP-004",
+      "pattern": "sw.js",
+      "check": "all",
+      "reason": "Service Worker独立上下文，无法导入logger",
+      "addedAt": "2026-06-03",
+      "addedBy": "project-lead"
+    },
+    {
+      "id": "SUP-005",
+      "pattern": "scripts/*.mjs",
+      "check": "all",
+      "reason": "构建脚本非运行时代码，允许console",
+      "addedAt": "2026-06-03",
+      "addedBy": "project-lead"
+    },
+    {
+      "id": "SUP-006",
+      "pattern": "js/utils/logger.js",
+      "check": "all",
+      "reason": "logger模块本身使用console是正确行为",
+      "addedAt": "2026-06-03",
+      "addedBy": "project-lead"
+    },
+    {
+      "id": "SUP-007",
+      "pattern": "js/utils/dom.js",
+      "check": "all",
+      "reason": "dom.js是底层公共库，包含安全的setHtml实现，可以使用innerHTML",
+      "addedAt": "2026-06-07",
+      "addedBy": "project-lead"
+    },
+    {
+      "id": "SUP-008",
+      "pattern": "js/utils/stats.js",
+      "check": "all",
+      "reason": "stats.js仅使用innerHTML进行清空操作，100%安全",
+      "addedAt": "2026-06-07",
+      "addedBy": "project-lead"
+    },
+    {
+      "id": "SUP-009",
+      "pattern": "js/utils/wrong-words.js",
+      "check": "all",
+      "reason": "wrong-words.js使用innerHTML清空内容或设置硬编码的安全HTML结构",
+      "addedAt": "2026-06-07",
+      "addedBy": "project-lead"
+    },
+    {
+      "id": "SUP-010",
+      "pattern": "js/features/study.js",
+      "check": "all",
+      "reason": "study.js使用cloze机制动态构造完形填空HTML，已做安全防范",
+      "addedAt": "2026-06-07",
+      "addedBy": "project-lead"
+    },
+    {
+      "id": "SUP-011",
+      "pattern": "js/init/ui-repair.js",
+      "check": "all",
+      "reason": "ui-repair.js使用innerHTML填充已转义的值或静态标记字串",
+      "addedAt": "2026-06-07",
+      "addedBy": "project-lead"
+    }
+  ]
+}

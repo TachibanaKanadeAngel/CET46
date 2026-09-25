@@ -151,8 +151,9 @@ const WORDS_G = [
     "word": "greedy",
     "phonetic": "/ˈɡɹiːdi/",
     "meaning": "adj 贪婪的",
-    "example": "",
-    "level": "CET4"
+    "example": "in the green (在年富力强时)",
+    "level": "CET4",
+    "exampleRoot": "greed"
   },
   {
     "id": 1023,
@@ -473,8 +474,9 @@ const WORDS_G = [
     "word": "groundlessly",
     "phonetic": "/ˈɡraʊnd.ləs.li/",
     "meaning": "adv 无缘无故地，无根据地",
-    "example": "",
-    "level": "CET4"
+    "example": "on the ground (在地上；当场；在决斗)",
+    "level": "CET4",
+    "exampleRoot": "groundless"
   },
   {
     "id": 4117,
@@ -569,8 +571,9 @@ const WORDS_G = [
     "word": "gardener",
     "phonetic": "/ˈɡɑːdnə/",
     "meaning": "n 园丁，花匠",
-    "example": "",
-    "level": "CET4"
+    "example": "regardless of (不顾，不管)",
+    "level": "CET4",
+    "exampleRoot": "regardless"
   },
   {
     "id": 5285,
@@ -906,8 +909,9 @@ const WORDS_G = [
     "word": "gradually",
     "phonetic": "/ˈɡɹædʒuəli/",
     "meaning": "adv 逐渐地，逐步地",
-    "example": "",
-    "level": "CET4"
+    "example": "graduate student (n. 研究生；毕业生)",
+    "level": "CET4",
+    "exampleRoot": "graduate"
   },
   {
     "id": 5327,
@@ -930,8 +934,9 @@ const WORDS_G = [
     "word": "gramme",
     "phonetic": "/ɡɹæm/",
     "meaning": "n 克(重量单位)",
-    "example": "",
-    "level": "CET4"
+    "example": "gram negative (adj. 革兰氏阴性的；革兰氏〔染色）阴性的)",
+    "level": "CET4",
+    "exampleRoot": "gram"
   },
   {
     "id": 5330,
@@ -962,8 +967,9 @@ const WORDS_G = [
     "word": "grandson",
     "phonetic": "/ˈɡɹæn(d)sʌn/",
     "meaning": "n 孙子，外孙子",
-    "example": "",
-    "level": "CET4"
+    "example": "grand prix (n. 国际汽车大奖赛；头等奖，最高奖)",
+    "level": "CET4",
+    "exampleRoot": "grand"
   },
   {
     "id": 5334,
@@ -1075,8 +1081,9 @@ const WORDS_G = [
     "word": "grocer",
     "phonetic": "/ˈɡɹəʊ.sə/",
     "meaning": "n 食品商；杂货商",
-    "example": "",
-    "level": "CET4"
+    "example": "grocery store (杂货店)",
+    "level": "CET4",
+    "exampleRoot": "grocery"
   },
   {
     "id": 5348,

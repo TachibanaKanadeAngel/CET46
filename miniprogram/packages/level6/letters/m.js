@@ -30,8 +30,9 @@ const WORDS_M = [
     "word": "markedly",
     "phonetic": "/ˈmɑːkɪdli/",
     "meaning": "adv 显著地",
-    "example": "",
-    "level": "CET6"
+    "example": "remarkable development (显著发展)",
+    "level": "CET6",
+    "exampleRoot": "remarkable"
   },
   {
     "id": 451,
@@ -326,8 +327,9 @@ const WORDS_M = [
     "word": "melody",
     "phonetic": "/ˈmel.ə.di/",
     "meaning": "n 旋律，曲调；歌曲",
-    "example": "",
-    "level": "CET6"
+    "example": "melt into (溶解成；消散在…中；因心软而…)",
+    "level": "CET6",
+    "exampleRoot": "me"
   },
   {
     "id": 1573,
@@ -382,8 +384,9 @@ const WORDS_M = [
     "word": "misery",
     "phonetic": "/ˈmɪz(ə)ɹɪ/",
     "meaning": "n 痛苦，悲惨，不幸",
-    "example": "",
-    "level": "CET6"
+    "example": "data transmission (数据传输)",
+    "level": "CET6",
+    "exampleRoot": "miser"
   },
   {
     "id": 1719,
@@ -414,8 +417,9 @@ const WORDS_M = [
     "word": "momentary",
     "phonetic": "/ˈməʊmənt(ə)ɹi/",
     "meaning": "adj 瞬息间的，片刻的",
-    "example": "",
-    "level": "CET6"
+    "example": "at the moment (此刻；当时)",
+    "level": "CET6",
+    "exampleRoot": "moment"
   },
   {
     "id": 1792,
@@ -496,8 +500,9 @@ const WORDS_M = [
     "word": "modesty",
     "phonetic": "/ˈmɒd.ə.sti/",
     "meaning": "n 谦逊；端庄",
-    "example": "",
-    "level": "CET6"
+    "example": "operation mode (操作方式)",
+    "level": "CET6",
+    "exampleRoot": "mode"
   },
   {
     "id": 1975,
@@ -512,8 +517,9 @@ const WORDS_M = [
     "word": "motorway",
     "phonetic": "/ˈməʊtəweɪ/",
     "meaning": "n 汽车道，快车路",
-    "example": "",
-    "level": "CET6"
+    "example": "motor vehicle (汽车；机动车辆)",
+    "level": "CET6",
+    "exampleRoot": "motor"
   },
   {
     "id": 1989,
@@ -537,8 +543,9 @@ const WORDS_M = [
     "word": "magician",
     "phonetic": "/məˈdʒɪʃən/",
     "meaning": "n 魔法师；变戏法的人",
-    "example": "",
-    "level": "CET6"
+    "example": "black magic (n. 魔法；巫术)",
+    "level": "CET6",
+    "exampleRoot": "magic"
   },
   {
     "id": 2064,
@@ -586,8 +593,9 @@ const WORDS_M = [
     "word": "mob",
     "phonetic": "/mɒb/",
     "meaning": "v 团团围住（名人等）",
-    "example": "",
-    "level": "CET6"
+    "example": "mobile phone (手机；行动电话)",
+    "level": "CET6",
+    "exampleRoot": "mobile"
   },
   {
     "id": 2259,
@@ -626,8 +634,9 @@ const WORDS_M = [
     "word": "Mars",
     "phonetic": "/ˈmɑːz/",
     "meaning": "n 火星",
-    "example": "",
-    "level": "CET6"
+    "example": "marsh gas (甲烷，沼气)",
+    "level": "CET6",
+    "exampleRoot": "marsh"
   },
   {
     "id": 2349,
@@ -747,8 +756,9 @@ const WORDS_M = [
     "word": "massacre",
     "phonetic": "/ˈmæs.ə.kə(ɹ)/",
     "meaning": "n 大屠杀，残杀",
-    "example": "",
-    "level": "CET6"
+    "example": "rock mass (岩体；岩块，岩块体；岩石层)",
+    "level": "CET6",
+    "exampleRoot": "mass"
   },
   {
     "id": 2625,
@@ -787,8 +797,9 @@ const WORDS_M = [
     "word": "muse",
     "phonetic": "/mjuːz/",
     "meaning": "v 沉思，默想，冥想",
-    "example": "",
-    "level": "CET6"
+    "example": "art museum (美术馆，美术博物馆；艺术博物馆)",
+    "level": "CET6",
+    "exampleRoot": "museum"
   },
   {
     "id": 2703,
@@ -819,16 +830,18 @@ const WORDS_M = [
     "word": "millionaire",
     "phonetic": "/ˌmɪl.i.əˈnɛə(ɹ)/",
     "meaning": "n 百分富翁，巨富",
-    "example": "",
-    "level": "CET6"
+    "example": "in a million ((人、物)千里挑一的，无与伦比的)",
+    "level": "CET6",
+    "exampleRoot": "million"
   },
   {
     "id": 2922,
     "word": "menace",
     "phonetic": "/ˈmɛnɪs/",
     "meaning": "n 威胁；v （进行）威胁",
-    "example": "",
-    "level": "CET6"
+    "example": "melt into (溶解成；消散在…中；因心软而…)",
+    "level": "CET6",
+    "exampleRoot": "me"
   },
   {
     "id": 2970,

@@ -78,8 +78,9 @@ const WORDS_V = [
     "word": "virtually",
     "phonetic": "/[ˈvɝt͡ʃuəɫi]/",
     "meaning": "adv 几乎",
-    "example": "",
-    "level": "CET4"
+    "example": "virtual reality (虚拟现实)",
+    "level": "CET4",
+    "exampleRoot": "virtual"
   },
   {
     "id": 788,
@@ -375,8 +376,9 @@ const WORDS_V = [
     "word": "via",
     "phonetic": "/ˈvaɪə/",
     "meaning": "prep 通过",
-    "example": "",
-    "level": "CET4"
+    "example": "standard deviation (标准偏差)",
+    "level": "CET4",
+    "exampleRoot": "deviation"
   },
   {
     "id": 6440,

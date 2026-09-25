@@ -6,8 +6,9 @@ const WORDS_K = [
     "word": "kidnap",
     "phonetic": "/ˈkɪd.næp/",
     "meaning": "v 绑架",
-    "example": "",
-    "level": "CET6"
+    "example": "no kidding (说真的，不要开玩笑)",
+    "level": "CET6",
+    "exampleRoot": "kid"
   },
   {
     "id": 1875,
@@ -46,8 +47,9 @@ const WORDS_K = [
     "word": "kindle",
     "phonetic": "/ˈkɪndl/",
     "meaning": "v 点燃，着火",
-    "example": "",
-    "level": "CET6"
+    "example": "kindness of (敬请转交[信封用语])",
+    "level": "CET6",
+    "exampleRoot": "kind"
   },
   {
     "id": 2699,

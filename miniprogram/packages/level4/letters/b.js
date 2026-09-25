@@ -391,8 +391,9 @@ const WORDS_B = [
     "word": "baseball",
     "phonetic": "/ˈbeɪs.bɔːl/",
     "meaning": "n 棒球运动；棒球",
-    "example": "",
-    "level": "CET4"
+    "example": "base on (基于，以……为根据；在……基础上)",
+    "level": "CET4",
+    "exampleRoot": "base"
   },
   {
     "id": 2826,
@@ -848,8 +849,9 @@ const WORDS_B = [
     "word": "basically",
     "phonetic": "/ˈbeɪsɪk(ə)li/",
     "meaning": "adv 基本上",
-    "example": "",
-    "level": "CET4"
+    "example": "basic principle (基本原理)",
+    "level": "CET4",
+    "exampleRoot": "basic"
   },
   {
     "id": 4557,
@@ -1040,8 +1042,9 @@ const WORDS_B = [
     "word": "beggar",
     "phonetic": "/ˈbɛɡə/",
     "meaning": "n 乞丐，穷人",
-    "example": "",
-    "level": "CET4"
+    "example": "so be it (诚心所愿；顺其自然)",
+    "level": "CET4",
+    "exampleRoot": "be"
   },
   {
     "id": 4581,
@@ -1185,8 +1188,9 @@ const WORDS_B = [
     "word": "besides",
     "phonetic": "/biˈsaɪdz/",
     "meaning": "adv 而且prep除…之外",
-    "example": "",
-    "level": "CET4"
+    "example": "beside oneself (极度兴奋；发狂)",
+    "level": "CET4",
+    "exampleRoot": "beside"
   },
   {
     "id": 4599,
@@ -1257,8 +1261,9 @@ const WORDS_B = [
     "word": "billion",
     "phonetic": "/ˈbɪljən/",
     "meaning": "num 万亿(英)",
-    "example": "",
-    "level": "CET4"
+    "example": "bill gates (比尔盖兹（微软主席兼总裁）)",
+    "level": "CET4",
+    "exampleRoot": "bill"
   },
   {
     "id": 4608,
@@ -1762,8 +1767,9 @@ const WORDS_B = [
     "word": "brow",
     "phonetic": "/bɹaʊ/",
     "meaning": "n 额；眉，眉毛",
-    "example": "",
-    "level": "CET4"
+    "example": "gordon brown (戈登·布朗（英国首相）)",
+    "level": "CET4",
+    "exampleRoot": "brown"
   },
   {
     "id": 4671,
@@ -1914,8 +1920,9 @@ const WORDS_B = [
     "word": "butcher",
     "phonetic": "/ˈbʊtʃ.ə(ɹ)/",
     "meaning": "n 屠夫；屠杀者",
-    "example": "",
-    "level": "CET4"
+    "example": "but now (刚刚)",
+    "level": "CET4",
+    "exampleRoot": "but"
   },
   {
     "id": 4690,

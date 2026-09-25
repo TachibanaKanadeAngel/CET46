@@ -6,8 +6,9 @@ const WORDS_L = [
     "word": "layman",
     "phonetic": "/ˈleɪmən/",
     "meaning": "n 门外汉",
-    "example": "",
-    "level": "CET6"
+    "example": "lay in (贮存)",
+    "level": "CET6",
+    "exampleRoot": "lay"
   },
   {
     "id": 437,
@@ -30,8 +31,9 @@ const WORDS_L = [
     "word": "lawsuit",
     "phonetic": "/ˈlɔˌs(j)ut/",
     "meaning": "n 诉讼",
-    "example": "",
-    "level": "CET6"
+    "example": "by law (n. 根据法律，在法律上；附则)",
+    "level": "CET6",
+    "exampleRoot": "law"
   },
   {
     "id": 901,
@@ -70,24 +72,27 @@ const WORDS_L = [
     "word": "landmark",
     "phonetic": "/ˈlændmɑɹk/",
     "meaning": "adj 有重大意义或影响的",
-    "example": "",
-    "level": "CET6"
+    "example": "land use (土地利用，土地用途；土地使用，土壤使用)",
+    "level": "CET6",
+    "exampleRoot": "land"
   },
   {
     "id": 1161,
     "word": "legalize",
     "phonetic": "/ˈliːɡəlaɪz/",
     "meaning": "v 合法化",
-    "example": "",
-    "level": "CET6"
+    "example": "chief delegate (首席代表)",
+    "level": "CET6",
+    "exampleRoot": "delegate"
   },
   {
     "id": 1195,
     "word": "lobbyist",
     "phonetic": "/ˈlɒ.bi.ɪst/",
     "meaning": "n 游说者",
-    "example": "",
-    "level": "CET6"
+    "example": "hotel lobby (饭店大堂；宾馆大厅)",
+    "level": "CET6",
+    "exampleRoot": "lobby"
   },
   {
     "id": 1213,
@@ -102,8 +107,9 @@ const WORDS_L = [
     "word": "literally",
     "phonetic": "/ˈlɪtəɹəli/",
     "meaning": "adv 照字义，逐字地",
-    "example": "",
-    "level": "CET6"
+    "example": "literal translation (直译，直译法；逐字翻译)",
+    "level": "CET6",
+    "exampleRoot": "literal"
   },
   {
     "id": 1369,
@@ -134,8 +140,9 @@ const WORDS_L = [
     "word": "locality",
     "phonetic": "/ləʊˈkælɪti/",
     "meaning": "n 位置，地点，发生地",
-    "example": "",
-    "level": "CET6"
+    "example": "fault location (故障定位)",
+    "level": "CET6",
+    "exampleRoot": "location"
   },
   {
     "id": 1635,
@@ -288,8 +295,9 @@ const WORDS_L = [
     "word": "leaflet",
     "phonetic": "/ˈliːflɪt/",
     "meaning": "n 传单",
-    "example": "",
-    "level": "CET6"
+    "example": "leaf blade (叶片)",
+    "level": "CET6",
+    "exampleRoot": "leaf"
   },
   {
     "id": 2707,
@@ -344,8 +352,9 @@ const WORDS_L = [
     "word": "layoff",
     "phonetic": "/ˈleɪ.ɒf/",
     "meaning": "n 解雇； 裁员； 歇工期， 停工期",
-    "example": "",
-    "level": "CET6"
+    "example": "lay in (贮存)",
+    "level": "CET6",
+    "exampleRoot": "lay"
   },
   {
     "id": 3320,

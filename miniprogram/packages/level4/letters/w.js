@@ -118,8 +118,9 @@ const WORDS_W = [
     "word": "waggon",
     "phonetic": "/ˈwæɡ.ən/",
     "meaning": "n 敞蓬车厢",
-    "example": "",
-    "level": "CET4"
+    "example": "wag its tail (（狗）摇尾巴)",
+    "level": "CET4",
+    "exampleRoot": "wag"
   },
   {
     "id": 2902,

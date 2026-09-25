@@ -14,8 +14,9 @@ const WORDS_N = [
     "word": "neutrality",
     "phonetic": "/njuːˈtɹæləti/",
     "meaning": "n 中立",
-    "example": "",
-    "level": "CET6"
+    "example": "neutral point (中性点；中和点)",
+    "level": "CET6",
+    "exampleRoot": "neutral"
   },
   {
     "id": 488,
@@ -48,8 +49,9 @@ const WORDS_N = [
     "word": "notably",
     "phonetic": "/ˈnəʊ.tə.bli/",
     "meaning": "adv 显著地，尤其",
-    "example": "",
-    "level": "CET6"
+    "example": "so as not to (vt. 以便不（未到...的程度）)",
+    "level": "CET6",
+    "exampleRoot": "not"
   },
   {
     "id": 1174,
@@ -105,8 +107,9 @@ const WORDS_N = [
     "word": "novelty",
     "phonetic": "/ˈnɒvəlti/",
     "meaning": "n 新颖；新奇的事物",
-    "example": "",
-    "level": "CET6"
+    "example": "historical novel (历史小说)",
+    "level": "CET6",
+    "exampleRoot": "novel"
   },
   {
     "id": 1618,

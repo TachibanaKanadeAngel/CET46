@@ -434,8 +434,9 @@ const WORDS_M = [
     "word": "myth",
     "phonetic": "/mɪθ/",
     "meaning": "n 杜撰出来的人； 神话",
-    "example": "",
-    "level": "CET4"
+    "example": "by myself (独立完成)",
+    "level": "CET4",
+    "exampleRoot": "my"
   },
   {
     "id": 3058,
@@ -563,8 +564,9 @@ const WORDS_M = [
     "word": "moreover",
     "phonetic": "/mɔːˈɹəʊvə/",
     "meaning": "adv 而且， 再者， 此外",
-    "example": "",
-    "level": "CET4"
+    "example": "more than (多于；超出；比……多)",
+    "level": "CET4",
+    "exampleRoot": "more"
   },
   {
     "id": 3546,
@@ -619,8 +621,9 @@ const WORDS_M = [
     "word": "modest",
     "phonetic": "/ˈmɑdəst/",
     "meaning": "adj 谦虚的； 适中的； 羞怯的",
-    "example": "",
-    "level": "CET4"
+    "example": "operation mode (操作方式)",
+    "level": "CET4",
+    "exampleRoot": "mode"
   },
   {
     "id": 3775,
@@ -765,8 +768,9 @@ const WORDS_M = [
     "word": "miserable",
     "phonetic": "/ˈmɪz(ə)ɹəbəl/",
     "meaning": "adj 痛苦的",
-    "example": "",
-    "level": "CET4"
+    "example": "data transmission (数据传输)",
+    "level": "CET4",
+    "exampleRoot": "miser"
   },
   {
     "id": 4162,
@@ -824,8 +828,9 @@ const WORDS_M = [
     "word": "marginalize",
     "phonetic": "/ˈmɑː.dʒɪ.nəl.aɪz/",
     "meaning": "v 边缘化，排斥",
-    "example": "",
-    "level": "CET4"
+    "example": "profit margin ([经]利润率)",
+    "level": "CET4",
+    "exampleRoot": "margin"
   },
   {
     "id": 4374,
@@ -953,8 +958,9 @@ const WORDS_M = [
     "word": "mankind",
     "phonetic": "/mænˈkaɪnd/",
     "meaning": "n 人类",
-    "example": "",
-    "level": "CET4"
+    "example": "old man (情人；丈夫；老头子；父亲)",
+    "level": "CET4",
+    "exampleRoot": "man"
   },
   {
     "id": 5713,
@@ -1034,8 +1040,9 @@ const WORDS_M = [
     "word": "marvellous",
     "phonetic": "/ˈmɑːvləs/",
     "meaning": "adj 奇迹般的；了不起的",
-    "example": "",
-    "level": "CET4"
+    "example": "marvel at (v. 对…惊奇)",
+    "level": "CET4",
+    "exampleRoot": "marvel"
   },
   {
     "id": 5723,
@@ -1123,8 +1130,9 @@ const WORDS_M = [
     "word": "maybe",
     "phonetic": "/ˈmeɪbi/",
     "meaning": "adv 大概，或许；也许",
-    "example": "",
-    "level": "CET4"
+    "example": "may be (也许，可能)",
+    "level": "CET4",
+    "exampleRoot": "may"
   },
   {
     "id": 5734,
@@ -1139,8 +1147,9 @@ const WORDS_M = [
     "word": "me",
     "phonetic": "/miː/",
     "meaning": "pron (宾格)我",
-    "example": "",
-    "level": "CET4"
+    "example": "melt into (溶解成；消散在…中；因心软而…)",
+    "level": "CET4",
+    "exampleRoot": "melt"
   },
   {
     "id": 5736,
@@ -1203,8 +1212,9 @@ const WORDS_M = [
     "word": "mechanically",
     "phonetic": "/məˈkænɪkli/",
     "meaning": "adv 机械地",
-    "example": "",
-    "level": "CET4"
+    "example": "market mechanism (市场机制；市场调节作用)",
+    "level": "CET4",
+    "exampleRoot": "mechanism"
   },
   {
     "id": 5744,
@@ -1816,8 +1826,9 @@ const WORDS_M = [
     "word": "murderer",
     "phonetic": "/ˈmɜːdəɹə/",
     "meaning": "n 杀人犯，凶手",
-    "example": "",
-    "level": "CET4"
+    "example": "mass murder (大屠杀；大规模的谋杀；集体屠杀)",
+    "level": "CET4",
+    "exampleRoot": "murder"
   },
   {
     "id": 5820,
@@ -1864,8 +1875,9 @@ const WORDS_M = [
     "word": "musician",
     "phonetic": "/mjuˈzɪʃən/",
     "meaning": "n 音乐家；作曲家",
-    "example": "",
-    "level": "CET4"
+    "example": "pop music (流行音乐)",
+    "level": "CET4",
+    "exampleRoot": "music"
   },
   {
     "id": 5826,
@@ -1888,8 +1900,9 @@ const WORDS_M = [
     "word": "my",
     "phonetic": "/mi/",
     "meaning": "pron 我的",
-    "example": "",
-    "level": "CET4"
+    "example": "by myself (独立完成)",
+    "level": "CET4",
+    "exampleRoot": "myself"
   },
   {
     "id": 5829,

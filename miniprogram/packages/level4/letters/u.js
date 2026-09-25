@@ -39,8 +39,9 @@ const WORDS_U = [
     "word": "urge",
     "phonetic": "/ɜːd͡ʒ/",
     "meaning": "v 催促",
-    "example": "",
-    "level": "CET4"
+    "example": "urgent need (迫切需要)",
+    "level": "CET4",
+    "exampleRoot": "urgent"
   },
   {
     "id": 773,
@@ -170,8 +171,9 @@ const WORDS_U = [
     "word": "ultimately",
     "phonetic": "/ˈʌltɪmətli/",
     "meaning": "adv 最后，最终",
-    "example": "",
-    "level": "CET4"
+    "example": "ultimate goal (最终目标；终极目标)",
+    "level": "CET4",
+    "exampleRoot": "ultimate"
   },
   {
     "id": 4251,
@@ -228,8 +230,9 @@ const WORDS_U = [
     "word": "undoubtedly",
     "phonetic": "/ʌnˈdaʊtɪdli/",
     "meaning": "adv 无疑",
-    "example": "",
-    "level": "CET4"
+    "example": "no doubt (adv. 无疑地；很可能地)",
+    "level": "CET4",
+    "exampleRoot": "doubtless"
   },
   {
     "id": 4333,
@@ -417,8 +420,9 @@ const WORDS_U = [
     "word": "unfortunately",
     "phonetic": "/ʌnˈfɔːtjʊnətli/",
     "meaning": "adv 不幸地",
-    "example": "",
-    "level": "CET4"
+    "example": "fortunate in (有好运气；于…很幸运)",
+    "level": "CET4",
+    "exampleRoot": "fortunate"
   },
   {
     "id": 6551,

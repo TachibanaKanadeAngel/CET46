@@ -505,8 +505,9 @@ const WORDS_A = [
     "word": "anybody",
     "phonetic": "/ˈɛn.i.bɒd.i/",
     "meaning": "n 重要人物",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "any"
   },
   {
     "id": 1317,
@@ -633,8 +634,9 @@ const WORDS_A = [
     "word": "annually",
     "phonetic": "/ˈæn.jʊə.li/",
     "meaning": "adv 年年，每年",
-    "example": "",
-    "level": "CET4"
+    "example": "annual meeting (年会)",
+    "level": "CET4",
+    "exampleRoot": "annual"
   },
   {
     "id": 2087,
@@ -753,8 +755,9 @@ const WORDS_A = [
     "word": "announce",
     "phonetic": "/əˈnaʊns/",
     "meaning": "v 报告…的来到",
-    "example": "",
-    "level": "CET4"
+    "example": "radio announcer (电台播音员)",
+    "level": "CET4",
+    "exampleRoot": "announcer"
   },
   {
     "id": 2973,
@@ -873,8 +876,9 @@ const WORDS_A = [
     "word": "attain",
     "phonetic": "/əˈteɪn/",
     "meaning": "vt 达到， 获得； 完成",
-    "example": "",
-    "level": "CET4"
+    "example": "at all (（否定句）根本；究竟)",
+    "level": "CET4",
+    "exampleRoot": "at"
   },
   {
     "id": 3188,
@@ -993,8 +997,9 @@ const WORDS_A = [
     "word": "annoy",
     "phonetic": "/əˈnɔɪ/",
     "meaning": "vt 使恼怒； 打搅",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "a"
   },
   {
     "id": 3404,
@@ -1233,8 +1238,9 @@ const WORDS_A = [
     "word": "advisable",
     "phonetic": "/ədˈvaɪ.zə.bəl/",
     "meaning": "adj 可取的； 适当的",
-    "example": "",
-    "level": "CET4"
+    "example": "advisory committee (咨询委员会)",
+    "level": "CET4",
+    "exampleRoot": "advisory"
   },
   {
     "id": 3899,
@@ -1395,8 +1401,9 @@ const WORDS_A = [
     "word": "advancement",
     "phonetic": "/ædˈvæns.mɛnt/",
     "meaning": "n 进步，提升",
-    "example": "",
-    "level": "CET4"
+    "example": "in advance (adv. 预先，提前)",
+    "level": "CET4",
+    "exampleRoot": "advance"
   },
   {
     "id": 4001,
@@ -1557,16 +1564,18 @@ const WORDS_A = [
     "word": "amaze",
     "phonetic": "/əˈmeɪz/",
     "meaning": "v 使吃惊",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "a"
   },
   {
     "id": 4388,
     "word": "a",
     "phonetic": "/æɪ/",
     "meaning": "art 一(个)；每一(个)",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "abuse"
   },
   {
     "id": 4389,
@@ -1669,8 +1678,9 @@ const WORDS_A = [
     "word": "accessary",
     "phonetic": "/ækˈsɛs(ə)ɹi/",
     "meaning": "n 同谋，从犯",
-    "example": "",
-    "level": "CET4"
+    "example": "access control (访问控制)",
+    "level": "CET4",
+    "exampleRoot": "access"
   },
   {
     "id": 4402,
@@ -1709,8 +1719,9 @@ const WORDS_A = [
     "word": "acre",
     "phonetic": "/ˈeɪ.kə/",
     "meaning": "n 英亩(=607亩)",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "a"
   },
   {
     "id": 4407,
@@ -1757,8 +1768,9 @@ const WORDS_A = [
     "word": "actress",
     "phonetic": "/ˈak.tɹəs/",
     "meaning": "n 女演员",
-    "example": "",
-    "level": "CET4"
+    "example": "act as (担当)",
+    "level": "CET4",
+    "exampleRoot": "act"
   },
   {
     "id": 4413,
@@ -1773,8 +1785,9 @@ const WORDS_A = [
     "word": "actually",
     "phonetic": "/-ɪ/",
     "meaning": "adv 实际上；竟然",
-    "example": "",
-    "level": "CET4"
+    "example": "actual situation (实际情况)",
+    "level": "CET4",
+    "exampleRoot": "actual"
   },
   {
     "id": 4415,
@@ -1813,8 +1826,9 @@ const WORDS_A = [
     "word": "adverb",
     "phonetic": "/ˈæd.vɜːb/",
     "meaning": "n 副词",
-    "example": "",
-    "level": "CET4"
+    "example": "ad hoc (adj. 特别的；临时；专设)",
+    "level": "CET4",
+    "exampleRoot": "ad"
   },
   {
     "id": 4420,
@@ -1901,8 +1915,9 @@ const WORDS_A = [
     "word": "afterward",
     "phonetic": "/ˈɑːftə.wəd/",
     "meaning": "adv 后来，以后",
-    "example": "",
-    "level": "CET4"
+    "example": "after all (毕竟；终究)",
+    "level": "CET4",
+    "exampleRoot": "after"
   },
   {
     "id": 4431,
@@ -1933,8 +1948,9 @@ const WORDS_A = [
     "word": "ago",
     "phonetic": "/əˈɡəʊ/",
     "meaning": "adv 以前",
-    "example": "",
-    "level": "CET4"
+    "example": "agony of ((感情上的)突然而强烈的爆发，任何精神上的激动)",
+    "level": "CET4",
+    "exampleRoot": "agonize"
   },
   {
     "id": 4435,
@@ -2021,8 +2037,9 @@ const WORDS_A = [
     "word": "alike",
     "phonetic": "/əˈlaɪk/",
     "meaning": "adj 同样的，相同的",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "a"
   },
   {
     "id": 4446,
@@ -2173,8 +2190,9 @@ const WORDS_A = [
     "word": "amongst",
     "phonetic": "/əˈmʌŋst/",
     "meaning": "prep 在…之中(=among)",
-    "example": "",
-    "level": "CET4"
+    "example": "from among (从…中间；从…当中)",
+    "level": "CET4",
+    "exampleRoot": "among"
   },
   {
     "id": 4465,
@@ -2293,24 +2311,27 @@ const WORDS_A = [
     "word": "any",
     "phonetic": "/ˈæni/",
     "meaning": "adj 什么，一些；任何的",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "a"
   },
   {
     "id": 4480,
     "word": "anyhow",
     "phonetic": "/ˈæn.i.haʊ/",
     "meaning": "adv 无论如何",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "any"
   },
   {
     "id": 4481,
     "word": "anyone",
     "phonetic": "/ˈæniˌwʌn/",
     "meaning": "pron 任何人",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "any"
   },
   {
     "id": 4482,
@@ -2325,8 +2346,9 @@ const WORDS_A = [
     "word": "anyway",
     "phonetic": "/ˈɛniweɪ/",
     "meaning": "adv 无论如何",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "any"
   },
   {
     "id": 4484,
@@ -2533,8 +2555,9 @@ const WORDS_A = [
     "word": "ask",
     "phonetic": "/ˈask/",
     "meaning": "v 问；要求；邀请",
-    "example": "",
-    "level": "CET4"
+    "example": "as well (也；同样地；还不如)",
+    "level": "CET4",
+    "exampleRoot": "as"
   },
   {
     "id": 4510,
@@ -2622,8 +2645,9 @@ const WORDS_A = [
     "word": "attentive",
     "phonetic": "/əˈtɛntɪv/",
     "meaning": "adj 注意的；有礼貌的",
-    "example": "",
-    "level": "CET4"
+    "example": "pay attention (专心；集中注意力)",
+    "level": "CET4",
+    "exampleRoot": "attention"
   },
   {
     "id": 4521,
@@ -2654,8 +2678,9 @@ const WORDS_A = [
     "word": "aural",
     "phonetic": "/ˈɔːɹəl/",
     "meaning": "adj 耳的，听觉的",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "a"
   },
   {
     "id": 4525,
@@ -2718,8 +2743,9 @@ const WORDS_A = [
     "word": "await",
     "phonetic": "/əˈwɛɪt/",
     "meaning": "v 等候，期待",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "a"
   },
   {
     "id": 4533,
@@ -2734,16 +2760,18 @@ const WORDS_A = [
     "word": "awfully",
     "phonetic": "/ˈɔːfli/",
     "meaning": "adv 令人畏惧的；很",
-    "example": "",
-    "level": "CET4"
+    "example": "an awful lot (◎经常)",
+    "level": "CET4",
+    "exampleRoot": "awful"
   },
   {
     "id": 4535,
     "word": "ax",
     "phonetic": "/æks/",
     "meaning": "n 斧子",
-    "example": "",
-    "level": "CET4"
+    "example": "axial force (轴向力)",
+    "level": "CET4",
+    "exampleRoot": "axial"
   },
   {
     "id": 6540,
@@ -2798,8 +2826,9 @@ const WORDS_A = [
     "word": "amid",
     "phonetic": "/əˈmɪd/",
     "meaning": "prep 在…中间， 在…之中， 被…围绕",
-    "example": "",
-    "level": "CET4"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET4",
+    "exampleRoot": "a"
   },
   {
     "id": 6647,

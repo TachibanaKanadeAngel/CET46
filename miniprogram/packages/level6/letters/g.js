@@ -266,8 +266,9 @@ const WORDS_G = [
     "word": "gangster",
     "phonetic": "/ˈɡæŋstə/",
     "meaning": "n 匪徒，歹徒，暴徒",
-    "example": "",
-    "level": "CET6"
+    "example": "gang of four (四人帮)",
+    "level": "CET6",
+    "exampleRoot": "gang"
   },
   {
     "id": 2567,
@@ -339,8 +340,9 @@ const WORDS_G = [
     "word": "growl",
     "phonetic": "/ɡɹaʊl/",
     "meaning": "v （狗等）嗥叫；咆哮",
-    "example": "",
-    "level": "CET6"
+    "example": "grow up (成长，逐渐形成)",
+    "level": "CET6",
+    "exampleRoot": "grow"
   },
   {
     "id": 2912,

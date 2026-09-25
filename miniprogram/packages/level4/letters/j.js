@@ -207,8 +207,9 @@ const WORDS_J = [
     "word": "journalist",
     "phonetic": "/ˈdʒɜːnəlɪst/",
     "meaning": "n 记者，新闻工作者",
-    "example": "",
-    "level": "CET4"
+    "example": "wall street journal (华尔街日报)",
+    "level": "CET4",
+    "exampleRoot": "journal"
   },
   {
     "id": 5553,

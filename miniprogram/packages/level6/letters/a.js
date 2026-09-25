@@ -15,8 +15,9 @@ const WORDS_A = [
     "word": "abnormally",
     "phonetic": "/æbˈnɔɹ.mə.li/",
     "meaning": "adv 不正常的",
-    "example": "",
-    "level": "CET6"
+    "example": "abnormal phenomena (异常现象)",
+    "level": "CET6",
+    "exampleRoot": "abnormal"
   },
   {
     "id": 9,
@@ -56,8 +57,9 @@ const WORDS_A = [
     "word": "adventurer",
     "phonetic": "/ædˈvɛn.tʃɚ.ɚ/",
     "meaning": "n 冒险者",
-    "example": "",
-    "level": "CET6"
+    "example": "adventure film (惊险片)",
+    "level": "CET6",
+    "exampleRoot": "adventure"
   },
   {
     "id": 23,
@@ -202,8 +204,9 @@ const WORDS_A = [
     "word": "aptly",
     "phonetic": "/ˈæp(t).li/",
     "meaning": "adv 适当地",
-    "example": "",
-    "level": "CET6"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET6",
+    "exampleRoot": "a"
   },
   {
     "id": 809,
@@ -251,8 +254,9 @@ const WORDS_A = [
     "word": "allegedly",
     "phonetic": "/əˈledʒ.ɪd.li/",
     "meaning": "adv 据说",
-    "example": "",
-    "level": "CET6"
+    "example": "all the (◎惟一的，仅有的)",
+    "level": "CET6",
+    "exampleRoot": "allege"
   },
   {
     "id": 925,
@@ -267,8 +271,9 @@ const WORDS_A = [
     "word": "accidentally",
     "phonetic": "/ˌæksəˈdɛnt(ə)li/",
     "meaning": "adv 偶然地，意外地",
-    "example": "",
-    "level": "CET6"
+    "example": "traffic accident (交通事故)",
+    "level": "CET6",
+    "exampleRoot": "accident"
   },
   {
     "id": 981,
@@ -283,8 +288,9 @@ const WORDS_A = [
     "word": "athletics",
     "phonetic": "/æθˈlɛtɪks/",
     "meaning": "n 体育运动",
-    "example": "",
-    "level": "CET6"
+    "example": "athletic sports (体育运动)",
+    "level": "CET6",
+    "exampleRoot": "athletic"
   },
   {
     "id": 1025,
@@ -299,8 +305,9 @@ const WORDS_A = [
     "word": "aspirational",
     "phonetic": "/ˌæspəˈɹeɪʃənəl/",
     "meaning": "adj 渴望的",
-    "example": "",
-    "level": "CET6"
+    "example": "aspiration biopsy (针吸活组织检查)",
+    "level": "CET6",
+    "exampleRoot": "aspiration"
   },
   {
     "id": 1075,
@@ -331,8 +338,9 @@ const WORDS_A = [
     "word": "alternatively",
     "phonetic": "/ɔːlˈtɜː.nə.tɪv.li/",
     "meaning": "adv 二选一地；非此即彼",
-    "example": "",
-    "level": "CET6"
+    "example": "alternative energy (替代能源；新能源)",
+    "level": "CET6",
+    "exampleRoot": "alternative"
   },
   {
     "id": 1165,
@@ -347,8 +355,9 @@ const WORDS_A = [
     "word": "Automatically",
     "phonetic": "/ˈɔːtəʊˌmæt.ɪk(.ə)li/",
     "meaning": "adv 自动地；不经思考地",
-    "example": "",
-    "level": "CET6"
+    "example": "automatic control (自动控制)",
+    "level": "CET6",
+    "exampleRoot": "automatic"
   },
   {
     "id": 1184,
@@ -363,8 +372,9 @@ const WORDS_A = [
     "word": "ascend",
     "phonetic": "/əˈsɛnd/",
     "meaning": "v 上升",
-    "example": "",
-    "level": "CET6"
+    "example": "as well (也；同样地；还不如)",
+    "level": "CET6",
+    "exampleRoot": "as"
   },
   {
     "id": 1238,
@@ -411,8 +421,9 @@ const WORDS_A = [
     "word": "adhere",
     "phonetic": "/ædˈhiɹ/",
     "meaning": "v 粘附；追随；坚持",
-    "example": "",
-    "level": "CET6"
+    "example": "ad hoc (adj. 特别的；临时；专设)",
+    "level": "CET6",
+    "exampleRoot": "ad"
   },
   {
     "id": 1359,
@@ -484,8 +495,9 @@ const WORDS_A = [
     "word": "adjoin",
     "phonetic": "/əˈdʒɔɪn/",
     "meaning": "v 贴近，毗连；靠近",
-    "example": "",
-    "level": "CET6"
+    "example": "ad hoc (adj. 特别的；临时；专设)",
+    "level": "CET6",
+    "exampleRoot": "ad"
   },
   {
     "id": 1727,
@@ -534,8 +546,9 @@ const WORDS_A = [
     "word": "apt",
     "phonetic": "/æpt/",
     "meaning": "adj 恰当的；聪明的",
-    "example": "",
-    "level": "CET6"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET6",
+    "exampleRoot": "a"
   },
   {
     "id": 2013,
@@ -727,8 +740,9 @@ const WORDS_A = [
     "word": "adore",
     "phonetic": "/əˈdɔː/",
     "meaning": "v 崇拜，爱慕；很喜欢",
-    "example": "",
-    "level": "CET6"
+    "example": "ad hoc (adj. 特别的；临时；专设)",
+    "level": "CET6",
+    "exampleRoot": "ad"
   },
   {
     "id": 2721,
@@ -783,8 +797,9 @@ const WORDS_A = [
     "word": "alas",
     "phonetic": "/ɘˈlɛs/",
     "meaning": "int 唉，哎呀",
-    "example": "",
-    "level": "CET6"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET6",
+    "exampleRoot": "a"
   },
   {
     "id": 2889,
@@ -824,8 +839,9 @@ const WORDS_A = [
     "word": "avert",
     "phonetic": "/əˈvɜːt/",
     "meaning": "vt 防止， 避免； 转移",
-    "example": "",
-    "level": "CET6"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET6",
+    "exampleRoot": "a"
   },
   {
     "id": 3038,
@@ -880,8 +896,9 @@ const WORDS_A = [
     "word": "allege",
     "phonetic": "/əˈlɛdʒ/",
     "meaning": "vt 断言， 宣称， 硬说",
-    "example": "",
-    "level": "CET6"
+    "example": "all the (◎惟一的，仅有的)",
+    "level": "CET6",
+    "exampleRoot": "all"
   },
   {
     "id": 3338,
@@ -904,8 +921,9 @@ const WORDS_A = [
     "word": "authentic",
     "phonetic": "/ɒ.ˈθɛn.tɪk/",
     "meaning": "adj 真的， 真正的； 可靠的， 可信的",
-    "example": "",
-    "level": "CET6"
+    "example": "competent authority ([法]主管当局，主管部门)",
+    "level": "CET6",
+    "exampleRoot": "authority"
   },
   {
     "id": 3418,
@@ -920,8 +938,9 @@ const WORDS_A = [
     "word": "arena",
     "phonetic": "/əˈɹiːnə/",
     "meaning": "n 表演场地， 竞技场； 活动场所",
-    "example": "",
-    "level": "CET6"
+    "example": "drug abuse (药物滥用；毒品滥用)",
+    "level": "CET6",
+    "exampleRoot": "a"
   },
   {
     "id": 3445,
@@ -1011,8 +1030,9 @@ const WORDS_A = [
     "word": "alienate",
     "phonetic": "/ˈeɪ.li.ə.neɪt/",
     "meaning": "vt 使疏远， 使不友好， 离间； 转让， 让渡",
-    "example": "",
-    "level": "CET6"
+    "example": "alien from (相异的)",
+    "level": "CET6",
+    "exampleRoot": "alien"
   },
   {
     "id": 3754,

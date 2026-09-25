@@ -1,4 +1,4 @@
-﻿import { CONFIG } from '../config.js';
+import { CONFIG } from '../config.js';
 import { DeviceBridge } from '../bridge.js';
 import logger from '../utils/logger.js';
 
@@ -94,85 +94,81 @@ function cleanupAudio(audioEl: HTMLAudioElement | null): void {
   }
 }
 
-async function speak(text: string): Promise<void> {
+function playWithTimeout(audioUrl: string, timeout: number): Promise<HTMLAudioElement> {
+  return new Promise((resolve, reject) => {
+    if (currentPlayingAudio) {
+      cleanupAudio(currentPlayingAudio);
+      currentPlayingAudio = null;
+    }
+
+    const audio = new Audio(audioUrl);
+    currentPlayingAudio = audio;
+
+    const timer = setTimeout(() => {
+      cleanupAudio(audio);
+      if (currentPlayingAudio === audio) {
+        currentPlayingAudio = null;
+      }
+      reject(new Error('Audio timeout'));
+    }, timeout);
+
+    audio.oncanplaythrough = () => {
+      clearTimeout(timer);
+      audio
+        .play()
+        .then(() => resolve(audio))
+        .catch(reject);
+    };
+
+    audio.onerror = () => {
+      clearTimeout(timer);
+      cleanupAudio(audio);
+      if (currentPlayingAudio === audio) {
+        currentPlayingAudio = null;
+      }
+      reject(new Error('Audio load error'));
+    };
+
+    audio.onended = () => {
+      cleanupAudio(audio);
+      if (currentPlayingAudio === audio) {
+        currentPlayingAudio = null;
+      }
+    };
+
+    audio.load();
+  });
+}
+
+async function tryProxyAudio(text: string): Promise<boolean> {
   const CORS_PROXIES = CONFIG.CORS_PROXIES;
   const originalUrl = `${CONFIG.AUDIO_BASE_URL}?audio=${encodeURIComponent(text)}&type=2`;
 
-  const playWithTimeout = (audioUrl: string, timeout: number): Promise<HTMLAudioElement> => {
-    return new Promise((resolve, reject) => {
-      if (currentPlayingAudio) {
-        cleanupAudio(currentPlayingAudio);
-        currentPlayingAudio = null;
+  for (let i = 0; i < CORS_PROXIES.length; i++) {
+    const proxyIndex = (currentAudioProxyIndex + i) % CORS_PROXIES.length;
+    const proxy = CORS_PROXIES[proxyIndex];
+    const audioUrl = proxy + encodeURIComponent(originalUrl);
+
+    try {
+      await playWithTimeout(audioUrl, AUDIO_RACE_TIMEOUT);
+      currentAudioProxyIndex = proxyIndex;
+
+      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({
+          type: 'CACHE_AUDIO',
+          url: audioUrl,
+        });
       }
-
-      const audio = new Audio(audioUrl);
-      currentPlayingAudio = audio;
-
-      const timer = setTimeout(() => {
-        cleanupAudio(audio);
-        if (currentPlayingAudio === audio) {
-          currentPlayingAudio = null;
-        }
-        reject(new Error('Audio timeout'));
-      }, timeout);
-
-      audio.oncanplaythrough = () => {
-        clearTimeout(timer);
-        audio
-          .play()
-          .then(() => resolve(audio))
-          .catch(reject);
-      };
-
-      audio.onerror = () => {
-        clearTimeout(timer);
-        cleanupAudio(audio);
-        if (currentPlayingAudio === audio) {
-          currentPlayingAudio = null;
-        }
-        reject(new Error('Audio load error'));
-      };
-
-      audio.onended = () => {
-        cleanupAudio(audio);
-        if (currentPlayingAudio === audio) {
-          currentPlayingAudio = null;
-        }
-      };
-
-      audio.load();
-    });
-  };
-
-  const playLocalTTS = () => {
-    DeviceBridge.speakNative(text);
-  };
-
-  const tryProxyAudio = async (): Promise<boolean> => {
-    for (let i = 0; i < CORS_PROXIES.length; i++) {
-      const proxyIndex = (currentAudioProxyIndex + i) % CORS_PROXIES.length;
-      const proxy = CORS_PROXIES[proxyIndex];
-      const audioUrl = proxy + encodeURIComponent(originalUrl);
-
-      try {
-        await playWithTimeout(audioUrl, AUDIO_RACE_TIMEOUT);
-        currentAudioProxyIndex = proxyIndex;
-
-        if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-          navigator.serviceWorker.controller.postMessage({
-            type: 'CACHE_AUDIO',
-            url: audioUrl,
-          });
-        }
-        return true;
-      } catch (err: any) {
-        logger.warn(`音频代理 ${proxy} 失败:`, err.message);
-      }
+      return true;
+    } catch (err: any) {
+      logger.warn(`音频代理 ${proxy} 失败:`, err.message);
     }
-    return false;
-  };
+  }
+  return false;
+}
 
-  const proxyPromise = tryProxyAudio();
+async function speak(text: string): Promise<void> {
+  const proxyPromise = tryProxyAudio(text);
   const fallbackTimer = new Promise<{ type: string }>((resolve) => {
     setTimeout(() => resolve({ type: 'timeout' }), AUDIO_RACE_TIMEOUT);
   });
@@ -183,7 +179,7 @@ async function speak(text: string): Promise<void> {
   ]);
 
   if (raceResult.type === 'timeout') {
-    playLocalTTS();
+    DeviceBridge.speakNative(text);
     proxyPromise.then(audio => {
       if (audio && currentPlayingAudio) {
         cleanupAudio(currentPlayingAudio);
@@ -191,7 +187,7 @@ async function speak(text: string): Promise<void> {
       }
     }).catch(() => {});
   } else if (raceResult.type === 'proxy' && !(raceResult as any).success) {
-    playLocalTTS();
+    DeviceBridge.speakNative(text);
   }
 }
 

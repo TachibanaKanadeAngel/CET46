@@ -1,4 +1,4 @@
-import { CONFIG } from '../config.js';
+import { CONFIG, MS_PER_DAY } from '../config.js';
 import { db } from '../db.js';
 import { getData, getWordData } from '../core.js';
 import { getHeatmap, memoryCache } from '../store.js';
@@ -159,7 +159,7 @@ export function renderHeatmap(): void {
       if (wd.status === 'review' && wd.nextReview) {
         const reviewDate = new Date(wd.nextReview);
         reviewDate.setHours(0, 0, 0, 0);
-        const daysDiff = Math.floor((reviewDate.getTime() - todayNorm.getTime()) / (CONFIG.CONSTANTS?.MS_PER_DAY || 86400000));
+        const daysDiff = Math.floor((reviewDate.getTime() - todayNorm.getTime()) / MS_PER_DAY);
         if (daysDiff >= 0 && daysDiff < 7) upcomingReviews[daysDiff]++;
       }
     }

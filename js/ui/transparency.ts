@@ -1,4 +1,4 @@
-import { CONFIG } from '../config.js';
+import { MS_PER_DAY } from '../config.js';
 
 export function renderAlgorithmTransparency(wordId: any, getWordData: (id: any) => any, FSRS_W: number[]): any | null {
   const wd = getWordData(wordId);
@@ -9,7 +9,7 @@ export function renderAlgorithmTransparency(wordId: any, getWordData: (id: any) 
 
   let retrievability = 1;
   if (wd.lastStudy && wd.status === 'review') {
-    const daysSinceReview = (Date.now() - wd.lastStudy) / (CONFIG.CONSTANTS?.MS_PER_DAY || 86400000);
+    const daysSinceReview = (Date.now() - wd.lastStudy) / MS_PER_DAY;
     retrievability = Math.pow(1 + daysSinceReview / (9 * Math.max(stability, 0.01)), -1);
   }
 
@@ -48,7 +48,7 @@ export function createAlgorithmHeatmap(words: any[], getWordData: (id: any) => a
 
       let retrievability = 1;
       if (wd.lastStudy) {
-        const daysSinceReview = (Date.now() - wd.lastStudy) / (CONFIG.CONSTANTS?.MS_PER_DAY || 86400000);
+        const daysSinceReview = (Date.now() - wd.lastStudy) / MS_PER_DAY;
         retrievability = Math.pow(1 + daysSinceReview / (9 * Math.max(stability, 0.01)), -1);
       }
 
@@ -79,7 +79,7 @@ export function renderEFDisplay(
   MIN_EF: number,
   MAX_EF: number,
   FSRS_W: number[],
-  MS_PER_DAY: number = (CONFIG.CONSTANTS?.MS_PER_DAY || 86400000)
+  msPerDay: number = MS_PER_DAY
 ): void {
   const idPrefix = prefix ? `${prefix}-` : '';
   const efDisplay = document.getElementById(`${idPrefix}ef-display`);
@@ -104,7 +104,7 @@ export function renderEFDisplay(
   if (!retentionValue) return;
 
   if (wd.lastStudy && wd.status === 'review') {
-    const days = (Date.now() - wd.lastStudy) / MS_PER_DAY;
+    const days = (Date.now() - wd.lastStudy) / msPerDay;
     const r = Math.pow(1 + days / (9 * Math.max(stability, 0.01)), -1);
     retentionValue.textContent = `${Math.round(r * 100)}%`;
   } else {

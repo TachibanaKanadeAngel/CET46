@@ -312,8 +312,9 @@ const WORDS_L = [
     "word": "loyal",
     "phonetic": "/ˈlɔɪəl/",
     "meaning": "adj 忠诚的， 忠心的",
-    "example": "",
-    "level": "CET4"
+    "example": "customer loyalty (客户忠诚度；顾客信赖)",
+    "level": "CET4",
+    "exampleRoot": "loyalty"
   },
   {
     "id": 3276,
@@ -464,8 +465,9 @@ const WORDS_L = [
     "word": "logically",
     "phonetic": "/ˈlɒdʒ.ɪ.kəl.i/",
     "meaning": "adv 合乎情理地，符合逻辑地",
-    "example": "",
-    "level": "CET4"
+    "example": "log in (注册；请求联机)",
+    "level": "CET4",
+    "exampleRoot": "log"
   },
   {
     "id": 5586,
@@ -552,16 +554,18 @@ const WORDS_L = [
     "word": "landlady",
     "phonetic": "/ˈlændˌleɪ.di/",
     "meaning": "n 女房东；女地主",
-    "example": "",
-    "level": "CET4"
+    "example": "land use (土地利用，土地用途；土地使用，土壤使用)",
+    "level": "CET4",
+    "exampleRoot": "land"
   },
   {
     "id": 5597,
     "word": "landlord",
     "phonetic": "/ˈlænd.lɔːd/",
     "meaning": "n 地主；房东，店主",
-    "example": "",
-    "level": "CET4"
+    "example": "land use (土地利用，土地用途；土地使用，土壤使用)",
+    "level": "CET4",
+    "exampleRoot": "land"
   },
   {
     "id": 5598,
@@ -1132,8 +1136,9 @@ const WORDS_L = [
     "word": "liter",
     "phonetic": "/ˈliː.tə/",
     "meaning": "n 升(容量单位)",
-    "example": "",
-    "level": "CET4"
+    "example": "literal translation (直译，直译法；逐字翻译)",
+    "level": "CET4",
+    "exampleRoot": "literal"
   },
   {
     "id": 5669,
@@ -1380,8 +1385,9 @@ const WORDS_L = [
     "word": "lad",
     "phonetic": "/læd/",
     "meaning": "n 男孩， 小伙子",
-    "example": "",
-    "level": "CET4"
+    "example": "ladder diagram (梯形图)",
+    "level": "CET4",
+    "exampleRoot": "ladder"
   }
 ];
 

@@ -86,8 +86,9 @@ const WORDS_T = [
     "word": "tradeoff",
     "phonetic": "/ˈtreɪd.ɒf/",
     "meaning": "n 权衡，交易",
-    "example": "",
-    "level": "CET6"
+    "example": "foreign trade (外贸，对外贸易)",
+    "level": "CET6",
+    "exampleRoot": "trade"
   },
   {
     "id": 1008,
@@ -222,8 +223,9 @@ const WORDS_T = [
     "word": "towards",
     "phonetic": "/tɘˈwoːdz/",
     "meaning": "prep 用于，有助于",
-    "example": "",
-    "level": "CET6"
+    "example": "in tow (拖着；在一起)",
+    "level": "CET6",
+    "exampleRoot": "tow"
   },
   {
     "id": 1659,
@@ -279,8 +281,9 @@ const WORDS_T = [
     "word": "treasurer",
     "phonetic": "/ˈtɹɛʒəɹə(ɹ)/",
     "meaning": "n 司库，财务主管",
-    "example": "",
-    "level": "CET6"
+    "example": "treasure house (n. 宝库；宝藏室)",
+    "level": "CET6",
+    "exampleRoot": "treasure"
   },
   {
     "id": 1786,
@@ -303,8 +306,9 @@ const WORDS_T = [
     "word": "tiresome",
     "phonetic": "/ˈtaɪəsəm/",
     "meaning": "adj 使人厌倦的，讨厌的",
-    "example": "",
-    "level": "CET6"
+    "example": "tire of (厌倦；厌烦)",
+    "level": "CET6",
+    "exampleRoot": "tire"
   },
   {
     "id": 1831,
@@ -345,8 +349,9 @@ const WORDS_T = [
     "word": "tradesman",
     "phonetic": "/ˈtreɪdz.mən/",
     "meaning": "n 商人，店主；手艺人",
-    "example": "",
-    "level": "CET6"
+    "example": "foreign trade (外贸，对外贸易)",
+    "level": "CET6",
+    "exampleRoot": "trade"
   },
   {
     "id": 1895,
@@ -425,8 +430,9 @@ const WORDS_T = [
     "word": "tickle",
     "phonetic": "/ˈtɪkl̩/",
     "meaning": "v 挠，胳肢；逗乐",
-    "example": "",
-    "level": "CET6"
+    "example": "tick off (列举；用记号标出)",
+    "level": "CET6",
+    "exampleRoot": "tick"
   },
   {
     "id": 2103,
@@ -449,8 +455,9 @@ const WORDS_T = [
     "word": "terrorist",
     "phonetic": "/ˈtɛɹəɹɪst/",
     "meaning": "n 恐怖分子",
-    "example": "",
-    "level": "CET6"
+    "example": "feel terrible (感觉不舒服)",
+    "level": "CET6",
+    "exampleRoot": "terrify"
   },
   {
     "id": 2258,
@@ -595,8 +602,9 @@ const WORDS_T = [
     "word": "thresh",
     "phonetic": "/θɹɛʃ/",
     "meaning": "v 打谷，脱粒",
-    "example": "",
-    "level": "CET6"
+    "example": "threshold value ([计]阈值；门限值；界限值)",
+    "level": "CET6",
+    "exampleRoot": "threshold"
   },
   {
     "id": 2654,
@@ -619,8 +627,9 @@ const WORDS_T = [
     "word": "tactics",
     "phonetic": "/ˈtæktɪks/",
     "meaning": "n 战术，兵法",
-    "example": "",
-    "level": "CET6"
+    "example": "contact us (联系我们；联络我们；联系方式)",
+    "level": "CET6",
+    "exampleRoot": "tact"
   },
   {
     "id": 2797,
@@ -763,8 +772,9 @@ const WORDS_T = [
     "word": "tempo",
     "phonetic": "/ˈtɛm.pəʊ/",
     "meaning": "n 速度； 节奏， 行进速度",
-    "example": "",
-    "level": "CET6"
+    "example": "temporary storage (暂时存储器；暂时库容；中间存储器)",
+    "level": "CET6",
+    "exampleRoot": "temporary"
   },
   {
     "id": 3078,

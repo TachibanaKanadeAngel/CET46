@@ -102,8 +102,9 @@ const WORDS_J = [
     "word": "jealousy",
     "phonetic": "/ˈdʒɛləsi/",
     "meaning": "n 妒忌，嫉妒，猜忌",
-    "example": "",
-    "level": "CET6"
+    "example": "jealous of (妒忌)",
+    "level": "CET6",
+    "exampleRoot": "jealous"
   },
   {
     "id": 2576,

@@ -6,8 +6,9 @@ const WORDS_I = [
     "word": "ideologically",
     "phonetic": "/ˌaɪ.di.əˈlɒdʒ.ɪ.kəl.i/",
     "meaning": "adv 意识形态上地",
-    "example": "",
-    "level": "CET6"
+    "example": "political ideology (政治意识形态)",
+    "level": "CET6",
+    "exampleRoot": "ideology"
   },
   {
     "id": 368,
@@ -104,8 +105,9 @@ const WORDS_I = [
     "word": "inhale",
     "phonetic": "/ɪnˈheɪl/",
     "meaning": "v 吸入",
-    "example": "",
-    "level": "CET6"
+    "example": "in on (参与，参加)",
+    "level": "CET6",
+    "exampleRoot": "in"
   },
   {
     "id": 400,
@@ -121,8 +123,9 @@ const WORDS_I = [
     "word": "instinctively",
     "phonetic": "/ɪnˈstɪŋktɪvli/",
     "meaning": "adv 本能地",
-    "example": "",
-    "level": "CET6"
+    "example": "by instinct (出于本能)",
+    "level": "CET6",
+    "exampleRoot": "instinct"
   },
   {
     "id": 409,
@@ -343,8 +346,9 @@ const WORDS_I = [
     "word": "inaction",
     "phonetic": "/ɪnˈækʃən/",
     "meaning": "n 不作为",
-    "example": "",
-    "level": "CET6"
+    "example": "interaction with (交往；与…相互作用)",
+    "level": "CET6",
+    "exampleRoot": "interaction"
   },
   {
     "id": 1048,
@@ -383,8 +387,9 @@ const WORDS_I = [
     "word": "incidentally",
     "phonetic": "/ˌɪn.sɪˈden.təl.i/",
     "meaning": "adv 顺便地，附带",
-    "example": "",
-    "level": "CET6"
+    "example": "incidence rate (发生率，发病率)",
+    "level": "CET6",
+    "exampleRoot": "incidence"
   },
   {
     "id": 1168,
@@ -581,8 +586,9 @@ const WORDS_I = [
     "word": "idealism",
     "phonetic": "/aɪˈdɪə.lɪ.zəm/",
     "meaning": "n 唯心主义；理想主义",
-    "example": "",
-    "level": "CET6"
+    "example": "ideal gas (理想气体)",
+    "level": "CET6",
+    "exampleRoot": "ideal"
   },
   {
     "id": 1679,
@@ -630,16 +636,18 @@ const WORDS_I = [
     "word": "intellect",
     "phonetic": "/ˈɪntəlɛkt/",
     "meaning": "n 理智，智力，才智",
-    "example": "",
-    "level": "CET6"
+    "example": "intellectual property (知识产权；著作权)",
+    "level": "CET6",
+    "exampleRoot": "intellectual"
   },
   {
     "id": 2147,
     "word": "ideally",
     "phonetic": "/ʌɪˈdɪəli/",
     "meaning": "adv 理想地；理论上",
-    "example": "",
-    "level": "CET6"
+    "example": "ideal gas (理想气体)",
+    "level": "CET6",
+    "exampleRoot": "ideal"
   },
   {
     "id": 2151,
@@ -753,8 +761,9 @@ const WORDS_I = [
     "word": "indignation",
     "phonetic": "/ˌɪn.dɪɡ.ˈneɪ.ʃən/",
     "meaning": "n 愤怒，愤慨，义愤",
-    "example": "",
-    "level": "CET6"
+    "example": "dig out (掘出；发现)",
+    "level": "CET6",
+    "exampleRoot": "dignity"
   },
   {
     "id": 2507,
@@ -884,8 +893,9 @@ const WORDS_I = [
     "word": "icy",
     "phonetic": "/ˈaɪsi/",
     "meaning": "adj 冰冷的；冷冰冰的",
-    "example": "",
-    "level": "CET6"
+    "example": "index system ([计]索引系统)",
+    "level": "CET6",
+    "exampleRoot": "I"
   },
   {
     "id": 2818,

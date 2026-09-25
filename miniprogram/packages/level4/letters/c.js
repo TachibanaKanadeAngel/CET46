@@ -667,8 +667,9 @@ const WORDS_C = [
     "word": "confess",
     "phonetic": "/kənˈfɛs/",
     "meaning": "v 承认",
-    "example": "",
-    "level": "CET4"
+    "example": "profession of (宣称(感情、信念等)；表白)",
+    "level": "CET4",
+    "exampleRoot": "profess"
   },
   {
     "id": 1064,
@@ -1061,8 +1062,9 @@ const WORDS_C = [
     "word": "currently",
     "phonetic": "/ˈkʌɹəntli/",
     "meaning": "adv 当前",
-    "example": "",
-    "level": "CET4"
+    "example": "recurrence rate ([计]重复率；[医]再发率)",
+    "level": "CET4",
+    "exampleRoot": "recurrence"
   },
   {
     "id": 2003,
@@ -1295,8 +1297,9 @@ const WORDS_C = [
     "word": "cruelty",
     "phonetic": "/ˈkɹuː(ə)lti/",
     "meaning": "n 残酷；残酷行为",
-    "example": "",
-    "level": "CET4"
+    "example": "extremely cruel (极其残忍；惨绝人寰)",
+    "level": "CET4",
+    "exampleRoot": "cruel"
   },
   {
     "id": 2765,
@@ -1311,8 +1314,9 @@ const WORDS_C = [
     "word": "characterize",
     "phonetic": "/ˈkæɹəktəɹaɪz/",
     "meaning": "v 表现…的特性",
-    "example": "",
-    "level": "CET4"
+    "example": "chinese character (汉字)",
+    "level": "CET4",
+    "exampleRoot": "character"
   },
   {
     "id": 2794,
@@ -1440,8 +1444,9 @@ const WORDS_C = [
     "word": "cordial",
     "phonetic": "/ˈkɔː.dɪ.əl/",
     "meaning": "adj 热情友好的， 热诚的",
-    "example": "",
-    "level": "CET4"
+    "example": "spinal cord (脊髓)",
+    "level": "CET4",
+    "exampleRoot": "cord"
   },
   {
     "id": 3071,
@@ -1568,8 +1573,9 @@ const WORDS_C = [
     "word": "compete",
     "phonetic": "/kəm.ˈpiːt/",
     "meaning": "vi 比赛， 竞争， 对抗",
-    "example": "",
-    "level": "CET4"
+    "example": "core competence (核心竞争力；核心才能)",
+    "level": "CET4",
+    "exampleRoot": "competence"
   },
   {
     "id": 3273,
@@ -1857,8 +1863,9 @@ const WORDS_C = [
     "word": "consequently",
     "phonetic": "/ˈkɒnsɪˌkwɛntli/",
     "meaning": "adv 因此， 因而， 所以",
-    "example": "",
-    "level": "CET4"
+    "example": "consequent on (随之而来；跟着…发生的)",
+    "level": "CET4",
+    "exampleRoot": "consequent"
   },
   {
     "id": 3766,
@@ -2081,8 +2088,9 @@ const WORDS_C = [
     "word": "canteen",
     "phonetic": "/kænˈtiːn/",
     "meaning": "n 食堂",
-    "example": "",
-    "level": "CET4"
+    "example": "can be (可能；可以是)",
+    "level": "CET4",
+    "exampleRoot": "can"
   },
   {
     "id": 4025,
@@ -2242,16 +2250,18 @@ const WORDS_C = [
     "word": "considerably",
     "phonetic": "/kənˈsɪdəɹəbli/",
     "meaning": "adv 相当地，非常地",
-    "example": "",
-    "level": "CET4"
+    "example": "consider as (vt. 认为（把...看作）)",
+    "level": "CET4",
+    "exampleRoot": "consider"
   },
   {
     "id": 4045,
     "word": "constantly",
     "phonetic": "/ˈkɒnstəntli/",
     "meaning": "adv 不断地，时常地",
-    "example": "",
-    "level": "CET4"
+    "example": "constant temperature (恒温；定温；等温)",
+    "level": "CET4",
+    "exampleRoot": "constant"
   },
   {
     "id": 4046,
@@ -2490,8 +2500,9 @@ const WORDS_C = [
     "word": "canoe",
     "phonetic": "/kəˈnuː/",
     "meaning": "n 独木舟，皮艇，划子",
-    "example": "",
-    "level": "CET4"
+    "example": "can be (可能；可以是)",
+    "level": "CET4",
+    "exampleRoot": "can"
   },
   {
     "id": 4713,
@@ -2892,8 +2903,9 @@ const WORDS_C = [
     "word": "cheerful",
     "phonetic": "/ˈt͡ʃɪəfəl/",
     "meaning": "adj 快乐的，愉快的",
-    "example": "",
-    "level": "CET4"
+    "example": "cheer up (使高兴；高兴起来；使振奋)",
+    "level": "CET4",
+    "exampleRoot": "cheer"
   },
   {
     "id": 4763,
@@ -3053,8 +3065,9 @@ const WORDS_C = [
     "word": "cigaret",
     "phonetic": "/ˈsɪɡ.ər.et/",
     "meaning": "n 香烟，纸烟，卷烟",
-    "example": "",
-    "level": "CET4"
+    "example": "no cigar (连香烟奖品也挣不到)",
+    "level": "CET4",
+    "exampleRoot": "cigar"
   },
   {
     "id": 4783,
@@ -3135,8 +3148,9 @@ const WORDS_C = [
     "word": "classmate",
     "phonetic": "/ˈklɑːs.meɪt/",
     "meaning": "n 同班同学",
-    "example": "",
-    "level": "CET4"
+    "example": "in class (在课堂上；上课中)",
+    "level": "CET4",
+    "exampleRoot": "class"
   },
   {
     "id": 4793,
@@ -3239,8 +3253,9 @@ const WORDS_C = [
     "word": "clothe",
     "phonetic": "/ˈkləʊð/",
     "meaning": "v 给…穿衣服",
-    "example": "",
-    "level": "CET4"
+    "example": "cotton cloth (棉布)",
+    "level": "CET4",
+    "exampleRoot": "cloth"
   },
   {
     "id": 4806,
@@ -3805,8 +3820,9 @@ const WORDS_C = [
     "word": "costly",
     "phonetic": "/ˈkɒst.li/",
     "meaning": "adj 昂贵的；价值高的",
-    "example": "",
-    "level": "CET4"
+    "example": "the cost of (以…为代价)",
+    "level": "CET4",
+    "exampleRoot": "cost"
   },
   {
     "id": 4876,
@@ -4214,8 +4230,9 @@ const WORDS_C = [
     "word": "cashier",
     "phonetic": "/kəˈʃɪə/",
     "meaning": "n 出纳",
-    "example": "",
-    "level": "CET4"
+    "example": "cash flow (资金流动)",
+    "level": "CET4",
+    "exampleRoot": "cash"
   }
 ];
 

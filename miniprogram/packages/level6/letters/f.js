@@ -6,8 +6,9 @@ const WORDS_F = [
     "word": "fearlessly",
     "phonetic": "/ˈfɪə.ləs.li/",
     "meaning": "adv 无畏地，大胆地",
-    "example": "",
-    "level": "CET6"
+    "example": "for fear (以免，唯恐；由于害怕)",
+    "level": "CET6",
+    "exampleRoot": "fearless"
   },
   {
     "id": 307,
@@ -30,8 +31,9 @@ const WORDS_F = [
     "word": "footnote",
     "phonetic": "/ˈfʊtˌnəʊt/",
     "meaning": "n 注脚",
-    "example": "",
-    "level": "CET6"
+    "example": "on foot (步行；在进行中)",
+    "level": "CET6",
+    "exampleRoot": "foot"
   },
   {
     "id": 317,
@@ -88,8 +90,9 @@ const WORDS_F = [
     "word": "fluently",
     "phonetic": "/ˈfluː.ənt.li/",
     "meaning": "adv 流利地",
-    "example": "",
-    "level": "CET6"
+    "example": "influence on (对…的影响)",
+    "level": "CET6",
+    "exampleRoot": "influence"
   },
   {
     "id": 910,
@@ -153,8 +156,9 @@ const WORDS_F = [
     "word": "foresee",
     "phonetic": "/fɔːˈsiː/",
     "meaning": "v 预见，预知，看穿",
-    "example": "",
-    "level": "CET6"
+    "example": "to the fore (在前面；在近处；在手头)",
+    "level": "CET6",
+    "exampleRoot": "fore"
   },
   {
     "id": 1400,
@@ -170,16 +174,18 @@ const WORDS_F = [
     "word": "formerly",
     "phonetic": "/ˈfɔːməli/",
     "meaning": "adv 以前，从前",
-    "example": "",
-    "level": "CET6"
+    "example": "in conformity with (与…相符，符合；遵照；和…相适应)",
+    "level": "CET6",
+    "exampleRoot": "conformity"
   },
   {
     "id": 1449,
     "word": "forsake",
     "phonetic": "/fɔɹˈseɪk/",
     "meaning": "v 遗弃，抛弃；摒绝，摒弃",
-    "example": "",
-    "level": "CET6"
+    "example": "for all (尽管；虽然)",
+    "level": "CET6",
+    "exampleRoot": "for"
   },
   {
     "id": 1471,
@@ -194,8 +200,9 @@ const WORDS_F = [
     "word": "footpath",
     "phonetic": "/ˈfʊtˌpæθ/",
     "meaning": "n 小路，人行道",
-    "example": "",
-    "level": "CET6"
+    "example": "on foot (步行；在进行中)",
+    "level": "CET6",
+    "exampleRoot": "foot"
   },
   {
     "id": 1561,
@@ -244,8 +251,9 @@ const WORDS_F = [
     "word": "fro",
     "phonetic": "/[fɹəʊ]/",
     "meaning": "adv 往，去，回，向后",
-    "example": "",
-    "level": "CET6"
+    "example": "frown on (不悦，不满)",
+    "level": "CET6",
+    "exampleRoot": "frown"
   },
   {
     "id": 1714,
@@ -324,8 +332,9 @@ const WORDS_F = [
     "word": "faction",
     "phonetic": "/ˈfæk.ʃn̩/",
     "meaning": "n 派别，宗派，小集团",
-    "example": "",
-    "level": "CET6"
+    "example": "in fact (事实上，实际上)",
+    "level": "CET6",
+    "exampleRoot": "fact"
   },
   {
     "id": 2031,
@@ -528,8 +537,9 @@ const WORDS_F = [
     "word": "fortress",
     "phonetic": "/ˈfɔː.tɹəs/",
     "meaning": "n 堡垒，要塞",
-    "example": "",
-    "level": "CET6"
+    "example": "fort worth (沃思堡市（美国城市）)",
+    "level": "CET6",
+    "exampleRoot": "fort"
   },
   {
     "id": 2812,
@@ -560,8 +570,9 @@ const WORDS_F = [
     "word": "frock",
     "phonetic": "/fɹɒk/",
     "meaning": "n （女）连衣裙",
-    "example": "",
-    "level": "CET6"
+    "example": "frown on (不悦，不满)",
+    "level": "CET6",
+    "exampleRoot": "fro"
   },
   {
     "id": 2885,
@@ -608,8 +619,9 @@ const WORDS_F = [
     "word": "facet",
     "phonetic": "/ˈfæsɪt/",
     "meaning": "n 一个方面； 面",
-    "example": "",
-    "level": "CET6"
+    "example": "the face of (即使；在…面前)",
+    "level": "CET6",
+    "exampleRoot": "face"
   },
   {
     "id": 3308,

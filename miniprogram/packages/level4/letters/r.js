@@ -306,8 +306,9 @@ const WORDS_R = [
     "word": "rigorous",
     "phonetic": "/ˈɹɪɡəɹəs/",
     "meaning": "adj 严格的",
-    "example": "",
-    "level": "CET4"
+    "example": "drilling rig (钻机，钻探装置)",
+    "level": "CET4",
+    "exampleRoot": "rigor"
   },
   {
     "id": 644,
@@ -1202,16 +1203,18 @@ const WORDS_R = [
     "word": "racially",
     "phonetic": "/ˈreɪ.ʃəl.i/",
     "meaning": "adv 种族上地",
-    "example": "",
-    "level": "CET4"
+    "example": "racial discrimination (种族歧视)",
+    "level": "CET4",
+    "exampleRoot": "interracial"
   },
   {
     "id": 4356,
     "word": "respectively",
     "phonetic": "/ɹɪˈspɛktɪvli/",
     "meaning": "adv 各自地",
-    "example": "",
-    "level": "CET4"
+    "example": "prospect for (勘探)",
+    "level": "CET4",
+    "exampleRoot": "prospect"
   },
   {
     "id": 4372,
@@ -1451,8 +1454,9 @@ const WORDS_R = [
     "word": "really",
     "phonetic": "/ˈɹɪəli/",
     "meaning": "adv 真正地；实在",
-    "example": "",
-    "level": "CET4"
+    "example": "overall situation (大局；总体形势)",
+    "level": "CET4",
+    "exampleRoot": "overall"
   },
   {
     "id": 6199,
@@ -1467,8 +1471,9 @@ const WORDS_R = [
     "word": "receive",
     "phonetic": "/ɹɪˈsiːv/",
     "meaning": "v 收到；得到；接待",
-    "example": "",
-    "level": "CET4"
+    "example": "conceive of (设想；想象)",
+    "level": "CET4",
+    "exampleRoot": "conceive"
   },
   {
     "id": 6201,
@@ -1683,8 +1688,9 @@ const WORDS_R = [
     "word": "repeatedly",
     "phonetic": "/ɹɪˈpiːtɪdli/",
     "meaning": "adv 重复地；一再",
-    "example": "",
-    "level": "CET4"
+    "example": "repeat oneself (不自觉地重复)",
+    "level": "CET4",
+    "exampleRoot": "repeat"
   },
   {
     "id": 6228,
@@ -2020,8 +2026,9 @@ const WORDS_R = [
     "word": "rob",
     "phonetic": "/ɹɒb/",
     "meaning": "vt 抢劫， 盗窃",
-    "example": "",
-    "level": "CET4"
+    "example": "armed robbery (持械抢劫)",
+    "level": "CET4",
+    "exampleRoot": "robbery"
   },
   {
     "id": 6599,

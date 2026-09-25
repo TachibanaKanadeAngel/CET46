@@ -17,8 +17,9 @@
       "word": "abnormally",
       "phonetic": "/æbˈnɔɹ.mə.li/",
       "meaning": "adv 不正常的",
-      "example": "",
-      "level": "CET6"
+      "example": "abnormal phenomena (异常现象)",
+      "level": "CET6",
+      "exampleRoot": "abnormal"
     },
     {
       "id": 3,
@@ -180,8 +181,9 @@
       "word": "adventurer",
       "phonetic": "/ædˈvɛn.tʃɚ.ɚ/",
       "meaning": "n 冒险者",
-      "example": "",
-      "level": "CET6"
+      "example": "adventure film (惊险片)",
+      "level": "CET6",
+      "exampleRoot": "adventure"
     },
     {
       "id": 23,
@@ -952,8 +954,9 @@
       "word": "chronicle",
       "phonetic": "/ˈkɹɒnɪkəl/",
       "meaning": "v 记录",
-      "example": "",
-      "level": "CET6"
+      "example": "chronic disease ([医]慢性病)",
+      "level": "CET6",
+      "exampleRoot": "chronic"
     },
     {
       "id": 119,
@@ -1219,8 +1222,9 @@
       "word": "confrontational",
       "phonetic": "/ˌkɒn.frʌnˈteɪ.ʃən.əl/",
       "meaning": "adj 对抗的，有敌意的",
-      "example": "",
-      "level": "CET6"
+      "example": "confront with (使面临)",
+      "level": "CET6",
+      "exampleRoot": "confront"
     },
     {
       "id": 152,
@@ -1888,8 +1892,9 @@
       "word": "diverse",
       "phonetic": "/daɪˈvɜːs/",
       "meaning": "adj 各种各样的",
-      "example": "",
-      "level": "CET4"
+      "example": "dive into (v. 投入；把手伸入；钻研)",
+      "level": "CET4",
+      "exampleRoot": "dive"
     },
     {
       "id": 234,
@@ -1968,8 +1973,9 @@
       "word": "dorm",
       "phonetic": "/dɔːm/",
       "meaning": "n 宿舍",
-      "example": "",
-      "level": "CET4"
+      "example": "do a ([口语]仿效，模仿，学…的样子)",
+      "level": "CET4",
+      "exampleRoot": "do"
     },
     {
       "id": 244,
@@ -2458,8 +2464,9 @@
       "word": "fearlessly",
       "phonetic": "/ˈfɪə.ləs.li/",
       "meaning": "adv 无畏地，大胆地",
-      "example": "",
-      "level": "CET6"
+      "example": "for fear (以免，唯恐；由于害怕)",
+      "level": "CET6",
+      "exampleRoot": "fearless"
     },
     {
       "id": 305,
@@ -2538,8 +2545,9 @@
       "word": "footnote",
       "phonetic": "/ˈfʊtˌnəʊt/",
       "meaning": "n 注脚",
-      "example": "",
-      "level": "CET6"
+      "example": "on foot (步行；在进行中)",
+      "level": "CET6",
+      "exampleRoot": "foot"
     },
     {
       "id": 315,
@@ -2644,8 +2652,9 @@
       "word": "furious",
       "phonetic": "/ˈfjʊə.ɹɪəs/",
       "meaning": "adj 生气的；激烈的",
-      "example": "",
-      "level": "CET4"
+      "example": "fur coat (皮毛大衣)",
+      "level": "CET4",
+      "exampleRoot": "fur"
     },
     {
       "id": 328,
@@ -2837,8 +2846,9 @@
       "word": "handgun",
       "phonetic": "/ˈhænd.ɡʌn/",
       "meaning": "n 手枪",
-      "example": "",
-      "level": "CET6"
+      "example": "on the other hand (另一方面)",
+      "level": "CET6",
+      "exampleRoot": "hand"
     },
     {
       "id": 352,
@@ -2893,8 +2903,9 @@
       "word": "hinder",
       "phonetic": "/ˈhɪndə/",
       "meaning": "v 阻碍",
-      "example": "",
-      "level": "CET4"
+      "example": "hi there (嘿，你好(或你们好))",
+      "level": "CET4",
+      "exampleRoot": "hi"
     },
     {
       "id": 359,
@@ -2965,8 +2976,9 @@
       "word": "ideologically",
       "phonetic": "/ˌaɪ.di.əˈlɒdʒ.ɪ.kəl.i/",
       "meaning": "adv 意识形态上地",
-      "example": "",
-      "level": "CET6"
+      "example": "political ideology (政治意识形态)",
+      "level": "CET6",
+      "exampleRoot": "ideology"
     },
     {
       "id": 368,
@@ -3212,8 +3224,9 @@
       "word": "inhale",
       "phonetic": "/ɪnˈheɪl/",
       "meaning": "v 吸入",
-      "example": "",
-      "level": "CET6"
+      "example": "in on (参与，参加)",
+      "level": "CET6",
+      "exampleRoot": "in"
     },
     {
       "id": 398,
@@ -3270,8 +3283,9 @@
       "word": "instinctively",
       "phonetic": "/ɪnˈstɪŋktɪvli/",
       "meaning": "adv 本能地",
-      "example": "",
-      "level": "CET6"
+      "example": "by instinct (出于本能)",
+      "level": "CET6",
+      "exampleRoot": "instinct"
     },
     {
       "id": 405,
@@ -3465,8 +3479,9 @@
       "word": "kidnap",
       "phonetic": "/ˈkɪd.næp/",
       "meaning": "v 绑架",
-      "example": "",
-      "level": "CET6"
+      "example": "no kidding (说真的，不要开玩笑)",
+      "level": "CET6",
+      "exampleRoot": "kid"
     },
     {
       "id": 429,
@@ -3505,8 +3520,9 @@
       "word": "layman",
       "phonetic": "/ˈleɪmən/",
       "meaning": "n 门外汉",
-      "example": "",
-      "level": "CET6"
+      "example": "lay in (贮存)",
+      "level": "CET6",
+      "exampleRoot": "lay"
     },
     {
       "id": 434,
@@ -3625,8 +3641,9 @@
       "word": "markedly",
       "phonetic": "/ˈmɑːkɪdli/",
       "meaning": "adv 显著地",
-      "example": "",
-      "level": "CET6"
+      "example": "remarkable development (显著发展)",
+      "level": "CET6",
+      "exampleRoot": "remarkable"
     },
     {
       "id": 449,
@@ -3935,16 +3952,18 @@
       "word": "neutrality",
       "phonetic": "/njuːˈtɹæləti/",
       "meaning": "n 中立",
-      "example": "",
-      "level": "CET6"
+      "example": "neutral point (中性点；中和点)",
+      "level": "CET6",
+      "exampleRoot": "neutral"
     },
     {
       "id": 487,
       "word": "nightmare",
       "phonetic": "/ˈnaɪt.mɛə/",
       "meaning": "n 噩梦",
-      "example": "",
-      "level": "CET4"
+      "example": "at night (在夜里)",
+      "level": "CET4",
+      "exampleRoot": "night"
     },
     {
       "id": 488,
@@ -3960,8 +3979,9 @@
       "word": "notion",
       "phonetic": "/ˈnəʊʃən/",
       "meaning": "n 想法，观点",
-      "example": "",
-      "level": "CET4"
+      "example": "no longer (不再)",
+      "level": "CET4",
+      "exampleRoot": "no"
     },
     {
       "id": 490,
@@ -4089,8 +4109,9 @@
       "word": "outlive",
       "phonetic": "/aʊtˈlɪv/",
       "meaning": "v 比……活的时间长",
-      "example": "",
-      "level": "CET6"
+      "example": "out of (由于；缺乏；自…离开；用…（材料）)",
+      "level": "CET6",
+      "exampleRoot": "out"
     },
     {
       "id": 506,
@@ -4372,8 +4393,9 @@
       "word": "potentially",
       "phonetic": "/pəˈtɛnʃ(ə)li/",
       "meaning": "adv 潜在地",
-      "example": "",
-      "level": "CET6"
+      "example": "market potential ([经]市场潜力；市场潜在需求量)",
+      "level": "CET6",
+      "exampleRoot": "potential"
     },
     {
       "id": 541,
@@ -4404,16 +4426,18 @@
       "word": "predict",
       "phonetic": "/pɹɪˈdɪkt/",
       "meaning": "v 预测",
-      "example": "",
-      "level": "CET4"
+      "example": "prediction model (预测模型；推算模型)",
+      "level": "CET4",
+      "exampleRoot": "prediction"
     },
     {
       "id": 545,
       "word": "predominantly",
       "phonetic": "/prɪˈdɒm.ɪ.nənt.li/",
       "meaning": "adv 占主导地位地",
-      "example": "",
-      "level": "CET6"
+      "example": "dominate the market (欺行霸市)",
+      "level": "CET6",
+      "exampleRoot": "dominate"
     },
     {
       "id": 546,
@@ -4476,8 +4500,9 @@
       "word": "presidency",
       "phonetic": "/ˈpɹezɪdənsi/",
       "meaning": "n 总统任期",
-      "example": "",
-      "level": "CET6"
+      "example": "preside over (主持；负责)",
+      "level": "CET6",
+      "exampleRoot": "preside"
     },
     {
       "id": 554,
@@ -4743,8 +4768,9 @@
       "word": "randomly",
       "phonetic": "/ˈɹændm̩li/",
       "meaning": "adv 随机地",
-      "example": "",
-      "level": "CET6"
+      "example": "at random (胡乱地；随便地；任意地)",
+      "level": "CET6",
+      "exampleRoot": "random"
     },
     {
       "id": 587,
@@ -5163,8 +5189,9 @@
       "word": "revolutionize",
       "phonetic": "/ˌrev.əˈluː.ʃən.aɪz/",
       "meaning": "v 革命化",
-      "example": "",
-      "level": "CET6"
+      "example": "cultural revolution (文化大革命)",
+      "level": "CET6",
+      "exampleRoot": "revolution"
     },
     {
       "id": 639,
@@ -5187,8 +5214,9 @@
       "word": "rigorous",
       "phonetic": "/ˈɹɪɡəɹəs/",
       "meaning": "adj 严格的",
-      "example": "",
-      "level": "CET4"
+      "example": "drilling rig (钻机，钻探装置)",
+      "level": "CET4",
+      "exampleRoot": "rigor"
     },
     {
       "id": 642,
@@ -5661,8 +5689,9 @@
       "word": "startle",
       "phonetic": "/ˈstɑːt(ə)l/",
       "meaning": "v 使惊讶",
-      "example": "",
-      "level": "CET4"
+      "example": "start something ([美国口语] 制造麻烦；引起争吵(或打斗))",
+      "level": "CET4",
+      "exampleRoot": "start"
     },
     {
       "id": 701,
@@ -5677,8 +5706,9 @@
       "word": "stereotype",
       "phonetic": "/ˈstɛ.ɹi.əˌtaɪp/",
       "meaning": "n 刻板印象，固有印象",
-      "example": "",
-      "level": "CET4"
+      "example": "stereo system (n. 立体音响系统)",
+      "level": "CET4",
+      "exampleRoot": "stereo"
     },
     {
       "id": 703,
@@ -5999,8 +6029,9 @@
       "word": "tragedy",
       "phonetic": "/ˈtɹæd͡ʒɪdi/",
       "meaning": "n 悲剧",
-      "example": "",
-      "level": "CET4"
+      "example": "tragic hero (悲剧英雄；英雄好汉)",
+      "level": "CET4",
+      "exampleRoot": "tragic"
     },
     {
       "id": 743,
@@ -6146,8 +6177,9 @@
       "word": "undocumented",
       "phonetic": "/ʌnˈdɒk.jə.men.tɪd/",
       "meaning": "adj 无证明的",
-      "example": "",
-      "level": "CET6"
+      "example": "document management (文件管理；资料管理)",
+      "level": "CET6",
+      "exampleRoot": "document"
     },
     {
       "id": 761,
@@ -6194,8 +6226,9 @@
       "word": "unrealistic",
       "phonetic": "/ˌʌn.riːˈlɪs.tɪk/",
       "meaning": "adj 不现实的",
-      "example": "",
-      "level": "CET6"
+      "example": "real estate (n. 不动产，房地产)",
+      "level": "CET6",
+      "exampleRoot": "real"
     },
     {
       "id": 767,
@@ -6242,8 +6275,9 @@
       "word": "urge",
       "phonetic": "/ɜːd͡ʒ/",
       "meaning": "v 催促",
-      "example": "",
-      "level": "CET4"
+      "example": "urgent need (迫切需要)",
+      "level": "CET4",
+      "exampleRoot": "urgent"
     },
     {
       "id": 773,
@@ -6362,8 +6396,9 @@
       "word": "virtually",
       "phonetic": "/[ˈvɝt͡ʃuəɫi]/",
       "meaning": "adv 几乎",
-      "example": "",
-      "level": "CET4"
+      "example": "virtual reality (虚拟现实)",
+      "level": "CET4",
+      "exampleRoot": "virtual"
     },
     {
       "id": 788,
@@ -6491,8 +6526,9 @@
       "word": "elaborately",
       "phonetic": "/ɪˈlæb.ər.ət.li/",
       "meaning": "adv 复杂地，精心设计地",
-      "example": "",
-      "level": "CET6"
+      "example": "elaborate on (详细说明)",
+      "level": "CET6",
+      "exampleRoot": "elaborate"
     },
     {
       "id": 804,
@@ -6531,8 +6567,9 @@
       "word": "aptly",
       "phonetic": "/ˈæp(t).li/",
       "meaning": "adv 适当地",
-      "example": "",
-      "level": "CET6"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET6",
+      "exampleRoot": "a"
     },
     {
       "id": 809,
@@ -6636,8 +6673,9 @@
       "word": "optimism",
       "phonetic": "/ˈɒptɪmɪzəm/",
       "meaning": "n 乐观",
-      "example": "",
-      "level": "CET6"
+      "example": "cautiously optimistic (审慎乐观)",
+      "level": "CET6",
+      "exampleRoot": "optimistic"
     },
     {
       "id": 822,
@@ -6797,16 +6835,18 @@
       "word": "successively",
       "phonetic": "/səkˈses.ɪv.li/",
       "meaning": "adv 接连着地，继续地",
-      "example": "",
-      "level": "CET6"
+      "example": "legal successor (法定继承人；合法继承人)",
+      "level": "CET6",
+      "exampleRoot": "successor"
     },
     {
       "id": 842,
       "word": "visualize",
       "phonetic": "/ˈvɪʒ.u.əl.aɪz/",
       "meaning": "v 想象",
-      "example": "",
-      "level": "CET6"
+      "example": "visual angle (n. 视界，视角)",
+      "level": "CET6",
+      "exampleRoot": "visual"
     },
     {
       "id": 843,
@@ -7073,8 +7113,9 @@
       "word": "lawsuit",
       "phonetic": "/ˈlɔˌs(j)ut/",
       "meaning": "n 诉讼",
-      "example": "",
-      "level": "CET6"
+      "example": "by law (n. 根据法律，在法律上；附则)",
+      "level": "CET6",
+      "exampleRoot": "law"
     },
     {
       "id": 876,
@@ -7221,8 +7262,9 @@
       "word": "hasten",
       "phonetic": "/ˈheɪ.sən/",
       "meaning": "v 加速",
-      "example": "",
-      "level": "CET4"
+      "example": "in haste (急忙地；草率的；慌张地)",
+      "level": "CET4",
+      "exampleRoot": "haste"
     },
     {
       "id": 894,
@@ -7253,8 +7295,9 @@
       "word": "bemoan",
       "phonetic": "/bɪˈməʊn/",
       "meaning": "v 抱怨；惋惜",
-      "example": "",
-      "level": "CET6"
+      "example": "so be it (诚心所愿；顺其自然)",
+      "level": "CET6",
+      "exampleRoot": "be"
     },
     {
       "id": 898,
@@ -7269,8 +7312,9 @@
       "word": "fluently",
       "phonetic": "/ˈfluː.ənt.li/",
       "meaning": "adv 流利地",
-      "example": "",
-      "level": "CET6"
+      "example": "influence on (对…的影响)",
+      "level": "CET6",
+      "exampleRoot": "influence"
     },
     {
       "id": 900,
@@ -7341,8 +7385,9 @@
       "word": "allegedly",
       "phonetic": "/əˈledʒ.ɪd.li/",
       "meaning": "adv 据说",
-      "example": "",
-      "level": "CET6"
+      "example": "all the (◎惟一的，仅有的)",
+      "level": "CET6",
+      "exampleRoot": "allege"
     },
     {
       "id": 909,
@@ -7382,8 +7427,9 @@
       "word": "hasty",
       "phonetic": "/ˈheɪsti/",
       "meaning": "adj 匆忙的",
-      "example": "",
-      "level": "CET4"
+      "example": "in haste (急忙地；草率的；慌张地)",
+      "level": "CET4",
+      "exampleRoot": "hasten"
     },
     {
       "id": 914,
@@ -7846,16 +7892,18 @@
       "word": "accidentally",
       "phonetic": "/ˌæksəˈdɛnt(ə)li/",
       "meaning": "adv 偶然地，意外地",
-      "example": "",
-      "level": "CET6"
+      "example": "traffic accident (交通事故)",
+      "level": "CET6",
+      "exampleRoot": "accident"
     },
     {
       "id": 971,
       "word": "exertion",
       "phonetic": "/əɡˈzɝʃən/",
       "meaning": "n 运用",
-      "example": "",
-      "level": "CET6"
+      "example": "exert oneself (努力；尽力)",
+      "level": "CET6",
+      "exampleRoot": "exert"
     },
     {
       "id": 972,
@@ -7927,8 +7975,9 @@
       "word": "endure",
       "phonetic": "/ɪnˈdjɔː(ɹ)/",
       "meaning": "v 忍受",
-      "example": "",
-      "level": "CET4"
+      "example": "the end of (…的最后)",
+      "level": "CET4",
+      "exampleRoot": "end"
     },
     {
       "id": 981,
@@ -7951,16 +8000,18 @@
       "word": "tradeoff",
       "phonetic": "/ˈtreɪd.ɒf/",
       "meaning": "n 权衡，交易",
-      "example": "",
-      "level": "CET6"
+      "example": "foreign trade (外贸，对外贸易)",
+      "level": "CET6",
+      "exampleRoot": "trade"
     },
     {
       "id": 984,
       "word": "commentator",
       "phonetic": "/ˈkɑmənˌteɪtəɹ/",
       "meaning": "n 评论员",
-      "example": "",
-      "level": "CET6"
+      "example": "comment on (对……评论)",
+      "level": "CET6",
+      "exampleRoot": "comment"
     },
     {
       "id": 985,
@@ -8096,8 +8147,9 @@
       "word": "drummer",
       "phonetic": "/ˈdɹʌmə(ɹ)/",
       "meaning": "n 鼓手",
-      "example": "",
-      "level": "CET6"
+      "example": "drum up (招徕（顾客）；[口]竭力争取；纠集；鼓动)",
+      "level": "CET6",
+      "exampleRoot": "drum"
     },
     {
       "id": 1002,
@@ -8161,8 +8213,9 @@
       "word": "athletics",
       "phonetic": "/æθˈlɛtɪks/",
       "meaning": "n 体育运动",
-      "example": "",
-      "level": "CET6"
+      "example": "athletic sports (体育运动)",
+      "level": "CET6",
+      "exampleRoot": "athletic"
     },
     {
       "id": 1010,
@@ -8226,8 +8279,9 @@
       "word": "greedy",
       "phonetic": "/ˈɡɹiːdi/",
       "meaning": "adj 贪婪的",
-      "example": "",
-      "level": "CET4"
+      "example": "in the green (在年富力强时)",
+      "level": "CET4",
+      "exampleRoot": "greed"
     },
     {
       "id": 1018,
@@ -8342,8 +8396,9 @@
       "word": "overturn",
       "phonetic": "/ˌəʊ.vəˈtɜːn/",
       "meaning": "v 推翻",
-      "example": "",
-      "level": "CET6"
+      "example": "all over (到处，遍及；浑身；全部结束)",
+      "level": "CET6",
+      "exampleRoot": "over"
     },
     {
       "id": 1032,
@@ -8391,8 +8446,9 @@
       "word": "inaction",
       "phonetic": "/ɪnˈækʃən/",
       "meaning": "n 不作为",
-      "example": "",
-      "level": "CET6"
+      "example": "interaction with (交往；与…相互作用)",
+      "level": "CET6",
+      "exampleRoot": "interaction"
     },
     {
       "id": 1038,
@@ -8425,8 +8481,9 @@
       "word": "counterpart",
       "phonetic": "/ˈkaʊntəˌpɑːt/",
       "meaning": "n 对等物",
-      "example": "",
-      "level": "CET6"
+      "example": "counter measure (对策；防范措施；反措施)",
+      "level": "CET6",
+      "exampleRoot": "counter"
     },
     {
       "id": 1042,
@@ -8449,8 +8506,9 @@
       "word": "aspirational",
       "phonetic": "/ˌæspəˈɹeɪʃənəl/",
       "meaning": "adj 渴望的",
-      "example": "",
-      "level": "CET6"
+      "example": "aspiration biopsy (针吸活组织检查)",
+      "level": "CET6",
+      "exampleRoot": "aspiration"
     },
     {
       "id": 1045,
@@ -8530,8 +8588,9 @@
       "word": "confess",
       "phonetic": "/kənˈfɛs/",
       "meaning": "v 承认",
-      "example": "",
-      "level": "CET4"
+      "example": "profession of (宣称(感情、信念等)；表白)",
+      "level": "CET4",
+      "exampleRoot": "profess"
     },
     {
       "id": 1055,
@@ -8554,8 +8613,9 @@
       "word": "hijack",
       "phonetic": "/ˈhaɪ.dʒæk/",
       "meaning": "v 劫持",
-      "example": "",
-      "level": "CET6"
+      "example": "hi there (嘿，你好(或你们好))",
+      "level": "CET6",
+      "exampleRoot": "hi"
     },
     {
       "id": 1058,
@@ -8642,8 +8702,9 @@
       "word": "badge",
       "phonetic": "/bædʒ/",
       "meaning": "n 标记, 徽章",
-      "example": "",
-      "level": "CET6"
+      "example": "in bad (倒霉；失宠)",
+      "level": "CET6",
+      "exampleRoot": "bad"
     },
     {
       "id": 1069,
@@ -8675,8 +8736,9 @@
       "word": "portray",
       "phonetic": "/pɔɹˈtɹeɪ/",
       "meaning": "v 描述",
-      "example": "",
-      "level": "CET6"
+      "example": "at the port (作持枪的姿势)",
+      "level": "CET6",
+      "exampleRoot": "port"
     },
     {
       "id": 1073,
@@ -8935,8 +8997,9 @@
       "word": "overstate",
       "phonetic": "/ˌəʊ.vəˈsteɪt/",
       "meaning": "v 夸张",
-      "example": "",
-      "level": "CET4"
+      "example": "financial statement (财务报表，财政报告；财政决算)",
+      "level": "CET4",
+      "exampleRoot": "statement"
     },
     {
       "id": 1105,
@@ -8959,8 +9022,9 @@
       "word": "subsequently",
       "phonetic": "/ˈsʌb.sɪ.kwənt.li/",
       "meaning": "adv 随后",
-      "example": "",
-      "level": "CET6"
+      "example": "consequent on (随之而来；跟着…发生的)",
+      "level": "CET6",
+      "exampleRoot": "consequent"
     },
     {
       "id": 1108,
@@ -9039,16 +9103,18 @@
       "word": "incidentally",
       "phonetic": "/ˌɪn.sɪˈden.təl.i/",
       "meaning": "adv 顺便地，附带",
-      "example": "",
-      "level": "CET6"
+      "example": "incidence rate (发生率，发病率)",
+      "level": "CET6",
+      "exampleRoot": "incidence"
     },
     {
       "id": 1118,
       "word": "notably",
       "phonetic": "/ˈnəʊ.tə.bli/",
       "meaning": "adv 显著地，尤其",
-      "example": "",
-      "level": "CET6"
+      "example": "so as not to (vt. 以便不（未到...的程度）)",
+      "level": "CET6",
+      "exampleRoot": "not"
     },
     {
       "id": 1119,
@@ -9282,8 +9348,9 @@
       "word": "landmark",
       "phonetic": "/ˈlændmɑɹk/",
       "meaning": "adj 有重大意义或影响的",
-      "example": "",
-      "level": "CET6"
+      "example": "land use (土地利用，土地用途；土地使用，土壤使用)",
+      "level": "CET6",
+      "exampleRoot": "land"
     },
     {
       "id": 1148,
@@ -9346,16 +9413,18 @@
       "word": "alternatively",
       "phonetic": "/ɔːlˈtɜː.nə.tɪv.li/",
       "meaning": "adv 二选一地；非此即彼",
-      "example": "",
-      "level": "CET6"
+      "example": "alternative energy (替代能源；新能源)",
+      "level": "CET6",
+      "exampleRoot": "alternative"
     },
     {
       "id": 1156,
       "word": "chronically",
       "phonetic": "/ˈkrɒn.ɪ.kəl.i/",
       "meaning": "adv 慢性地；持久地",
-      "example": "",
-      "level": "CET6"
+      "example": "chronic disease ([医]慢性病)",
+      "level": "CET6",
+      "exampleRoot": "chronic"
     },
     {
       "id": 1157,
@@ -9395,8 +9464,9 @@
       "word": "legalize",
       "phonetic": "/ˈliːɡəlaɪz/",
       "meaning": "v 合法化",
-      "example": "",
-      "level": "CET6"
+      "example": "chief delegate (首席代表)",
+      "level": "CET6",
+      "exampleRoot": "delegate"
     },
     {
       "id": 1162,
@@ -9436,8 +9506,9 @@
       "word": "Automatically",
       "phonetic": "/ˈɔːtəʊˌmæt.ɪk(.ə)li/",
       "meaning": "adv 自动地；不经思考地",
-      "example": "",
-      "level": "CET6"
+      "example": "automatic control (自动控制)",
+      "level": "CET6",
+      "exampleRoot": "automatic"
     },
     {
       "id": 1167,
@@ -9625,8 +9696,9 @@
       "word": "ascend",
       "phonetic": "/əˈsɛnd/",
       "meaning": "v 上升",
-      "example": "",
-      "level": "CET6"
+      "example": "as well (也；同样地；还不如)",
+      "level": "CET6",
+      "exampleRoot": "as"
     },
     {
       "id": 1190,
@@ -9665,16 +9737,18 @@
       "word": "proximately",
       "phonetic": "/ˈprɒk.sɪ.mət.li/",
       "meaning": "adv 近似，接近",
-      "example": "",
-      "level": "CET6"
+      "example": "close proximity (极为贴近)",
+      "level": "CET6",
+      "exampleRoot": "proximity"
     },
     {
       "id": 1195,
       "word": "lobbyist",
       "phonetic": "/ˈlɒ.bi.ɪst/",
       "meaning": "n 游说者",
-      "example": "",
-      "level": "CET6"
+      "example": "hotel lobby (饭店大堂；宾馆大厅)",
+      "level": "CET6",
+      "exampleRoot": "lobby"
     },
     {
       "id": 1196,
@@ -9707,8 +9781,9 @@
       "word": "cropland",
       "phonetic": "/ˈkrɒp.lænd/",
       "meaning": "n 农田",
-      "example": "",
-      "level": "CET6"
+      "example": "in crop ((土地)种着庄稼)",
+      "level": "CET6",
+      "exampleRoot": "crop"
     },
     {
       "id": 1200,
@@ -10041,8 +10116,9 @@
       "word": "dignity",
       "phonetic": "/ˈdɪɡnɪti/",
       "meaning": "n 庄重；尊严；体面",
-      "example": "",
-      "level": "CET6"
+      "example": "dig out (掘出；发现)",
+      "level": "CET6",
+      "exampleRoot": "dig"
     },
     {
       "id": 1241,
@@ -10065,8 +10141,9 @@
       "word": "initially",
       "phonetic": "/ɪˈnɪʃli/",
       "meaning": "adv 最初，开始",
-      "example": "",
-      "level": "CET4"
+      "example": "initial stage (原始期)",
+      "level": "CET4",
+      "exampleRoot": "initial"
     },
     {
       "id": 1244,
@@ -10225,8 +10302,9 @@
       "word": "ornament",
       "phonetic": "/ˈɔː(ɹ)nəmənt/",
       "meaning": "n 装饰物",
-      "example": "",
-      "level": "CET4"
+      "example": "ornamental plant (观赏植物)",
+      "level": "CET4",
+      "exampleRoot": "ornamental"
     },
     {
       "id": 1264,
@@ -10354,8 +10432,9 @@
       "word": "principally",
       "phonetic": "/ˈprɪn.sɪ.pəl.i/",
       "meaning": "adv 主要，大抵",
-      "example": "",
-      "level": "CET6"
+      "example": "principal component (主成分；[化]知组分)",
+      "level": "CET6",
+      "exampleRoot": "principal"
     },
     {
       "id": 1280,
@@ -10466,8 +10545,9 @@
       "word": "anybody",
       "phonetic": "/ˈɛn.i.bɒd.i/",
       "meaning": "n 重要人物",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "any"
     },
     {
       "id": 1294,
@@ -10606,8 +10686,9 @@
       "word": "weaver",
       "phonetic": "/ˈwiː.və(ɹ)/",
       "meaning": "n 织布工，编织者",
-      "example": "",
-      "level": "CET6"
+      "example": "plain weave (平纹梭织，平纹布；平布)",
+      "level": "CET6",
+      "exampleRoot": "weave"
     },
     {
       "id": 1311,
@@ -10769,8 +10850,9 @@
       "word": "literally",
       "phonetic": "/ˈlɪtəɹəli/",
       "meaning": "adv 照字义，逐字地",
-      "example": "",
-      "level": "CET6"
+      "example": "literal translation (直译，直译法；逐字翻译)",
+      "level": "CET6",
+      "exampleRoot": "literal"
     },
     {
       "id": 1331,
@@ -10898,8 +10980,9 @@
       "word": "adhere",
       "phonetic": "/ædˈhiɹ/",
       "meaning": "v 粘附；追随；坚持",
-      "example": "",
-      "level": "CET6"
+      "example": "ad hoc (adj. 特别的；临时；专设)",
+      "level": "CET6",
+      "exampleRoot": "ad"
     },
     {
       "id": 1347,
@@ -11187,8 +11270,9 @@
       "word": "beforehand",
       "phonetic": "/bɪˈfɔːhænd/",
       "meaning": "adv 预先；提前地",
-      "example": "",
-      "level": "CET6"
+      "example": "before and after (前后，之前之后)",
+      "level": "CET6",
+      "exampleRoot": "before"
     },
     {
       "id": 1383,
@@ -11203,8 +11287,9 @@
       "word": "foresee",
       "phonetic": "/fɔːˈsiː/",
       "meaning": "v 预见，预知，看穿",
-      "example": "",
-      "level": "CET6"
+      "example": "to the fore (在前面；在近处；在手头)",
+      "level": "CET6",
+      "exampleRoot": "fore"
     },
     {
       "id": 1385,
@@ -11359,8 +11444,9 @@
       "word": "courteous",
       "phonetic": "/ˈkɜːti.əs/",
       "meaning": "adj 有礼貌的，谦恭的",
-      "example": "",
-      "level": "CET6"
+      "example": "people's court (人民法院；人民法庭（美国一种电视节目）)",
+      "level": "CET6",
+      "exampleRoot": "court"
     },
     {
       "id": 1404,
@@ -11713,8 +11799,9 @@
       "word": "formerly",
       "phonetic": "/ˈfɔːməli/",
       "meaning": "adv 以前，从前",
-      "example": "",
-      "level": "CET6"
+      "example": "in conformity with (与…相符，符合；遵照；和…相适应)",
+      "level": "CET6",
+      "exampleRoot": "conformity"
     },
     {
       "id": 1448,
@@ -11729,8 +11816,9 @@
       "word": "forsake",
       "phonetic": "/fɔɹˈseɪk/",
       "meaning": "v 遗弃，抛弃；摒绝，摒弃",
-      "example": "",
-      "level": "CET6"
+      "example": "for all (尽管；虽然)",
+      "level": "CET6",
+      "exampleRoot": "for"
     },
     {
       "id": 1450,
@@ -11770,8 +11858,9 @@
       "word": "wardrobe",
       "phonetic": "/ ˈwɔːdɹəʊb/",
       "meaning": "n 衣柜，衣橱，藏衣室",
-      "example": "",
-      "level": "CET6"
+      "example": "ward off (避开；挡住)",
+      "level": "CET6",
+      "exampleRoot": "ward"
     },
     {
       "id": 1455,
@@ -11938,8 +12027,9 @@
       "word": "waver",
       "phonetic": "/ˈweɪ.vər/",
       "meaning": "v 犹豫不决；摇摆",
-      "example": "",
-      "level": "CET6"
+      "example": "shock wave (冲击波)",
+      "level": "CET6",
+      "exampleRoot": "wave"
     },
     {
       "id": 1476,
@@ -12163,8 +12253,9 @@
       "word": "melody",
       "phonetic": "/ˈmel.ə.di/",
       "meaning": "n 旋律，曲调；歌曲",
-      "example": "",
-      "level": "CET6"
+      "example": "melt into (溶解成；消散在…中；因心软而…)",
+      "level": "CET6",
+      "exampleRoot": "me"
     },
     {
       "id": 1504,
@@ -12325,8 +12416,9 @@
       "word": "novelty",
       "phonetic": "/ˈnɒvəlti/",
       "meaning": "n 新颖；新奇的事物",
-      "example": "",
-      "level": "CET6"
+      "example": "historical novel (历史小说)",
+      "level": "CET6",
+      "exampleRoot": "novel"
     },
     {
       "id": 1524,
@@ -12479,8 +12571,9 @@
       "word": "suitcase",
       "phonetic": "/ˈsutkeɪs/",
       "meaning": "n 手提箱，衣箱",
-      "example": "",
-      "level": "CET6"
+      "example": "suit oneself (随自己的意愿做事)",
+      "level": "CET6",
+      "exampleRoot": "suit"
     },
     {
       "id": 1543,
@@ -12495,8 +12588,9 @@
       "word": "footpath",
       "phonetic": "/ˈfʊtˌpæθ/",
       "meaning": "n 小路，人行道",
-      "example": "",
-      "level": "CET6"
+      "example": "on foot (步行；在进行中)",
+      "level": "CET6",
+      "exampleRoot": "foot"
     },
     {
       "id": 1545,
@@ -12849,8 +12943,9 @@
       "word": "systematically",
       "phonetic": "/ˌsɪs.təˈmæt.ɪ.kəl.i/",
       "meaning": "adv 系统地，有规则地",
-      "example": "",
-      "level": "CET6"
+      "example": "systematic analysis (系统分析)",
+      "level": "CET6",
+      "exampleRoot": "systematic"
     },
     {
       "id": 1589,
@@ -13119,8 +13214,9 @@
       "word": "hum",
       "phonetic": "/ˈhʌm/",
       "meaning": "n 嗡嗡声；v 哼曲子",
-      "example": "",
-      "level": "CET6"
+      "example": "humorous story (幽默小说)",
+      "level": "CET6",
+      "exampleRoot": "humorous"
     },
     {
       "id": 1622,
@@ -13184,8 +13280,9 @@
       "word": "locality",
       "phonetic": "/ləʊˈkælɪti/",
       "meaning": "n 位置，地点，发生地",
-      "example": "",
-      "level": "CET6"
+      "example": "fault location (故障定位)",
+      "level": "CET6",
+      "exampleRoot": "location"
     },
     {
       "id": 1630,
@@ -13248,8 +13345,9 @@
       "word": "idealism",
       "phonetic": "/aɪˈdɪə.lɪ.zəm/",
       "meaning": "n 唯心主义；理想主义",
-      "example": "",
-      "level": "CET6"
+      "example": "ideal gas (理想气体)",
+      "level": "CET6",
+      "exampleRoot": "ideal"
     },
     {
       "id": 1638,
@@ -13281,8 +13379,9 @@
       "word": "towards",
       "phonetic": "/tɘˈwoːdz/",
       "meaning": "prep 用于，有助于",
-      "example": "",
-      "level": "CET6"
+      "example": "in tow (拖着；在一起)",
+      "level": "CET6",
+      "exampleRoot": "tow"
     },
     {
       "id": 1642,
@@ -13385,8 +13484,9 @@
       "word": "fro",
       "phonetic": "/[fɹəʊ]/",
       "meaning": "adv 往，去，回，向后",
-      "example": "",
-      "level": "CET6"
+      "example": "frown on (不悦，不满)",
+      "level": "CET6",
+      "exampleRoot": "frown"
     },
     {
       "id": 1655,
@@ -13529,8 +13629,9 @@
       "word": "drawback",
       "phonetic": "/ˈdɹɔːˌbæk/",
       "meaning": "n 妨碍；弊端",
-      "example": "",
-      "level": "CET6"
+      "example": "draw lessons from (从…吸取教训)",
+      "level": "CET6",
+      "exampleRoot": "draw"
     },
     {
       "id": 1673,
@@ -13578,8 +13679,9 @@
       "word": "overthrow",
       "phonetic": "/əʊvəˈθɹəʊ/",
       "meaning": "v 推翻；n 推翻，瓦解",
-      "example": "",
-      "level": "CET6"
+      "example": "all over (到处，遍及；浑身；全部结束)",
+      "level": "CET6",
+      "exampleRoot": "overt"
     },
     {
       "id": 1679,
@@ -13610,8 +13712,9 @@
       "word": "shove",
       "phonetic": "/ʃʌv/",
       "meaning": "v 推，（使劲）推",
-      "example": "",
-      "level": "CET6"
+      "example": "power shovel (电铲；机铲，动力铲；挖土机)",
+      "level": "CET6",
+      "exampleRoot": "shovel"
     },
     {
       "id": 1683,
@@ -13626,8 +13729,9 @@
       "word": "regiment",
       "phonetic": "/ˈɹɛdʒɪmənt/",
       "meaning": "n 团，军团；一大群",
-      "example": "",
-      "level": "CET6"
+      "example": "flow regime (流态；水流动态)",
+      "level": "CET6",
+      "exampleRoot": "regime"
     },
     {
       "id": 1685,
@@ -13699,8 +13803,9 @@
       "word": "misery",
       "phonetic": "/ˈmɪz(ə)ɹɪ/",
       "meaning": "n 痛苦，悲惨，不幸",
-      "example": "",
-      "level": "CET6"
+      "example": "data transmission (数据传输)",
+      "level": "CET6",
+      "exampleRoot": "miser"
     },
     {
       "id": 1694,
@@ -13877,8 +13982,9 @@
       "word": "adjoin",
       "phonetic": "/əˈdʒɔɪn/",
       "meaning": "v 贴近，毗连；靠近",
-      "example": "",
-      "level": "CET6"
+      "example": "ad hoc (adj. 特别的；临时；专设)",
+      "level": "CET6",
+      "exampleRoot": "ad"
     },
     {
       "id": 1716,
@@ -14073,8 +14179,9 @@
       "word": "outlaw",
       "phonetic": "/ˈaʊt.lɔː/",
       "meaning": "n 逃犯，歹徒",
-      "example": "",
-      "level": "CET6"
+      "example": "out of (由于；缺乏；自…离开；用…（材料）)",
+      "level": "CET6",
+      "exampleRoot": "out"
     },
     {
       "id": 1740,
@@ -14300,8 +14407,9 @@
       "word": "hiss",
       "phonetic": "/hɪs/",
       "meaning": "n 嘶嘶声；v 嘶嘶作声",
-      "example": "",
-      "level": "CET6"
+      "example": "hi there (嘿，你好(或你们好))",
+      "level": "CET6",
+      "exampleRoot": "hi"
     },
     {
       "id": 1768,
@@ -14340,8 +14448,9 @@
       "word": "treasurer",
       "phonetic": "/ˈtɹɛʒəɹə(ɹ)/",
       "meaning": "n 司库，财务主管",
-      "example": "",
-      "level": "CET6"
+      "example": "treasure house (n. 宝库；宝藏室)",
+      "level": "CET6",
+      "exampleRoot": "treasure"
     },
     {
       "id": 1773,
@@ -14374,8 +14483,9 @@
       "word": "momentary",
       "phonetic": "/ˈməʊmənt(ə)ɹi/",
       "meaning": "adj 瞬息间的，片刻的",
-      "example": "",
-      "level": "CET6"
+      "example": "at the moment (此刻；当时)",
+      "level": "CET6",
+      "exampleRoot": "moment"
     },
     {
       "id": 1777,
@@ -14390,8 +14500,9 @@
       "word": "slumber",
       "phonetic": "/slʌmbə/",
       "meaning": "n 睡眠；沉睡状态",
-      "example": "",
-      "level": "CET6"
+      "example": "economic slump (经济衰退)",
+      "level": "CET6",
+      "exampleRoot": "slum"
     },
     {
       "id": 1779,
@@ -14738,8 +14849,9 @@
       "word": "tiresome",
       "phonetic": "/ˈtaɪəsəm/",
       "meaning": "adj 使人厌倦的，讨厌的",
-      "example": "",
-      "level": "CET6"
+      "example": "tire of (厌倦；厌烦)",
+      "level": "CET6",
+      "exampleRoot": "tire"
     },
     {
       "id": 1822,
@@ -14803,8 +14915,9 @@
       "word": "deafen",
       "phonetic": "/ˈdɛfən/",
       "meaning": "v 使聋",
-      "example": "",
-      "level": "CET6"
+      "example": "turn a deaf ear (充耳不闻；不加理睬；不愿听)",
+      "level": "CET6",
+      "exampleRoot": "deaf"
     },
     {
       "id": 1830,
@@ -15001,16 +15114,18 @@
       "word": "pantry",
       "phonetic": "/ˈpantɹi/",
       "meaning": "n 食品柜，餐具室",
-      "example": "",
-      "level": "CET6"
+      "example": "pant for (v. 渴望)",
+      "level": "CET6",
+      "exampleRoot": "pant"
     },
     {
       "id": 1854,
       "word": "experimentally",
       "phonetic": "/ɪkˌsper.ɪˈmen.təl.i/",
       "meaning": "adv 实验上，实验性地",
-      "example": "",
-      "level": "CET6"
+      "example": "imperial palace (n. 宫城；皇城)",
+      "level": "CET6",
+      "exampleRoot": "imperial"
     },
     {
       "id": 1855,
@@ -15049,8 +15164,9 @@
       "word": "whitewash",
       "phonetic": "/ˈwaɪtwɒʃ/",
       "meaning": "n 石灰水；v 粉饰",
-      "example": "",
-      "level": "CET6"
+      "example": "white house (n. 白宫（美国政府的行政机关，美国总统官邸）)",
+      "level": "CET6",
+      "exampleRoot": "white"
     },
     {
       "id": 1860,
@@ -15073,8 +15189,9 @@
       "word": "handout",
       "phonetic": "/ˈhændaʊt/",
       "meaning": "n 施舍物，救济品",
-      "example": "",
-      "level": "CET6"
+      "example": "on the other hand (另一方面)",
+      "level": "CET6",
+      "exampleRoot": "hand"
     },
     {
       "id": 1863,
@@ -15185,8 +15302,9 @@
       "word": "deliberately",
       "phonetic": "/dəˈlɪb(ə)ɹətli/",
       "meaning": "adv 故意地；审慎地",
-      "example": "",
-      "level": "CET6"
+      "example": "take time to deliberate (做事要深思熟虑)",
+      "level": "CET6",
+      "exampleRoot": "deliberate"
     },
     {
       "id": 1877,
@@ -15329,8 +15447,9 @@
       "word": "tradesman",
       "phonetic": "/ˈtreɪdz.mən/",
       "meaning": "n 商人，店主；手艺人",
-      "example": "",
-      "level": "CET6"
+      "example": "foreign trade (外贸，对外贸易)",
+      "level": "CET6",
+      "exampleRoot": "trade"
     },
     {
       "id": 1895,
@@ -15546,8 +15665,9 @@
       "word": "hostage",
       "phonetic": "/ˈhɒstɪdʒ/",
       "meaning": "n 人质",
-      "example": "",
-      "level": "CET6"
+      "example": "a host of (许多，一大群；众多，大量)",
+      "level": "CET6",
+      "exampleRoot": "host"
     },
     {
       "id": 1922,
@@ -15936,8 +16056,9 @@
       "word": "modesty",
       "phonetic": "/ˈmɒd.ə.sti/",
       "meaning": "n 谦逊；端庄",
-      "example": "",
-      "level": "CET6"
+      "example": "operation mode (操作方式)",
+      "level": "CET6",
+      "exampleRoot": "mode"
     },
     {
       "id": 1970,
@@ -15968,8 +16089,9 @@
       "word": "apt",
       "phonetic": "/æpt/",
       "meaning": "adj 恰当的；聪明的",
-      "example": "",
-      "level": "CET6"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET6",
+      "exampleRoot": "a"
     },
     {
       "id": 1974,
@@ -16008,8 +16130,9 @@
       "word": "motorway",
       "phonetic": "/ˈməʊtəweɪ/",
       "meaning": "n 汽车道，快车路",
-      "example": "",
-      "level": "CET6"
+      "example": "motor vehicle (汽车；机动车辆)",
+      "level": "CET6",
+      "exampleRoot": "motor"
     },
     {
       "id": 1979,
@@ -16121,24 +16244,27 @@
       "word": "currently",
       "phonetic": "/ˈkʌɹəntli/",
       "meaning": "adv 当前",
-      "example": "",
-      "level": "CET4"
+      "example": "recurrence rate ([计]重复率；[医]再发率)",
+      "level": "CET4",
+      "exampleRoot": "recurrence"
     },
     {
       "id": 1993,
       "word": "universally",
       "phonetic": "/ˌjuːnɪˈvɜːsəli/",
       "meaning": "adv 普遍地，一般地",
-      "example": "",
-      "level": "CET6"
+      "example": "universal joint (万向节；万向接头)",
+      "level": "CET6",
+      "exampleRoot": "universal"
     },
     {
       "id": 1994,
       "word": "bushel",
       "phonetic": "/ˈbʊʃəl/",
       "meaning": "n 蒲式耳（容量单位）",
-      "example": "",
-      "level": "CET6"
+      "example": "by bus (搭乘公共汽车)",
+      "level": "CET6",
+      "exampleRoot": "bus"
     },
     {
       "id": 1995,
@@ -16361,8 +16487,9 @@
       "word": "faction",
       "phonetic": "/ˈfæk.ʃn̩/",
       "meaning": "n 派别，宗派，小集团",
-      "example": "",
-      "level": "CET6"
+      "example": "in fact (事实上，实际上)",
+      "level": "CET6",
+      "exampleRoot": "fact"
     },
     {
       "id": 2023,
@@ -16418,8 +16545,9 @@
       "word": "ohm",
       "phonetic": "/əʊm/",
       "meaning": "n 欧姆",
-      "example": "",
-      "level": "CET6"
+      "example": "oh my (天哪)",
+      "level": "CET6",
+      "exampleRoot": "oh"
     },
     {
       "id": 2030,
@@ -16557,16 +16685,18 @@
       "word": "annually",
       "phonetic": "/ˈæn.jʊə.li/",
       "meaning": "adv 年年，每年",
-      "example": "",
-      "level": "CET4"
+      "example": "annual meeting (年会)",
+      "level": "CET4",
+      "exampleRoot": "annual"
     },
     {
       "id": 2047,
       "word": "practicable",
       "phonetic": "/ˈpɹæktɪkəbəl/",
       "meaning": "adj 能实行的；适用的",
-      "example": "",
-      "level": "CET6"
+      "example": "practical application (实际应用)",
+      "level": "CET6",
+      "exampleRoot": "practical"
     },
     {
       "id": 2048,
@@ -16597,8 +16727,9 @@
       "word": "tickle",
       "phonetic": "/ˈtɪkl̩/",
       "meaning": "v 挠，胳肢；逗乐",
-      "example": "",
-      "level": "CET6"
+      "example": "tick off (列举；用记号标出)",
+      "level": "CET6",
+      "exampleRoot": "tick"
     },
     {
       "id": 2052,
@@ -16645,8 +16776,9 @@
       "word": "baron",
       "phonetic": "/ˈbæɹən/",
       "meaning": "n 男爵；贵族；巨商",
-      "example": "",
-      "level": "CET6"
+      "example": "at the bar (在酒吧；受到公开审问)",
+      "level": "CET6",
+      "exampleRoot": "bar"
     },
     {
       "id": 2058,
@@ -16693,8 +16825,9 @@
       "word": "magician",
       "phonetic": "/məˈdʒɪʃən/",
       "meaning": "n 魔法师；变戏法的人",
-      "example": "",
-      "level": "CET6"
+      "example": "black magic (n. 魔法；巫术)",
+      "level": "CET6",
+      "exampleRoot": "magic"
     },
     {
       "id": 2064,
@@ -16749,8 +16882,9 @@
       "word": "destine",
       "phonetic": "/ˈdɛstɪn/",
       "meaning": "v 命定，注定；预定",
-      "example": "",
-      "level": "CET6"
+      "example": "destined for (驶往；去往)",
+      "level": "CET6",
+      "exampleRoot": "destined"
     },
     {
       "id": 2071,
@@ -16765,8 +16899,9 @@
       "word": "decidedly",
       "phonetic": "/dɪˈsaɪdɪdli/",
       "meaning": "adv 明确地，坚决地",
-      "example": "",
-      "level": "CET6"
+      "example": "incidence rate (发生率，发病率)",
+      "level": "CET6",
+      "exampleRoot": "incidence"
     },
     {
       "id": 2073,
@@ -16838,8 +16973,9 @@
       "word": "enchant",
       "phonetic": "/ɛnˈtʃant/",
       "meaning": "v 迷住；用魔法迷惑",
-      "example": "",
-      "level": "CET6"
+      "example": "gregorian chant (格列高利圣咏（教皇格列高利一世采用，常无伴奏）)",
+      "level": "CET6",
+      "exampleRoot": "chant"
     },
     {
       "id": 2082,
@@ -16854,8 +16990,9 @@
       "word": "perplex",
       "phonetic": "/pəˈplɛks/",
       "meaning": "v 迷惑，困惑，难住",
-      "example": "",
-      "level": "CET6"
+      "example": "per cent (百分之……，百分数)",
+      "level": "CET6",
+      "exampleRoot": "per"
     },
     {
       "id": 2084,
@@ -17072,8 +17209,9 @@
       "word": "stairway",
       "phonetic": "/ˈsteə.weɪ/",
       "meaning": "n 楼梯",
-      "example": "",
-      "level": "CET6"
+      "example": "below stairs (在地下室；在楼下)",
+      "level": "CET6",
+      "exampleRoot": "stair"
     },
     {
       "id": 2111,
@@ -17363,16 +17501,18 @@
       "word": "intellect",
       "phonetic": "/ˈɪntəlɛkt/",
       "meaning": "n 理智，智力，才智",
-      "example": "",
-      "level": "CET6"
+      "example": "intellectual property (知识产权；著作权)",
+      "level": "CET6",
+      "exampleRoot": "intellectual"
     },
     {
       "id": 2147,
       "word": "ideally",
       "phonetic": "/ʌɪˈdɪəli/",
       "meaning": "adv 理想地；理论上",
-      "example": "",
-      "level": "CET6"
+      "example": "ideal gas (理想气体)",
+      "level": "CET6",
+      "exampleRoot": "ideal"
     },
     {
       "id": 2148,
@@ -17387,8 +17527,9 @@
       "word": "courtesy",
       "phonetic": "/ˈkɜːtəsi/",
       "meaning": "n 礼貌，谦恭",
-      "example": "",
-      "level": "CET6"
+      "example": "people's court (人民法院；人民法庭（美国一种电视节目）)",
+      "level": "CET6",
+      "exampleRoot": "court"
     },
     {
       "id": 2150,
@@ -17614,8 +17755,9 @@
       "word": "terrorist",
       "phonetic": "/ˈtɛɹəɹɪst/",
       "meaning": "n 恐怖分子",
-      "example": "",
-      "level": "CET6"
+      "example": "feel terrible (感觉不舒服)",
+      "level": "CET6",
+      "exampleRoot": "terrify"
     },
     {
       "id": 2178,
@@ -17686,8 +17828,9 @@
       "word": "questionable",
       "phonetic": "/ˈkwɛst͡ʃənəbl̩/",
       "meaning": "adj 可疑的，不可靠的",
-      "example": "",
-      "level": "CET6"
+      "example": "in question (讨论中的；成问题的；考虑中的)",
+      "level": "CET6",
+      "exampleRoot": "question"
     },
     {
       "id": 2187,
@@ -17911,8 +18054,9 @@
       "word": "bugle",
       "phonetic": "/ˈbjuːɡəl/",
       "meaning": "n 军号，喇叭",
-      "example": "",
-      "level": "CET6"
+      "example": "big bug (要人；大人物；大错误)",
+      "level": "CET6",
+      "exampleRoot": "bug"
     },
     {
       "id": 2214,
@@ -17951,8 +18095,9 @@
       "word": "mob",
       "phonetic": "/mɒb/",
       "meaning": "v 团团围住（名人等）",
-      "example": "",
-      "level": "CET6"
+      "example": "mobile phone (手机；行动电话)",
+      "level": "CET6",
+      "exampleRoot": "mobile"
     },
     {
       "id": 2219,
@@ -18185,8 +18330,9 @@
       "word": "dismay",
       "phonetic": "/dɪsˈmeɪ/",
       "meaning": "n 惊慌，沮丧，灰心",
-      "example": "",
-      "level": "CET6"
+      "example": "may be (也许，可能)",
+      "level": "CET6",
+      "exampleRoot": "may"
     },
     {
       "id": 2248,
@@ -18250,8 +18396,9 @@
       "word": "perfection",
       "phonetic": "/pɚˈfɛkʃən/",
       "meaning": "n 尽善尽美；无比精确",
-      "example": "",
-      "level": "CET6"
+      "example": "perfect oneself in (精通；熟练；完全掌握)",
+      "level": "CET6",
+      "exampleRoot": "perfect"
     },
     {
       "id": 2256,
@@ -18621,8 +18768,9 @@
       "word": "sham",
       "phonetic": "/ʃæm/",
       "meaning": "n 假冒；膺品；v 假装",
-      "example": "",
-      "level": "CET6"
+      "example": "put to shame (使蒙羞；使自愧不如)",
+      "level": "CET6",
+      "exampleRoot": "shame"
     },
     {
       "id": 2302,
@@ -18695,8 +18843,9 @@
       "word": "deepen",
       "phonetic": "/ˈdiːpən/",
       "meaning": "vt （使色泽等）加浓",
-      "example": "",
-      "level": "CET4"
+      "example": "in deep (—深陷其中，深深卷入(尤指麻烦))",
+      "level": "CET4",
+      "exampleRoot": "deep"
     },
     {
       "id": 2311,
@@ -18970,8 +19119,9 @@
       "word": "Mars",
       "phonetic": "/ˈmɑːz/",
       "meaning": "n 火星",
-      "example": "",
-      "level": "CET6"
+      "example": "marsh gas (甲烷，沼气)",
+      "level": "CET6",
+      "exampleRoot": "marsh"
     },
     {
       "id": 2345,
@@ -19315,8 +19465,9 @@
       "word": "howl",
       "phonetic": "/haʊl/",
       "meaning": "n 嚎叫；哀号；吠",
-      "example": "",
-      "level": "CET6"
+      "example": "and how (正确；（美）非常)",
+      "level": "CET6",
+      "exampleRoot": "how"
     },
     {
       "id": 2388,
@@ -19419,8 +19570,9 @@
       "word": "excessively",
       "phonetic": "/ɪkˈsɛsɪvli/",
       "meaning": "adv 过分，极端地",
-      "example": "",
-      "level": "CET6"
+      "example": "in excess (过度；过量地)",
+      "level": "CET6",
+      "exampleRoot": "excess"
     },
     {
       "id": 2401,
@@ -19879,8 +20031,9 @@
       "word": "dove",
       "phonetic": "/dʌv/",
       "meaning": "n 鸽子，斑鸠",
-      "example": "",
-      "level": "CET6"
+      "example": "do a ([口语]仿效，模仿，学…的样子)",
+      "level": "CET6",
+      "exampleRoot": "do"
     },
     {
       "id": 2458,
@@ -20179,8 +20332,9 @@
       "word": "windmill",
       "phonetic": "/ˈwɪnd.mɪl/",
       "meaning": "n 风车",
-      "example": "",
-      "level": "CET6"
+      "example": "wind power (风力，风能)",
+      "level": "CET6",
+      "exampleRoot": "wind"
     },
     {
       "id": 2495,
@@ -20203,8 +20357,9 @@
       "word": "indignation",
       "phonetic": "/ˌɪn.dɪɡ.ˈneɪ.ʃən/",
       "meaning": "n 愤怒，愤慨，义愤",
-      "example": "",
-      "level": "CET6"
+      "example": "dig out (掘出；发现)",
+      "level": "CET6",
+      "exampleRoot": "dignity"
     },
     {
       "id": 2498,
@@ -20315,8 +20470,9 @@
       "word": "gangster",
       "phonetic": "/ˈɡæŋstə/",
       "meaning": "n 匪徒，歹徒，暴徒",
-      "example": "",
-      "level": "CET6"
+      "example": "gang of four (四人帮)",
+      "level": "CET6",
+      "exampleRoot": "gang"
     },
     {
       "id": 2512,
@@ -20379,8 +20535,9 @@
       "word": "hamper",
       "phonetic": "/ˈhæmpɚ/",
       "meaning": "v 妨碍，阻碍，牵制",
-      "example": "",
-      "level": "CET6"
+      "example": "ham sandwich (火腿三明治)",
+      "level": "CET6",
+      "exampleRoot": "ham"
     },
     {
       "id": 2520,
@@ -20749,8 +20906,9 @@
       "word": "jealousy",
       "phonetic": "/ˈdʒɛləsi/",
       "meaning": "n 妒忌，嫉妒，猜忌",
-      "example": "",
-      "level": "CET6"
+      "example": "jealous of (妒忌)",
+      "level": "CET6",
+      "exampleRoot": "jealous"
     },
     {
       "id": 2566,
@@ -20904,8 +21062,9 @@
       "word": "summit",
       "phonetic": "/ˈsʌmɪt/",
       "meaning": "n 顶点，最高点；极度",
-      "example": "",
-      "level": "CET4"
+      "example": "sum up (总结；概述；计算…的总数)",
+      "level": "CET4",
+      "exampleRoot": "sum"
     },
     {
       "id": 2585,
@@ -20952,8 +21111,9 @@
       "word": "electrician",
       "phonetic": "/ˌel.ekˈtrɪʃ.ən/",
       "meaning": "n 电工，电气技师",
-      "example": "",
-      "level": "CET6"
+      "example": "electric power (电力；电功率)",
+      "level": "CET6",
+      "exampleRoot": "electric"
     },
     {
       "id": 2591,
@@ -20968,8 +21128,9 @@
       "word": "kindle",
       "phonetic": "/ˈkɪndl/",
       "meaning": "v 点燃，着火",
-      "example": "",
-      "level": "CET6"
+      "example": "kindness of (敬请转交[信封用语])",
+      "level": "CET6",
+      "exampleRoot": "kind"
     },
     {
       "id": 2593,
@@ -21202,8 +21363,9 @@
       "word": "massacre",
       "phonetic": "/ˈmæs.ə.kə(ɹ)/",
       "meaning": "n 大屠杀，残杀",
-      "example": "",
-      "level": "CET6"
+      "example": "rock mass (岩体；岩块，岩块体；岩石层)",
+      "level": "CET6",
+      "exampleRoot": "mass"
     },
     {
       "id": 2622,
@@ -21347,8 +21509,9 @@
       "word": "thresh",
       "phonetic": "/θɹɛʃ/",
       "meaning": "v 打谷，脱粒",
-      "example": "",
-      "level": "CET6"
+      "example": "threshold value ([计]阈值；门限值；界限值)",
+      "level": "CET6",
+      "exampleRoot": "threshold"
     },
     {
       "id": 2640,
@@ -21619,8 +21782,9 @@
       "word": "leaflet",
       "phonetic": "/ˈliːflɪt/",
       "meaning": "n 传单",
-      "example": "",
-      "level": "CET6"
+      "example": "leaf blade (叶片)",
+      "level": "CET6",
+      "exampleRoot": "leaf"
     },
     {
       "id": 2674,
@@ -21699,8 +21863,9 @@
       "word": "adore",
       "phonetic": "/əˈdɔː/",
       "meaning": "v 崇拜，爱慕；很喜欢",
-      "example": "",
-      "level": "CET6"
+      "example": "ad hoc (adj. 特别的；临时；专设)",
+      "level": "CET6",
+      "exampleRoot": "ad"
     },
     {
       "id": 2684,
@@ -21851,8 +22016,9 @@
       "word": "muse",
       "phonetic": "/mjuːz/",
       "meaning": "v 沉思，默想，冥想",
-      "example": "",
-      "level": "CET6"
+      "example": "art museum (美术馆，美术博物馆；艺术博物馆)",
+      "level": "CET6",
+      "exampleRoot": "museum"
     },
     {
       "id": 2703,
@@ -21939,8 +22105,9 @@
       "word": "waggon",
       "phonetic": "/ˈwæɡ.ən/",
       "meaning": "n 敞蓬车厢",
-      "example": "",
-      "level": "CET4"
+      "example": "wag its tail (（狗）摇尾巴)",
+      "level": "CET4",
+      "exampleRoot": "wag"
     },
     {
       "id": 2714,
@@ -22019,8 +22186,9 @@
       "word": "tactics",
       "phonetic": "/ˈtæktɪks/",
       "meaning": "n 战术，兵法",
-      "example": "",
-      "level": "CET6"
+      "example": "contact us (联系我们；联络我们；联系方式)",
+      "level": "CET6",
+      "exampleRoot": "tact"
     },
     {
       "id": 2724,
@@ -22060,8 +22228,9 @@
       "word": "cruelty",
       "phonetic": "/ˈkɹuː(ə)lti/",
       "meaning": "n 残酷；残酷行为",
-      "example": "",
-      "level": "CET4"
+      "example": "extremely cruel (极其残忍；惨绝人寰)",
+      "level": "CET4",
+      "exampleRoot": "cruel"
     },
     {
       "id": 2729,
@@ -22418,8 +22587,9 @@
       "word": "icy",
       "phonetic": "/ˈaɪsi/",
       "meaning": "adj 冰冷的；冷冰冰的",
-      "example": "",
-      "level": "CET6"
+      "example": "index system ([计]索引系统)",
+      "level": "CET6",
+      "exampleRoot": "I"
     },
     {
       "id": 2773,
@@ -22434,8 +22604,9 @@
       "word": "characterize",
       "phonetic": "/ˈkæɹəktəɹaɪz/",
       "meaning": "v 表现…的特性",
-      "example": "",
-      "level": "CET4"
+      "example": "chinese character (汉字)",
+      "level": "CET4",
+      "exampleRoot": "character"
     },
     {
       "id": 2775,
@@ -22706,8 +22877,9 @@
       "word": "announce",
       "phonetic": "/əˈnaʊns/",
       "meaning": "v 报告…的来到",
-      "example": "",
-      "level": "CET4"
+      "example": "radio announcer (电台播音员)",
+      "level": "CET4",
+      "exampleRoot": "announcer"
     },
     {
       "id": 2809,
@@ -22722,8 +22894,9 @@
       "word": "fortress",
       "phonetic": "/ˈfɔː.tɹəs/",
       "meaning": "n 堡垒，要塞",
-      "example": "",
-      "level": "CET6"
+      "example": "fort worth (沃思堡市（美国城市）)",
+      "level": "CET6",
+      "exampleRoot": "fort"
     },
     {
       "id": 2811,
@@ -22802,8 +22975,9 @@
       "word": "baseball",
       "phonetic": "/ˈbeɪs.bɔːl/",
       "meaning": "n 棒球运动；棒球",
-      "example": "",
-      "level": "CET4"
+      "example": "base on (基于，以……为根据；在……基础上)",
+      "level": "CET4",
+      "exampleRoot": "base"
     },
     {
       "id": 2821,
@@ -22874,8 +23048,9 @@
       "word": "millionaire",
       "phonetic": "/ˌmɪl.i.əˈnɛə(ɹ)/",
       "meaning": "n 百分富翁，巨富",
-      "example": "",
-      "level": "CET6"
+      "example": "in a million ((人、物)千里挑一的，无与伦比的)",
+      "level": "CET6",
+      "exampleRoot": "million"
     },
     {
       "id": 2830,
@@ -22922,8 +23097,9 @@
       "word": "bestow",
       "phonetic": "/bɪˈstəʊ/",
       "meaning": "v 把…赠与",
-      "example": "",
-      "level": "CET6"
+      "example": "so be it (诚心所愿；顺其自然)",
+      "level": "CET6",
+      "exampleRoot": "be"
     },
     {
       "id": 2836,
@@ -23027,8 +23203,9 @@
       "word": "alas",
       "phonetic": "/ɘˈlɛs/",
       "meaning": "int 唉，哎呀",
-      "example": "",
-      "level": "CET6"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET6",
+      "exampleRoot": "a"
     },
     {
       "id": 2849,
@@ -23043,8 +23220,9 @@
       "word": "pathetic",
       "phonetic": "/pəˈθɛtɪk/",
       "meaning": "adj 哀婉动人的；可怜的",
-      "example": "",
-      "level": "CET6"
+      "example": "shortest path (最短路径)",
+      "level": "CET6",
+      "exampleRoot": "path"
     },
     {
       "id": 2851,
@@ -23292,8 +23470,9 @@
       "word": "perch",
       "phonetic": "/pɜːtʃ/",
       "meaning": "n （禽鸟的）栖木",
-      "example": "",
-      "level": "CET6"
+      "example": "per cent (百分之……，百分数)",
+      "level": "CET6",
+      "exampleRoot": "per"
     },
     {
       "id": 2882,
@@ -23316,8 +23495,9 @@
       "word": "frock",
       "phonetic": "/fɹɒk/",
       "meaning": "n （女）连衣裙",
-      "example": "",
-      "level": "CET6"
+      "example": "frown on (不悦，不满)",
+      "level": "CET6",
+      "exampleRoot": "fro"
     },
     {
       "id": 2885,
@@ -23469,8 +23649,9 @@
       "word": "growl",
       "phonetic": "/ɡɹaʊl/",
       "meaning": "v （狗等）嗥叫；咆哮",
-      "example": "",
-      "level": "CET6"
+      "example": "grow up (成长，逐渐形成)",
+      "level": "CET6",
+      "exampleRoot": "grow"
     },
     {
       "id": 2904,
@@ -23621,8 +23802,9 @@
       "word": "menace",
       "phonetic": "/ˈmɛnɪs/",
       "meaning": "n 威胁；v （进行）威胁",
-      "example": "",
-      "level": "CET6"
+      "example": "melt into (溶解成；消散在…中；因心软而…)",
+      "level": "CET6",
+      "exampleRoot": "me"
     },
     {
       "id": 2923,
@@ -23728,8 +23910,9 @@
       "word": "repay",
       "phonetic": "/ɹiˈpeɪ/",
       "meaning": "v 偿还；报答",
-      "example": "",
-      "level": "CET6"
+      "example": "terms of payment (付款条件)",
+      "level": "CET6",
+      "exampleRoot": "pay"
     },
     {
       "id": 2936,
@@ -23915,8 +24098,9 @@
       "word": "boycott",
       "phonetic": "/ˈbɔɪkɒt/",
       "meaning": "v 联合抵制；n 抵制行动，受抵制时期",
-      "example": "",
-      "level": "CET6"
+      "example": "little boy (小男孩)",
+      "level": "CET6",
+      "exampleRoot": "boy"
     },
     {
       "id": 2959,
@@ -23987,8 +24171,9 @@
       "word": "headlong",
       "phonetic": "/ˈhɛdlɑŋ/",
       "meaning": "adv 头向前地；adj 头向前的",
-      "example": "",
-      "level": "CET6"
+      "example": "head office (总公司；总行)",
+      "level": "CET6",
+      "exampleRoot": "head"
     },
     {
       "id": 2968,
@@ -24240,8 +24425,9 @@
       "word": "humble",
       "phonetic": "/ˈhʌmbəl/",
       "meaning": "adj 谦逊的；地位低下的；简陋的；vt 使谦恭； 使卑下",
-      "example": "",
-      "level": "CET4"
+      "example": "humorous story (幽默小说)",
+      "level": "CET4",
+      "exampleRoot": "hum"
     },
     {
       "id": 2999,
@@ -24361,8 +24547,9 @@
       "word": "facet",
       "phonetic": "/ˈfæsɪt/",
       "meaning": "n 一个方面； 面",
-      "example": "",
-      "level": "CET6"
+      "example": "the face of (即使；在…面前)",
+      "level": "CET6",
+      "exampleRoot": "face"
     },
     {
       "id": 3014,
@@ -24433,8 +24620,9 @@
       "word": "avert",
       "phonetic": "/əˈvɜːt/",
       "meaning": "vt 防止， 避免； 转移",
-      "example": "",
-      "level": "CET6"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET6",
+      "exampleRoot": "a"
     },
     {
       "id": 3023,
@@ -24603,8 +24791,9 @@
       "word": "myth",
       "phonetic": "/mɪθ/",
       "meaning": "n 杜撰出来的人； 神话",
-      "example": "",
-      "level": "CET4"
+      "example": "by myself (独立完成)",
+      "level": "CET4",
+      "exampleRoot": "my"
     },
     {
       "id": 3044,
@@ -24628,8 +24817,9 @@
       "word": "cordial",
       "phonetic": "/ˈkɔː.dɪ.əl/",
       "meaning": "adj 热情友好的， 热诚的",
-      "example": "",
-      "level": "CET4"
+      "example": "spinal cord (脊髓)",
+      "level": "CET4",
+      "exampleRoot": "cord"
     },
     {
       "id": 3047,
@@ -24766,8 +24956,9 @@
       "word": "pastry",
       "phonetic": "/ˈpeɪstɹi/",
       "meaning": "n 油酥面团， 酥皮糕点",
-      "example": "",
-      "level": "CET6"
+      "example": "in the past (在过去)",
+      "level": "CET6",
+      "exampleRoot": "past"
     },
     {
       "id": 3064,
@@ -24815,8 +25006,9 @@
       "word": "tempo",
       "phonetic": "/ˈtɛm.pəʊ/",
       "meaning": "n 速度； 节奏， 行进速度",
-      "example": "",
-      "level": "CET6"
+      "example": "temporary storage (暂时存储器；暂时库容；中间存储器)",
+      "level": "CET6",
+      "exampleRoot": "temporary"
     },
     {
       "id": 3070,
@@ -25353,8 +25545,9 @@
       "word": "dodge",
       "phonetic": "/dɒdʒ/",
       "meaning": "vi 闪身躲开；vt 回避，逃避；n 托辞， 伎俩； 躲闪， 躲避",
-      "example": "",
-      "level": "CET6"
+      "example": "do a ([口语]仿效，模仿，学…的样子)",
+      "level": "CET6",
+      "exampleRoot": "do"
     },
     {
       "id": 3137,
@@ -25508,8 +25701,9 @@
       "word": "pastime",
       "phonetic": "/ˈpæs.taɪm/",
       "meaning": "n 消遣， 娱乐",
-      "example": "",
-      "level": "CET6"
+      "example": "in the past (在过去)",
+      "level": "CET6",
+      "exampleRoot": "past"
     },
     {
       "id": 3156,
@@ -25524,8 +25718,9 @@
       "word": "prosecute",
       "phonetic": "/ˈpɹɒsɪkjuːt/",
       "meaning": "vi 起诉， 告发；vt 对…提起公诉，告发，检举；继续从事",
-      "example": "",
-      "level": "CET6"
+      "example": "prose poem (n. 散文诗)",
+      "level": "CET6",
+      "exampleRoot": "prose"
     },
     {
       "id": 3158,
@@ -25716,8 +25911,9 @@
       "word": "attain",
       "phonetic": "/əˈteɪn/",
       "meaning": "vt 达到， 获得； 完成",
-      "example": "",
-      "level": "CET4"
+      "example": "at all (（否定句）根本；究竟)",
+      "level": "CET4",
+      "exampleRoot": "at"
     },
     {
       "id": 3182,
@@ -25733,8 +25929,9 @@
       "word": "batter",
       "phonetic": "/ˈbætə(ɹ)/",
       "meaning": "v 连续猛击；n 面糊",
-      "example": "",
-      "level": "CET6"
+      "example": "battery of (一组；一套)",
+      "level": "CET6",
+      "exampleRoot": "battery"
     },
     {
       "id": 3184,
@@ -26081,8 +26278,9 @@
       "word": "exceedingly",
       "phonetic": "/ɪkˈsiːdɪŋli/",
       "meaning": "adv 极端地， 非常",
-      "example": "",
-      "level": "CET4"
+      "example": "exceed in (在…方面超过)",
+      "level": "CET4",
+      "exampleRoot": "exceed"
     },
     {
       "id": 3227,
@@ -26185,8 +26383,9 @@
       "word": "loyal",
       "phonetic": "/ˈlɔɪəl/",
       "meaning": "adj 忠诚的， 忠心的",
-      "example": "",
-      "level": "CET4"
+      "example": "customer loyalty (客户忠诚度；顾客信赖)",
+      "level": "CET4",
+      "exampleRoot": "loyalty"
     },
     {
       "id": 3240,
@@ -26241,8 +26440,9 @@
       "word": "corpse",
       "phonetic": "/ˈkoːps/",
       "meaning": "n 死尸， 尸体",
-      "example": "",
-      "level": "CET6"
+      "example": "corps of engineers (陆军工兵部队)",
+      "level": "CET6",
+      "exampleRoot": "corps"
     },
     {
       "id": 3247,
@@ -26417,8 +26617,9 @@
       "word": "compete",
       "phonetic": "/kəm.ˈpiːt/",
       "meaning": "vi 比赛， 竞争， 对抗",
-      "example": "",
-      "level": "CET4"
+      "example": "core competence (核心竞争力；核心才能)",
+      "level": "CET4",
+      "exampleRoot": "competence"
     },
     {
       "id": 3269,
@@ -26449,8 +26650,9 @@
       "word": "layoff",
       "phonetic": "/ˈleɪ.ɒf/",
       "meaning": "n 解雇； 裁员； 歇工期， 停工期",
-      "example": "",
-      "level": "CET6"
+      "example": "lay in (贮存)",
+      "level": "CET6",
+      "exampleRoot": "lay"
     },
     {
       "id": 3273,
@@ -26673,8 +26875,9 @@
       "word": "idiom",
       "phonetic": "/ˈɪdɪəm/",
       "meaning": "n 习语， 成语； 风格， 特色",
-      "example": "",
-      "level": "CET4"
+      "example": "index system ([计]索引系统)",
+      "level": "CET4",
+      "exampleRoot": "I"
     },
     {
       "id": 3301,
@@ -26689,8 +26892,9 @@
       "word": "sparkle",
       "phonetic": "/ˈspɑːkəl/",
       "meaning": "vi 发光，闪耀，闪烁；活跃，焕发；n 闪光， 闪耀， 闪烁； 活力， 生气",
-      "example": "",
-      "level": "CET6"
+      "example": "spark plug (n. 火花塞；带头人；中坚分子)",
+      "level": "CET6",
+      "exampleRoot": "spark"
     },
     {
       "id": 3303,
@@ -26930,8 +27134,9 @@
       "word": "allege",
       "phonetic": "/əˈlɛdʒ/",
       "meaning": "vt 断言， 宣称， 硬说",
-      "example": "",
-      "level": "CET6"
+      "example": "all the (◎惟一的，仅有的)",
+      "level": "CET6",
+      "exampleRoot": "all"
     },
     {
       "id": 3333,
@@ -27220,8 +27425,9 @@
       "word": "authentic",
       "phonetic": "/ɒ.ˈθɛn.tɪk/",
       "meaning": "adj 真的， 真正的； 可靠的， 可信的",
-      "example": "",
-      "level": "CET6"
+      "example": "competent authority ([法]主管当局，主管部门)",
+      "level": "CET6",
+      "exampleRoot": "authority"
     },
     {
       "id": 3369,
@@ -27252,24 +27458,27 @@
       "word": "suburb",
       "phonetic": "/ˈsʌbɜːb/",
       "meaning": "n 郊区， 郊外， 近郊",
-      "example": "",
-      "level": "CET4"
+      "example": "suburban district (郊区)",
+      "level": "CET4",
+      "exampleRoot": "suburban"
     },
     {
       "id": 3373,
       "word": "annoy",
       "phonetic": "/əˈnɔɪ/",
       "meaning": "vt 使恼怒； 打搅",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "a"
     },
     {
       "id": 3374,
       "word": "profess",
       "phonetic": "/pɹəˈfɛs/",
       "meaning": "vt 表示， 承认； 宣称信仰",
-      "example": "",
-      "level": "CET6"
+      "example": "profession of (宣称(感情、信念等)；表白)",
+      "level": "CET6",
+      "exampleRoot": "profession"
     },
     {
       "id": 3375,
@@ -27300,8 +27509,9 @@
       "word": "outfit",
       "phonetic": "/ˈaʊtfɪt/",
       "meaning": "n 全套服装； 一组人； 全套装备， 全套工具",
-      "example": "",
-      "level": "CET6"
+      "example": "out of (由于；缺乏；自…离开；用…（材料）)",
+      "level": "CET6",
+      "exampleRoot": "out"
     },
     {
       "id": 3379,
@@ -27349,8 +27559,9 @@
       "word": "setback",
       "phonetic": "/ˈsɛtbæk/",
       "meaning": "n 挫折， 倒退， 失败",
-      "example": "",
-      "level": "CET6"
+      "example": "set up (v. 建立；装配；开业；竖立)",
+      "level": "CET6",
+      "exampleRoot": "set"
     },
     {
       "id": 3385,
@@ -27405,8 +27616,9 @@
       "word": "crystallize",
       "phonetic": "/ˈkɹɪstəlaɪz/",
       "meaning": "v 结晶； 变得清晰而明确； 使具体化",
-      "example": "",
-      "level": "CET6"
+      "example": "liquid crystal (液晶)",
+      "level": "CET6",
+      "exampleRoot": "crystal"
     },
     {
       "id": 3392,
@@ -27566,8 +27778,9 @@
       "word": "stab",
       "phonetic": "/stæb/",
       "meaning": "n&v 刺， 戳",
-      "example": "",
-      "level": "CET6"
+      "example": "stable quality (质量稳定)",
+      "level": "CET6",
+      "exampleRoot": "stable"
     },
     {
       "id": 3412,
@@ -27679,8 +27892,9 @@
       "word": "arena",
       "phonetic": "/əˈɹiːnə/",
       "meaning": "n 表演场地， 竞技场； 活动场所",
-      "example": "",
-      "level": "CET6"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET6",
+      "exampleRoot": "a"
     },
     {
       "id": 3426,
@@ -28032,8 +28246,9 @@
       "word": "moreover",
       "phonetic": "/mɔːˈɹəʊvə/",
       "meaning": "adv 而且， 再者， 此外",
-      "example": "",
-      "level": "CET4"
+      "example": "more than (多于；超出；比……多)",
+      "level": "CET4",
+      "exampleRoot": "more"
     },
     {
       "id": 3470,
@@ -28180,8 +28395,9 @@
       "word": "imply",
       "phonetic": "/ɪmˈplaɪ/",
       "meaning": "vt 暗示， 意指",
-      "example": "",
-      "level": "CET4"
+      "example": "comply with (照做，遵守)",
+      "level": "CET4",
+      "exampleRoot": "comply"
     },
     {
       "id": 3488,
@@ -28509,8 +28725,9 @@
       "word": "overt",
       "phonetic": "/ə(ʊ)ˈvɜːt/",
       "meaning": "adj 公开的， 不隐蔽的",
-      "example": "",
-      "level": "CET6"
+      "example": "all over (到处，遍及；浑身；全部结束)",
+      "level": "CET6",
+      "exampleRoot": "over"
     },
     {
       "id": 3529,
@@ -28598,8 +28815,9 @@
       "word": "educational",
       "phonetic": "/ˌɛdʒʊˈkeɪʃənəl/",
       "meaning": "adj 教育的， 教育性的",
-      "example": "",
-      "level": "CET6"
+      "example": "higher education (高等教育（指含大学以上的教育）)",
+      "level": "CET6",
+      "exampleRoot": "educate"
     },
     {
       "id": 3540,
@@ -28678,8 +28896,9 @@
       "word": "indignant",
       "phonetic": "/ɪnˈdɪɡ.nənt/",
       "meaning": "adj 愤怒的， 愤慨的， 义愤的",
-      "example": "",
-      "level": "CET4"
+      "example": "dig out (掘出；发现)",
+      "level": "CET4",
+      "exampleRoot": "dignity"
     },
     {
       "id": 3550,
@@ -29211,8 +29430,9 @@
       "word": "dictate",
       "phonetic": "/ˈdɪkˌteɪt/",
       "meaning": "v ['dIkteIt]；n 口授； 命令， 规定， 要求",
-      "example": "",
-      "level": "CET4"
+      "example": "prediction model (预测模型；推算模型)",
+      "level": "CET4",
+      "exampleRoot": "predict"
     },
     {
       "id": 3616,
@@ -29524,16 +29744,18 @@
       "word": "slum",
       "phonetic": "/slʌm/",
       "meaning": "n 贫民窟",
-      "example": "",
-      "level": "CET6"
+      "example": "economic slump (经济衰退)",
+      "level": "CET6",
+      "exampleRoot": "slump"
     },
     {
       "id": 3655,
       "word": "occasional",
       "phonetic": "/əˈkeɪʒ(ə)nəl/",
       "meaning": "adj 偶尔的， 间或发生的",
-      "example": "",
-      "level": "CET4"
+      "example": "on the occasion (在那时；值此…之际)",
+      "level": "CET4",
+      "exampleRoot": "occasion"
     },
     {
       "id": 3656,
@@ -29741,8 +29963,9 @@
       "word": "furthermore",
       "phonetic": "/ˈfɜː(ɹ).ðə(ɹ).mɔː(ɹ)/",
       "meaning": "adv 而且， 此外",
-      "example": "",
-      "level": "CET4"
+      "example": "further development (进一步的发展)",
+      "level": "CET4",
+      "exampleRoot": "further"
     },
     {
       "id": 3682,
@@ -29789,8 +30012,9 @@
       "word": "modest",
       "phonetic": "/ˈmɑdəst/",
       "meaning": "adj 谦虚的； 适中的； 羞怯的",
-      "example": "",
-      "level": "CET4"
+      "example": "operation mode (操作方式)",
+      "level": "CET4",
+      "exampleRoot": "mode"
     },
     {
       "id": 3688,
@@ -30241,16 +30465,18 @@
       "word": "sensational",
       "phonetic": "/senˈseɪ.ʃən.əl/",
       "meaning": "adj 轰动的， 耸人听闻的； 使人感动的， 非常好的",
-      "example": "",
-      "level": "CET6"
+      "example": "sensible heat (显热；焓)",
+      "level": "CET6",
+      "exampleRoot": "sensible"
     },
     {
       "id": 3744,
       "word": "alienate",
       "phonetic": "/ˈeɪ.li.ə.neɪt/",
       "meaning": "vt 使疏远， 使不友好， 离间； 转让， 让渡",
-      "example": "",
-      "level": "CET6"
+      "example": "alien from (相异的)",
+      "level": "CET6",
+      "exampleRoot": "alien"
     },
     {
       "id": 3745,
@@ -30361,8 +30587,9 @@
       "word": "consequently",
       "phonetic": "/ˈkɒnsɪˌkwɛntli/",
       "meaning": "adv 因此， 因而， 所以",
-      "example": "",
-      "level": "CET4"
+      "example": "consequent on (随之而来；跟着…发生的)",
+      "level": "CET4",
+      "exampleRoot": "consequent"
     },
     {
       "id": 3759,
@@ -30807,8 +31034,9 @@
       "word": "digest",
       "phonetic": "/daɪˈdʒɛst/",
       "meaning": "vt 消化， 领会；n 文摘",
-      "example": "",
-      "level": "CET4"
+      "example": "dig out (掘出；发现)",
+      "level": "CET4",
+      "exampleRoot": "dig"
     },
     {
       "id": 3814,
@@ -30879,8 +31107,9 @@
       "word": "outrage",
       "phonetic": "/ˈæot.ɹæed͡ʒ/",
       "meaning": "n 义愤，愤慨；暴行，骇人听闻的事件；vt 激起…的义愤， 激怒",
-      "example": "",
-      "level": "CET6"
+      "example": "out of (由于；缺乏；自…离开；用…（材料）)",
+      "level": "CET6",
+      "exampleRoot": "out"
     },
     {
       "id": 3823,
@@ -31289,8 +31518,9 @@
       "word": "advisable",
       "phonetic": "/ədˈvaɪ.zə.bəl/",
       "meaning": "adj 可取的； 适当的",
-      "example": "",
-      "level": "CET4"
+      "example": "advisory committee (咨询委员会)",
+      "level": "CET4",
+      "exampleRoot": "advisory"
     },
     {
       "id": 3874,
@@ -31907,8 +32137,9 @@
       "word": "objection",
       "phonetic": "/əbˈdʒɛkʃən/",
       "meaning": "n 反对， 异议； 反对的理由",
-      "example": "",
-      "level": "CET4"
+      "example": "object oriented (面向对象的；对象趋向的；物件导向的)",
+      "level": "CET4",
+      "exampleRoot": "object"
     },
     {
       "id": 3950,
@@ -32037,8 +32268,9 @@
       "word": "briefcase",
       "phonetic": "/ˈbɹiːfˌkeɪs/",
       "meaning": "n 公文包， 公事包",
-      "example": "",
-      "level": "CET6"
+      "example": "in brief (简言之)",
+      "level": "CET6",
+      "exampleRoot": "brief"
     },
     {
       "id": 3966,
@@ -32199,8 +32431,9 @@
       "word": "feeble",
       "phonetic": "/ˈfiːbəl/",
       "meaning": "adj 虚弱的， 衰弱的， 无力的； 无效的， 无益的",
-      "example": "",
-      "level": "CET4"
+      "example": "service fee (酬金；劳务费)",
+      "level": "CET4",
+      "exampleRoot": "fee"
     },
     {
       "id": 3986,
@@ -32320,8 +32553,9 @@
       "word": "advancement",
       "phonetic": "/ædˈvæns.mɛnt/",
       "meaning": "n 进步，提升",
-      "example": "",
-      "level": "CET4"
+      "example": "in advance (adv. 预先，提前)",
+      "level": "CET4",
+      "exampleRoot": "advance"
     },
     {
       "id": 4001,
@@ -32514,8 +32748,9 @@
       "word": "canteen",
       "phonetic": "/kænˈtiːn/",
       "meaning": "n 食堂",
-      "example": "",
-      "level": "CET4"
+      "example": "can be (可能；可以是)",
+      "level": "CET4",
+      "exampleRoot": "can"
     },
     {
       "id": 4025,
@@ -32675,16 +32910,18 @@
       "word": "considerably",
       "phonetic": "/kənˈsɪdəɹəbli/",
       "meaning": "adv 相当地，非常地",
-      "example": "",
-      "level": "CET4"
+      "example": "consider as (vt. 认为（把...看作）)",
+      "level": "CET4",
+      "exampleRoot": "consider"
     },
     {
       "id": 4045,
       "word": "constantly",
       "phonetic": "/ˈkɒnstəntli/",
       "meaning": "adv 不断地，时常地",
-      "example": "",
-      "level": "CET4"
+      "example": "constant temperature (恒温；定温；等温)",
+      "level": "CET4",
+      "exampleRoot": "constant"
     },
     {
       "id": 4046,
@@ -32886,8 +33123,9 @@
       "word": "distraction",
       "phonetic": "/dɪsˈtɹækʃən/",
       "meaning": "n 消遣；分心",
-      "example": "",
-      "level": "CET4"
+      "example": "distract from (转移；使从…分心)",
+      "level": "CET4",
+      "exampleRoot": "distract"
     },
     {
       "id": 4071,
@@ -32943,8 +33181,9 @@
       "word": "downfall",
       "phonetic": "/ˈdaʊn.fɔːl/",
       "meaning": "n （雨等的）大下特下",
-      "example": "",
-      "level": "CET4"
+      "example": "down on (突然意识到)",
+      "level": "CET4",
+      "exampleRoot": "down"
     },
     {
       "id": 4078,
@@ -33007,8 +33246,9 @@
       "word": "efficiently",
       "phonetic": "/ɪˈfɪʃ.ənt.li/",
       "meaning": "adj 有效地",
-      "example": "",
-      "level": "CET4"
+      "example": "transfer coefficient (传送系数，转移系数)",
+      "level": "CET4",
+      "exampleRoot": "coefficient"
     },
     {
       "id": 4086,
@@ -33095,8 +33335,9 @@
       "word": "essentially",
       "phonetic": "/ɪˈsɛnʃəli/",
       "meaning": "adv 本质上地；必须的",
-      "example": "",
-      "level": "CET4"
+      "example": "essential oil (香精油，精油)",
+      "level": "CET4",
+      "exampleRoot": "essential"
     },
     {
       "id": 4097,
@@ -33135,8 +33376,9 @@
       "word": "expressiveness",
       "phonetic": "/ɪkˈspres.ɪv.nəs/",
       "meaning": "n 表达",
-      "example": "",
-      "level": "CET4"
+      "example": "press conference (记者招待会，新闻发布会)",
+      "level": "CET4",
+      "exampleRoot": "press"
     },
     {
       "id": 4102,
@@ -33208,16 +33450,18 @@
       "word": "foothold",
       "phonetic": "/ˈfʊt.həʊld/",
       "meaning": "n 立足处（攀登时脚踩的地方）",
-      "example": "",
-      "level": "CET4"
+      "example": "on foot (步行；在进行中)",
+      "level": "CET4",
+      "exampleRoot": "foot"
     },
     {
       "id": 4111,
       "word": "fortunately",
       "phonetic": "/ˈfɔːt͡ʃənɪtli/",
       "meaning": "adv 幸运地",
-      "example": "",
-      "level": "CET4"
+      "example": "fortunate in (有好运气；于…很幸运)",
+      "level": "CET4",
+      "exampleRoot": "fortunate"
     },
     {
       "id": 4112,
@@ -33256,8 +33500,9 @@
       "word": "groundlessly",
       "phonetic": "/ˈɡraʊnd.ləs.li/",
       "meaning": "adv 无缘无故地，无根据地",
-      "example": "",
-      "level": "CET4"
+      "example": "on the ground (在地上；当场；在决斗)",
+      "level": "CET4",
+      "exampleRoot": "groundless"
     },
     {
       "id": 4117,
@@ -33420,8 +33665,9 @@
       "word": "injure",
       "phonetic": "/ˈɪndʒə/",
       "meaning": "v 使受伤",
-      "example": "",
-      "level": "CET4"
+      "example": "in on (参与，参加)",
+      "level": "CET4",
+      "exampleRoot": "in"
     },
     {
       "id": 4137,
@@ -33486,16 +33732,18 @@
       "word": "invade",
       "phonetic": "/ɪnˈveɪd/",
       "meaning": "v 侵入，侵略",
-      "example": "",
-      "level": "CET4"
+      "example": "in on (参与，参加)",
+      "level": "CET4",
+      "exampleRoot": "in"
     },
     {
       "id": 4145,
       "word": "irrationally",
       "phonetic": "/ɪˈræʃ.ən.əl.i/",
       "meaning": "adv 不合理地，无理性地",
-      "example": "",
-      "level": "CET4"
+      "example": "irrational number ([数]无理数)",
+      "level": "CET4",
+      "exampleRoot": "irrational"
     },
     {
       "id": 4146,
@@ -33625,8 +33873,9 @@
       "word": "miserable",
       "phonetic": "/ˈmɪz(ə)ɹəbəl/",
       "meaning": "adj 痛苦的",
-      "example": "",
-      "level": "CET4"
+      "example": "data transmission (数据传输)",
+      "level": "CET4",
+      "exampleRoot": "miser"
     },
     {
       "id": 4162,
@@ -33699,8 +33948,9 @@
       "word": "patiently",
       "phonetic": "/ˈpeɪʃəntli/",
       "meaning": "adv 耐心地",
-      "example": "",
-      "level": "CET4"
+      "example": "too impatient to wait (迫不及待)",
+      "level": "CET4",
+      "exampleRoot": "impatient"
     },
     {
       "id": 4171,
@@ -33814,8 +34064,9 @@
       "word": "previously",
       "phonetic": "/ˈpɹiːvi.əsli/",
       "meaning": "adv 事先",
-      "example": "",
-      "level": "CET4"
+      "example": "previous year (前一年)",
+      "level": "CET4",
+      "exampleRoot": "previous"
     },
     {
       "id": 4185,
@@ -34356,8 +34607,9 @@
       "word": "ultimately",
       "phonetic": "/ˈʌltɪmətli/",
       "meaning": "adv 最后，最终",
-      "example": "",
-      "level": "CET4"
+      "example": "ultimate goal (最终目标；终极目标)",
+      "level": "CET4",
+      "exampleRoot": "ultimate"
     },
     {
       "id": 4251,
@@ -34543,8 +34795,9 @@
       "word": "prohibitively",
       "phonetic": "/prəˈhɪb.ɪ.tɪv.li/",
       "meaning": "adv 过分地，非常地",
-      "example": "",
-      "level": "CET4"
+      "example": "strictly prohibit (严禁)",
+      "level": "CET4",
+      "exampleRoot": "prohibit"
     },
     {
       "id": 4274,
@@ -34738,8 +34991,9 @@
       "word": "extensively",
       "phonetic": "/ɪkˈsten.sɪv.li/",
       "meaning": "adv 广泛地",
-      "example": "",
-      "level": "CET4"
+      "example": "intensive care (重病特别护理)",
+      "level": "CET4",
+      "exampleRoot": "intensive"
     },
     {
       "id": 4298,
@@ -34829,8 +35083,9 @@
       "word": "undoubtedly",
       "phonetic": "/ʌnˈdaʊtɪdli/",
       "meaning": "adv 无疑",
-      "example": "",
-      "level": "CET4"
+      "example": "no doubt (adv. 无疑地；很可能地)",
+      "level": "CET4",
+      "exampleRoot": "doubtless"
     },
     {
       "id": 4309,
@@ -35042,8 +35297,9 @@
       "word": "racially",
       "phonetic": "/ˈreɪ.ʃəl.i/",
       "meaning": "adv 种族上地",
-      "example": "",
-      "level": "CET4"
+      "example": "racial discrimination (种族歧视)",
+      "level": "CET4",
+      "exampleRoot": "interracial"
     },
     {
       "id": 4335,
@@ -35067,8 +35323,9 @@
       "word": "headquarter",
       "phonetic": "/ˌhedˈkwɔː.tər/",
       "meaning": "v 设立总部，在…设立总部",
-      "example": "",
-      "level": "CET4"
+      "example": "general headquarters (陆军总司令部)",
+      "level": "CET4",
+      "exampleRoot": "headquarters"
     },
     {
       "id": 4338,
@@ -35091,8 +35348,9 @@
       "word": "prosper",
       "phonetic": "/ˈpɹɒspə(ɹ)/",
       "meaning": "v 繁荣",
-      "example": "",
-      "level": "CET4"
+      "example": "common prosperity (共同繁荣；共同富裕)",
+      "level": "CET4",
+      "exampleRoot": "desperate"
     },
     {
       "id": 4341,
@@ -35139,8 +35397,9 @@
       "word": "passively",
       "phonetic": "/ˈpæs.ɪv.li/",
       "meaning": "adv 消极地",
-      "example": "",
-      "level": "CET4"
+      "example": "pedestrian overpass (步行天桥；人行天桥)",
+      "level": "CET4",
+      "exampleRoot": "overpass"
     },
     {
       "id": 4347,
@@ -35163,16 +35422,18 @@
       "word": "downsize",
       "phonetic": "/ˈdaʊnsaɪz/",
       "meaning": "v 裁员",
-      "example": "",
-      "level": "CET4"
+      "example": "down on (突然意识到)",
+      "level": "CET4",
+      "exampleRoot": "down"
     },
     {
       "id": 4350,
       "word": "foreseeable",
       "phonetic": "/fɔːˈsiː.ə.bəl/",
       "meaning": "adj 可以预见的",
-      "example": "",
-      "level": "CET4"
+      "example": "to the fore (在前面；在近处；在手头)",
+      "level": "CET4",
+      "exampleRoot": "foresee"
     },
     {
       "id": 4351,
@@ -35195,8 +35456,9 @@
       "word": "amaze",
       "phonetic": "/əˈmeɪz/",
       "meaning": "v 使吃惊",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "a"
     },
     {
       "id": 4354,
@@ -35219,16 +35481,18 @@
       "word": "respectively",
       "phonetic": "/ɹɪˈspɛktɪvli/",
       "meaning": "adv 各自地",
-      "example": "",
-      "level": "CET4"
+      "example": "prospect for (勘探)",
+      "level": "CET4",
+      "exampleRoot": "prospect"
     },
     {
       "id": 4357,
       "word": "fundamentally",
       "phonetic": "/ˌfʌn.dəˈmen.təl.i/",
       "meaning": "adv 根本上",
-      "example": "",
-      "level": "CET4"
+      "example": "fundamental principle (基本原则)",
+      "level": "CET4",
+      "exampleRoot": "fundamental"
     },
     {
       "id": 4358,
@@ -35252,8 +35516,9 @@
       "word": "marginalize",
       "phonetic": "/ˈmɑː.dʒɪ.nəl.aɪz/",
       "meaning": "v 边缘化，排斥",
-      "example": "",
-      "level": "CET4"
+      "example": "profit margin ([经]利润率)",
+      "level": "CET4",
+      "exampleRoot": "margin"
     },
     {
       "id": 4361,
@@ -35269,16 +35534,18 @@
       "word": "logically",
       "phonetic": "/ˈlɒdʒ.ɪ.kəl.i/",
       "meaning": "adv 合乎情理地，符合逻辑地",
-      "example": "",
-      "level": "CET4"
+      "example": "log in (注册；请求联机)",
+      "level": "CET4",
+      "exampleRoot": "log"
     },
     {
       "id": 4363,
       "word": "via",
       "phonetic": "/ˈvaɪə/",
       "meaning": "prep 通过",
-      "example": "",
-      "level": "CET4"
+      "example": "standard deviation (标准偏差)",
+      "level": "CET4",
+      "exampleRoot": "deviation"
     },
     {
       "id": 4364,
@@ -35482,8 +35749,9 @@
       "word": "a",
       "phonetic": "/æɪ/",
       "meaning": "art 一(个)；每一(个)",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "abuse"
     },
     {
       "id": 4389,
@@ -35586,8 +35854,9 @@
       "word": "accessary",
       "phonetic": "/ækˈsɛs(ə)ɹi/",
       "meaning": "n 同谋，从犯",
-      "example": "",
-      "level": "CET4"
+      "example": "access control (访问控制)",
+      "level": "CET4",
+      "exampleRoot": "access"
     },
     {
       "id": 4402,
@@ -35626,8 +35895,9 @@
       "word": "acre",
       "phonetic": "/ˈeɪ.kə/",
       "meaning": "n 英亩(=607亩)",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "a"
     },
     {
       "id": 4407,
@@ -35674,8 +35944,9 @@
       "word": "actress",
       "phonetic": "/ˈak.tɹəs/",
       "meaning": "n 女演员",
-      "example": "",
-      "level": "CET4"
+      "example": "act as (担当)",
+      "level": "CET4",
+      "exampleRoot": "act"
     },
     {
       "id": 4413,
@@ -35690,8 +35961,9 @@
       "word": "actually",
       "phonetic": "/-ɪ/",
       "meaning": "adv 实际上；竟然",
-      "example": "",
-      "level": "CET4"
+      "example": "actual situation (实际情况)",
+      "level": "CET4",
+      "exampleRoot": "actual"
     },
     {
       "id": 4415,
@@ -35730,8 +36002,9 @@
       "word": "adverb",
       "phonetic": "/ˈæd.vɜːb/",
       "meaning": "n 副词",
-      "example": "",
-      "level": "CET4"
+      "example": "ad hoc (adj. 特别的；临时；专设)",
+      "level": "CET4",
+      "exampleRoot": "ad"
     },
     {
       "id": 4420,
@@ -35818,8 +36091,9 @@
       "word": "afterward",
       "phonetic": "/ˈɑːftə.wəd/",
       "meaning": "adv 后来，以后",
-      "example": "",
-      "level": "CET4"
+      "example": "after all (毕竟；终究)",
+      "level": "CET4",
+      "exampleRoot": "after"
     },
     {
       "id": 4431,
@@ -35850,8 +36124,9 @@
       "word": "ago",
       "phonetic": "/əˈɡəʊ/",
       "meaning": "adv 以前",
-      "example": "",
-      "level": "CET4"
+      "example": "agony of ((感情上的)突然而强烈的爆发，任何精神上的激动)",
+      "level": "CET4",
+      "exampleRoot": "agonize"
     },
     {
       "id": 4435,
@@ -35938,8 +36213,9 @@
       "word": "alike",
       "phonetic": "/əˈlaɪk/",
       "meaning": "adj 同样的，相同的",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "a"
     },
     {
       "id": 4446,
@@ -36090,8 +36366,9 @@
       "word": "amongst",
       "phonetic": "/əˈmʌŋst/",
       "meaning": "prep 在…之中(=among)",
-      "example": "",
-      "level": "CET4"
+      "example": "from among (从…中间；从…当中)",
+      "level": "CET4",
+      "exampleRoot": "among"
     },
     {
       "id": 4465,
@@ -36210,24 +36487,27 @@
       "word": "any",
       "phonetic": "/ˈæni/",
       "meaning": "adj 什么，一些；任何的",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "a"
     },
     {
       "id": 4480,
       "word": "anyhow",
       "phonetic": "/ˈæn.i.haʊ/",
       "meaning": "adv 无论如何",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "any"
     },
     {
       "id": 4481,
       "word": "anyone",
       "phonetic": "/ˈæniˌwʌn/",
       "meaning": "pron 任何人",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "any"
     },
     {
       "id": 4482,
@@ -36242,8 +36522,9 @@
       "word": "anyway",
       "phonetic": "/ˈɛniweɪ/",
       "meaning": "adv 无论如何",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "any"
     },
     {
       "id": 4484,
@@ -36450,8 +36731,9 @@
       "word": "ask",
       "phonetic": "/ˈask/",
       "meaning": "v 问；要求；邀请",
-      "example": "",
-      "level": "CET4"
+      "example": "as well (也；同样地；还不如)",
+      "level": "CET4",
+      "exampleRoot": "as"
     },
     {
       "id": 4510,
@@ -36539,8 +36821,9 @@
       "word": "attentive",
       "phonetic": "/əˈtɛntɪv/",
       "meaning": "adj 注意的；有礼貌的",
-      "example": "",
-      "level": "CET4"
+      "example": "pay attention (专心；集中注意力)",
+      "level": "CET4",
+      "exampleRoot": "attention"
     },
     {
       "id": 4521,
@@ -36571,8 +36854,9 @@
       "word": "aural",
       "phonetic": "/ˈɔːɹəl/",
       "meaning": "adj 耳的，听觉的",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "a"
     },
     {
       "id": 4525,
@@ -36635,8 +36919,9 @@
       "word": "await",
       "phonetic": "/əˈwɛɪt/",
       "meaning": "v 等候，期待",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "a"
     },
     {
       "id": 4533,
@@ -36651,16 +36936,18 @@
       "word": "awfully",
       "phonetic": "/ˈɔːfli/",
       "meaning": "adv 令人畏惧的；很",
-      "example": "",
-      "level": "CET4"
+      "example": "an awful lot (◎经常)",
+      "level": "CET4",
+      "exampleRoot": "awful"
     },
     {
       "id": 4535,
       "word": "ax",
       "phonetic": "/æks/",
       "meaning": "n 斧子",
-      "example": "",
-      "level": "CET4"
+      "example": "axial force (轴向力)",
+      "level": "CET4",
+      "exampleRoot": "axial"
     },
     {
       "id": 4536,
@@ -36828,8 +37115,9 @@
       "word": "basically",
       "phonetic": "/ˈbeɪsɪk(ə)li/",
       "meaning": "adv 基本上",
-      "example": "",
-      "level": "CET4"
+      "example": "basic principle (基本原理)",
+      "level": "CET4",
+      "exampleRoot": "basic"
     },
     {
       "id": 4557,
@@ -37020,8 +37308,9 @@
       "word": "beggar",
       "phonetic": "/ˈbɛɡə/",
       "meaning": "n 乞丐，穷人",
-      "example": "",
-      "level": "CET4"
+      "example": "so be it (诚心所愿；顺其自然)",
+      "level": "CET4",
+      "exampleRoot": "be"
     },
     {
       "id": 4581,
@@ -37165,8 +37454,9 @@
       "word": "besides",
       "phonetic": "/biˈsaɪdz/",
       "meaning": "adv 而且prep除…之外",
-      "example": "",
-      "level": "CET4"
+      "example": "beside oneself (极度兴奋；发狂)",
+      "level": "CET4",
+      "exampleRoot": "beside"
     },
     {
       "id": 4599,
@@ -37237,8 +37527,9 @@
       "word": "billion",
       "phonetic": "/ˈbɪljən/",
       "meaning": "num 万亿(英)",
-      "example": "",
-      "level": "CET4"
+      "example": "bill gates (比尔盖兹（微软主席兼总裁）)",
+      "level": "CET4",
+      "exampleRoot": "bill"
     },
     {
       "id": 4608,
@@ -37742,8 +38033,9 @@
       "word": "brow",
       "phonetic": "/bɹaʊ/",
       "meaning": "n 额；眉，眉毛",
-      "example": "",
-      "level": "CET4"
+      "example": "gordon brown (戈登·布朗（英国首相）)",
+      "level": "CET4",
+      "exampleRoot": "brown"
     },
     {
       "id": 4671,
@@ -37894,8 +38186,9 @@
       "word": "butcher",
       "phonetic": "/ˈbʊtʃ.ə(ɹ)/",
       "meaning": "n 屠夫；屠杀者",
-      "example": "",
-      "level": "CET4"
+      "example": "but now (刚刚)",
+      "level": "CET4",
+      "exampleRoot": "but"
     },
     {
       "id": 4690,
@@ -38078,8 +38371,9 @@
       "word": "canoe",
       "phonetic": "/kəˈnuː/",
       "meaning": "n 独木舟，皮艇，划子",
-      "example": "",
-      "level": "CET4"
+      "example": "can be (可能；可以是)",
+      "level": "CET4",
+      "exampleRoot": "can"
     },
     {
       "id": 4713,
@@ -38480,8 +38774,9 @@
       "word": "cheerful",
       "phonetic": "/ˈt͡ʃɪəfəl/",
       "meaning": "adj 快乐的，愉快的",
-      "example": "",
-      "level": "CET4"
+      "example": "cheer up (使高兴；高兴起来；使振奋)",
+      "level": "CET4",
+      "exampleRoot": "cheer"
     },
     {
       "id": 4763,
@@ -38641,8 +38936,9 @@
       "word": "cigaret",
       "phonetic": "/ˈsɪɡ.ər.et/",
       "meaning": "n 香烟，纸烟，卷烟",
-      "example": "",
-      "level": "CET4"
+      "example": "no cigar (连香烟奖品也挣不到)",
+      "level": "CET4",
+      "exampleRoot": "cigar"
     },
     {
       "id": 4783,
@@ -38723,8 +39019,9 @@
       "word": "classmate",
       "phonetic": "/ˈklɑːs.meɪt/",
       "meaning": "n 同班同学",
-      "example": "",
-      "level": "CET4"
+      "example": "in class (在课堂上；上课中)",
+      "level": "CET4",
+      "exampleRoot": "class"
     },
     {
       "id": 4793,
@@ -38827,8 +39124,9 @@
       "word": "clothe",
       "phonetic": "/ˈkləʊð/",
       "meaning": "v 给…穿衣服",
-      "example": "",
-      "level": "CET4"
+      "example": "cotton cloth (棉布)",
+      "level": "CET4",
+      "exampleRoot": "cloth"
     },
     {
       "id": 4806,
@@ -39393,8 +39691,9 @@
       "word": "costly",
       "phonetic": "/ˈkɒst.li/",
       "meaning": "adj 昂贵的；价值高的",
-      "example": "",
-      "level": "CET4"
+      "example": "the cost of (以…为代价)",
+      "level": "CET4",
+      "exampleRoot": "cost"
     },
     {
       "id": 4876,
@@ -40162,8 +40461,9 @@
       "word": "dictation",
       "phonetic": "/dɪkˈteɪʃən/",
       "meaning": "n 口授笔录，听写",
-      "example": "",
-      "level": "CET4"
+      "example": "prediction model (预测模型；推算模型)",
+      "level": "CET4",
+      "exampleRoot": "predict"
     },
     {
       "id": 4972,
@@ -40258,8 +40558,9 @@
       "word": "direction",
       "phonetic": "/d(a)ɪˈɹɛk.ʃən/",
       "meaning": "n 方向，方位；指导",
-      "example": "",
-      "level": "CET4"
+      "example": "direct investment ([经]直接投资)",
+      "level": "CET4",
+      "exampleRoot": "direct"
     },
     {
       "id": 4984,
@@ -40413,8 +40714,9 @@
       "word": "doctor",
       "phonetic": "/ˈdɒktə/",
       "meaning": "n 医生，医师；博士",
-      "example": "",
-      "level": "CET4"
+      "example": "doctoral student (博士生)",
+      "level": "CET4",
+      "exampleRoot": "postdoctoral"
     },
     {
       "id": 5003,
@@ -40437,8 +40739,9 @@
       "word": "donkey",
       "phonetic": "/ˈdɒŋki/",
       "meaning": "n 驴；笨蛋",
-      "example": "",
-      "level": "CET4"
+      "example": "do a ([口语]仿效，模仿，学…的样子)",
+      "level": "CET4",
+      "exampleRoot": "do"
     },
     {
       "id": 5006,
@@ -40879,16 +41182,18 @@
       "word": "eighteen",
       "phonetic": "/ˈeɪ.tiːn/",
       "meaning": "num 十八，十八个",
-      "example": "",
-      "level": "CET4"
+      "example": "the eight diagrams (八卦)",
+      "level": "CET4",
+      "exampleRoot": "eight"
     },
     {
       "id": 5061,
       "word": "eighth",
       "phonetic": "/eɪtθ/",
       "meaning": "num 第八；n 八分之一",
-      "example": "",
-      "level": "CET4"
+      "example": "the eight diagrams (八卦)",
+      "level": "CET4",
+      "exampleRoot": "eight"
     },
     {
       "id": 5062,
@@ -41090,8 +41395,9 @@
       "word": "Englishman",
       "phonetic": "/ˈɪŋ.ɡlɪʃ.mən/",
       "meaning": "n 英国男子",
-      "example": "",
-      "level": "CET4"
+      "example": "in english (用英语)",
+      "level": "CET4",
+      "exampleRoot": "English"
     },
     {
       "id": 5087,
@@ -41267,8 +41573,9 @@
       "word": "everybody",
       "phonetic": "/ˈɛvɹibɒdi/",
       "meaning": "pron 每人，人人",
-      "example": "",
-      "level": "CET4"
+      "example": "every time (每次，每当)",
+      "level": "CET4",
+      "exampleRoot": "every"
     },
     {
       "id": 5109,
@@ -41283,8 +41590,9 @@
       "word": "everyone",
       "phonetic": "/ˈɛv.ɹi.wʌn/",
       "meaning": "pron 每人，人人",
-      "example": "",
-      "level": "CET4"
+      "example": "for ever (永远；总是)",
+      "level": "CET4",
+      "exampleRoot": "ever"
     },
     {
       "id": 5111,
@@ -41373,8 +41681,9 @@
       "word": "exclusively",
       "phonetic": "/ɪkˈskluːsɪvli/",
       "meaning": "adv 专门地",
-      "example": "",
-      "level": "CET4"
+      "example": "conclusive evidence (决定性证据)",
+      "level": "CET4",
+      "exampleRoot": "conclusive"
     },
     {
       "id": 5122,
@@ -41638,8 +41947,9 @@
       "word": "far",
       "phonetic": "/fɑː/",
       "meaning": "adj 远的；adv 远，遥远",
-      "example": "",
-      "level": "CET4"
+      "example": "bus fare (公共汽车票钱；公车票；公车费率)",
+      "level": "CET4",
+      "exampleRoot": "fare"
     },
     {
       "id": 5155,
@@ -41751,8 +42061,9 @@
       "word": "favourite",
       "phonetic": "/ˈfeɪv.ɹɪt/",
       "meaning": "adj 特别受喜爱的",
-      "example": "",
-      "level": "CET4"
+      "example": "in favour of (支持，赞成)",
+      "level": "CET4",
+      "exampleRoot": "favour"
     },
     {
       "id": 5169,
@@ -41927,8 +42238,9 @@
       "word": "finally",
       "phonetic": "/ˈfaɪ.nəl.i/",
       "meaning": "adv 最后；不可更改的",
-      "example": "",
-      "level": "CET4"
+      "example": "ministry of finance (财政部)",
+      "level": "CET4",
+      "exampleRoot": "finance"
     },
     {
       "id": 5191,
@@ -41975,8 +42287,9 @@
       "word": "fireman",
       "phonetic": "/ˈfaɪəmən/",
       "meaning": "n 消防队员；司炉工",
-      "example": "",
-      "level": "CET4"
+      "example": "on fire (adv. 着火；起火；在兴头上；非常激动)",
+      "level": "CET4",
+      "exampleRoot": "fire"
     },
     {
       "id": 5197,
@@ -42216,8 +42529,9 @@
       "word": "footstep",
       "phonetic": "/ˈfʊtstɛp/",
       "meaning": "n 脚步；脚步声；足迹",
-      "example": "",
-      "level": "CET4"
+      "example": "on foot (步行；在进行中)",
+      "level": "CET4",
+      "exampleRoot": "foot"
     },
     {
       "id": 5227,
@@ -42232,8 +42546,9 @@
       "word": "forbid",
       "phonetic": "/fəˈbɪd/",
       "meaning": "v 禁止，不许；阻止",
-      "example": "",
-      "level": "CET4"
+      "example": "for all (尽管；虽然)",
+      "level": "CET4",
+      "exampleRoot": "for"
     },
     {
       "id": 5229,
@@ -42530,8 +42845,9 @@
       "word": "from",
       "phonetic": "/fɹɒm/",
       "meaning": "prep 从…来；离开",
-      "example": "",
-      "level": "CET4"
+      "example": "frown on (不悦，不满)",
+      "level": "CET4",
+      "exampleRoot": "fro"
     },
     {
       "id": 5266,
@@ -42546,8 +42862,9 @@
       "word": "frost",
       "phonetic": "/fɹɑst/",
       "meaning": "n 冰冻，严寒；霜",
-      "example": "",
-      "level": "CET4"
+      "example": "frown on (不悦，不满)",
+      "level": "CET4",
+      "exampleRoot": "fro"
     },
     {
       "id": 5268,
@@ -42579,8 +42896,9 @@
       "word": "fulfil",
       "phonetic": "/fʊlˈfɪl/",
       "meaning": "v 履行；满足；完成",
-      "example": "",
-      "level": "CET4"
+      "example": "fulfill oneself (v. 完全实现自己的抱负)",
+      "level": "CET4",
+      "exampleRoot": "fulfill"
     },
     {
       "id": 5272,
@@ -42683,8 +43001,9 @@
       "word": "gardener",
       "phonetic": "/ˈɡɑːdnə/",
       "meaning": "n 园丁，花匠",
-      "example": "",
-      "level": "CET4"
+      "example": "regardless of (不顾，不管)",
+      "level": "CET4",
+      "exampleRoot": "regardless"
     },
     {
       "id": 5285,
@@ -43020,8 +43339,9 @@
       "word": "gradually",
       "phonetic": "/ˈɡɹædʒuəli/",
       "meaning": "adv 逐渐地，逐步地",
-      "example": "",
-      "level": "CET4"
+      "example": "graduate student (n. 研究生；毕业生)",
+      "level": "CET4",
+      "exampleRoot": "graduate"
     },
     {
       "id": 5327,
@@ -43044,8 +43364,9 @@
       "word": "gramme",
       "phonetic": "/ɡɹæm/",
       "meaning": "n 克(重量单位)",
-      "example": "",
-      "level": "CET4"
+      "example": "gram negative (adj. 革兰氏阴性的；革兰氏〔染色）阴性的)",
+      "level": "CET4",
+      "exampleRoot": "gram"
     },
     {
       "id": 5330,
@@ -43076,8 +43397,9 @@
       "word": "grandson",
       "phonetic": "/ˈɡɹæn(d)sʌn/",
       "meaning": "n 孙子，外孙子",
-      "example": "",
-      "level": "CET4"
+      "example": "grand prix (n. 国际汽车大奖赛；头等奖，最高奖)",
+      "level": "CET4",
+      "exampleRoot": "grand"
     },
     {
       "id": 5334,
@@ -43189,8 +43511,9 @@
       "word": "grocer",
       "phonetic": "/ˈɡɹəʊ.sə/",
       "meaning": "n 食品商；杂货商",
-      "example": "",
-      "level": "CET4"
+      "example": "grocery store (杂货店)",
+      "level": "CET4",
+      "exampleRoot": "grocery"
     },
     {
       "id": 5348,
@@ -43510,8 +43833,9 @@
       "word": "he",
       "phonetic": "/hi/",
       "meaning": "pron (主格)他",
-      "example": "",
-      "level": "CET4"
+      "example": "hale and hearty (精神充沛的，矍铄的；老当益壮的，健壮的)",
+      "level": "CET4",
+      "exampleRoot": "hearty"
     },
     {
       "id": 5388,
@@ -43680,8 +44004,9 @@
       "word": "hen",
       "phonetic": "/hɛn/",
       "meaning": "n 母鸡，雌禽",
-      "example": "",
-      "level": "CET4"
+      "example": "from hence ([古语]从这里)",
+      "level": "CET4",
+      "exampleRoot": "hence"
     },
     {
       "id": 5409,
@@ -43730,8 +44055,9 @@
       "word": "heroine",
       "phonetic": "/ˈhɛɹoʊɪn/",
       "meaning": "n 女主角；女英雄",
-      "example": "",
-      "level": "CET4"
+      "example": "inherent quality (固有性质)",
+      "level": "CET4",
+      "exampleRoot": "her"
     },
     {
       "id": 5415,
@@ -43794,16 +44120,18 @@
       "word": "hillside",
       "phonetic": "/ˈhɪl.saɪd/",
       "meaning": "n (小山)山腰，山坡",
-      "example": "",
-      "level": "CET4"
+      "example": "buried hill (潜山；埋藏山；掩丘)",
+      "level": "CET4",
+      "exampleRoot": "hill"
     },
     {
       "id": 5423,
       "word": "him",
       "phonetic": "/əm/",
       "meaning": "pron (宾格)他",
-      "example": "",
-      "level": "CET4"
+      "example": "hi there (嘿，你好(或你们好))",
+      "level": "CET4",
+      "exampleRoot": "hi"
     },
     {
       "id": 5424,
@@ -43826,8 +44154,9 @@
       "word": "his",
       "phonetic": "/ˈhɪz/",
       "meaning": "pron 他的，他的东西",
-      "example": "",
-      "level": "CET4"
+      "example": "hi there (嘿，你好(或你们好))",
+      "level": "CET4",
+      "exampleRoot": "hi"
     },
     {
       "id": 5427,
@@ -44028,8 +44357,9 @@
       "word": "housewife",
       "phonetic": "/ˈhaʊs.waɪf/",
       "meaning": "n 家庭主妇",
-      "example": "",
-      "level": "CET4"
+      "example": "white house (n. 白宫（美国政府的行政机关，美国总统官邸）)",
+      "level": "CET4",
+      "exampleRoot": "house"
     },
     {
       "id": 5452,
@@ -44044,8 +44374,9 @@
       "word": "however",
       "phonetic": "/hɑʊˈɛvə/",
       "meaning": "adv 然而；不管怎样",
-      "example": "",
-      "level": "CET4"
+      "example": "and how (正确；（美）非常)",
+      "level": "CET4",
+      "exampleRoot": "how"
     },
     {
       "id": 5454,
@@ -44148,8 +44479,9 @@
       "word": "I",
       "phonetic": "/aɪ/",
       "meaning": "pron (主格)我",
-      "example": "",
-      "level": "CET4"
+      "example": "index system ([计]索引系统)",
+      "level": "CET4",
+      "exampleRoot": "index"
     },
     {
       "id": 5467,
@@ -44342,8 +44674,9 @@
       "word": "indeed",
       "phonetic": "/ɪnˈdiːd/",
       "meaning": "adv 真正地；确实",
-      "example": "",
-      "level": "CET4"
+      "example": "good deed (善事，好事)",
+      "level": "CET4",
+      "exampleRoot": "deed"
     },
     {
       "id": 5491,
@@ -44382,16 +44715,18 @@
       "word": "indoors",
       "phonetic": "/ɪnˈdɔːz/",
       "meaning": "adv 在室内，在屋里",
-      "example": "",
-      "level": "CET4"
+      "example": "indoor air pollution (空内空气污染)",
+      "level": "CET4",
+      "exampleRoot": "indoor"
     },
     {
       "id": 5496,
       "word": "industrialize",
       "phonetic": "/ɪnˈdʌs.tri.əl.aɪz/",
       "meaning": "v 使工业化",
-      "example": "",
-      "level": "CET4"
+      "example": "industrial structure (产业结构)",
+      "level": "CET4",
+      "exampleRoot": "industrious"
     },
     {
       "id": 5497,
@@ -44447,8 +44782,9 @@
       "word": "injury",
       "phonetic": "/ˈɪn.dʒə.ɹi/",
       "meaning": "n 损害，伤害；受伤处",
-      "example": "",
-      "level": "CET4"
+      "example": "in on (参与，参加)",
+      "level": "CET4",
+      "exampleRoot": "in"
     },
     {
       "id": 5504,
@@ -44504,8 +44840,9 @@
       "word": "instantly",
       "phonetic": "/ˈɪnstəntli/",
       "meaning": "adv 立即，即刻",
-      "example": "",
-      "level": "CET4"
+      "example": "constant temperature (恒温；定温；等温)",
+      "level": "CET4",
+      "exampleRoot": "constant"
     },
     {
       "id": 5511,
@@ -44842,8 +45179,9 @@
       "word": "journalist",
       "phonetic": "/ˈdʒɜːnəlɪst/",
       "meaning": "n 记者，新闻工作者",
-      "example": "",
-      "level": "CET4"
+      "example": "wall street journal (华尔街日报)",
+      "level": "CET4",
+      "exampleRoot": "journal"
     },
     {
       "id": 5553,
@@ -45196,16 +45534,18 @@
       "word": "landlady",
       "phonetic": "/ˈlændˌleɪ.di/",
       "meaning": "n 女房东；女地主",
-      "example": "",
-      "level": "CET4"
+      "example": "land use (土地利用，土地用途；土地使用，土壤使用)",
+      "level": "CET4",
+      "exampleRoot": "land"
     },
     {
       "id": 5597,
       "word": "landlord",
       "phonetic": "/ˈlænd.lɔːd/",
       "meaning": "n 地主；房东，店主",
-      "example": "",
-      "level": "CET4"
+      "example": "land use (土地利用，土地用途；土地使用，土壤使用)",
+      "level": "CET4",
+      "exampleRoot": "land"
     },
     {
       "id": 5598,
@@ -45776,8 +46116,9 @@
       "word": "liter",
       "phonetic": "/ˈliː.tə/",
       "meaning": "n 升(容量单位)",
-      "example": "",
-      "level": "CET4"
+      "example": "literal translation (直译，直译法；逐字翻译)",
+      "level": "CET4",
+      "exampleRoot": "literal"
     },
     {
       "id": 5669,
@@ -46129,8 +46470,9 @@
       "word": "mankind",
       "phonetic": "/mænˈkaɪnd/",
       "meaning": "n 人类",
-      "example": "",
-      "level": "CET4"
+      "example": "old man (情人；丈夫；老头子；父亲)",
+      "level": "CET4",
+      "exampleRoot": "man"
     },
     {
       "id": 5713,
@@ -46210,8 +46552,9 @@
       "word": "marvellous",
       "phonetic": "/ˈmɑːvləs/",
       "meaning": "adj 奇迹般的；了不起的",
-      "example": "",
-      "level": "CET4"
+      "example": "marvel at (v. 对…惊奇)",
+      "level": "CET4",
+      "exampleRoot": "marvel"
     },
     {
       "id": 5723,
@@ -46299,8 +46642,9 @@
       "word": "maybe",
       "phonetic": "/ˈmeɪbi/",
       "meaning": "adv 大概，或许；也许",
-      "example": "",
-      "level": "CET4"
+      "example": "may be (也许，可能)",
+      "level": "CET4",
+      "exampleRoot": "may"
     },
     {
       "id": 5734,
@@ -46315,8 +46659,9 @@
       "word": "me",
       "phonetic": "/miː/",
       "meaning": "pron (宾格)我",
-      "example": "",
-      "level": "CET4"
+      "example": "melt into (溶解成；消散在…中；因心软而…)",
+      "level": "CET4",
+      "exampleRoot": "melt"
     },
     {
       "id": 5736,
@@ -46379,8 +46724,9 @@
       "word": "mechanically",
       "phonetic": "/məˈkænɪkli/",
       "meaning": "adv 机械地",
-      "example": "",
-      "level": "CET4"
+      "example": "market mechanism (市场机制；市场调节作用)",
+      "level": "CET4",
+      "exampleRoot": "mechanism"
     },
     {
       "id": 5744,
@@ -46992,8 +47338,9 @@
       "word": "murderer",
       "phonetic": "/ˈmɜːdəɹə/",
       "meaning": "n 杀人犯，凶手",
-      "example": "",
-      "level": "CET4"
+      "example": "mass murder (大屠杀；大规模的谋杀；集体屠杀)",
+      "level": "CET4",
+      "exampleRoot": "murder"
     },
     {
       "id": 5820,
@@ -47040,8 +47387,9 @@
       "word": "musician",
       "phonetic": "/mjuˈzɪʃən/",
       "meaning": "n 音乐家；作曲家",
-      "example": "",
-      "level": "CET4"
+      "example": "pop music (流行音乐)",
+      "level": "CET4",
+      "exampleRoot": "music"
     },
     {
       "id": 5826,
@@ -47064,8 +47412,9 @@
       "word": "my",
       "phonetic": "/mi/",
       "meaning": "pron 我的",
-      "example": "",
-      "level": "CET4"
+      "example": "by myself (独立完成)",
+      "level": "CET4",
+      "exampleRoot": "myself"
     },
     {
       "id": 5829,
@@ -47152,8 +47501,9 @@
       "word": "naturally",
       "phonetic": "/ˈnætʃ(ə)ɹəli/",
       "meaning": "adv 自然地；天然地",
-      "example": "",
-      "level": "CET4"
+      "example": "natural gas (天然气)",
+      "level": "CET4",
+      "exampleRoot": "natural"
     },
     {
       "id": 5840,
@@ -47200,8 +47550,9 @@
       "word": "nearby",
       "phonetic": "/ˈnɪə.baɪ/",
       "meaning": "adj 附近的；adv 在附近",
-      "example": "",
-      "level": "CET4"
+      "example": "come near (走进；险些；可与…相比（多用于否定句）)",
+      "level": "CET4",
+      "exampleRoot": "near"
     },
     {
       "id": 5846,
@@ -47411,16 +47762,18 @@
       "word": "nineteen",
       "phonetic": "/naɪnˈtiːn/",
       "meaning": "num 十九，十九个",
-      "example": "",
-      "level": "CET4"
+      "example": "nine out of ten (十分之九，百分之九十)",
+      "level": "CET4",
+      "exampleRoot": "nine"
     },
     {
       "id": 5872,
       "word": "ninety",
       "phonetic": "/ˈnaɪn.ti/",
       "meaning": "num 九十，九十个",
-      "example": "",
-      "level": "CET4"
+      "example": "nine out of ten (十分之九，百分之九十)",
+      "level": "CET4",
+      "exampleRoot": "nine"
     },
     {
       "id": 5873,
@@ -47491,8 +47844,9 @@
       "word": "none",
       "phonetic": "/nɒn/",
       "meaning": "pron 没有人；adv 毫不",
-      "example": "",
-      "level": "CET4"
+      "example": "no longer (不再)",
+      "level": "CET4",
+      "exampleRoot": "no"
     },
     {
       "id": 5882,
@@ -47547,8 +47901,9 @@
       "word": "northeast",
       "phonetic": "/ˌnɔːθˈiːst/",
       "meaning": "n 东北；adj 位于东北的",
-      "example": "",
-      "level": "CET4"
+      "example": "north america (北美洲)",
+      "level": "CET4",
+      "exampleRoot": "north"
     },
     {
       "id": 5889,
@@ -47716,8 +48071,9 @@
       "word": "occasionally",
       "phonetic": "/əˈkeɪʒnəli/",
       "meaning": "adv 偶然；非经常地",
-      "example": "",
-      "level": "CET4"
+      "example": "on the occasion (在那时；值此…之际)",
+      "level": "CET4",
+      "exampleRoot": "occasion"
     },
     {
       "id": 5910,
@@ -47868,8 +48224,9 @@
       "word": "once",
       "phonetic": "/wɒn(t)s/",
       "meaning": "adv 一次；曾经；n 一次",
-      "example": "",
-      "level": "CET4"
+      "example": "and so on (等等；诸如此类)",
+      "level": "CET4",
+      "exampleRoot": "on"
     },
     {
       "id": 5929,
@@ -47908,8 +48265,9 @@
       "word": "onto",
       "phonetic": "/ˈɒn.tuː/",
       "meaning": "prep 到…上",
-      "example": "",
-      "level": "CET4"
+      "example": "and so on (等等；诸如此类)",
+      "level": "CET4",
+      "exampleRoot": "on"
     },
     {
       "id": 5934,
@@ -47988,8 +48346,9 @@
       "word": "or",
       "phonetic": "/ɔː(ɹ)/",
       "meaning": "conj 或，或者；即",
-      "example": "",
-      "level": "CET4"
+      "example": "orient express (东方快车)",
+      "level": "CET4",
+      "exampleRoot": "orient"
     },
     {
       "id": 5944,
@@ -48062,8 +48421,9 @@
       "word": "orphan",
       "phonetic": "/ˈɔːfən/",
       "meaning": "n 孤儿",
-      "example": "",
-      "level": "CET4"
+      "example": "orient express (东方快车)",
+      "level": "CET4",
+      "exampleRoot": "or"
     },
     {
       "id": 5953,
@@ -48126,8 +48486,9 @@
       "word": "outdoors",
       "phonetic": "/ˌaʊtˈdɔːz/",
       "meaning": "adv 在户外，在野外",
-      "example": "",
-      "level": "CET4"
+      "example": "outdoor advertising (户外广告)",
+      "level": "CET4",
+      "exampleRoot": "outdoor"
     },
     {
       "id": 5961,
@@ -48232,8 +48593,9 @@
       "word": "ox",
       "phonetic": "/ˈɒks/",
       "meaning": "n 牛；公牛，阉牛",
-      "example": "",
-      "level": "CET4"
+      "example": "zinc oxide (n. 氧化锌)",
+      "level": "CET4",
+      "exampleRoot": "oxide"
     },
     {
       "id": 5974,
@@ -48320,8 +48682,9 @@
       "word": "pale",
       "phonetic": "/peɪl/",
       "meaning": "adj 苍白的；浅的",
-      "example": "",
-      "level": "CET4"
+      "example": "pen pal (笔友（等于pen friend）)",
+      "level": "CET4",
+      "exampleRoot": "pal"
     },
     {
       "id": 5985,
@@ -48643,8 +49006,9 @@
       "word": "perhaps",
       "phonetic": "/pəˈhæps/",
       "meaning": "adv 也许，可能，多半",
-      "example": "",
-      "level": "CET4"
+      "example": "per cent (百分之……，百分数)",
+      "level": "CET4",
+      "exampleRoot": "per"
     },
     {
       "id": 6025,
@@ -49131,8 +49495,9 @@
       "word": "pollute",
       "phonetic": "/pəˈljuːt/",
       "meaning": "v 弄脏，污染，沾污",
-      "example": "",
-      "level": "CET4"
+      "example": "opinion poll (民意测验；选举投票)",
+      "level": "CET4",
+      "exampleRoot": "poll"
     },
     {
       "id": 6086,
@@ -49252,8 +49617,9 @@
       "word": "postpone",
       "phonetic": "/poʊstˈpoʊn/",
       "meaning": "v 延迟，推迟，延缓",
-      "example": "",
-      "level": "CET4"
+      "example": "post office (n. 邮局)",
+      "level": "CET4",
+      "exampleRoot": "post"
     },
     {
       "id": 6101,
@@ -49316,8 +49682,9 @@
       "word": "practically",
       "phonetic": "/ˈpɹæktɪkli/",
       "meaning": "adv 实际上；几乎",
-      "example": "",
-      "level": "CET4"
+      "example": "practical application (实际应用)",
+      "level": "CET4",
+      "exampleRoot": "practical"
     },
     {
       "id": 6109,
@@ -49562,8 +49929,9 @@
       "word": "professor",
       "phonetic": "/pɹəˈfɛsə/",
       "meaning": "n 教授",
-      "example": "",
-      "level": "CET4"
+      "example": "profession of (宣称(感情、信念等)；表白)",
+      "level": "CET4",
+      "exampleRoot": "profess"
     },
     {
       "id": 6139,
@@ -50043,8 +50411,9 @@
       "word": "really",
       "phonetic": "/ˈɹɪəli/",
       "meaning": "adv 真正地；实在",
-      "example": "",
-      "level": "CET4"
+      "example": "overall situation (大局；总体形势)",
+      "level": "CET4",
+      "exampleRoot": "overall"
     },
     {
       "id": 6199,
@@ -50059,8 +50428,9 @@
       "word": "receive",
       "phonetic": "/ɹɪˈsiːv/",
       "meaning": "v 收到；得到；接待",
-      "example": "",
-      "level": "CET4"
+      "example": "conceive of (设想；想象)",
+      "level": "CET4",
+      "exampleRoot": "conceive"
     },
     {
       "id": 6201,
@@ -50275,8 +50645,9 @@
       "word": "repeatedly",
       "phonetic": "/ɹɪˈpiːtɪdli/",
       "meaning": "adv 重复地；一再",
-      "example": "",
-      "level": "CET4"
+      "example": "repeat oneself (不自觉地重复)",
+      "level": "CET4",
+      "exampleRoot": "repeat"
     },
     {
       "id": 6228,
@@ -51521,8 +51892,9 @@
       "word": "throughout",
       "phonetic": "/θɹuˈʌʊt/",
       "meaning": "prep 遍及；adv 到处",
-      "example": "",
-      "level": "CET4"
+      "example": "go through (参加；经受；仔细检查；被通过)",
+      "level": "CET4",
+      "exampleRoot": "through"
     },
     {
       "id": 6383,
@@ -52548,8 +52920,9 @@
       "word": "lad",
       "phonetic": "/læd/",
       "meaning": "n 男孩， 小伙子",
-      "example": "",
-      "level": "CET4"
+      "example": "ladder diagram (梯形图)",
+      "level": "CET4",
+      "exampleRoot": "ladder"
     },
     {
       "id": 6510,
@@ -52693,8 +53066,9 @@
       "word": "unfortunately",
       "phonetic": "/ʌnˈfɔːtjʊnətli/",
       "meaning": "adv 不幸地",
-      "example": "",
-      "level": "CET4"
+      "example": "fortunate in (有好运气；于…很幸运)",
+      "level": "CET4",
+      "exampleRoot": "fortunate"
     },
     {
       "id": 6528,
@@ -52758,8 +53132,9 @@
       "word": "predictable",
       "phonetic": "/pɹɪˈdɪktəbl̩/",
       "meaning": "adj 可预料的",
-      "example": "",
-      "level": "CET4"
+      "example": "prediction model (预测模型；推算模型)",
+      "level": "CET4",
+      "exampleRoot": "predict"
     },
     {
       "id": 6536,
@@ -53006,8 +53381,9 @@
       "word": "fourfold",
       "phonetic": "/ˈfɔːr.fəʊld/",
       "meaning": "adv 四倍， 四重；adj 四倍的，四重的",
-      "example": "",
-      "level": "CET4"
+      "example": "four seasons (四季)",
+      "level": "CET4",
+      "exampleRoot": "four"
     },
     {
       "id": 6567,
@@ -53206,8 +53582,9 @@
       "word": "rob",
       "phonetic": "/ɹɒb/",
       "meaning": "vt 抢劫， 盗窃",
-      "example": "",
-      "level": "CET4"
+      "example": "armed robbery (持械抢劫)",
+      "level": "CET4",
+      "exampleRoot": "robbery"
     },
     {
       "id": 6592,
@@ -53408,8 +53785,9 @@
       "word": "cashier",
       "phonetic": "/kəˈʃɪə/",
       "meaning": "n 出纳",
-      "example": "",
-      "level": "CET4"
+      "example": "cash flow (资金流动)",
+      "level": "CET4",
+      "exampleRoot": "cash"
     },
     {
       "id": 6617,
@@ -53588,8 +53966,9 @@
       "word": "evidently",
       "phonetic": "/ˈɛvɪdəntli/",
       "meaning": "adv 明显地， 显然",
-      "example": "",
-      "level": "CET4"
+      "example": "self evident (不言而喻的；不证自明的)",
+      "level": "CET4",
+      "exampleRoot": "evident"
     },
     {
       "id": 6639,
@@ -53638,8 +54017,9 @@
       "word": "amid",
       "phonetic": "/əˈmɪd/",
       "meaning": "prep 在…中间， 在…之中， 被…围绕",
-      "example": "",
-      "level": "CET4"
+      "example": "drug abuse (药物滥用；毒品滥用)",
+      "level": "CET4",
+      "exampleRoot": "a"
     },
     {
       "id": 6645,

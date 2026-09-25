@@ -6,8 +6,9 @@ const WORDS_H = [
     "word": "handgun",
     "phonetic": "/ˈhænd.ɡʌn/",
     "meaning": "n 手枪",
-    "example": "",
-    "level": "CET6"
+    "example": "on the other hand (另一方面)",
+    "level": "CET6",
+    "exampleRoot": "hand"
   },
   {
     "id": 359,
@@ -62,8 +63,9 @@ const WORDS_H = [
     "word": "hijack",
     "phonetic": "/ˈhaɪ.dʒæk/",
     "meaning": "v 劫持",
-    "example": "",
-    "level": "CET6"
+    "example": "hi there (嘿，你好(或你们好))",
+    "level": "CET6",
+    "exampleRoot": "hi"
   },
   {
     "id": 1073,
@@ -134,8 +136,9 @@ const WORDS_H = [
     "word": "hum",
     "phonetic": "/ˈhʌm/",
     "meaning": "n 嗡嗡声；v 哼曲子",
-    "example": "",
-    "level": "CET6"
+    "example": "humorous story (幽默小说)",
+    "level": "CET6",
+    "exampleRoot": "humorous"
   },
   {
     "id": 1662,
@@ -174,8 +177,9 @@ const WORDS_H = [
     "word": "hiss",
     "phonetic": "/hɪs/",
     "meaning": "n 嘶嘶声；v 嘶嘶作声",
-    "example": "",
-    "level": "CET6"
+    "example": "hi there (嘿，你好(或你们好))",
+    "level": "CET6",
+    "exampleRoot": "hi"
   },
   {
     "id": 1780,
@@ -214,8 +218,9 @@ const WORDS_H = [
     "word": "handout",
     "phonetic": "/ˈhændaʊt/",
     "meaning": "n 施舍物，救济品",
-    "example": "",
-    "level": "CET6"
+    "example": "on the other hand (另一方面)",
+    "level": "CET6",
+    "exampleRoot": "hand"
   },
   {
     "id": 1874,
@@ -230,8 +235,9 @@ const WORDS_H = [
     "word": "hostage",
     "phonetic": "/ˈhɒstɪdʒ/",
     "meaning": "n 人质",
-    "example": "",
-    "level": "CET6"
+    "example": "a host of (许多，一大群；众多，大量)",
+    "level": "CET6",
+    "exampleRoot": "host"
   },
   {
     "id": 1960,
@@ -352,8 +358,9 @@ const WORDS_H = [
     "word": "howl",
     "phonetic": "/haʊl/",
     "meaning": "n 嚎叫；哀号；吠",
-    "example": "",
-    "level": "CET6"
+    "example": "and how (正确；（美）非常)",
+    "level": "CET6",
+    "exampleRoot": "how"
   },
   {
     "id": 2434,
@@ -368,8 +375,9 @@ const WORDS_H = [
     "word": "hamper",
     "phonetic": "/ˈhæmpɚ/",
     "meaning": "v 妨碍，阻碍，牵制",
-    "example": "",
-    "level": "CET6"
+    "example": "ham sandwich (火腿三明治)",
+    "level": "CET6",
+    "exampleRoot": "ham"
   },
   {
     "id": 2520,
@@ -472,8 +480,9 @@ const WORDS_H = [
     "word": "headlong",
     "phonetic": "/ˈhɛdlɑŋ/",
     "meaning": "adv 头向前地；adj 头向前的",
-    "example": "",
-    "level": "CET6"
+    "example": "head office (总公司；总行)",
+    "level": "CET6",
+    "exampleRoot": "head"
   },
   {
     "id": 3020,

@@ -73,7 +73,7 @@ vi.mock('../js/utils/stats.js', () => ({
   registerStudyFeature: vi.fn(),
 }));
 
-vi.mock('../js/utils/wrong-words.ts', () => ({
+vi.mock('../js/features/wrong-words.ts', () => ({
   registerStudyFeature: vi.fn(),
 }));
 

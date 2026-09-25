@@ -1,4 +1,4 @@
-import { CONFIG, SEMANTIC_CLUSTERS, CONFUSING_PAIRS } from '../config.js';
+import { SEMANTIC_CLUSTERS, CONFUSING_PAIRS, MS_PER_DAY } from '../config.js';
 import logger from './logger.js';
 import { db } from '../db.js';
 import { isFileProtocol } from './worker-pool.js';
@@ -261,7 +261,7 @@ function adjustForSemanticInterference(wordId: any, baseInterval: number): numbe
       const wd = data[confusingEntry.id];
       if (wd && wd.status === 'review' && wd.nextReview > Date.now()) {
         const timeDiff = Math.abs(wd.nextReview - (Date.now() + baseInterval));
-        if (timeDiff < (CONFIG.CONSTANTS?.MS_PER_DAY || 86400000)) {
+        if (timeDiff < MS_PER_DAY) {
           interferenceCount++;
         }
       }

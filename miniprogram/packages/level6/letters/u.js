@@ -48,8 +48,9 @@ const WORDS_U = [
     "word": "undocumented",
     "phonetic": "/ʌnˈdɒk.jə.men.tɪd/",
     "meaning": "adj 无证明的",
-    "example": "",
-    "level": "CET6"
+    "example": "document management (文件管理；资料管理)",
+    "level": "CET6",
+    "exampleRoot": "document"
   },
   {
     "id": 761,
@@ -88,8 +89,9 @@ const WORDS_U = [
     "word": "unrealistic",
     "phonetic": "/ˌʌn.riːˈlɪs.tɪk/",
     "meaning": "adj 不现实的",
-    "example": "",
-    "level": "CET6"
+    "example": "real estate (n. 不动产，房地产)",
+    "level": "CET6",
+    "exampleRoot": "real"
   },
   {
     "id": 767,
@@ -291,8 +293,9 @@ const WORDS_U = [
     "word": "universally",
     "phonetic": "/ˌjuːnɪˈvɜːsəli/",
     "meaning": "adv 普遍地，一般地",
-    "example": "",
-    "level": "CET6"
+    "example": "universal joint (万向节；万向接头)",
+    "level": "CET6",
+    "exampleRoot": "universal"
   },
   {
     "id": 2209,

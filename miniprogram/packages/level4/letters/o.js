@@ -128,8 +128,9 @@ const WORDS_O = [
     "word": "overstate",
     "phonetic": "/ˌəʊ.vəˈsteɪt/",
     "meaning": "v 夸张",
-    "example": "",
-    "level": "CET4"
+    "example": "financial statement (财务报表，财政报告；财政决算)",
+    "level": "CET4",
+    "exampleRoot": "statement"
   },
   {
     "id": 1164,
@@ -169,8 +170,9 @@ const WORDS_O = [
     "word": "ornament",
     "phonetic": "/ˈɔː(ɹ)nəmənt/",
     "meaning": "n 装饰物",
-    "example": "",
-    "level": "CET4"
+    "example": "ornamental plant (观赏植物)",
+    "level": "CET4",
+    "exampleRoot": "ornamental"
   },
   {
     "id": 1358,
@@ -419,8 +421,9 @@ const WORDS_O = [
     "word": "occasional",
     "phonetic": "/əˈkeɪʒ(ə)nəl/",
     "meaning": "adj 偶尔的， 间或发生的",
-    "example": "",
-    "level": "CET4"
+    "example": "on the occasion (在那时；值此…之际)",
+    "level": "CET4",
+    "exampleRoot": "occasion"
   },
   {
     "id": 3666,
@@ -499,8 +502,9 @@ const WORDS_O = [
     "word": "objection",
     "phonetic": "/əbˈdʒɛkʃən/",
     "meaning": "n 反对， 异议； 反对的理由",
-    "example": "",
-    "level": "CET4"
+    "example": "object oriented (面向对象的；对象趋向的；物件导向的)",
+    "level": "CET4",
+    "exampleRoot": "object"
   },
   {
     "id": 4165,
@@ -579,8 +583,9 @@ const WORDS_O = [
     "word": "occasionally",
     "phonetic": "/əˈkeɪʒnəli/",
     "meaning": "adv 偶然；非经常地",
-    "example": "",
-    "level": "CET4"
+    "example": "on the occasion (在那时；值此…之际)",
+    "level": "CET4",
+    "exampleRoot": "occasion"
   },
   {
     "id": 5910,
@@ -731,8 +736,9 @@ const WORDS_O = [
     "word": "once",
     "phonetic": "/wɒn(t)s/",
     "meaning": "adv 一次；曾经；n 一次",
-    "example": "",
-    "level": "CET4"
+    "example": "and so on (等等；诸如此类)",
+    "level": "CET4",
+    "exampleRoot": "on"
   },
   {
     "id": 5929,
@@ -771,8 +777,9 @@ const WORDS_O = [
     "word": "onto",
     "phonetic": "/ˈɒn.tuː/",
     "meaning": "prep 到…上",
-    "example": "",
-    "level": "CET4"
+    "example": "and so on (等等；诸如此类)",
+    "level": "CET4",
+    "exampleRoot": "on"
   },
   {
     "id": 5934,
@@ -851,8 +858,9 @@ const WORDS_O = [
     "word": "or",
     "phonetic": "/ɔː(ɹ)/",
     "meaning": "conj 或，或者；即",
-    "example": "",
-    "level": "CET4"
+    "example": "orient express (东方快车)",
+    "level": "CET4",
+    "exampleRoot": "orient"
   },
   {
     "id": 5944,
@@ -925,8 +933,9 @@ const WORDS_O = [
     "word": "orphan",
     "phonetic": "/ˈɔːfən/",
     "meaning": "n 孤儿",
-    "example": "",
-    "level": "CET4"
+    "example": "orient express (东方快车)",
+    "level": "CET4",
+    "exampleRoot": "or"
   },
   {
     "id": 5953,
@@ -989,8 +998,9 @@ const WORDS_O = [
     "word": "outdoors",
     "phonetic": "/ˌaʊtˈdɔːz/",
     "meaning": "adv 在户外，在野外",
-    "example": "",
-    "level": "CET4"
+    "example": "outdoor advertising (户外广告)",
+    "level": "CET4",
+    "exampleRoot": "outdoor"
   },
   {
     "id": 5961,
@@ -1095,8 +1105,9 @@ const WORDS_O = [
     "word": "ox",
     "phonetic": "/ˈɒks/",
     "meaning": "n 牛；公牛，阉牛",
-    "example": "",
-    "level": "CET4"
+    "example": "zinc oxide (n. 氧化锌)",
+    "level": "CET4",
+    "exampleRoot": "oxide"
   },
   {
     "id": 6560,

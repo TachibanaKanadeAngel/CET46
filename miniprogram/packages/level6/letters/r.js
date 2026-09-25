@@ -6,8 +6,9 @@ const WORDS_R = [
     "word": "randomly",
     "phonetic": "/ˈɹændm̩li/",
     "meaning": "adv 随机地",
-    "example": "",
-    "level": "CET6"
+    "example": "at random (胡乱地；随便地；任意地)",
+    "level": "CET6",
+    "exampleRoot": "random"
   },
   {
     "id": 588,
@@ -142,8 +143,9 @@ const WORDS_R = [
     "word": "revolutionize",
     "phonetic": "/ˌrev.əˈluː.ʃən.aɪz/",
     "meaning": "v 革命化",
-    "example": "",
-    "level": "CET6"
+    "example": "cultural revolution (文化大革命)",
+    "level": "CET6",
+    "exampleRoot": "revolution"
   },
   {
     "id": 639,
@@ -421,8 +423,9 @@ const WORDS_R = [
     "word": "regiment",
     "phonetic": "/ˈɹɛdʒɪmənt/",
     "meaning": "n 团，军团；一大群",
-    "example": "",
-    "level": "CET6"
+    "example": "flow regime (流态；水流动态)",
+    "level": "CET6",
+    "exampleRoot": "regime"
   },
   {
     "id": 1712,
@@ -789,8 +792,9 @@ const WORDS_R = [
     "word": "repay",
     "phonetic": "/ɹiˈpeɪ/",
     "meaning": "v 偿还；报答",
-    "example": "",
-    "level": "CET6"
+    "example": "terms of payment (付款条件)",
+    "level": "CET6",
+    "exampleRoot": "pay"
   },
   {
     "id": 2938,

@@ -38,8 +38,9 @@ const WORDS_O = [
     "word": "outlive",
     "phonetic": "/aʊtˈlɪv/",
     "meaning": "v 比……活的时间长",
-    "example": "",
-    "level": "CET6"
+    "example": "out of (由于；缺乏；自…离开；用…（材料）)",
+    "level": "CET6",
+    "exampleRoot": "out"
   },
   {
     "id": 506,
@@ -78,8 +79,9 @@ const WORDS_O = [
     "word": "optimism",
     "phonetic": "/ˈɒptɪmɪzəm/",
     "meaning": "n 乐观",
-    "example": "",
-    "level": "CET6"
+    "example": "cautiously optimistic (审慎乐观)",
+    "level": "CET6",
+    "exampleRoot": "optimistic"
   },
   {
     "id": 873,
@@ -110,8 +112,9 @@ const WORDS_O = [
     "word": "overturn",
     "phonetic": "/ˌəʊ.vəˈtɜːn/",
     "meaning": "v 推翻",
-    "example": "",
-    "level": "CET6"
+    "example": "all over (到处，遍及；浑身；全部结束)",
+    "level": "CET6",
+    "exampleRoot": "over"
   },
   {
     "id": 1053,
@@ -207,8 +210,9 @@ const WORDS_O = [
     "word": "overthrow",
     "phonetic": "/əʊvəˈθɹəʊ/",
     "meaning": "v 推翻；n 推翻，瓦解",
-    "example": "",
-    "level": "CET6"
+    "example": "all over (到处，遍及；浑身；全部结束)",
+    "level": "CET6",
+    "exampleRoot": "overt"
   },
   {
     "id": 1710,
@@ -223,8 +227,9 @@ const WORDS_O = [
     "word": "outlaw",
     "phonetic": "/ˈaʊt.lɔː/",
     "meaning": "n 逃犯，歹徒",
-    "example": "",
-    "level": "CET6"
+    "example": "out of (由于；缺乏；自…离开；用…（材料）)",
+    "level": "CET6",
+    "exampleRoot": "out"
   },
   {
     "id": 1796,
@@ -248,8 +253,9 @@ const WORDS_O = [
     "word": "ohm",
     "phonetic": "/əʊm/",
     "meaning": "n 欧姆",
-    "example": "",
-    "level": "CET6"
+    "example": "oh my (天哪)",
+    "level": "CET6",
+    "exampleRoot": "oh"
   },
   {
     "id": 2062,
@@ -369,16 +375,18 @@ const WORDS_O = [
     "word": "outfit",
     "phonetic": "/ˈaʊtfɪt/",
     "meaning": "n 全套服装； 一组人； 全套装备， 全套工具",
-    "example": "",
-    "level": "CET6"
+    "example": "out of (由于；缺乏；自…离开；用…（材料）)",
+    "level": "CET6",
+    "exampleRoot": "out"
   },
   {
     "id": 3528,
     "word": "overt",
     "phonetic": "/ə(ʊ)ˈvɜːt/",
     "meaning": "adj 公开的， 不隐蔽的",
-    "example": "",
-    "level": "CET6"
+    "example": "all over (到处，遍及；浑身；全部结束)",
+    "level": "CET6",
+    "exampleRoot": "over"
   },
   {
     "id": 3592,
@@ -409,8 +417,9 @@ const WORDS_O = [
     "word": "outrage",
     "phonetic": "/ˈæot.ɹæed͡ʒ/",
     "meaning": "n 义愤，愤慨；暴行，骇人听闻的事件；vt 激起…的义愤， 激怒",
-    "example": "",
-    "level": "CET6"
+    "example": "out of (由于；缺乏；自…离开；用…（材料）)",
+    "level": "CET6",
+    "exampleRoot": "out"
   }
 ];
 

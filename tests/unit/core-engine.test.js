@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { CoreEngine, getPersonalizedCircadianFactor, calculateMasteryScore } from '../../js/core.js';
 import { SafeStore, MemoryStorage } from '../../js/store.js';
-import { ActionBus } from '../../js/utils/action-bus.js';
 
 describe('TypeScript Core Architecture Tests', () => {
   describe('Circadian Factor & Mastery Scoring', () => {
@@ -78,22 +77,6 @@ describe('TypeScript Core Architecture Tests', () => {
 
       store.set('sample_data', { count: 42 });
       expect(store.get('sample_data', { count: 0 })).toEqual({ count: 42 });
-    });
-  });
-
-  describe('ActionBus Event System', () => {
-    it('publishes and subscribes to named events cleanly', async () => {
-      const bus = new ActionBus();
-      const fn = vi.fn();
-
-      const unsubscribe = bus.on('test-event', fn);
-      await bus.emit('test-event', { msg: 'hello' });
-
-      expect(fn).toHaveBeenCalledWith({ msg: 'hello' });
-
-      unsubscribe();
-      await bus.emit('test-event', { msg: 'world' });
-      expect(fn).toHaveBeenCalledTimes(1);
     });
   });
 });

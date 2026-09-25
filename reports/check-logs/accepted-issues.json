@@ -1,0 +1,54 @@
+[
+  {
+    "id": "ACCEPT-001",
+    "file": "js/main.js",
+    "category": "ESLint",
+    "message": "no-promise-executor-return",
+    "reason": "项目中14处 Promise executor 中的 return db.save(...) 是合法模式，return值未被使用，ESLint已设为warn级别",
+    "status": "accepted",
+    "acceptedAt": "2026-06-02",
+    "acceptedBy": "project-lead",
+    "reviewedBy": "project-lead",
+    "updatedAt": "2026-06-03",
+    "expiresAt": null
+  },
+  {
+    "id": "ACCEPT-002",
+    "file": "js/main.js",
+    "category": "ESLint",
+    "message": "no-unused-vars",
+    "reason": "以下划线开头的变量(_WorkerPool, _getMnemonic等)为保留API，ESLint已配置varsIgnorePattern豁免",
+    "status": "accepted",
+    "acceptedAt": "2026-06-02",
+    "acceptedBy": "project-lead",
+    "reviewedBy": "project-lead",
+    "updatedAt": "2026-06-03",
+    "expiresAt": null
+  },
+  {
+    "id": "ACCEPT-003",
+    "file": "js/workers/*.js",
+    "category": "Quality",
+    "message": "console usage in Worker",
+    "reason": "Web Worker中无法使用自定义logger模块，console是唯一可用的日志输出方式",
+    "status": "accepted",
+    "acceptedAt": "2026-06-02",
+    "acceptedBy": "project-lead",
+    "reviewedBy": "project-lead",
+    "updatedAt": "2026-06-03",
+    "expiresAt": null
+  },
+  {
+    "id": "ACCEPT-004",
+    "file": "sw.js",
+    "category": "Quality",
+    "message": "console usage in Service Worker",
+    "reason": "Service Worker运行在独立上下文中，无法导入项目logger模块",
+    "status": "accepted",
+    "acceptedAt": "2026-06-02",
+    "acceptedBy": "project-lead",
+    "reviewedBy": "project-lead",
+    "updatedAt": "2026-06-03",
+    "expiresAt": null
+  }
+]

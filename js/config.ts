@@ -138,6 +138,8 @@ export const CONFIG = {
   },
 };
 
+export const MS_PER_DAY = CONFIG.CONSTANTS.MS_PER_DAY;
+
 export const SEMANTIC_CLUSTERS = {
   abandon: ['desert', 'forsake', 'leave'],
   ability: ['capability', 'capacity', 'competence'],

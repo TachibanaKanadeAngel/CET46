@@ -135,8 +135,9 @@ const WORDS_E = [
     "word": "elaborately",
     "phonetic": "/ɪˈlæb.ər.ət.li/",
     "meaning": "adv 复杂地，精心设计地",
-    "example": "",
-    "level": "CET6"
+    "example": "elaborate on (详细说明)",
+    "level": "CET6",
+    "exampleRoot": "elaborate"
   },
   {
     "id": 845,
@@ -192,8 +193,9 @@ const WORDS_E = [
     "word": "exertion",
     "phonetic": "/əɡˈzɝʃən/",
     "meaning": "n 运用",
-    "example": "",
-    "level": "CET6"
+    "example": "exert oneself (努力；尽力)",
+    "level": "CET6",
+    "exampleRoot": "exert"
   },
   {
     "id": 1102,
@@ -323,8 +325,9 @@ const WORDS_E = [
     "word": "experimentally",
     "phonetic": "/ɪkˌsper.ɪˈmen.təl.i/",
     "meaning": "adv 实验上，实验性地",
-    "example": "",
-    "level": "CET6"
+    "example": "imperial palace (n. 宫城；皇城)",
+    "level": "CET6",
+    "exampleRoot": "imperial"
   },
   {
     "id": 1855,
@@ -404,8 +407,9 @@ const WORDS_E = [
     "word": "enchant",
     "phonetic": "/ɛnˈtʃant/",
     "meaning": "v 迷住；用魔法迷惑",
-    "example": "",
-    "level": "CET6"
+    "example": "gregorian chant (格列高利圣咏（教皇格列高利一世采用，常无伴奏）)",
+    "level": "CET6",
+    "exampleRoot": "chant"
   },
   {
     "id": 2094,
@@ -501,8 +505,9 @@ const WORDS_E = [
     "word": "excessively",
     "phonetic": "/ɪkˈsɛsɪvli/",
     "meaning": "adv 过分，极端地",
-    "example": "",
-    "level": "CET6"
+    "example": "in excess (过度；过量地)",
+    "level": "CET6",
+    "exampleRoot": "excess"
   },
   {
     "id": 2448,
@@ -558,8 +563,9 @@ const WORDS_E = [
     "word": "electrician",
     "phonetic": "/ˌel.ekˈtrɪʃ.ən/",
     "meaning": "n 电工，电气技师",
-    "example": "",
-    "level": "CET6"
+    "example": "electric power (电力；电功率)",
+    "level": "CET6",
+    "exampleRoot": "electric"
   },
   {
     "id": 2682,
@@ -729,8 +735,9 @@ const WORDS_E = [
     "word": "educational",
     "phonetic": "/ˌɛdʒʊˈkeɪʃənəl/",
     "meaning": "adj 教育的， 教育性的",
-    "example": "",
-    "level": "CET6"
+    "example": "higher education (高等教育（指含大学以上的教育）)",
+    "level": "CET6",
+    "exampleRoot": "educate"
   },
   {
     "id": 3540,

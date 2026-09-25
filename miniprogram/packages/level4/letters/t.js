@@ -79,8 +79,9 @@ const WORDS_T = [
     "word": "tragedy",
     "phonetic": "/ˈtɹæd͡ʒɪdi/",
     "meaning": "n 悲剧",
-    "example": "",
-    "level": "CET4"
+    "example": "tragic hero (悲剧英雄；英雄好汉)",
+    "level": "CET4",
+    "exampleRoot": "tragic"
   },
   {
     "id": 743,
@@ -779,8 +780,9 @@ const WORDS_T = [
     "word": "throughout",
     "phonetic": "/θɹuˈʌʊt/",
     "meaning": "prep 遍及；adv 到处",
-    "example": "",
-    "level": "CET4"
+    "example": "go through (参加；经受；仔细检查；被通过)",
+    "level": "CET4",
+    "exampleRoot": "through"
   },
   {
     "id": 6383,

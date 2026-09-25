@@ -87,8 +87,9 @@ const WORDS_Q = [
     "word": "questionable",
     "phonetic": "/ˈkwɛst͡ʃənəbl̩/",
     "meaning": "adj 可疑的，不可靠的",
-    "example": "",
-    "level": "CET6"
+    "example": "in question (讨论中的；成问题的；考虑中的)",
+    "level": "CET6",
+    "exampleRoot": "question"
   },
   {
     "id": 2317,

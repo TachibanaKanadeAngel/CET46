@@ -397,8 +397,9 @@ const WORDS_I = [
     "word": "initially",
     "phonetic": "/ɪˈnɪʃli/",
     "meaning": "adv 最初，开始",
-    "example": "",
-    "level": "CET4"
+    "example": "initial stage (原始期)",
+    "level": "CET4",
+    "exampleRoot": "initial"
   },
   {
     "id": 1298,
@@ -780,8 +781,9 @@ const WORDS_I = [
     "word": "idiom",
     "phonetic": "/ˈɪdɪəm/",
     "meaning": "n 习语， 成语； 风格， 特色",
-    "example": "",
-    "level": "CET4"
+    "example": "index system ([计]索引系统)",
+    "level": "CET4",
+    "exampleRoot": "I"
   },
   {
     "id": 3336,
@@ -869,8 +871,9 @@ const WORDS_I = [
     "word": "imply",
     "phonetic": "/ɪmˈplaɪ/",
     "meaning": "vt 暗示， 意指",
-    "example": "",
-    "level": "CET4"
+    "example": "comply with (照做，遵守)",
+    "level": "CET4",
+    "exampleRoot": "comply"
   },
   {
     "id": 3512,
@@ -893,8 +896,9 @@ const WORDS_I = [
     "word": "indignant",
     "phonetic": "/ɪnˈdɪɡ.nənt/",
     "meaning": "adj 愤怒的， 愤慨的， 义愤的",
-    "example": "",
-    "level": "CET4"
+    "example": "dig out (掘出；发现)",
+    "level": "CET4",
+    "exampleRoot": "dignity"
   },
   {
     "id": 3600,
@@ -1016,8 +1020,9 @@ const WORDS_I = [
     "word": "injure",
     "phonetic": "/ˈɪndʒə/",
     "meaning": "v 使受伤",
-    "example": "",
-    "level": "CET4"
+    "example": "in on (参与，参加)",
+    "level": "CET4",
+    "exampleRoot": "in"
   },
   {
     "id": 4137,
@@ -1082,16 +1087,18 @@ const WORDS_I = [
     "word": "invade",
     "phonetic": "/ɪnˈveɪd/",
     "meaning": "v 侵入，侵略",
-    "example": "",
-    "level": "CET4"
+    "example": "in on (参与，参加)",
+    "level": "CET4",
+    "exampleRoot": "in"
   },
   {
     "id": 4145,
     "word": "irrationally",
     "phonetic": "/ɪˈræʃ.ən.əl.i/",
     "meaning": "adv 不合理地，无理性地",
-    "example": "",
-    "level": "CET4"
+    "example": "irrational number ([数]无理数)",
+    "level": "CET4",
+    "exampleRoot": "irrational"
   },
   {
     "id": 4285,
@@ -1195,8 +1202,9 @@ const WORDS_I = [
     "word": "I",
     "phonetic": "/aɪ/",
     "meaning": "pron (主格)我",
-    "example": "",
-    "level": "CET4"
+    "example": "index system ([计]索引系统)",
+    "level": "CET4",
+    "exampleRoot": "index"
   },
   {
     "id": 5467,
@@ -1389,8 +1397,9 @@ const WORDS_I = [
     "word": "indeed",
     "phonetic": "/ɪnˈdiːd/",
     "meaning": "adv 真正地；确实",
-    "example": "",
-    "level": "CET4"
+    "example": "good deed (善事，好事)",
+    "level": "CET4",
+    "exampleRoot": "deed"
   },
   {
     "id": 5491,
@@ -1429,16 +1438,18 @@ const WORDS_I = [
     "word": "indoors",
     "phonetic": "/ɪnˈdɔːz/",
     "meaning": "adv 在室内，在屋里",
-    "example": "",
-    "level": "CET4"
+    "example": "indoor air pollution (空内空气污染)",
+    "level": "CET4",
+    "exampleRoot": "indoor"
   },
   {
     "id": 5496,
     "word": "industrialize",
     "phonetic": "/ɪnˈdʌs.tri.əl.aɪz/",
     "meaning": "v 使工业化",
-    "example": "",
-    "level": "CET4"
+    "example": "industrial structure (产业结构)",
+    "level": "CET4",
+    "exampleRoot": "industrious"
   },
   {
     "id": 5497,
@@ -1494,8 +1505,9 @@ const WORDS_I = [
     "word": "injury",
     "phonetic": "/ˈɪn.dʒə.ɹi/",
     "meaning": "n 损害，伤害；受伤处",
-    "example": "",
-    "level": "CET4"
+    "example": "in on (参与，参加)",
+    "level": "CET4",
+    "exampleRoot": "in"
   },
   {
     "id": 5504,
@@ -1551,8 +1563,9 @@ const WORDS_I = [
     "word": "instantly",
     "phonetic": "/ˈɪnstəntli/",
     "meaning": "adv 立即，即刻",
-    "example": "",
-    "level": "CET4"
+    "example": "constant temperature (恒温；定温；等温)",
+    "level": "CET4",
+    "exampleRoot": "constant"
   },
   {
     "id": 5511,

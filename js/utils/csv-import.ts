@@ -51,38 +51,53 @@ export function parseCSV(text: string): string[][] {
   let row: string[] = [];
   let field = '';
   let inQuotes = false;
+
+  const commitRow = () => {
+    row.push(field);
+    field = '';
+    if (row.length > 1 || (row[0] && row[0].trim() !== '')) {
+      rows.push(row);
+    }
+    row = [];
+  };
+
   for (let i = 0; i < text.length; i++) {
     const c = text[i];
     if (inQuotes) {
-      if (c === '"') {
-        if (text[i + 1] === '"') {
-          field += '"';
-          i++;
-        } else {
-          inQuotes = false;
-        }
+      if (c === '"' && text[i + 1] === '"') {
+        field += '"';
+        i++;
+      } else if (c === '"') {
+        inQuotes = false;
       } else {
         field += c;
       }
-    } else if (c === '"') {
-      inQuotes = true;
-    } else if (c === ',') {
-      row.push(field);
-      field = '';
-    } else if (c === '\n' || c === '\r') {
-      if (c === '\r' && text[i + 1] === '\n') i++;
-      row.push(field);
-      field = '';
-      if (row.length > 1 || row[0].trim() !== '') rows.push(row);
-      row = [];
-    } else {
-      field += c;
+      continue;
     }
+
+    if (c === '"') {
+      inQuotes = true;
+      continue;
+    }
+
+    if (c === ',') {
+      row.push(field);
+      field = '';
+      continue;
+    }
+
+    if (c === '\n' || c === '\r') {
+      if (c === '\r' && text[i + 1] === '\n') i++;
+      commitRow();
+      continue;
+    }
+
+    field += c;
   }
+
   // 末尾未换行的部分
   if (field !== '' || row.length > 0) {
-    row.push(field);
-    if (row.length > 1 || row[0].trim() !== '') rows.push(row);
+    commitRow();
   }
   return rows;
 }

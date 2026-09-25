@@ -1,4 +1,4 @@
-import { CONFIG } from './config.js';
+import { CONFIG, MS_PER_DAY } from './config.js';
 import logger from './utils/logger.js';
 
 const DB_NAME = CONFIG.DB_NAME || 'CET46_DB';
@@ -320,7 +320,7 @@ export class IndexedDB {
 
       request.onsuccess = () => {
         const result = request.result;
-        if (result && result.data && Date.now() - result.timestamp < (CONFIG.CONSTANTS?.MS_PER_DAY || 86400000)) {
+        if (result && result.data && Date.now() - result.timestamp < MS_PER_DAY) {
           resolve(result.data);
         } else {
           resolve(null);

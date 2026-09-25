@@ -5,7 +5,7 @@ import {
   renderWrongList,
   registerStudyFeature,
   startWrongWordsStudy,
-} from '../js/utils/wrong-words.ts';
+} from '../js/features/wrong-words.ts';
 import { memoryCache } from '../js/store.js';
 import { setWordsArray } from '../js/data/vocab-store.js';
 

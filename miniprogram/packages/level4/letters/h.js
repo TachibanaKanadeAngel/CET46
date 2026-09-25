@@ -62,8 +62,9 @@ const WORDS_H = [
     "word": "hinder",
     "phonetic": "/ˈhɪndə/",
     "meaning": "v 阻碍",
-    "example": "",
-    "level": "CET4"
+    "example": "hi there (嘿，你好(或你们好))",
+    "level": "CET4",
+    "exampleRoot": "hi"
   },
   {
     "id": 360,
@@ -102,16 +103,18 @@ const WORDS_H = [
     "word": "hasten",
     "phonetic": "/ˈheɪ.sən/",
     "meaning": "v 加速",
-    "example": "",
-    "level": "CET4"
+    "example": "in haste (急忙地；草率的；慌张地)",
+    "level": "CET4",
+    "exampleRoot": "haste"
   },
   {
     "id": 913,
     "word": "hasty",
     "phonetic": "/ˈheɪsti/",
     "meaning": "adj 匆忙的",
-    "example": "",
-    "level": "CET4"
+    "example": "in haste (急忙地；草率的；慌张地)",
+    "level": "CET4",
+    "exampleRoot": "hasten"
   },
   {
     "id": 996,
@@ -310,8 +313,9 @@ const WORDS_H = [
     "word": "humble",
     "phonetic": "/ˈhʌmbəl/",
     "meaning": "adj 谦逊的；地位低下的；简陋的；vt 使谦恭； 使卑下",
-    "example": "",
-    "level": "CET4"
+    "example": "humorous story (幽默小说)",
+    "level": "CET4",
+    "exampleRoot": "hum"
   },
   {
     "id": 3016,
@@ -457,8 +461,9 @@ const WORDS_H = [
     "word": "headquarter",
     "phonetic": "/ˌhedˈkwɔː.tər/",
     "meaning": "v 设立总部，在…设立总部",
-    "example": "",
-    "level": "CET4"
+    "example": "general headquarters (陆军总司令部)",
+    "level": "CET4",
+    "exampleRoot": "headquarters"
   },
   {
     "id": 4365,
@@ -691,8 +696,9 @@ const WORDS_H = [
     "word": "he",
     "phonetic": "/hi/",
     "meaning": "pron (主格)他",
-    "example": "",
-    "level": "CET4"
+    "example": "hale and hearty (精神充沛的，矍铄的；老当益壮的，健壮的)",
+    "level": "CET4",
+    "exampleRoot": "hearty"
   },
   {
     "id": 5388,
@@ -861,8 +867,9 @@ const WORDS_H = [
     "word": "hen",
     "phonetic": "/hɛn/",
     "meaning": "n 母鸡，雌禽",
-    "example": "",
-    "level": "CET4"
+    "example": "from hence ([古语]从这里)",
+    "level": "CET4",
+    "exampleRoot": "hence"
   },
   {
     "id": 5409,
@@ -911,8 +918,9 @@ const WORDS_H = [
     "word": "heroine",
     "phonetic": "/ˈhɛɹoʊɪn/",
     "meaning": "n 女主角；女英雄",
-    "example": "",
-    "level": "CET4"
+    "example": "inherent quality (固有性质)",
+    "level": "CET4",
+    "exampleRoot": "her"
   },
   {
     "id": 5415,
@@ -975,16 +983,18 @@ const WORDS_H = [
     "word": "hillside",
     "phonetic": "/ˈhɪl.saɪd/",
     "meaning": "n (小山)山腰，山坡",
-    "example": "",
-    "level": "CET4"
+    "example": "buried hill (潜山；埋藏山；掩丘)",
+    "level": "CET4",
+    "exampleRoot": "hill"
   },
   {
     "id": 5423,
     "word": "him",
     "phonetic": "/əm/",
     "meaning": "pron (宾格)他",
-    "example": "",
-    "level": "CET4"
+    "example": "hi there (嘿，你好(或你们好))",
+    "level": "CET4",
+    "exampleRoot": "hi"
   },
   {
     "id": 5424,
@@ -1007,8 +1017,9 @@ const WORDS_H = [
     "word": "his",
     "phonetic": "/ˈhɪz/",
     "meaning": "pron 他的，他的东西",
-    "example": "",
-    "level": "CET4"
+    "example": "hi there (嘿，你好(或你们好))",
+    "level": "CET4",
+    "exampleRoot": "hi"
   },
   {
     "id": 5427,
@@ -1209,8 +1220,9 @@ const WORDS_H = [
     "word": "housewife",
     "phonetic": "/ˈhaʊs.waɪf/",
     "meaning": "n 家庭主妇",
-    "example": "",
-    "level": "CET4"
+    "example": "white house (n. 白宫（美国政府的行政机关，美国总统官邸）)",
+    "level": "CET4",
+    "exampleRoot": "house"
   },
   {
     "id": 5452,
@@ -1225,8 +1237,9 @@ const WORDS_H = [
     "word": "however",
     "phonetic": "/hɑʊˈɛvə/",
     "meaning": "adv 然而；不管怎样",
-    "example": "",
-    "level": "CET4"
+    "example": "and how (正确；（美）非常)",
+    "level": "CET4",
+    "exampleRoot": "how"
   },
   {
     "id": 5454,

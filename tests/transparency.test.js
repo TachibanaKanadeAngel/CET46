@@ -3,6 +3,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 // 模拟 CONFIG
 vi.mock('../js/config.js', () => ({
+  MS_PER_DAY: 86400000,
   CONFIG: {
     CONSTANTS: {
       MS_PER_DAY: 86400000,

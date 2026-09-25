@@ -220,8 +220,9 @@ const WORDS_D = [
     "word": "diverse",
     "phonetic": "/daɪˈvɜːs/",
     "meaning": "adj 各种各样的",
-    "example": "",
-    "level": "CET4"
+    "example": "dive into (v. 投入；把手伸入；钻研)",
+    "level": "CET4",
+    "exampleRoot": "dive"
   },
   {
     "id": 235,
@@ -252,8 +253,9 @@ const WORDS_D = [
     "word": "dorm",
     "phonetic": "/dɔːm/",
     "meaning": "n 宿舍",
-    "example": "",
-    "level": "CET4"
+    "example": "do a ([口语]仿效，模仿，学…的样子)",
+    "level": "CET4",
+    "exampleRoot": "do"
   },
   {
     "id": 244,
@@ -549,8 +551,9 @@ const WORDS_D = [
     "word": "deepen",
     "phonetic": "/ˈdiːpən/",
     "meaning": "vt （使色泽等）加浓",
-    "example": "",
-    "level": "CET4"
+    "example": "in deep (—深陷其中，深深卷入(尤指麻烦))",
+    "level": "CET4",
+    "exampleRoot": "deep"
   },
   {
     "id": 2326,
@@ -859,8 +862,9 @@ const WORDS_D = [
     "word": "dictate",
     "phonetic": "/ˈdɪkˌteɪt/",
     "meaning": "v ['dIkteIt]；n 口授； 命令， 规定， 要求",
-    "example": "",
-    "level": "CET4"
+    "example": "prediction model (预测模型；推算模型)",
+    "level": "CET4",
+    "exampleRoot": "predict"
   },
   {
     "id": 3638,
@@ -988,8 +992,9 @@ const WORDS_D = [
     "word": "digest",
     "phonetic": "/daɪˈdʒɛst/",
     "meaning": "vt 消化， 领会；n 文摘",
-    "example": "",
-    "level": "CET4"
+    "example": "dig out (掘出；发现)",
+    "level": "CET4",
+    "exampleRoot": "dig"
   },
   {
     "id": 3845,
@@ -1184,8 +1189,9 @@ const WORDS_D = [
     "word": "distraction",
     "phonetic": "/dɪsˈtɹækʃən/",
     "meaning": "n 消遣；分心",
-    "example": "",
-    "level": "CET4"
+    "example": "distract from (转移；使从…分心)",
+    "level": "CET4",
+    "exampleRoot": "distract"
   },
   {
     "id": 4071,
@@ -1241,8 +1247,9 @@ const WORDS_D = [
     "word": "downfall",
     "phonetic": "/ˈdaʊn.fɔːl/",
     "meaning": "n （雨等的）大下特下",
-    "example": "",
-    "level": "CET4"
+    "example": "down on (突然意识到)",
+    "level": "CET4",
+    "exampleRoot": "down"
   },
   {
     "id": 4078,
@@ -1322,8 +1329,9 @@ const WORDS_D = [
     "word": "downsize",
     "phonetic": "/ˈdaʊnsaɪz/",
     "meaning": "v 裁员",
-    "example": "",
-    "level": "CET4"
+    "example": "down on (突然意识到)",
+    "level": "CET4",
+    "exampleRoot": "down"
   },
   {
     "id": 4384,
@@ -1796,8 +1804,9 @@ const WORDS_D = [
     "word": "dictation",
     "phonetic": "/dɪkˈteɪʃən/",
     "meaning": "n 口授笔录，听写",
-    "example": "",
-    "level": "CET4"
+    "example": "prediction model (预测模型；推算模型)",
+    "level": "CET4",
+    "exampleRoot": "predict"
   },
   {
     "id": 4972,
@@ -1892,8 +1901,9 @@ const WORDS_D = [
     "word": "direction",
     "phonetic": "/d(a)ɪˈɹɛk.ʃən/",
     "meaning": "n 方向，方位；指导",
-    "example": "",
-    "level": "CET4"
+    "example": "direct investment ([经]直接投资)",
+    "level": "CET4",
+    "exampleRoot": "direct"
   },
   {
     "id": 4984,
@@ -2047,8 +2057,9 @@ const WORDS_D = [
     "word": "doctor",
     "phonetic": "/ˈdɒktə/",
     "meaning": "n 医生，医师；博士",
-    "example": "",
-    "level": "CET4"
+    "example": "doctoral student (博士生)",
+    "level": "CET4",
+    "exampleRoot": "postdoctoral"
   },
   {
     "id": 5003,
@@ -2071,8 +2082,9 @@ const WORDS_D = [
     "word": "donkey",
     "phonetic": "/ˈdɒŋki/",
     "meaning": "n 驴；笨蛋",
-    "example": "",
-    "level": "CET4"
+    "example": "do a ([口语]仿效，模仿，学…的样子)",
+    "level": "CET4",
+    "exampleRoot": "do"
   },
   {
     "id": 5006,

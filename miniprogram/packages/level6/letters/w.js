@@ -86,8 +86,9 @@ const WORDS_W = [
     "word": "weaver",
     "phonetic": "/ˈwiː.və(ɹ)/",
     "meaning": "n 织布工，编织者",
-    "example": "",
-    "level": "CET6"
+    "example": "plain weave (平纹梭织，平纹布；平布)",
+    "level": "CET6",
+    "exampleRoot": "weave"
   },
   {
     "id": 1338,
@@ -110,16 +111,18 @@ const WORDS_W = [
     "word": "wardrobe",
     "phonetic": "/ ˈwɔːdɹəʊb/",
     "meaning": "n 衣柜，衣橱，藏衣室",
-    "example": "",
-    "level": "CET6"
+    "example": "ward off (避开；挡住)",
+    "level": "CET6",
+    "exampleRoot": "ward"
   },
   {
     "id": 1475,
     "word": "waver",
     "phonetic": "/ˈweɪ.vər/",
     "meaning": "v 犹豫不决；摇摆",
-    "example": "",
-    "level": "CET6"
+    "example": "shock wave (冲击波)",
+    "level": "CET6",
+    "exampleRoot": "wave"
   },
   {
     "id": 1476,
@@ -206,8 +209,9 @@ const WORDS_W = [
     "word": "whitewash",
     "phonetic": "/ˈwaɪtwɒʃ/",
     "meaning": "n 石灰水；v 粉饰",
-    "example": "",
-    "level": "CET6"
+    "example": "white house (n. 白宫（美国政府的行政机关，美国总统官邸）)",
+    "level": "CET6",
+    "exampleRoot": "white"
   },
   {
     "id": 1897,
@@ -350,8 +354,9 @@ const WORDS_W = [
     "word": "windmill",
     "phonetic": "/ˈwɪnd.mɪl/",
     "meaning": "n 风车",
-    "example": "",
-    "level": "CET6"
+    "example": "wind power (风力，风能)",
+    "level": "CET6",
+    "exampleRoot": "wind"
   },
   {
     "id": 2553,

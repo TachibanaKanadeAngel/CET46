@@ -38,8 +38,9 @@ const WORDS_V = [
     "word": "visualize",
     "phonetic": "/ˈvɪʒ.u.əl.aɪz/",
     "meaning": "v 想象",
-    "example": "",
-    "level": "CET6"
+    "example": "visual angle (n. 视界，视角)",
+    "level": "CET6",
+    "exampleRoot": "visual"
   },
   {
     "id": 882,

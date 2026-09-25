@@ -159,8 +159,9 @@ const WORDS_P = [
     "word": "predict",
     "phonetic": "/pɹɪˈdɪkt/",
     "meaning": "v 预测",
-    "example": "",
-    "level": "CET4"
+    "example": "prediction model (预测模型；推算模型)",
+    "level": "CET4",
+    "exampleRoot": "prediction"
   },
   {
     "id": 546,
@@ -1180,8 +1181,9 @@ const WORDS_P = [
     "word": "patiently",
     "phonetic": "/ˈpeɪʃəntli/",
     "meaning": "adv 耐心地",
-    "example": "",
-    "level": "CET4"
+    "example": "too impatient to wait (迫不及待)",
+    "level": "CET4",
+    "exampleRoot": "impatient"
   },
   {
     "id": 4171,
@@ -1295,8 +1297,9 @@ const WORDS_P = [
     "word": "previously",
     "phonetic": "/ˈpɹiːvi.əsli/",
     "meaning": "adv 事先",
-    "example": "",
-    "level": "CET4"
+    "example": "previous year (前一年)",
+    "level": "CET4",
+    "exampleRoot": "previous"
   },
   {
     "id": 4185,
@@ -1335,8 +1338,9 @@ const WORDS_P = [
     "word": "prohibitively",
     "phonetic": "/prəˈhɪb.ɪ.tɪv.li/",
     "meaning": "adv 过分地，非常地",
-    "example": "",
-    "level": "CET4"
+    "example": "strictly prohibit (严禁)",
+    "level": "CET4",
+    "exampleRoot": "prohibit"
   },
   {
     "id": 4279,
@@ -1368,8 +1372,9 @@ const WORDS_P = [
     "word": "prosper",
     "phonetic": "/ˈpɹɒspə(ɹ)/",
     "meaning": "v 繁荣",
-    "example": "",
-    "level": "CET4"
+    "example": "common prosperity (共同繁荣；共同富裕)",
+    "level": "CET4",
+    "exampleRoot": "desperate"
   },
   {
     "id": 4341,
@@ -1392,8 +1397,9 @@ const WORDS_P = [
     "word": "passively",
     "phonetic": "/ˈpæs.ɪv.li/",
     "meaning": "adv 消极地",
-    "example": "",
-    "level": "CET4"
+    "example": "pedestrian overpass (步行天桥；人行天桥)",
+    "level": "CET4",
+    "exampleRoot": "overpass"
   },
   {
     "id": 4351,
@@ -1496,8 +1502,9 @@ const WORDS_P = [
     "word": "pale",
     "phonetic": "/peɪl/",
     "meaning": "adj 苍白的；浅的",
-    "example": "",
-    "level": "CET4"
+    "example": "pen pal (笔友（等于pen friend）)",
+    "level": "CET4",
+    "exampleRoot": "pal"
   },
   {
     "id": 5985,
@@ -1819,8 +1826,9 @@ const WORDS_P = [
     "word": "perhaps",
     "phonetic": "/pəˈhæps/",
     "meaning": "adv 也许，可能，多半",
-    "example": "",
-    "level": "CET4"
+    "example": "per cent (百分之……，百分数)",
+    "level": "CET4",
+    "exampleRoot": "per"
   },
   {
     "id": 6025,
@@ -2307,8 +2315,9 @@ const WORDS_P = [
     "word": "pollute",
     "phonetic": "/pəˈljuːt/",
     "meaning": "v 弄脏，污染，沾污",
-    "example": "",
-    "level": "CET4"
+    "example": "opinion poll (民意测验；选举投票)",
+    "level": "CET4",
+    "exampleRoot": "poll"
   },
   {
     "id": 6086,
@@ -2428,8 +2437,9 @@ const WORDS_P = [
     "word": "postpone",
     "phonetic": "/poʊstˈpoʊn/",
     "meaning": "v 延迟，推迟，延缓",
-    "example": "",
-    "level": "CET4"
+    "example": "post office (n. 邮局)",
+    "level": "CET4",
+    "exampleRoot": "post"
   },
   {
     "id": 6101,
@@ -2492,8 +2502,9 @@ const WORDS_P = [
     "word": "practically",
     "phonetic": "/ˈpɹæktɪkli/",
     "meaning": "adv 实际上；几乎",
-    "example": "",
-    "level": "CET4"
+    "example": "practical application (实际应用)",
+    "level": "CET4",
+    "exampleRoot": "practical"
   },
   {
     "id": 6109,
@@ -2738,8 +2749,9 @@ const WORDS_P = [
     "word": "professor",
     "phonetic": "/pɹəˈfɛsə/",
     "meaning": "n 教授",
-    "example": "",
-    "level": "CET4"
+    "example": "profession of (宣称(感情、信念等)；表白)",
+    "level": "CET4",
+    "exampleRoot": "profess"
   },
   {
     "id": 6139,
@@ -2988,8 +3000,9 @@ const WORDS_P = [
     "word": "predictable",
     "phonetic": "/pɹɪˈdɪktəbl̩/",
     "meaning": "adj 可预料的",
-    "example": "",
-    "level": "CET4"
+    "example": "prediction model (预测模型；推算模型)",
+    "level": "CET4",
+    "exampleRoot": "predict"
   },
   {
     "id": 6536,

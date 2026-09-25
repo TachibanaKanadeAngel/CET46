@@ -134,8 +134,9 @@ const WORDS_B = [
     "word": "bemoan",
     "phonetic": "/bɪˈməʊn/",
     "meaning": "v 抱怨；惋惜",
-    "example": "",
-    "level": "CET6"
+    "example": "so be it (诚心所愿；顺其自然)",
+    "level": "CET6",
+    "exampleRoot": "be"
   },
   {
     "id": 924,
@@ -158,8 +159,9 @@ const WORDS_B = [
     "word": "badge",
     "phonetic": "/bædʒ/",
     "meaning": "n 标记, 徽章",
-    "example": "",
-    "level": "CET6"
+    "example": "in bad (倒霉；失宠)",
+    "level": "CET6",
+    "exampleRoot": "bad"
   },
   {
     "id": 1186,
@@ -199,8 +201,9 @@ const WORDS_B = [
     "word": "beforehand",
     "phonetic": "/bɪˈfɔːhænd/",
     "meaning": "adv 预先；提前地",
-    "example": "",
-    "level": "CET6"
+    "example": "before and after (前后，之前之后)",
+    "level": "CET6",
+    "exampleRoot": "before"
   },
   {
     "id": 1404,
@@ -303,8 +306,9 @@ const WORDS_B = [
     "word": "bushel",
     "phonetic": "/ˈbʊʃəl/",
     "meaning": "n 蒲式耳（容量单位）",
-    "example": "",
-    "level": "CET6"
+    "example": "by bus (搭乘公共汽车)",
+    "level": "CET6",
+    "exampleRoot": "bus"
   },
   {
     "id": 2009,
@@ -335,8 +339,9 @@ const WORDS_B = [
     "word": "baron",
     "phonetic": "/ˈbæɹən/",
     "meaning": "n 男爵；贵族；巨商",
-    "example": "",
-    "level": "CET6"
+    "example": "at the bar (在酒吧；受到公开审问)",
+    "level": "CET6",
+    "exampleRoot": "bar"
   },
   {
     "id": 2074,
@@ -384,8 +389,9 @@ const WORDS_B = [
     "word": "bugle",
     "phonetic": "/ˈbjuːɡəl/",
     "meaning": "n 军号，喇叭",
-    "example": "",
-    "level": "CET6"
+    "example": "big bug (要人；大人物；大错误)",
+    "level": "CET6",
+    "exampleRoot": "bug"
   },
   {
     "id": 2303,
@@ -504,8 +510,9 @@ const WORDS_B = [
     "word": "bestow",
     "phonetic": "/bɪˈstəʊ/",
     "meaning": "v 把…赠与",
-    "example": "",
-    "level": "CET6"
+    "example": "so be it (诚心所愿；顺其自然)",
+    "level": "CET6",
+    "exampleRoot": "be"
   },
   {
     "id": 2899,
@@ -545,8 +552,9 @@ const WORDS_B = [
     "word": "boycott",
     "phonetic": "/ˈbɔɪkɒt/",
     "meaning": "v 联合抵制；n 抵制行动，受抵制时期",
-    "example": "",
-    "level": "CET6"
+    "example": "little boy (小男孩)",
+    "level": "CET6",
+    "exampleRoot": "boy"
   },
   {
     "id": 2972,
@@ -601,8 +609,9 @@ const WORDS_B = [
     "word": "batter",
     "phonetic": "/ˈbætə(ɹ)/",
     "meaning": "v 连续猛击；n 面糊",
-    "example": "",
-    "level": "CET6"
+    "example": "battery of (一组；一套)",
+    "level": "CET6",
+    "exampleRoot": "battery"
   },
   {
     "id": 3256,
@@ -705,8 +714,9 @@ const WORDS_B = [
     "word": "briefcase",
     "phonetic": "/ˈbɹiːfˌkeɪs/",
     "meaning": "n 公文包， 公事包",
-    "example": "",
-    "level": "CET6"
+    "example": "in brief (简言之)",
+    "level": "CET6",
+    "exampleRoot": "brief"
   }
 ];
 

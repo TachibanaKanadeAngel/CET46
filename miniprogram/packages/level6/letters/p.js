@@ -78,8 +78,9 @@ const WORDS_P = [
     "word": "potentially",
     "phonetic": "/pəˈtɛnʃ(ə)li/",
     "meaning": "adv 潜在地",
-    "example": "",
-    "level": "CET6"
+    "example": "market potential ([经]市场潜力；市场潜在需求量)",
+    "level": "CET6",
+    "exampleRoot": "potential"
   },
   {
     "id": 542,
@@ -94,8 +95,9 @@ const WORDS_P = [
     "word": "predominantly",
     "phonetic": "/prɪˈdɒm.ɪ.nənt.li/",
     "meaning": "adv 占主导地位地",
-    "example": "",
-    "level": "CET6"
+    "example": "dominate the market (欺行霸市)",
+    "level": "CET6",
+    "exampleRoot": "dominate"
   },
   {
     "id": 547,
@@ -118,8 +120,9 @@ const WORDS_P = [
     "word": "presidency",
     "phonetic": "/ˈpɹezɪdənsi/",
     "meaning": "n 总统任期",
-    "example": "",
-    "level": "CET6"
+    "example": "preside over (主持；负责)",
+    "level": "CET6",
+    "exampleRoot": "preside"
   },
   {
     "id": 554,
@@ -207,8 +210,9 @@ const WORDS_P = [
     "word": "portray",
     "phonetic": "/pɔɹˈtɹeɪ/",
     "meaning": "v 描述",
-    "example": "",
-    "level": "CET6"
+    "example": "at the port (作持枪的姿势)",
+    "level": "CET6",
+    "exampleRoot": "port"
   },
   {
     "id": 1100,
@@ -264,8 +268,9 @@ const WORDS_P = [
     "word": "proximately",
     "phonetic": "/ˈprɒk.sɪ.mət.li/",
     "meaning": "adv 近似，接近",
-    "example": "",
-    "level": "CET6"
+    "example": "close proximity (极为贴近)",
+    "level": "CET6",
+    "exampleRoot": "proximity"
   },
   {
     "id": 1218,
@@ -288,8 +293,9 @@ const WORDS_P = [
     "word": "principally",
     "phonetic": "/ˈprɪn.sɪ.pəl.i/",
     "meaning": "adv 主要，大抵",
-    "example": "",
-    "level": "CET6"
+    "example": "principal component (主成分；[化]知组分)",
+    "level": "CET6",
+    "exampleRoot": "principal"
   },
   {
     "id": 1281,
@@ -615,8 +621,9 @@ const WORDS_P = [
     "word": "pantry",
     "phonetic": "/ˈpantɹi/",
     "meaning": "n 食品柜，餐具室",
-    "example": "",
-    "level": "CET6"
+    "example": "pant for (v. 渴望)",
+    "level": "CET6",
+    "exampleRoot": "pant"
   },
   {
     "id": 1872,
@@ -719,8 +726,9 @@ const WORDS_P = [
     "word": "practicable",
     "phonetic": "/ˈpɹæktɪkəbəl/",
     "meaning": "adj 能实行的；适用的",
-    "example": "",
-    "level": "CET6"
+    "example": "practical application (实际应用)",
+    "level": "CET6",
+    "exampleRoot": "practical"
   },
   {
     "id": 2055,
@@ -744,8 +752,9 @@ const WORDS_P = [
     "word": "perplex",
     "phonetic": "/pəˈplɛks/",
     "meaning": "v 迷惑，困惑，难住",
-    "example": "",
-    "level": "CET6"
+    "example": "per cent (百分之……，百分数)",
+    "level": "CET6",
+    "exampleRoot": "per"
   },
   {
     "id": 2091,
@@ -826,8 +835,9 @@ const WORDS_P = [
     "word": "perfection",
     "phonetic": "/pɚˈfɛkʃən/",
     "meaning": "n 尽善尽美；无比精确",
-    "example": "",
-    "level": "CET6"
+    "example": "perfect oneself in (精通；熟练；完全掌握)",
+    "level": "CET6",
+    "exampleRoot": "perfect"
   },
   {
     "id": 2257,
@@ -1116,8 +1126,9 @@ const WORDS_P = [
     "word": "pathetic",
     "phonetic": "/pəˈθɛtɪk/",
     "meaning": "adj 哀婉动人的；可怜的",
-    "example": "",
-    "level": "CET6"
+    "example": "shortest path (最短路径)",
+    "level": "CET6",
+    "exampleRoot": "path"
   },
   {
     "id": 2855,
@@ -1132,8 +1143,9 @@ const WORDS_P = [
     "word": "perch",
     "phonetic": "/pɜːtʃ/",
     "meaning": "n （禽鸟的）栖木",
-    "example": "",
-    "level": "CET6"
+    "example": "per cent (百分之……，百分数)",
+    "level": "CET6",
+    "exampleRoot": "per"
   },
   {
     "id": 2883,
@@ -1236,8 +1248,9 @@ const WORDS_P = [
     "word": "pastry",
     "phonetic": "/ˈpeɪstɹi/",
     "meaning": "n 油酥面团， 酥皮糕点",
-    "example": "",
-    "level": "CET6"
+    "example": "in the past (在过去)",
+    "level": "CET6",
+    "exampleRoot": "past"
   },
   {
     "id": 3081,
@@ -1268,16 +1281,18 @@ const WORDS_P = [
     "word": "pastime",
     "phonetic": "/ˈpæs.taɪm/",
     "meaning": "n 消遣， 娱乐",
-    "example": "",
-    "level": "CET6"
+    "example": "in the past (在过去)",
+    "level": "CET6",
+    "exampleRoot": "past"
   },
   {
     "id": 3157,
     "word": "prosecute",
     "phonetic": "/ˈpɹɒsɪkjuːt/",
     "meaning": "vi 起诉， 告发；vt 对…提起公诉，告发，检举；继续从事",
-    "example": "",
-    "level": "CET6"
+    "example": "prose poem (n. 散文诗)",
+    "level": "CET6",
+    "exampleRoot": "prose"
   },
   {
     "id": 3161,
@@ -1348,8 +1363,9 @@ const WORDS_P = [
     "word": "profess",
     "phonetic": "/pɹəˈfɛs/",
     "meaning": "vt 表示， 承认； 宣称信仰",
-    "example": "",
-    "level": "CET6"
+    "example": "profession of (宣称(感情、信念等)；表白)",
+    "level": "CET6",
+    "exampleRoot": "profession"
   },
   {
     "id": 3389,

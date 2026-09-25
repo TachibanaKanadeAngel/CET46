@@ -329,8 +329,9 @@ const WORDS_D = [
     "word": "drummer",
     "phonetic": "/ˈdɹʌmə(ɹ)/",
     "meaning": "n 鼓手",
-    "example": "",
-    "level": "CET6"
+    "example": "drum up (招徕（顾客）；[口]竭力争取；纠集；鼓动)",
+    "level": "CET6",
+    "exampleRoot": "drum"
   },
   {
     "id": 1028,
@@ -428,8 +429,9 @@ const WORDS_D = [
     "word": "dignity",
     "phonetic": "/ˈdɪɡnɪti/",
     "meaning": "n 庄重；尊严；体面",
-    "example": "",
-    "level": "CET6"
+    "example": "dig out (掘出；发现)",
+    "level": "CET6",
+    "exampleRoot": "dig"
   },
   {
     "id": 1257,
@@ -550,8 +552,9 @@ const WORDS_D = [
     "word": "drawback",
     "phonetic": "/ˈdɹɔːˌbæk/",
     "meaning": "n 妨碍；弊端",
-    "example": "",
-    "level": "CET6"
+    "example": "draw lessons from (从…吸取教训)",
+    "level": "CET6",
+    "exampleRoot": "draw"
   },
   {
     "id": 1691,
@@ -592,8 +595,9 @@ const WORDS_D = [
     "word": "deafen",
     "phonetic": "/ˈdɛfən/",
     "meaning": "v 使聋",
-    "example": "",
-    "level": "CET6"
+    "example": "turn a deaf ear (充耳不闻；不加理睬；不愿听)",
+    "level": "CET6",
+    "exampleRoot": "deaf"
   },
   {
     "id": 1835,
@@ -617,8 +621,9 @@ const WORDS_D = [
     "word": "deliberately",
     "phonetic": "/dəˈlɪb(ə)ɹətli/",
     "meaning": "adv 故意地；审慎地",
-    "example": "",
-    "level": "CET6"
+    "example": "take time to deliberate (做事要深思熟虑)",
+    "level": "CET6",
+    "exampleRoot": "deliberate"
   },
   {
     "id": 1896,
@@ -699,16 +704,18 @@ const WORDS_D = [
     "word": "destine",
     "phonetic": "/ˈdɛstɪn/",
     "meaning": "v 命定，注定；预定",
-    "example": "",
-    "level": "CET6"
+    "example": "destined for (驶往；去往)",
+    "level": "CET6",
+    "exampleRoot": "destined"
   },
   {
     "id": 2072,
     "word": "decidedly",
     "phonetic": "/dɪˈsaɪdɪdli/",
     "meaning": "adv 明确地，坚决地",
-    "example": "",
-    "level": "CET6"
+    "example": "incidence rate (发生率，发病率)",
+    "level": "CET6",
+    "exampleRoot": "incidence"
   },
   {
     "id": 2080,
@@ -740,8 +747,9 @@ const WORDS_D = [
     "word": "dismay",
     "phonetic": "/dɪsˈmeɪ/",
     "meaning": "n 惊慌，沮丧，灰心",
-    "example": "",
-    "level": "CET6"
+    "example": "may be (也许，可能)",
+    "level": "CET6",
+    "exampleRoot": "may"
   },
   {
     "id": 2273,
@@ -805,8 +813,9 @@ const WORDS_D = [
     "word": "dove",
     "phonetic": "/dʌv/",
     "meaning": "n 鸽子，斑鸠",
-    "example": "",
-    "level": "CET6"
+    "example": "do a ([口语]仿效，模仿，学…的样子)",
+    "level": "CET6",
+    "exampleRoot": "do"
   },
   {
     "id": 2487,
@@ -1011,8 +1020,9 @@ const WORDS_D = [
     "word": "dodge",
     "phonetic": "/dɒdʒ/",
     "meaning": "vi 闪身躲开；vt 回避，逃避；n 托辞， 伎俩； 躲闪， 躲避",
-    "example": "",
-    "level": "CET6"
+    "example": "do a ([口语]仿效，模仿，学…的样子)",
+    "level": "CET6",
+    "exampleRoot": "do"
   },
   {
     "id": 3175,

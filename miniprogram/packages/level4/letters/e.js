@@ -280,8 +280,9 @@ const WORDS_E = [
     "word": "endure",
     "phonetic": "/ɪnˈdjɔː(ɹ)/",
     "meaning": "v 忍受",
-    "example": "",
-    "level": "CET4"
+    "example": "the end of (…的最后)",
+    "level": "CET4",
+    "exampleRoot": "end"
   },
   {
     "id": 1004,
@@ -669,8 +670,9 @@ const WORDS_E = [
     "word": "exceedingly",
     "phonetic": "/ɪkˈsiːdɪŋli/",
     "meaning": "adv 极端地， 非常",
-    "example": "",
-    "level": "CET4"
+    "example": "exceed in (在…方面超过)",
+    "level": "CET4",
+    "exampleRoot": "exceed"
   },
   {
     "id": 3244,
@@ -990,8 +992,9 @@ const WORDS_E = [
     "word": "efficiently",
     "phonetic": "/ɪˈfɪʃ.ənt.li/",
     "meaning": "adj 有效地",
-    "example": "",
-    "level": "CET4"
+    "example": "transfer coefficient (传送系数，转移系数)",
+    "level": "CET4",
+    "exampleRoot": "coefficient"
   },
   {
     "id": 4086,
@@ -1078,8 +1081,9 @@ const WORDS_E = [
     "word": "essentially",
     "phonetic": "/ɪˈsɛnʃəli/",
     "meaning": "adv 本质上地；必须的",
-    "example": "",
-    "level": "CET4"
+    "example": "essential oil (香精油，精油)",
+    "level": "CET4",
+    "exampleRoot": "essential"
   },
   {
     "id": 4097,
@@ -1118,8 +1122,9 @@ const WORDS_E = [
     "word": "expressiveness",
     "phonetic": "/ɪkˈspres.ɪv.nəs/",
     "meaning": "n 表达",
-    "example": "",
-    "level": "CET4"
+    "example": "press conference (记者招待会，新闻发布会)",
+    "level": "CET4",
+    "exampleRoot": "press"
   },
   {
     "id": 4102,
@@ -1150,8 +1155,9 @@ const WORDS_E = [
     "word": "extensively",
     "phonetic": "/ɪkˈsten.sɪv.li/",
     "meaning": "adv 广泛地",
-    "example": "",
-    "level": "CET4"
+    "example": "intensive care (重病特别护理)",
+    "level": "CET4",
+    "exampleRoot": "intensive"
   },
   {
     "id": 4318,
@@ -1337,16 +1343,18 @@ const WORDS_E = [
     "word": "eighteen",
     "phonetic": "/ˈeɪ.tiːn/",
     "meaning": "num 十八，十八个",
-    "example": "",
-    "level": "CET4"
+    "example": "the eight diagrams (八卦)",
+    "level": "CET4",
+    "exampleRoot": "eight"
   },
   {
     "id": 5061,
     "word": "eighth",
     "phonetic": "/eɪtθ/",
     "meaning": "num 第八；n 八分之一",
-    "example": "",
-    "level": "CET4"
+    "example": "the eight diagrams (八卦)",
+    "level": "CET4",
+    "exampleRoot": "eight"
   },
   {
     "id": 5062,
@@ -1548,8 +1556,9 @@ const WORDS_E = [
     "word": "Englishman",
     "phonetic": "/ˈɪŋ.ɡlɪʃ.mən/",
     "meaning": "n 英国男子",
-    "example": "",
-    "level": "CET4"
+    "example": "in english (用英语)",
+    "level": "CET4",
+    "exampleRoot": "English"
   },
   {
     "id": 5087,
@@ -1725,8 +1734,9 @@ const WORDS_E = [
     "word": "everybody",
     "phonetic": "/ˈɛvɹibɒdi/",
     "meaning": "pron 每人，人人",
-    "example": "",
-    "level": "CET4"
+    "example": "every time (每次，每当)",
+    "level": "CET4",
+    "exampleRoot": "every"
   },
   {
     "id": 5109,
@@ -1741,8 +1751,9 @@ const WORDS_E = [
     "word": "everyone",
     "phonetic": "/ˈɛv.ɹi.wʌn/",
     "meaning": "pron 每人，人人",
-    "example": "",
-    "level": "CET4"
+    "example": "for ever (永远；总是)",
+    "level": "CET4",
+    "exampleRoot": "ever"
   },
   {
     "id": 5111,
@@ -1831,8 +1842,9 @@ const WORDS_E = [
     "word": "exclusively",
     "phonetic": "/ɪkˈskluːsɪvli/",
     "meaning": "adv 专门地",
-    "example": "",
-    "level": "CET4"
+    "example": "conclusive evidence (决定性证据)",
+    "level": "CET4",
+    "exampleRoot": "conclusive"
   },
   {
     "id": 5122,
@@ -2017,8 +2029,9 @@ const WORDS_E = [
     "word": "evidently",
     "phonetic": "/ˈɛvɪdəntli/",
     "meaning": "adv 明显地， 显然",
-    "example": "",
-    "level": "CET4"
+    "example": "self evident (不言而喻的；不证自明的)",
+    "level": "CET4",
+    "exampleRoot": "evident"
   },
   {
     "id": 6662,
